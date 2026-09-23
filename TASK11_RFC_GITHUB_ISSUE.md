@@ -4,7 +4,7 @@
 
 给训练补一份持续更新的 **rank × 阶段耗时**：看见哪张卡、哪个阶段持续变慢，并保留工作量和对照组。方案是抽样记录 CUDA Event、后台读数上报；不改训练调度，不凭耗时直接判定硬件故障。**当前 demo 是独立机制验证，不是 Relax 集成或官方验收结果。**
 
-![训练记录、后台回收、平台比较的边界](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/architecture.png)
+![训练记录、后台回收、平台比较的边界](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/cover.png)
 
 ## 做什么
 

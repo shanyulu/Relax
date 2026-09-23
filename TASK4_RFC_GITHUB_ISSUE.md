@@ -4,7 +4,7 @@
 
 为 GenRM 增加动态副本、Autoscaler 和 TUI。**健康后接流量，排空后释放资源，全程不做权重同步。** 本文是设计提案；下方 demo 只验证契约回放，真实 Relax 集成与 GPU 验收仍未完成。
 
-![GenRM 弹性扩缩容：控制、打分与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/architecture.png)
+![GenRM 弹性扩缩容：控制、打分与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/cover.png)
 
 ## 先确定 Task 3 边界
 
