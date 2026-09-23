@@ -1,0 +1,280 @@
+{
+  "config": {
+    "batch": 16,
+    "dim": 256,
+    "gpus": 2,
+    "injection_steps": 12,
+    "interval": 2,
+    "pairs": 1,
+    "steps": 20,
+    "warmup": 2
+  },
+  "diagnosis": {
+    "alerts": [],
+    "complete_windows": 34,
+    "incomplete_windows": 0,
+    "uncertain": [
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 0
+      },
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 2
+      },
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 4
+      },
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 6
+      },
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 8
+      },
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 10
+      }
+    ]
+  },
+  "environment": {
+    "gpu": [
+      "NVIDIA GeForce RTX 4090",
+      "NVIDIA GeForce RTX 4090"
+    ],
+    "python": "3.12.3",
+    "torch": "2.8.0+cu128",
+    "world_size": 2
+  },
+  "overhead_median_pct": 27.759225099008454,
+  "overhead_range_pct": [
+    27.759225099008454,
+    27.759225099008454
+  ],
+  "paired_trials": [
+    {
+      "off_s": 0.016973196994513273,
+      "on_s": 0.02168482495471835,
+      "overhead_pct": 27.759225099008454,
+      "pair": 0
+    }
+  ],
+  "runs": [
+    {
+      "case": "bench_0_off",
+      "elapsed_s": 0.016921825241297483,
+      "final_loss": 0.04033466428518295,
+      "injection": null,
+      "probe": null,
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "bench_0_off",
+      "elapsed_s": 0.016973196994513273,
+      "final_loss": 0.04002003371715546,
+      "injection": null,
+      "probe": null,
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "bench_0_on",
+      "elapsed_s": 0.02168482495471835,
+      "final_loss": 0.04033466428518295,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 2450,
+        "pending_peak": 1,
+        "planned": 10,
+        "recorded": 10,
+        "report_lag_max_ms": 2.174564,
+        "reported": 10
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "bench_0_on",
+      "elapsed_s": 0.02158640930429101,
+      "final_loss": 0.04002003371715546,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 2448,
+        "pending_peak": 1,
+        "planned": 10,
+        "recorded": 10,
+        "report_lag_max_ms": 2.029012,
+        "reported": 10
+      },
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "control",
+      "elapsed_s": 0.013553182128816843,
+      "final_loss": 0.04002581909298897,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1451,
+        "pending_peak": 1,
+        "planned": 6,
+        "recorded": 6,
+        "report_lag_max_ms": 2.087679,
+        "reported": 6
+      },
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "control",
+      "elapsed_s": 0.013660619966685772,
+      "final_loss": 0.04034050554037094,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1451,
+        "pending_peak": 1,
+        "planned": 6,
+        "recorded": 6,
+        "report_lag_max_ms": 2.370756,
+        "reported": 6
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "compute_slow",
+      "elapsed_s": 0.016829777974635363,
+      "final_loss": 0.04002581909298897,
+      "injection": "compute_slow",
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1481,
+        "pending_peak": 1,
+        "planned": 6,
+        "recorded": 6,
+        "report_lag_max_ms": 2.121815,
+        "reported": 6
+      },
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "compute_slow",
+      "elapsed_s": 0.016638402827084064,
+      "final_loss": 0.04034050554037094,
+      "injection": "compute_slow",
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1476,
+        "pending_peak": 2,
+        "planned": 6,
+        "recorded": 6,
+        "report_lag_max_ms": 5.71935,
+        "reported": 6
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "load_skew",
+      "elapsed_s": 0.013456670101732016,
+      "final_loss": 0.040340572595596313,
+      "injection": "load_skew",
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1464,
+        "pending_peak": 1,
+        "planned": 6,
+        "recorded": 6,
+        "report_lag_max_ms": 2.120497,
+        "reported": 6
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "load_skew",
+      "elapsed_s": 0.01357972389087081,
+      "final_loss": 0.03882673382759094,
+      "injection": "load_skew",
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1461,
+        "pending_peak": 1,
+        "planned": 6,
+        "recorded": 6,
+        "report_lag_max_ms": 2.094592,
+        "reported": 6
+      },
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "host_stall",
+      "elapsed_s": 0.09126479597762227,
+      "final_loss": 0.04034050554037094,
+      "injection": "host_stall",
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1472,
+        "pending_peak": 5,
+        "planned": 6,
+        "recorded": 6,
+        "report_lag_max_ms": 74.305482,
+        "reported": 6
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "host_stall",
+      "elapsed_s": 0.09061809303238988,
+      "final_loss": 0.04002581909298897,
+      "injection": "host_stall",
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1467,
+        "pending_peak": 1,
+        "planned": 6,
+        "recorded": 6,
+        "report_lag_max_ms": 8.810921,
+        "reported": 6
+      },
+      "rank": 1,
+      "type": "run"
+    }
+  ],
+  "scope": "standalone mechanism; not a Relax recipe or official acceptance",
+  "telemetry": {
+    "dropped_pool": 0,
+    "dropped_queue": 0,
+    "max_report_lag_ms": 74.305482,
+    "payload_bytes": 16621,
+    "planned": 68,
+    "reported": 68
+  }
+}

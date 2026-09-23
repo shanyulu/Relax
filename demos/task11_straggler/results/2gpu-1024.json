@@ -1,0 +1,470 @@
+{
+  "config": {
+    "batch": 48,
+    "dim": 1024,
+    "gpus": 2,
+    "injection_steps": 32,
+    "interval": 4,
+    "pairs": 4,
+    "steps": 160,
+    "warmup": 12
+  },
+  "diagnosis": {
+    "alerts": [],
+    "complete_windows": 192,
+    "incomplete_windows": 0,
+    "uncertain": [
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 0
+      },
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 4
+      },
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 8
+      },
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 12
+      },
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 16
+      },
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 20
+      },
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 24
+      },
+      {
+        "case": "load_skew",
+        "reason": "workload_imbalance",
+        "step": 28
+      }
+    ]
+  },
+  "environment": {
+    "gpu": [
+      "NVIDIA GeForce RTX 4090",
+      "NVIDIA GeForce RTX 4090"
+    ],
+    "python": "3.12.3",
+    "torch": "2.8.0+cu128",
+    "world_size": 2
+  },
+  "overhead_median_pct": 0.4458422913281024,
+  "overhead_range_pct": [
+    0.37089554668878755,
+    0.49208044914863525
+  ],
+  "paired_trials": [
+    {
+      "off_s": 0.20965718990191817,
+      "on_s": 0.21043479908257723,
+      "overhead_pct": 0.37089554668878755,
+      "pair": 0
+    },
+    {
+      "off_s": 0.20875191874802113,
+      "on_s": 0.20977914612740278,
+      "overhead_pct": 0.49208044914863525,
+      "pair": 1
+    },
+    {
+      "off_s": 0.2085055192001164,
+      "on_s": 0.20950490469112992,
+      "overhead_pct": 0.4793088906458909,
+      "pair": 2
+    },
+    {
+      "off_s": 0.20851935865357518,
+      "on_s": 0.20937924180179834,
+      "overhead_pct": 0.4123756920103139,
+      "pair": 3
+    }
+  ],
+  "runs": [
+    {
+      "case": "bench_0_off",
+      "elapsed_s": 0.20965718990191817,
+      "final_loss": 0.03906002640724182,
+      "injection": null,
+      "probe": null,
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "bench_0_off",
+      "elapsed_s": 0.20959672704339027,
+      "final_loss": 0.039086684584617615,
+      "injection": null,
+      "probe": null,
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "bench_0_on",
+      "elapsed_s": 0.21043479908257723,
+      "final_loss": 0.03906002640724182,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 9880,
+        "pending_peak": 11,
+        "planned": 40,
+        "recorded": 40,
+        "report_lag_max_ms": 53.804533,
+        "reported": 40
+      },
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "bench_0_on",
+      "elapsed_s": 0.21043207217007875,
+      "final_loss": 0.039086684584617615,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 9877,
+        "pending_peak": 11,
+        "planned": 40,
+        "recorded": 40,
+        "report_lag_max_ms": 53.809586,
+        "reported": 40
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "bench_1_on",
+      "elapsed_s": 0.20942713785916567,
+      "final_loss": 0.03906002640724182,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 9884,
+        "pending_peak": 11,
+        "planned": 40,
+        "recorded": 40,
+        "report_lag_max_ms": 53.76772,
+        "reported": 40
+      },
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "bench_1_on",
+      "elapsed_s": 0.20977914612740278,
+      "final_loss": 0.039086684584617615,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 9882,
+        "pending_peak": 10,
+        "planned": 40,
+        "recorded": 40,
+        "report_lag_max_ms": 52.047119,
+        "reported": 40
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "bench_1_off",
+      "elapsed_s": 0.20875191874802113,
+      "final_loss": 0.03906002640724182,
+      "injection": null,
+      "probe": null,
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "bench_1_off",
+      "elapsed_s": 0.20870254561305046,
+      "final_loss": 0.039086684584617615,
+      "injection": null,
+      "probe": null,
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "bench_2_off",
+      "elapsed_s": 0.2085055192001164,
+      "final_loss": 0.03906002640724182,
+      "injection": null,
+      "probe": null,
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "bench_2_off",
+      "elapsed_s": 0.20849486393854022,
+      "final_loss": 0.039086684584617615,
+      "injection": null,
+      "probe": null,
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "bench_2_on",
+      "elapsed_s": 0.20910768816247582,
+      "final_loss": 0.03906002640724182,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 9882,
+        "pending_peak": 11,
+        "planned": 40,
+        "recorded": 40,
+        "report_lag_max_ms": 53.656661,
+        "reported": 40
+      },
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "bench_2_on",
+      "elapsed_s": 0.20950490469112992,
+      "final_loss": 0.039086684584617615,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 9881,
+        "pending_peak": 11,
+        "planned": 40,
+        "recorded": 40,
+        "report_lag_max_ms": 53.617495,
+        "reported": 40
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "bench_3_on",
+      "elapsed_s": 0.20932068768888712,
+      "final_loss": 0.039086684584617615,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 9883,
+        "pending_peak": 11,
+        "planned": 40,
+        "recorded": 40,
+        "report_lag_max_ms": 53.779354,
+        "reported": 40
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "bench_3_on",
+      "elapsed_s": 0.20937924180179834,
+      "final_loss": 0.03906002640724182,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 9878,
+        "pending_peak": 11,
+        "planned": 40,
+        "recorded": 40,
+        "report_lag_max_ms": 53.59399,
+        "reported": 40
+      },
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "bench_3_off",
+      "elapsed_s": 0.2084953528828919,
+      "final_loss": 0.03906002640724182,
+      "injection": null,
+      "probe": null,
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "bench_3_off",
+      "elapsed_s": 0.20851935865357518,
+      "final_loss": 0.039086684584617615,
+      "injection": null,
+      "probe": null,
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "control",
+      "elapsed_s": 0.042845678050071,
+      "final_loss": 0.039096370339393616,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1940,
+        "pending_peak": 3,
+        "planned": 8,
+        "recorded": 8,
+        "report_lag_max_ms": 13.077845,
+        "reported": 8
+      },
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "control",
+      "elapsed_s": 0.043031911831349134,
+      "final_loss": 0.039123520255088806,
+      "injection": null,
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1941,
+        "pending_peak": 2,
+        "planned": 8,
+        "recorded": 8,
+        "report_lag_max_ms": 7.271456,
+        "reported": 8
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "compute_slow",
+      "elapsed_s": 0.052827971056103706,
+      "final_loss": 0.039096370339393616,
+      "injection": "compute_slow",
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1976,
+        "pending_peak": 2,
+        "planned": 8,
+        "recorded": 8,
+        "report_lag_max_ms": 8.296982,
+        "reported": 8
+      },
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "compute_slow",
+      "elapsed_s": 0.05312189692631364,
+      "final_loss": 0.039123520255088806,
+      "injection": "compute_slow",
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1980,
+        "pending_peak": 3,
+        "planned": 8,
+        "recorded": 8,
+        "report_lag_max_ms": 15.850426,
+        "reported": 8
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "load_skew",
+      "elapsed_s": 0.044475759845227,
+      "final_loss": 0.03884345293045044,
+      "injection": "load_skew",
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1956,
+        "pending_peak": 3,
+        "planned": 8,
+        "recorded": 8,
+        "report_lag_max_ms": 12.02491,
+        "reported": 8
+      },
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "load_skew",
+      "elapsed_s": 0.044163743034005165,
+      "final_loss": 0.03912355378270149,
+      "injection": "load_skew",
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1955,
+        "pending_peak": 3,
+        "planned": 8,
+        "recorded": 8,
+        "report_lag_max_ms": 12.841754,
+        "reported": 8
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "host_stall",
+      "elapsed_s": 0.23850851505994797,
+      "final_loss": 0.039096370339393616,
+      "injection": "host_stall",
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1961,
+        "pending_peak": 1,
+        "planned": 8,
+        "recorded": 8,
+        "report_lag_max_ms": 9.270436,
+        "reported": 8
+      },
+      "rank": 1,
+      "type": "run"
+    },
+    {
+      "case": "host_stall",
+      "elapsed_s": 0.2387634301558137,
+      "final_loss": 0.039123520255088806,
+      "injection": "host_stall",
+      "probe": {
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "payload_bytes": 1971,
+        "pending_peak": 7,
+        "planned": 8,
+        "recorded": 8,
+        "report_lag_max_ms": 190.589778,
+        "reported": 8
+      },
+      "rank": 0,
+      "type": "run"
+    }
+  ],
+  "scope": "standalone mechanism; not a Relax recipe or official acceptance",
+  "telemetry": {
+    "dropped_pool": 0,
+    "dropped_queue": 0,
+    "max_report_lag_ms": 190.589778,
+    "payload_bytes": 94727,
+    "planned": 384,
+    "reported": 384
+  }
+}
