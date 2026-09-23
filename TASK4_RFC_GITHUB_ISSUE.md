@@ -4,7 +4,7 @@
 
 为 GenRM 增加动态副本、Autoscaler 和 TUI。**健康后接流量，排空后释放资源，全程不做权重同步。** 本文是设计提案；下方 demo 只验证契约回放，真实 Relax 集成与 GPU 验收仍未完成。
 
-![GenRM 弹性扩缩容：控制、打分与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/cover.png)
+![GenRM 弹性扩缩容：控制、打分与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/cover.jpg)
 
 ## 先确定 Task 3 边界
 
@@ -60,17 +60,17 @@ Gateway 和 direct client 共用 admission 检查。旧路由的迟到请求只�
 <details>
 <summary>扩容与缩容流程图</summary>
 
-![扩容流程：独占 PG、初始化、健康检查后发布；失败清理候选](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/scale-out.png)
+![扩容流程：独占 PG、初始化、健康检查后发布；失败清理候选](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/scale-out.jpg)
 
-![缩容流程：关入口、排空、停止 workers、释放 PG；超时保留资源](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/scale-in.png)
+![缩容流程：关入口、排空、停止 workers、释放 PG；超时保留资源](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/scale-in.jpg)
 
 </details>
 
 ## 可运行契约 demo
 
-[交互回放（下载后打开）](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task4_genrm/results/contract-demo.html) · [预览图](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task4_genrm/results/contract-demo-preview.png) · [事件记录](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task4_genrm/results/contract-demo.json) · [源码与测试](https://github.com/shanyulu/Relax/tree/codex/rfc-visuals/demos/task4_genrm)
+[交互回放（下载后打开）](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task4_genrm/results/contract-demo.html) · [预览图](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task4_genrm/results/contract-demo-preview.jpg) · [事件记录](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task4_genrm/results/contract-demo.json) · [源码与测试](https://github.com/shanyulu/Relax/tree/codex/rfc-visuals/demos/task4_genrm)
 
-![Task 4 契约回放预览：路由、在途请求与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/contract-demo-preview.png)
+![Task 4 契约回放预览：路由、在途请求与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/contract-demo-preview.jpg)
 
 模拟 `1→2→1`、在途 `409`、未知请求 `404`、健康检查失败、迟到 dispatch、后端未排空、PG 清理失败，以及显式 retry/reconcile。页面展示每一步的路由资格、在途请求和 PG owner；它是契约回放，不代表 Task 3 已集成或真实 GPU 验收。GitHub 的 `blob` 页面只显示源码，需下载 HTML 后在浏览器打开。
 

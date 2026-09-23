@@ -4,7 +4,7 @@
 
 给训练补一份持续更新的 **rank × 阶段耗时**：看见哪张卡、哪个阶段持续变慢，并保留工作量和对照组。方案是抽样记录 CUDA Event、后台读数上报；不改训练调度，不凭耗时直接判定硬件故障。**当前 demo 是独立机制验证，不是 Relax 集成或官方验收结果。**
 
-![训练记录、后台回收、平台比较的边界](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/cover.png)
+![训练记录、后台回收、平台比较的边界](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/cover.jpg)
 
 ## 做什么
 
@@ -33,9 +33,9 @@
 <details>
 <summary>采集流程与告警规则</summary>
 
-![采样步记录 Event，后台查询完成后回收](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/async-sampling.png)
+![采样步记录 Event，后台查询完成后回收](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/async-sampling.jpg)
 
-![先核对等价副本和工作量，再判断持续异常](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/diagnosis.png)
+![先核对等价副本和工作量，再判断持续异常](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/diagnosis.jpg)
 
 </details>
 
@@ -50,9 +50,9 @@
 | [v4 双卡实验](https://github.com/shanyulu/Relax/tree/7718e036c7144b68a01a8b608a4b463eb8e16ddd/demos/task11_straggler) | 两轮开销中位数 0.116% / 0.146%；off/off 对照仍有系统偏移，不能据此认定 <0.5% |
 | 采集与诊断 | 两轮各接收 8064/8064 样本；最终 loss、参数一致；约 1.8× 前向变慢均在 step 16 定位 rank 1 |
 | [当前版本](https://github.com/shanyulu/Relax/tree/codex/rfc-visuals/demos/task11_straggler) | 19 项测试通过；生命周期 smoke 单对开销 0.527%；host stall 出现 backward 区间告警，不能据此认定 backward 是根因 |
-| [恢复场景交互回放（下载后打开）](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task11_straggler/results/2gpu-recovery-demo.html) · [预览图](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task11_straggler/results/2gpu-recovery-demo-preview.png) | 224/224 样本接收；rank 1 只在中段变慢，随后回到 peer 范围；丢一条报告的按钮是接收端反事实回放 |
+| [恢复场景交互回放（下载后打开）](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task11_straggler/results/2gpu-recovery-demo.html) · [预览图](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task11_straggler/results/2gpu-recovery-demo-preview.jpg) | 224/224 样本接收；rank 1 只在中段变慢，随后回到 peer 范围；丢一条报告的按钮是接收端反事实回放 |
 
-![Task 11 交互回放预览：异常、恢复与 rank × 阶段轨迹](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/2gpu-recovery-demo-preview.png)
+![Task 11 交互回放预览：异常、恢复与 rank × 阶段轨迹](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/2gpu-recovery-demo-preview.jpg)
 
 **尚未完成官方验收。** 真实 recipe、MetricsService 和通算 overlap 均未验证。当前故障隔离只覆盖启动后的后台读数与传输；初始化和 Event.record 异常仍会抛出，不能承诺所有观测故障都不影响训练。
 
