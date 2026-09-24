@@ -105,7 +105,7 @@ reconcile 延续原 operation：不产生新 request ID，成功后原 operation
 
 ![Task 4 契约回放预览：路由、在途请求与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task4_genrm/results/contract-demo-preview.jpg)
 
-回放覆盖 `1→2→1`、在途 `409`、未知请求 `404`、健康检查失败、迟到 dispatch、后端未排空、PG 清理失败和 retry/reconcile。页面逐步展示路由资格、在途请求与 PG owner。它使用 mock 对象验证提案中的状态和返回值；真实接入、打分与 GPU 回收还要在 Relax 中验收。HTML 需下载后用浏览器打开。
+回放覆盖 `1→2→1`、在途 `409`、未知请求 `404`、健康检查失败、迟到 dispatch、后端未排空、PG 清理失败、retry/reconcile 与 keyed NOOP 重放。页面逐步展示路由资格、在途请求与 PG owner。它使用 mock 对象验证提案中的状态和返回值；真实接入、打分与 GPU 回收还要在 Relax 中验收。HTML 需下载后用浏览器打开。
 
 ## Autoscaler 与监控
 
