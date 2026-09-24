@@ -29,6 +29,7 @@ class ContractDemo:
         self.initial_capacity = 1
         self.pg_live = {"training-pg"}
         self.requests: dict[str, dict[str, Any]] = {}
+        self.idempotency: dict[tuple[str, str], tuple[int, str]] = {}
         self.active_request: str | None = None
         self.paused = False
         self.next_id = 1
@@ -47,20 +48,37 @@ class ContractDemo:
         return sum(r.published and r.admission_open for r in self.replicas.values())
 
     def _record(self, kind: str, message: str, **extra: Any) -> None:
-        self.events.append({
-            "kind": kind, "message": message, "current": self.current, "ready": self.ready,
-            "published": sorted(r.replica_id for r in self.replicas.values() if r.published),
-            "inflight": {r.replica_id: sorted(r.inflight) for r in self.replicas.values() if r.inflight},
-            "live_pgs": sorted(self.pg_live), "paused": self.paused, **extra,
-        })
+        self.events.append(
+            {
+                "kind": kind,
+                "message": message,
+                "current": self.current,
+                "ready": self.ready,
+                "published": sorted(r.replica_id for r in self.replicas.values() if r.published),
+                "inflight": {r.replica_id: sorted(r.inflight) for r in self.replicas.values() if r.inflight},
+                "live_pgs": sorted(self.pg_live),
+                "paused": self.paused,
+                **extra,
+            }
+        )
 
-    def request(self, direction: str, target: Any) -> dict[str, Any]:
+    def request(self, direction: str, target: Any, *, idempotency_key: str | None = None) -> dict[str, Any]:
         if direction not in ("out", "in"):
             raise ValueError("direction must be 'out' or 'in'")
         if isinstance(target, bool) or not isinstance(target, int):
             return {"http": 422, "status": "INVALID_TYPE"}
         if target < self.initial_capacity or (direction == "in" and target < self.initial_capacity):
             return {"http": 400, "status": "INVALID_RANGE"}
+        if idempotency_key is not None:
+            existing = self.idempotency.get((direction, idempotency_key))
+            if existing is not None:
+                existing_target, request_id = existing
+                if existing_target != target:
+                    self._record("REJECT_409", "Idempotency key was reused with a different request body")
+                    return {"http": 409, "status": "IDEMPOTENCY_CONFLICT"}
+                request = self.requests[request_id]
+                self._record("IDEMPOTENT_REPLAY", f"{request_id}: returned the original operation")
+                return {"http": 200, "status": request["status"], "request_id": request_id}
         if self.active_request or self.paused:
             self._record("REJECT_409", "Another lifecycle operation is active or cleanup is unresolved")
             return {"http": 409, "status": "CONFLICT"}
@@ -69,13 +87,21 @@ class ContractDemo:
             return {"http": 200, "status": "NOOP", "current": self.current}
         request_id = f"req-{self.next_id:02d}"
         self.next_id += 1
-        self.requests[request_id] = {"direction": direction, "target": target, "status": "PENDING"}
+        self.requests[request_id] = {
+            "direction": direction,
+            "target": target,
+            "status": "PENDING",
+            "idempotency_key": idempotency_key,
+        }
+        if idempotency_key is not None:
+            self.idempotency[(direction, idempotency_key)] = (target, request_id)
         self.active_request = request_id
         self._record("PENDING", f"{direction} to absolute target {target}", request_id=request_id)
         return {"http": 200, "status": "PENDING", "request_id": request_id}
 
     def get_status(self, request_id: str) -> dict[str, Any]:
-        """Expose the public status lookup shape, including the unknown-ID case."""
+        """Expose the public status lookup shape, including the unknown-ID
+        case."""
         request = self.requests.get(request_id)
         if request is None:
             self._record("NOT_FOUND", f"{request_id}: request ID is unknown")
@@ -186,10 +212,9 @@ class ContractDemo:
         self.active_request = None
         self._record("DRAIN_FAILED", f"{candidate.replica_id}: retained workers and PG; route remains closed")
 
-    def retry_scale_in(
-        self, request_id: str, *, backend_idle: bool = True, cleanup_ok: bool = True
-    ) -> str:
-        """Resume a failed drain only after the caller explicitly retries it."""
+    def retry_scale_in(self, request_id: str, *, backend_idle: bool = True, cleanup_ok: bool = True) -> str:
+        """Resume a failed drain only after the caller explicitly retries
+        it."""
         request = self.requests.get(request_id)
         if request is None or request["direction"] != "in" or request["status"] != "FAILED":
             raise ValueError("request is not a failed scale-in operation")
@@ -201,7 +226,8 @@ class ContractDemo:
         return self.finish_scale_in(request_id, backend_idle=backend_idle, cleanup_ok=cleanup_ok)
 
     def retry_cleanup(self, request_id: str) -> str:
-        """Reconcile unpublished manager candidates left by a failed allocation."""
+        """Reconcile unpublished manager candidates left by a failed
+        allocation."""
         request = self.requests.get(request_id)
         if request is None or request["direction"] != "out" or request["status"] not in {"FAILED", "PARTIAL"}:
             raise ValueError("request is not waiting for allocation cleanup")
@@ -229,7 +255,9 @@ class ContractDemo:
 
 def scripted_scenarios() -> dict[str, Any]:
     normal = ContractDemo()
-    out = normal.request("out", 2)
+    out = normal.request("out", 2, idempotency_key="scale-to-two")
+    replay = normal.request("out", 2, idempotency_key="scale-to-two")
+    key_conflict = normal.request("out", 3, idempotency_key="scale-to-two")
     conflict = normal.request("out", 2)
     normal.scale_out(out["request_id"])
     normal.admit("genrm-1", "score-17")
@@ -276,6 +304,8 @@ def scripted_scenarios() -> dict[str, Any]:
         },
         "checks": {
             "inflight_conflict": conflict["http"] == 409,
+            "idempotent_replay": replay.get("request_id") == out["request_id"],
+            "idempotency_key_conflict": key_conflict["http"] == 409,
             "late_dispatch_rejected": stale is False,
             "late_health_ack_ignored": late_ack is False,
             "accepted_request_drains": waiting == "DRAINING" and not normal.replicas["genrm-1"].inflight,
@@ -283,7 +313,8 @@ def scripted_scenarios() -> dict[str, Any]:
             "initial_protected": protected["http"] == 400 and "training-pg" in normal.pg_live,
             "cleanup_failure_blocks_new_scale": after_failure["http"] == 409,
             "failed_drain_keeps_pg": failed_drain_keeps_pg,
-            "cleanup_retry_reconciles": cleanup_retry == "RECONCILED" and "manager-pg-1" not in cleanup_failure.pg_live,
+            "cleanup_retry_reconciles": cleanup_retry == "RECONCILED"
+            and "manager-pg-1" not in cleanup_failure.pg_live,
             "drain_retry_completes": drain_retry == "COMPLETED" and not busy_backend.paused,
             "unknown_request_404": unknown_status["http"] == 404,
             "final_capacity": [normal.current, normal.ready],
