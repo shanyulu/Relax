@@ -16,10 +16,31 @@ import asyncio
 import unittest
 from types import SimpleNamespace
 
+import ray
+
 from tests.utils._dep_stubs import import_genrm_component
 
 
 genrm_module = import_genrm_component()
+
+# The /metrics capacity query goes through ray.get with plain dicts from the
+# SimpleNamespace manager fakes; a real ray.get would spin up a local Ray
+# instance to reject them. Pass ray.get through for this module (same
+# direct-attribute pattern as test_genrm_scale_watcher.py).
+_orig_ray_get = ray.get
+
+
+def _passthrough_ray_get(ref, timeout=None, **kwargs):
+    return ref
+
+
+def setUpModule():
+    ray.get = _passthrough_ray_get
+
+
+def tearDownModule():
+    ray.get = _orig_ray_get
+
 
 # Deployment-unwrapped class (the @serve.deployment wrapper stores it).
 _GenRM = genrm_module.GenRM.func_or_class
@@ -202,6 +223,46 @@ class TestEnginesEndpoint(unittest.TestCase):
         self.assertEqual(response.status, "PENDING")
         status = replica._scale_registry.get_status("scale_out", response.request_id)
         self.assertEqual(status["model_name"], "quality")
+
+
+class TestMetricsDynamicCapacity(unittest.TestCase):
+    """/metrics must report the manager's live capacity, not the startup
+    spec: after an elastic scale-out the engine count changes at runtime."""
+
+    _SPEC = {"model_path": "/model", "num_gpus": 1, "num_gpus_per_engine": 1}
+
+    def _replica_with_spec(self, manager):
+        replica = _replica(manager=manager)
+        replica.instance_specs = {"__default__": dict(self._SPEC)}
+        return replica
+
+    def test_metrics_reflects_manager_capacity(self):
+        capacity = {"current": 2, "ready": 2, "occupied": 2, "pending_cleanup": 1}
+        manager = _fake_manager({"get_engine_capacity": lambda: capacity})
+        out = _run(self._replica_with_spec(manager).metrics())
+        self.assertEqual(out["num_engines"], 2)  # live current, not startup spec (1)
+        self.assertEqual(out["ready_engines"], 2)
+        self.assertEqual(out["occupied"], 2)
+        self.assertEqual(out["pending_cleanup"], 1)
+        self.assertNotIn("capacity_error", out)
+
+    def test_metrics_falls_back_to_startup_count_on_query_failure(self):
+        def boom():
+            raise RuntimeError("manager unreachable")
+
+        manager = _fake_manager({"get_engine_capacity": boom})
+        out = _run(self._replica_with_spec(manager).metrics())
+        self.assertEqual(out["num_engines"], 1)  # startup spec fallback
+        self.assertIn("capacity_error", out)
+        # No fabricated live numbers alongside the fallback.
+        self.assertNotIn("ready_engines", out)
+        self.assertNotIn("pending_cleanup", out)
+
+    def test_metrics_without_capacity_hook_keeps_startup_count(self):
+        replica = self._replica_with_spec(_fake_manager())  # no get_engine_capacity hook
+        out = _run(replica.metrics())
+        self.assertEqual(out["num_engines"], 1)
+        self.assertNotIn("capacity_error", out)
 
 
 if __name__ == "__main__":

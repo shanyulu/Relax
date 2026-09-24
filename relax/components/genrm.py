@@ -469,15 +469,37 @@ class GenRM(Base):
 
     @app.get("/metrics")
     async def metrics(self) -> dict:
-        """Metrics endpoint; reports per-instance stats."""
-        instances = {
-            key: {
+        """Metrics endpoint; reports per-instance stats with live capacity.
+
+        ``num_engines`` follows the manager's actual capacity (elastic
+        scaling changes it after startup); ``ready_engines``/``occupied``/
+        ``pending_cleanup`` use the same accounting as ``/engines``. When the
+        capacity query fails, the startup count is kept and ``capacity_error``
+        is surfaced instead of fabricating numbers."""
+        instances: Dict[str, Any] = {}
+        for key, spec in self.instance_specs.items():
+            entry = {
                 "model_path": spec["model_path"],
                 "num_gpus": spec["num_gpus"],
+                "num_gpus_per_engine": spec["num_gpus_per_engine"],
                 "num_engines": spec["num_gpus"] // spec["num_gpus_per_engine"],
             }
-            for key, spec in self.instance_specs.items()
-        }
+            manager = self.genrm_managers.get(key)
+            if manager is not None and getattr(manager, "get_engine_capacity", None) is not None:
+                try:
+                    capacity = ray.get(manager.get_engine_capacity.remote())
+                    entry.update(
+                        {
+                            "num_engines": int(capacity.get("current", entry["num_engines"])),
+                            "ready_engines": int(capacity.get("ready", len(self._genrm_engine_list(key)))),
+                            "occupied": int(capacity.get("occupied", entry["num_engines"])),
+                            "pending_cleanup": int(capacity.get("pending_cleanup", 0)),
+                        }
+                    )
+                except Exception as e:  # noqa: BLE001
+                    self._logger.warning(f"GenRM metrics capacity query failed for '{key}': {e}")
+                    entry["capacity_error"] = str(e)
+            instances[key] = entry
         if list(instances) == [_DEFAULT_INSTANCE_KEY]:
             return {"service": "genrm", **instances[_DEFAULT_INSTANCE_KEY]}
         return {"service": "genrm", "instances": instances}
