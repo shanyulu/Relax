@@ -18,15 +18,16 @@ from typing import Any
 
 from tests.utils._dep_stubs import install_web_framework_stubs
 
+
 install_web_framework_stubs()  # relax.utils.autoscaler's package __init__ imports fastapi
 
 from relax.utils.autoscaler.config import AutoscalerConfig  # noqa: E402
 from relax.utils.autoscaler.metrics_collector import (  # noqa: E402
-    AggregatedMetrics,
     EngineMetrics,
     MetricFieldValidity,
     MetricsCollector,
 )
+
 
 _FULL_SCRAPE = "\n".join(
     [

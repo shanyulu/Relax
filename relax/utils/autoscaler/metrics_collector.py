@@ -12,7 +12,7 @@ import re
 import time
 from collections import deque
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any, Callable, Dict, List, NamedTuple, Optional
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, NamedTuple, Optional, Tuple
 
 from relax.utils.logging_utils import get_logger
 
@@ -70,6 +70,13 @@ _HISTOGRAM_FIELD_SOURCES: Dict[str, str] = {
 }
 
 _ALL_VALIDITY_FIELDS = tuple(_GAUGE_FIELD_SOURCES) + tuple(_HISTOGRAM_FIELD_SOURCES)
+
+# Fields whose series are REQUIRED before an engine may be judged idle/low-load
+# by the scale-in decision path: they back avg_token_usage / total_queue_reqs /
+# throughput_variance, the three scale-in conditions. A scrape that answers
+# HTTP 200 but omits any of these series leaves the engine "unknown" -- its
+# zero-filled values are placeholders, never evidence of idleness.
+CRITICAL_METRICS_FIELDS: Tuple[str, ...] = ("token_usage", "num_queue_reqs", "gen_throughput")
 
 
 @dataclass
@@ -162,6 +169,21 @@ class EngineMetrics:
                 return False
         return True
 
+    def has_critical_metrics(self) -> bool:
+        """Whether every critical field was validly observed for this engine.
+
+        Critical fields (``CRITICAL_METRICS_FIELDS``) are the series the
+        scale-in (idle/low-load) decision path consumes. An engine answering
+        HTTP 200 but missing one of them is "unknown": its zero-filled values
+        must not be read as real idleness. Legacy constructions without
+        ``field_validity`` count as complete so existing consumers keep their
+        behavior.
+
+        Returns:
+            True if all critical fields are valid for condition evaluation.
+        """
+        return all(self.is_field_valid(name) for name in CRITICAL_METRICS_FIELDS)
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization."""
         return {
@@ -216,6 +238,11 @@ class AggregatedMetrics:
         coverage: Fraction of active engines that successfully reported metrics
             (num_reporting / num_active_candidates), in [0.0, 1.0]. Used by the
             decision engine to gate scaling when metrics are only partially available.
+        unknown_engines: Engines that answered HTTP 200 but were missing at
+            least one critical series (token usage / queue depth / throughput).
+            Their zero-filled values are excluded from the load aggregates and
+            the decision engine must treat them as "unknown" -- never as idle --
+            when judging scale-in.
         timestamp: Unix timestamp of aggregation.
     """
 
@@ -241,6 +268,10 @@ class AggregatedMetrics:
     # (present + sampled). Lets consumers distinguish "field says 0" from
     # "field was never exposed" without changing the numeric aggregation.
     field_coverage: Dict[str, float] = field(default_factory=dict)
+    # Engines whose scrape answered HTTP 200 but missed at least one critical
+    # series. Excluded from the load aggregates above; the decision engine
+    # freezes scale-in while this list is non-empty (missing != idle).
+    unknown_engines: List[str] = field(default_factory=list)
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization."""
@@ -260,6 +291,7 @@ class AggregatedMetrics:
             "is_empty": self.is_empty,
             "coverage": self.coverage,
             "field_coverage": dict(self.field_coverage),
+            "unknown_engines": list(self.unknown_engines),
             "timestamp": self.timestamp,
         }
 
@@ -658,12 +690,30 @@ class MetricsCollector:
         if not latest:
             return AggregatedMetrics(is_empty=True, coverage=0.0)
 
-        # Aggregate across engines
+        # Aggregate across engines.
         num_engines = len(latest)
-        total_queue = sum(m.num_queue_reqs for m in latest.values())
-        total_running = sum(m.num_running_reqs for m in latest.values())
-        total_throughput = sum(m.gen_throughput for m in latest.values())
-        avg_token_usage = sum(m.token_usage for m in latest.values()) / num_engines if num_engines > 0 else 0.0
+
+        # Engines whose scrape was missing a critical series are "unknown":
+        # their zero-filled token_usage / queue / throughput values are missing
+        # data, not real idleness, so they are excluded from every load
+        # aggregate the scale-in (idle/low-load) decision path consumes.
+        unknown_engines = [engine_id for engine_id, m in latest.items() if not m.has_critical_metrics()]
+        known_metrics = [m for m in latest.values() if m.has_critical_metrics()]
+
+        # Aggregation denominators (capacity-ratio semantics):
+        # - avg_token_usage divides by the number of KNOWN engines only, so a
+        #   missing (zero-filled) series cannot drag the mean down and fake
+        #   "low load". When every engine is known this equals the legacy
+        #   num_engines denominator, so the healthy path is unchanged.
+        # - Load totals (queue/running/throughput) sum KNOWN engines only: an
+        #   unknown engine contributes no evidence in either direction.
+        # - num_engines and coverage keep their legacy meaning (reporting
+        #   engines over active candidates), so scale-out gates such as
+        #   queue_backlog's per-engine denominator are unchanged.
+        total_queue = sum(m.num_queue_reqs for m in known_metrics)
+        total_running = sum(m.num_running_reqs for m in known_metrics)
+        total_throughput = sum(m.gen_throughput for m in known_metrics)
+        avg_token_usage = sum(m.token_usage for m in known_metrics) / len(known_metrics) if known_metrics else 0.0
 
         # Compute max P95 latencies
         all_queue_times = [m.queue_time_p95 for m in latest.values() if m.queue_time_p95 > 0]
@@ -682,7 +732,13 @@ class MetricsCollector:
         # Compute throughput variance over time window
         throughput_variance = 0.0
         if len(self._history) >= 3:
-            throughputs = [sum(m.gen_throughput for m in h["metrics"].values()) for h in list(self._history)[-10:]]
+            # Same known-engine scope as total_throughput: a frame where an
+            # engine's critical series went missing must not inject a fake
+            # 0 tok/s sample into the variance window.
+            throughputs = [
+                sum(m.gen_throughput for m in h["metrics"].values() if m.has_critical_metrics())
+                for h in list(self._history)[-10:]
+            ]
             if throughputs:
                 mean_t = sum(throughputs) / len(throughputs)
                 if mean_t > 0:
@@ -721,6 +777,7 @@ class MetricsCollector:
             is_empty=False,
             coverage=coverage,
             field_coverage=field_coverage,
+            unknown_engines=unknown_engines,
             timestamp=time.time(),
         )
 

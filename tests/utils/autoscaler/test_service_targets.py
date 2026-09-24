@@ -12,15 +12,17 @@ Run: python -m unittest tests.utils.autoscaler.test_service_targets -v
 
 import asyncio
 import json
+import os
 import tempfile
 import unittest
-import os
 
 from tests.utils._dep_stubs import import_autoscaler_service
+
 
 svc_module = import_autoscaler_service()
 
 from relax.utils.autoscaler.config import AutoscalerConfig, ScaleOutPolicy, ServiceScalingPolicy  # noqa: E402
+
 
 _AutoscalerService = getattr(svc_module.AutoscalerService, "func_or_class", svc_module.AutoscalerService)
 _AutoscalerState = svc_module.AutoscalerState
@@ -127,6 +129,23 @@ class TestServicePolicies(unittest.TestCase):
         effective = config.get_effective_policies("genrm")
         self.assertEqual(effective.scale_out_policy.token_usage_threshold, 0.7)
         self.assertEqual(config.scale_out_policy.token_usage_threshold, 0.85)  # global untouched
+
+    def test_runtime_state_is_isolated_per_service(self):
+        config = AutoscalerConfig(
+            service_targets={"genrm": "http://genrm:8000/genrm"},
+            service_policies={"genrm": ServiceScalingPolicy(min_engines=1, max_engines=4)},
+        )
+        svc = object.__new__(_AutoscalerService)
+        svc.config = config
+        svc._services = {}
+        svc._rebuild_service_runtimes()
+        rollout = svc._services["rollout"]
+        genrm = svc._services["genrm"]
+        self.assertIsNot(rollout.state, genrm.state)
+        self.assertIsNot(rollout.metrics_collector, genrm.metrics_collector)
+        self.assertIsNot(rollout.decision_engine, genrm.decision_engine)
+        self.assertEqual(genrm.config.max_engines, 4)
+        self.assertEqual(rollout.config.max_engines, config.max_engines)
 
 
 class TestConfigValidation(unittest.TestCase):
