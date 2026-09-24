@@ -4,7 +4,7 @@
 
 目标是在训练过程中持续看到每个 rank 的阶段耗时，并指出持续变慢发生在哪个阶段。采集时保留工作量、并行位置和缺报信息，避免把数据量差异或等待同伴误报为坏卡。当前双卡 demo 验证了采集与判定机制；Relax recipe 上的开销和精度仍待实测。
 
-![训练记录、后台回收、平台比较的边界](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/cover.jpg)
+![训练记录、后台回收、平台比较的边界](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task11_straggler/results/cover.jpg)
 
 ## 做什么
 
@@ -43,7 +43,7 @@ stage_schema, workload{tokens,sequences,microbatches}, stages_ms{}, recorded_at
 
 cohort 不是全 world。比较对象必须处于相同 TP/PP/VPP/CP/EP/ETP 位置，只在对应 DP/EDP replica 轴上不同；整步 forward/backward 还要求 token、sequence 与 microbatch 数在容差内。没有至少两个等价 peer 就只保存画像，不产生慢卡结论。
 
-![TP2、PP2、DP2 示例：只比较同一分片位置的 DP 副本](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/cohort-map.svg)
+![TP2、PP2、DP2 示例：只比较同一分片位置的 DP 副本](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task11_straggler/results/cohort-map.svg)
 
 阶段语义在 schema 中固定：
 
@@ -59,9 +59,9 @@ observer 的异常边界也必须明确：初始化、Event 分配、`record/que
 <details>
 <summary>采集流程与告警规则</summary>
 
-![采样步记录 Event，后台查询完成后回收](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/async-sampling.jpg)
+![采样步记录 Event，后台查询完成后回收](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task11_straggler/results/async-sampling.jpg)
 
-![先核对等价副本和工作量，再判断持续异常](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/diagnosis.jpg)
+![先核对等价副本和工作量，再判断持续异常](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task11_straggler/results/diagnosis.jpg)
 
 </details>
 
@@ -69,27 +69,27 @@ observer 的异常边界也必须明确：初始化、Event 分配、`record/que
 
 下图由双卡 demo 的逐样本数据生成，不是平台效果稿。
 
-![实际 rank × 阶段结果视图](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/2gpu-v4-rank-view.png)
+![实际 rank × 阶段结果视图](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task11_straggler/results/2gpu-v4-rank-view.png)
 
-| 已验证                                                                                                                                                                                                                                                                               | 结果与限制                                                                                                       |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| [v4 双卡实验](https://github.com/shanyulu/Relax/tree/7718e036c7144b68a01a8b608a4b463eb8e16ddd/demos/task11_straggler)                                                                                                                                                                | 两轮开销中位数 0.116% / 0.146%；off/off 对照仍有系统偏移，不能据此认定 \<0.5%                                    |
-| 采集与诊断                                                                                                                                                                                                                                                                           | 两轮各接收 8064/8064 样本；最终 loss、参数一致；约 1.8× 前向变慢均在 step 16 定位 rank 1                         |
-| [当前版本](https://github.com/shanyulu/Relax/tree/codex/rfc-visuals/demos/task11_straggler)                                                                                                                                                                                          | 19 项测试通过；2026-09-24 用当前源码重跑生命周期 smoke，单对开销 0.321%，144/144 样本接收；单对仍不能证明 \<0.5% |
-| [恢复场景交互回放（下载后打开）](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task11_straggler/results/2gpu-recovery-demo.html) · [预览图](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task11_straggler/results/2gpu-recovery-demo-preview.jpg) | 224/224 样本接收；rank 1 只在中段变慢，随后回到 peer 范围；丢一条报告的按钮是接收端反事实回放                    |
+| 已验证                                                                                                                                                                                                                                                                                                                             | 结果与限制                                                                                                       |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| [v4 双卡实验](https://github.com/shanyulu/Relax/tree/7718e036c7144b68a01a8b608a4b463eb8e16ddd/demos/task11_straggler)                                                                                                                                                                                                              | 两轮开销中位数 0.116% / 0.146%；off/off 对照仍有系统偏移，不能据此认定 \<0.5%                                    |
+| 采集与诊断                                                                                                                                                                                                                                                                                                                         | 两轮各接收 8064/8064 样本；最终 loss、参数一致；约 1.8× 前向变慢均在 step 16 定位 rank 1                         |
+| [当前版本](https://github.com/shanyulu/Relax/tree/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task11_straggler)                                                                                                                                                                                                                 | 19 项测试通过；2026-09-24 用当前源码重跑生命周期 smoke，单对开销 0.321%，144/144 样本接收；单对仍不能证明 \<0.5% |
+| [恢复场景交互回放（下载后打开）](https://github.com/shanyulu/Relax/blob/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task11_straggler/results/2gpu-recovery-demo.html) · [预览图](https://github.com/shanyulu/Relax/blob/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task11_straggler/results/2gpu-recovery-demo-preview.jpg) | 224/224 样本接收；rank 1 只在中段变慢，随后回到 peer 范围；丢一条报告的按钮是接收端反事实回放                    |
 
-![双卡机制实验：配对开销、off/off 基线波动、计算注入与采集质量](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/2gpu-v4-comparison.png)
+![双卡机制实验：配对开销、off/off 基线波动、计算注入与采集质量](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task11_straggler/results/2gpu-v4-comparison.png)
 
 两轮的开销中位数低于 0.5%，但 off/off 对照在第二轮出现 −0.211% 偏移，幅度超过该轮的开销中位数。图中的低开销不能推出真实 Relax recipe 的验收结论。
 
-![Task 11 交互回放预览：异常、恢复与 rank × 阶段轨迹](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task11_straggler/results/2gpu-recovery-demo-preview.jpg)
+![Task 11 交互回放预览：异常、恢复与 rank × 阶段轨迹](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task11_straggler/results/2gpu-recovery-demo-preview.jpg)
 
 **尚未完成官方验收。** 真实 recipe、collector/MetricsService 和通算 overlap 均未验证。当前 demo 的初始化和 Event.record 异常仍会抛出；上文描述的是 production 接入必须满足的故障隔离契约，不把它冒充成现有证据。
 
 <details>
 <summary>实验图、复现方法与完整记录</summary>
 
-v4 每轮含 4 组 8000-step off/on 与 4 组 off/off，每次约 10.3–10.4 秒，每 8 步采样。置信区间、对照偏移、版本对应关系和历史试次见[证据记录](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task11_straggler/EVIDENCE.md)。v4 性能数据不代表后续修订版本。
+v4 每轮含 4 组 8000-step off/on 与 4 组 off/off，每次约 10.3–10.4 秒，每 8 步采样。置信区间、对照偏移、版本对应关系和历史试次见[证据记录](https://github.com/shanyulu/Relax/blob/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task11_straggler/EVIDENCE.md)。v4 性能数据不代表后续修订版本。
 
 </details>
 

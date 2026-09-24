@@ -4,7 +4,7 @@
 
 目标是在训练持续打分时，让 GenRM 从 1 个副本扩到 2 个，再缩回 1 个。新副本健康后才接流量；旧副本完成已接收的请求后才释放 GPU。手动 API 和 Autoscaler 使用同一套生命周期。GenRM 加载的是冻结模型，扩容不做权重同步。
 
-![GenRM 弹性扩缩容：控制、打分与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/cover.jpg)
+![GenRM 弹性扩缩容：控制、打分与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task4_genrm/results/cover.jpg)
 
 ## 先确定 Task 3 边界
 
@@ -71,24 +71,24 @@ Gateway 和 direct client 最终都只访问 Task 3 发布的受控 ingress，�
 
 旧路由请求只有在**明确未被 ingress 接收**时才能有界重选；连接已建立、响应超时或结果未知时不自动重放。drain 完成要求 request leases 归零，并由后端确认没有已接收任务；Prometheus 的 running/queue 只用于观测和交叉检查，不能单独授权回收。
 
-![缩容接收边界：先取得租约的请求完成，关闭后的请求被拒绝；双重排空确认后才释放 GPU](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/drain-fence.svg)
+![缩容接收边界：先取得租约的请求完成，关闭后的请求被拒绝；双重排空确认后才释放 GPU](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task4_genrm/results/drain-fence.svg)
 
 一次缩容按 newest-first **逐副本**执行：前一个副本确认释放后才处理下一个，避免同时摘除过多可用容量。若目标需要移除多个副本而中途失败，已释放副本不回滚，未选择副本保持 ACTIVE；operation 为 FAILED，返回实际容量和固定 victim 列表。失败副本保持不可路由并暂停该模型扩缩，只能通过对应 reconcile 接口继续，不能重新选 victim，也不能被 recovery 拉回。
 
 <details>
 <summary>扩容与缩容流程图</summary>
 
-![扩容流程：独占 PG、初始化、健康检查后发布；失败清理候选](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/scale-out.jpg)
+![扩容流程：独占 PG、初始化、健康检查后发布；失败清理候选](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task4_genrm/results/scale-out.jpg)
 
-![缩容流程：关入口、排空、停止 workers、释放 PG；超时保留资源](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/scale-in.jpg)
+![缩容流程：关入口、排空、停止 workers、释放 PG；超时保留资源](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task4_genrm/results/scale-in.jpg)
 
 </details>
 
 ## 可运行契约 demo
 
-[交互回放（下载后打开）](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task4_genrm/results/contract-demo.html) · [预览图](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task4_genrm/results/contract-demo-preview.jpg) · [事件记录](https://github.com/shanyulu/Relax/blob/codex/rfc-visuals/demos/task4_genrm/results/contract-demo.json) · [源码与测试](https://github.com/shanyulu/Relax/tree/codex/rfc-visuals/demos/task4_genrm)
+[交互回放（下载后打开）](https://github.com/shanyulu/Relax/blob/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task4_genrm/results/contract-demo.html) · [预览图](https://github.com/shanyulu/Relax/blob/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task4_genrm/results/contract-demo-preview.jpg) · [事件记录](https://github.com/shanyulu/Relax/blob/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task4_genrm/results/contract-demo.json) · [源码与测试](https://github.com/shanyulu/Relax/tree/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task4_genrm)
 
-![Task 4 契约回放预览：路由、在途请求与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/codex/rfc-visuals/demos/task4_genrm/results/contract-demo-preview.jpg)
+![Task 4 契约回放预览：路由、在途请求与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task4_genrm/results/contract-demo-preview.jpg)
 
 回放覆盖 `1→2→1`、在途 `409`、未知请求 `404`、健康检查失败、迟到 dispatch、后端未排空、PG 清理失败和 retry/reconcile。页面逐步展示路由资格、在途请求与 PG owner。它使用 mock 对象验证提案中的状态和返回值；真实接入、打分与 GPU 回收还要在 Relax 中验收。HTML 需下载后用浏览器打开。
 
