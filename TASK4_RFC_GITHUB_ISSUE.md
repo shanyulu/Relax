@@ -133,14 +133,14 @@ reconcile 延续原 operation：不产生新 request ID，成功后原 operation
 
 ## 接入路径
 
-| 改动点                                         | 现状（main `353ea7ce`）                     | 拟新增                                                                    |
-| ---------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------- |
-| `relax/components/genrm.py`                    | 只有 generate/health/metrics/onload/offload | `/genrm/scale_out`、`/genrm/scale_in`、`/genrm/engines` 与状态查询，复用 `ScaleOutStatus`/`ScaleInStatus` |
-| `relax/utils/autoscaler/autoscaler_service.py` | 仅轮询单个 `rollout_service_url`            | 按服务配置目标与 GenRM 独立阈值；终态判定沿用现有集合                    |
-| `relax/utils/autoscaler/metrics_collector.py`  | HTTP 200 但 series 缺失时按 0 填充          | 逐字段 validity（`present/observed_at/sample_count`）                     |
-| Task 3 ingress（上游依赖）                     | 两候选 PR 均未合入                          | admission 关闭不取消已接收请求、drain fence                               |
+| 改动点                                         | main `353ea7ce` 现状                       | [分支已实现](https://github.com/shanyulu/Relax/tree/601ee05ce5873aa15d408dfeff2070771f1b567c) `601ee05` |
+| ---------------------------------------------- | ------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `relax/components/genrm.py`                    | 只有 generate/health/metrics/onload/offload | `/genrm/scale_out`、`/scale_in`、`/engines` 与状态查询；状态机注册表复用 `ScaleOutStatus`/`ScaleInStatus`，含幂等（keyed NOOP 逐字重放）、互斥与绝对目标校验 |
+| `relax/utils/autoscaler/config.py` + `autoscaler_service.py` | 仅轮询单个 `rollout_service_url` | `service_targets` 按服务配置目标，GenRM 独立阈值（未设字段继承全局），旧字段向后兼容                  |
+| `relax/utils/autoscaler/metrics_collector.py`  | HTTP 200 但 series 缺失时按 0 填充          | 逐字段 validity（`present/observed_at/sample_count`），并修复既有 N/A 格式化崩溃                        |
+| GenRMManager 生命周期 / Task 3 ingress         | 均未实现                                    | 未实现：真实 PG 申请、排空 fence 与 reconcile（manager 钩子就位前操作停在 PENDING 并在响应中明示）；ingress 等 Task 3 定稿 |
 
-表中前三项改动不依赖 Task 3 评选结果，可先实现并用契约 demo 与单测验证；ingress 的排空与路由语义等 Task 3 定稿后接入。CPU demo 只覆盖契约模型，真实 Ray/SGLang 排空、PG 释放与 Autoscaler 决策要到文本 recipe 验收中取证。
+前三项通过 66 项 CPU 测试（含与 Autoscaler 现有终态集合的交叉断言）和 77 项既有 autoscaler 回归。CPU 单测只覆盖契约模型，真实 Ray/SGLang 排空、PG 释放与 Autoscaler 决策要到文本 recipe 验收中取证。
 
 ## 如何验收
 

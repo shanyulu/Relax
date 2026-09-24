@@ -90,6 +90,7 @@ observer 的异常边界也需要明确：初始化、Event 分配、`record/que
 | [v4 双卡实验](https://github.com/shanyulu/Relax/tree/7718e036c7144b68a01a8b608a4b463eb8e16ddd/demos/task11_straggler)                                                                                                                                                                                                              | 两轮开销中位数 0.116% / 0.146%；off/off 对照仍有系统偏移，不能据此认定 \<0.5%                                    |
 | 采集与诊断                                                                                                                                                                                                                                                                                                                         | 两轮各接收 8064/8064 样本；最终 loss、参数一致；约 1.8× 前向变慢均在 step 16 定位 rank 1                         |
 | [当前版本](https://github.com/shanyulu/Relax/tree/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task11_straggler)                                                                                                                                                                                                                 | 19 项测试通过；2026-09-24 用当前源码重跑生命周期 smoke，单对开销 0.321%，144/144 样本接收；单对仍不能证明 \<0.5% |
+| [多会话机制实验](https://github.com/shanyulu/Relax/tree/8214cd7426885e94c931c91b2483086e310558ea/demos/task11_straggler/results/multisession-20260924)                                                                                                                                                                           | 4 个全新进程会话、16 对配对（3 会话在 GPU 0,1、1 会话在 GPU 2,3）：会话中位数 0.0017–0.2536%、合并 0.0861%，全部远低于 0.5%；但会话间漂移与效应同量级（A–D 差 0.178pp），跨 GPU 对 0.05pp 容差不成立，off/off 符号会话间翻转；单会话数字不足为凭，验收门槛坚持 ≥3 会话与 A/A |
 | [恢复场景交互回放（下载后打开）](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task11_straggler/results/2gpu-recovery-demo.html) · [预览图](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task11_straggler/results/2gpu-recovery-demo-preview.jpg) | 224/224 样本接收；rank 1 只在中段变慢，随后回到 peer 范围；丢一条报告的按钮是接收端反事实回放                    |
 
 ![双卡机制实验：配对开销、off/off 基线波动、计算注入与采集质量](https://raw.githubusercontent.com/shanyulu/Relax/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task11_straggler/results/2gpu-v4-comparison.png)
@@ -103,7 +104,7 @@ observer 的异常边界也需要明确：初始化、Event 分配、`record/que
 <details>
 <summary>实验图、复现方法与完整记录</summary>
 
-v4 每轮含 4 组 8000-step off/on 与 4 组 off/off，每次约 10.3–10.4 秒，每 8 步采样。置信区间、对照偏移、版本对应关系和历史试次见[证据记录](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task11_straggler/EVIDENCE.md)。v4 性能数据不代表后续修订版本。
+v4 每轮含 4 组 8000-step off/on 与 4 组 off/off，每次约 10.3–10.4 秒，每 8 步采样。置信区间、对照偏移、多会话记录、版本对应关系和历史试次见[证据记录](https://github.com/shanyulu/Relax/blob/8214cd7426885e94c931c91b2483086e310558ea/demos/task11_straggler/EVIDENCE.md)。v4 性能数据不代表后续修订版本。
 
 </details>
 
