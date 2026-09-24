@@ -90,7 +90,7 @@ observer 的异常边界也需要明确：初始化、Event 分配、`record/que
 | [v4 双卡实验](https://github.com/shanyulu/Relax/tree/7718e036c7144b68a01a8b608a4b463eb8e16ddd/demos/task11_straggler)                                                                                                                                                                                                              | 两轮开销中位数 0.116% / 0.146%；off/off 对照仍有系统偏移，不能据此认定 \<0.5%                                    |
 | 采集与诊断                                                                                                                                                                                                                                                                                                                         | 两轮各接收 8064/8064 样本；最终 loss、参数一致；约 1.8× 前向变慢均在 step 16 定位 rank 1                         |
 | [当前版本](https://github.com/shanyulu/Relax/tree/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task11_straggler)                                                                                                                                                                                                                 | 19 项测试通过；2026-09-24 用当前源码重跑生命周期 smoke，单对开销 0.321%，144/144 样本接收；单对仍不能证明 \<0.5% |
-| [多会话机制实验](https://github.com/shanyulu/Relax/tree/8214cd7426885e94c931c91b2483086e310558ea/demos/task11_straggler/results/multisession-20260924)                                                                                                                                                                           | 4 个全新进程会话、16 对配对（3 会话在 GPU 0,1、1 会话在 GPU 2,3）：会话中位数 0.0017–0.2536%、合并 0.0861%，全部远低于 0.5%；但会话间漂移与效应同量级（A–D 差 0.178pp），跨 GPU 对 0.05pp 容差不成立，off/off 符号会话间翻转；单会话数字不足为凭，验收门槛坚持 ≥3 会话与 A/A |
+| [多会话机制实验](https://github.com/shanyulu/Relax/tree/8214cd7426885e94c931c91b2483086e310558ea/demos/task11_straggler/results/multisession-20260924)                                                                                                                                                                           | 4 个全新进程会话、16 对配对（3 会话在 GPU 0,1、1 会话在 GPU 2,3）：会话中位数 0.0017–0.2536%、合并 0.0861%，均低于 0.5%，但 Session D 的 bootstrap mean 95% 上界 0.8367% 超过 0.5% 验收上界，该会话未通过该项验收；干净负载段持续误报 2/1/2/0（A/B/C/D）；会话间漂移与效应同量级（A–D 差 0.178pp），D 与其他会话的差别因硬件对与运行顺序混杂、无法归因于 GPU 对，off/off 符号会话间翻转；单会话数字不足为凭，验收门槛坚持 ≥3 会话与 A/A |
 | [恢复场景交互回放（下载后打开）](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task11_straggler/results/2gpu-recovery-demo.html) · [预览图](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task11_straggler/results/2gpu-recovery-demo-preview.jpg) | 224/224 样本接收；rank 1 只在中段变慢，随后回到 peer 范围；丢一条报告的按钮是接收端反事实回放                    |
 
 ![双卡机制实验：配对开销、off/off 基线波动、计算注入与采集质量](https://raw.githubusercontent.com/shanyulu/Relax/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task11_straggler/results/2gpu-v4-comparison.png)
@@ -104,7 +104,7 @@ observer 的异常边界也需要明确：初始化、Event 分配、`record/que
 <details>
 <summary>实验图、复现方法与完整记录</summary>
 
-v4 每轮含 4 组 8000-step off/on 与 4 组 off/off，每次约 10.3–10.4 秒，每 8 步采样。置信区间、对照偏移、多会话记录、版本对应关系和历史试次见[证据记录](https://github.com/shanyulu/Relax/blob/8214cd7426885e94c931c91b2483086e310558ea/demos/task11_straggler/EVIDENCE.md)。v4 性能数据不代表后续修订版本。
+v4 每轮含 4 组 8000-step off/on 与 4 组 off/off，每次约 10.3–10.4 秒，每 8 步采样。置信区间、对照偏移、多会话记录、版本对应关系和历史试次见[证据记录](https://github.com/shanyulu/Relax/blob/e45ee60debfc0b88ab584c909e20293edbfee90c/demos/task11_straggler/EVIDENCE.md)。v4 性能数据不代表后续修订版本。
 
 </details>
 
@@ -112,7 +112,7 @@ v4 每轮含 4 组 8000-step off/on 与 4 组 off/off，每次约 10.3–10.4 �
 
 | 官方要求                     | 检查方法                                                                                                                                                                     |
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 整体开销 \<0.5%（官方门槛） | 固定 recipe、工作量、采样和上报配置，交错 AB/BA、off/off 与 A/A 三种对照；计入后台、网络和 collector 成本；启动段与稳态段分开报告；估计对象为配对开销中位数，bootstrap 95% 上界同样 \<0.5%。窗口内多个 step 存在自相关，不当作独立样本；3 个新进程会话与观测覆盖率 ≥99% 是我方验收门槛（严于官方），为的是覆盖 off/off 观察到的运行间漂移 |
+| 整体开销 \<0.5%（官方门槛） | 固定 recipe、工作量、采样和上报配置，交错 AB/BA、off/off 与 A/A 三种对照；计入后台、网络和 collector 成本；启动段与稳态段分开报告；估计对象为配对开销中位数，bootstrap mean 95% 上界同样 \<0.5%（bootstrap 的重采样对象为配对开销均值，与证据记录口径一致）。窗口内多个 step 存在自相关，不当作独立样本；3 个新进程会话与观测覆盖率 ≥99% 是我方验收门槛（严于官方），为的是覆盖 off/off 观察到的运行间漂移 |
 | 精度、loss、overlap 不受影响 | 对照 loss、参数和训练进度；短时 trace 检查已有通算 overlap，容差事先约定                                                                                                     |
 | 实时上报、便于定位           | 展示 rank/阶段/cohort、覆盖率、drop reason 和从采样到平台可见的延迟；注入覆盖无注入对照、轻微与明显计算变慢、短暂与持续异常、恢复、工作量不均、host stall、通信等待与缺报乱序，报告检出率、误报、检测/恢复延迟和 `undetermined` 占比 |
 | 观测失败不伤训练             | 注入 Event 池耗尽、队列满、collector 超时/重启、乱序/重复包和退出时未完成 Event；训练 step、loss 与 checkpoint 继续推进                                                      |
