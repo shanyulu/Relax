@@ -4,7 +4,7 @@
 
 让 GenRM 在训练持续请求奖励时扩缩副本：新副本健康后接流量，缩容副本处理完已接收请求后释放 GPU。手动 API 与 Autoscaler 共用生命周期；模型冻结，不做权重同步。
 
-**截至 2026-09-24：真实 Ray/SGLang 已跑通手动和自动 `1→2→1`，尚未完成官方验收。** 完整奖励一致性、训练连续性、故障路径和 TUI 仍需补齐。下面的契约是交付目标，不代表当前实现已全部满足。
+**截至 2026-09-25：真实 Ray/SGLang 已跑通手动和自动 `1→2→1`，奖励一致性（真实 dapo-genrm 协议、逐引擎归属）已在 PR 分支头通过；TUI 已支持 `--service genrm`。** 训练连续性、GPU 故障注入与冻结阈值后的多轮自动扩缩为进行中工作。下面的契约是交付目标，不代表当前实现已全部满足。
 
 ## Task 3 接入边界
 
@@ -32,6 +32,7 @@ GPU 实验使用 4×4090 服务器、Qwen3-0.6B 和单 Gateway 适配器，验�
 | --- | --- | --- |
 | [手动扩缩](https://github.com/shanyulu/Relax/tree/a2ca6cb5b80fd20b372aa6e982805e345ce95dcd/demos/task4_genrm/results/e2e_run_20260924) | 扩容约 45 s、缩容约 1 s；4,163 个负载请求零失败；新增引擎服务 511 个请求 | `max_new_tokens=8`，只能证明短生成前缀一致，不能证明奖励评分一致 |
 | [自动扩缩 v3](https://github.com/shanyulu/Relax/tree/105c69b59ae3896cfca7dd0e01bf5b606f00c0a7/demos/task4_genrm/results/autoscaler_run_20260924_v3) | 3,202 个请求零失败；新增引擎服务 516 个请求；最终容量回到初始值 | 一轮实验；使用实验阈值，不代表通用策略已校准 |
+| [奖励一致性（Draft PR #370 头部）](https://github.com/shanyulu/Relax/tree/c43023a79e5ef98d6cf4b17e7c777b8ef2cc66c5/demos/task4_genrm/results/reward_consistency_20260925) | 真实 dapo-genrm 协议（生产模板/ICE/解析器、关闭 thinking）；50 个固定输入（数据集正例 + 篡改负例）、800 条带引擎归属的回复：贪心判定跨引擎逐输入完全一致；独立解析门控通过；零截断 | 官方采样（temperature 0.1、每引擎种子不同）在 2/50 输入上翻转判定（两次运行同两例）——这是部署采样配置的属性而非扩缩缺陷，已报告未门控；0.6B judge 正确率约 95%（信息项） |
 | 手动实验的资源记录 | Ray 空闲 GPU 为 `3→2→3`；新增 GPU 显存快照约 `4 MiB→21,792 MiB→4 MiB` | 正常路径回收证据；现有 verdict 尚未同时断言物理显存恢复与 PG `REMOVED` |
 
 自动实验需要更正一处阶段解释：时间线首次观察到容量 2 约在 t=153.6 s，回到 1 约在 t=212.1 s；脚本约在 t=214.2 s 才切入 LOW′。因此缩容发生在 **STEADY 阶段**，不是 LOW′ 触发。决策记录是 `token_usage_low + no_queue + throughput_stable`；当时仍有在途请求。“低 KV 使用率”不等于“无流量”，该次运行也没有验证独立的空闲阶段。v3 将吞吐方差阈值从 0.1 调至 1.0；调参运行与冻结配置后的验收运行须分开。
@@ -123,7 +124,7 @@ reconcile 使用原 request ID 和固定 victim，只推进遗留排空/清理�
 ## 剩余验收
 
 1. **生命周期安全。** 回归覆盖超时后互斥、迟到初始化、PG 各失败出口、固定 victim、退役不被 recover、三种容量口径；GPU 抽查长请求跨 drain、超时与 reconcile。资源验收同时断言 PG REMOVED 和物理 GPU 显存恢复。
-2. **奖励一致性。** 固定完整输入集和模型配置，使用足够长的确定性生成，记录实际服务引擎并解析完整 judge 结果；容差在运行前写入 manifest。短前缀一致不计此项通过。
+2. **奖励一致性。** 服务级已在 Draft PR #370 头部通过（上表：真实协议、逐引擎归属、贪心判定完全一致、独立解析门控）。训练 recipe 级（正式 judge 配置下的连续打分一致性）仍随训练 E2E 一并取证；容差与判定标准运行前写入 manifest。
 3. **自动扩缩。** 冻结阈值后至少三轮负载复测，覆盖真空闲、新副本无样本、指标缺失和带流量缩容；证明剩余容量能承接请求，保存 conditions、history、时间线与 TUI。三轮是本提案的复测安排，不是官方新增门槛。
 4. **训练连续性。** 使用真实仓库 recipe/entrypoint，关联 actor 参数更新、rollout 产出、GenRM 请求完成与扩缩事件；报告停步时长、奖励延迟和样本返回率，排除 reward fallback 掩盖失败。不能以“脚本未报错”代替训练推进。
 
