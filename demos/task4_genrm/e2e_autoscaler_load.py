@@ -1,6 +1,7 @@
 # Copyright (c) 2026 Relax Authors. All Rights Reserved.
 
-"""Task 4 autoscaler E2E: deterministic load curve drives automatic GenRM scaling.
+"""Task 4 autoscaler E2E: deterministic load curve drives automatic GenRM
+scaling.
 
 Deploys the real GenRM service plus one AutoscalerService (genrm service
 target, demo-tuned thresholds), then runs LOW -> HIGH -> STEADY -> LOW'

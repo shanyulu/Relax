@@ -240,7 +240,8 @@ class MultiEngineManager:
         removal failure the handle is retained (put back into
         ``_engine_placements``) and the rank is recorded in
         ``_pending_pg_cleanup`` for reconcile retries, so the resource stays
-        accounted-for instead of silently leaking."""
+        accounted-for instead of silently leaking.
+        """
         # ``remove_placement_group`` only submits an asynchronous deletion.
         # Keep ownership until Ray reports REMOVED; treating an accepted RPC as
         # resource release lets a replacement actor race the old PG.
@@ -273,7 +274,8 @@ class MultiEngineManager:
     def retry_pending_pg_cleanup(self) -> list[int]:
         """Retry PG removal for all failed-cleanup ranks.
 
-        Returns the ranks still failing cleanup after this attempt."""
+        Returns the ranks still failing cleanup after this attempt.
+        """
         still_failing: list[int] = []
         for rank in sorted(self._pending_pg_cleanup):
             if self._remove_owned_pg(rank):

@@ -10,7 +10,7 @@
     "t": 19.449,
     "event": "ray_init",
     "node_ips": [
-      "172.17.0.6"
+      "node-0"
     ],
     "resources": {
       "GPU": 4.0,
@@ -37,7 +37,7 @@
     "ready": 1,
     "engines": [
       {
-        "host": "172.17.0.6",
+        "host": "node-0",
         "port": 16000,
         "inflight": 0,
         "served": 0
@@ -80,7 +80,7 @@
     "event": "phase0_initial_engine_ids",
     "ids": [
       [
-        "172.17.0.6",
+        "node-0",
         16000
       ]
     ]
@@ -139,13 +139,13 @@
     "ready": 2,
     "engines": [
       {
-        "host": "172.17.0.6",
+        "host": "node-0",
         "port": 16000,
         "inflight": 4,
         "served": 2708
       },
       {
-        "host": "172.17.0.6",
+        "host": "node-0",
         "port": 16001,
         "inflight": 4,
         "served": 8
@@ -170,12 +170,12 @@
     "t": 124.187,
     "event": "phase1_elastic_engine_id",
     "id": [
-      "172.17.0.6",
+      "node-0",
       16001
     ],
     "initial_survived": [
       [
-        "172.17.0.6",
+        "node-0",
         16000
       ]
     ]
@@ -247,7 +247,7 @@
     "ready": 1,
     "engines": [
       {
-        "host": "172.17.0.6",
+        "host": "node-0",
         "port": 16000,
         "inflight": 1,
         "served": 3422

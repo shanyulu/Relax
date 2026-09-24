@@ -31,15 +31,18 @@ genrm_module = import_genrm_manager()
 # Under a real Ray install, ``GenRMManager`` comes back as an ActorClass
 # wrapper; unwrap the original Python class (same pattern as
 # tests/distributed/ray/conftest.py) so ``object.__new__`` works everywhere.
-_GenRMManager = getattr(
-    getattr(genrm_module.GenRMManager, "__ray_metadata__", None), "modified_class", None
-) or genrm_module.GenRMManager
+_GenRMManager = (
+    getattr(getattr(genrm_module.GenRMManager, "__ray_metadata__", None), "modified_class", None)
+    or genrm_module.GenRMManager
+)
 
 import importlib  # noqa: E402
 
 import ray as _real_ray  # noqa: E402  seam for _create_scale_pg's function-scope ``import ray``
+
 import relax.distributed.ray.placement_group as _relax_pg_mod  # noqa: E402
 import relax.utils.utils as _relax_utils  # noqa: E402
+
 
 # ``import ray.util.placement_group as X`` binds X to the *factory function*
 # of the same name when ray.util's __init__ re-exports it, not to the module
@@ -85,9 +88,9 @@ class _PgTablePatch:
     """Make Ray's placement-group table report a fixed state.
 
     ``_remove_owned_pg`` imports ``placement_group_table`` /
-    ``remove_placement_group`` from ``ray.util.placement_group`` at call
-    time, so patching the (real or stubbed) module attribute steers both the
-    release confirmation and the asynchronous removal submit.
+    ``remove_placement_group`` from ``ray.util.placement_group`` at call time,
+    so patching the (real or stubbed) module attribute steers both the release
+    confirmation and the asynchronous removal submit.
     """
 
     def __init__(self, state: str):
@@ -169,10 +172,10 @@ class TestFailedScaleOutCandidateRelease(unittest.TestCase):
         self.assertEqual(rebuilt, {0})
 
     def test_unreleased_candidate_excluded_until_reconcile_confirms_release(self):
-        """Scale-out fails and Ray does not confirm the release in the
-        bounded wait: the slot blocks via ``_unreleased_candidate_ranks``;
-        once reconcile confirms the release the slot is retired, so recover()
-        never resolves the deleted PG on any cycle."""
+        """Scale-out fails and Ray does not confirm the release in the bounded
+        wait: the slot blocks via ``_unreleased_candidate_ranks``; once
+        reconcile confirms the release the slot is retired, so recover() never
+        resolves the deleted PG on any cycle."""
         manager = _manager(num_slots=1)
         stale_pg = ("SCALE_PG", [0], [0])
         self._prepare_failed_scale_out(manager, stale_pg)
@@ -222,12 +225,12 @@ class TestCreateScalePgOwnershipFence(unittest.TestCase):
 
     ``_create_scale_pg`` registers ownership immediately after the PG is
     created, so a readiness-wait timeout, an InfoActor creation failure, a
-    probe failure and a kill failure all reach ``_scale_out_add_one``'s
-    fenced release: the PG is either confirmed REMOVED or left in pending
-    cleanup blocking the model's next scale operation. (Before this fix
-    those exits propagated before any ownership map was populated, and the
-    readiness-timeout path removed the PG without REMOVED confirmation --
-    stranding the bundle or racing a replacement actor.)
+    probe failure and a kill failure all reach ``_scale_out_add_one``'s fenced
+    release: the PG is either confirmed REMOVED or left in pending cleanup
+    blocking the model's next scale operation. (Before this fix those exits
+    propagated before any ownership map was populated, and the readiness-
+    timeout path removed the PG without REMOVED confirmation -- stranding the
+    bundle or racing a replacement actor.)
     """
 
     def _prepare(self):
@@ -241,8 +244,9 @@ class TestCreateScalePgOwnershipFence(unittest.TestCase):
     def _seamed(self, *, ready, pg_state, probe=None, kill=None, info_actor_class=None, fast=False):
         """Patch every Ray seam the real ``_create_scale_pg`` touches.
 
-        ``fast`` additionally fast-forwards the 60 s bounded release wait so
-        an unconfirmed removal expires after a couple of iterations."""
+        ``fast`` additionally fast-forwards the 60 s bounded release wait so an
+        unconfirmed removal expires after a couple of iterations.
+        """
         clock = {"now": 1000.0}
 
         def fast_monotonic():
@@ -255,7 +259,9 @@ class TestCreateScalePgOwnershipFence(unittest.TestCase):
                 patch.object(_ray_pg_module, "placement_group", lambda bundles, strategy=None: _FakePg(), create=True)
             )
             stack.enter_context(
-                patch.object(_real_ray, "wait", lambda refs, timeout=None: (list(refs), []) if ready else ([], list(refs)))
+                patch.object(
+                    _real_ray, "wait", lambda refs, timeout=None: (list(refs), []) if ready else ([], list(refs))
+                )
             )
             stack.enter_context(patch.object(_relax_utils, "get_ray_accelerator_kwargs", lambda n: {"num_gpus": n}))
             if info_actor_class is not None:

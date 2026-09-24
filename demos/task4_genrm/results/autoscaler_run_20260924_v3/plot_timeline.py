@@ -1,5 +1,6 @@
 # Copyright (c) 2026 Relax Authors. All Rights Reserved.
-"""Plot the autoscaler full-cycle timeline from autoscaler_run_20260924_v3 raw data.
+"""Plot the autoscaler full-cycle timeline from autoscaler_run_20260924_v3 raw
+data.
 
 Inputs : timeline.json (capacity snapshots, target ~1 Hz), events.json (phase
          boundaries), scale_history.json (decision/completion unix timestamps)
@@ -17,8 +18,10 @@ import os
 
 import matplotlib
 
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 timeline = json.load(open(os.path.join(HERE, "timeline.json")))
@@ -38,9 +41,9 @@ def t(ev_name):
 
 
 # Load-phase boundaries (run events).
-t_low_done = t("phase_low_done")          # end of LOW
-t_high_done = t("phase_high_result")      # end of HIGH (confirmed scale-out)
-t_steady_done = t("phase_steady_done")    # end of STEADY
+t_low_done = t("phase_low_done")  # end of LOW
+t_high_done = t("phase_high_result")  # end of HIGH (confirmed scale-out)
+t_steady_done = t("phase_steady_done")  # end of STEADY
 t_load_stop = t("load_stopped")
 
 # Decision/completion times from /scale_history, unix -> run clock via the
@@ -106,20 +109,27 @@ ax1.text(si_completion, 0.78, "op COMPLETED", rotation=90, fontsize=7, color=C_R
 
 ax1.annotate(
     "auto scale-out 1\u21922 decided (t\u224836.5 s, in HIGH, ~16 s after onset)\ntrigger: token_usage_high",
-    xy=(so_decision, 2), xytext=(so_decision + 6, 2.52),
-    fontsize=8.2, color=C_GREEN, ha="left",
+    xy=(so_decision, 2),
+    xytext=(so_decision + 6, 2.52),
+    fontsize=8.2,
+    color=C_GREEN,
+    ha="left",
     arrowprops=dict(arrowstyle="-|>", color=C_GREEN, lw=1.1),
 )
 ax1.annotate(
     "auto scale-in 2\u21921 decided (t\u2248132.5 s, in STEADY):\nload diluted across 2 engines, avg token usage\n~1.8% < 5%; triggers: token_usage_low + no_queue\n+ throughput_stable",
-    xy=(si_decision, 1), xytext=(si_decision - 52, 1.62),
-    fontsize=8.2, color=C_RED, ha="left",
+    xy=(si_decision, 1),
+    xytext=(si_decision - 52, 1.62),
+    fontsize=8.2,
+    color=C_RED,
+    ha="left",
     arrowprops=dict(arrowstyle="-|>", color=C_RED, lw=1.1),
 )
 ax1.text(2, 1.13, "initial engine only \u2014 no false scale-out under LOW", fontsize=8, color="#444a54", va="bottom")
 ax1.set_title(
     "GenRM autoscaler full cycle on 4\u00d7RTX 4090 (Qwen3-0.6B judge): auto 1\u21922\u21921, 3,202 requests, 0 failures",
-    fontsize=10.5, pad=8,
+    fontsize=10.5,
+    pad=8,
 )
 
 # ---- panel 2: per-engine cumulative served ----
@@ -128,7 +138,10 @@ el_ts = [x for x, s in zip(ts, served_elastic) if s is not None]
 el_s = [s for s in served_elastic if s is not None]
 ax2.plot(el_ts, el_s, color=C_ORANGE, lw=1.9, label=f"elastic engine (port 16001, served {elastic_total})")
 ax2.set_ylabel("Cumulative requests served", fontsize=9.5)
-ax2.set_xlabel(f"Elapsed time since load start (s) \u2014 snapshots target ~1 Hz ({len(ts)} rows over ~{ts[-1]-ts[0]:.0f} s)", fontsize=9.5)
+ax2.set_xlabel(
+    f"Elapsed time since load start (s) \u2014 snapshots target ~1 Hz ({len(ts)} rows over ~{ts[-1] - ts[0]:.0f} s)",
+    fontsize=9.5,
+)
 ax2.set_xlim(-2, t_load_stop + 3)
 ax2.legend(loc="upper left", fontsize=8.5, framealpha=0.9)
 ax2.tick_params(labelsize=9)
@@ -136,8 +149,10 @@ ax2.grid(axis="y", color="#d8dce2", lw=0.6, alpha=0.7)
 
 ax2.annotate(
     "elastic engine drained\n(516 served; scale-in COMPLETED)",
-    xy=(el_ts[-1], el_s[-1]), xytext=(el_ts[-1] + 9, el_s[-1] - 260),
-    fontsize=8, color=C_ORANGE,
+    xy=(el_ts[-1], el_s[-1]),
+    xytext=(el_ts[-1] + 9, el_s[-1] - 260),
+    fontsize=8,
+    color=C_ORANGE,
     arrowprops=dict(arrowstyle="-|>", color=C_ORANGE, lw=1.0),
 )
 
@@ -146,15 +161,23 @@ for ax in (ax1, ax2):
         ax.spines[spine].set_visible(False)
 
 fig.text(
-    0.012, 0.005,
+    0.012,
+    0.005,
     "Shaded bands: load phases (run events). Dashed lines: autoscaler decisions; thin solid lines: operation completion\n"
     "(from /scale_history, unix\u2192run-clock aligned via scale-in completion \u2194 first poll observing capacity 1, \u00b11 s).",
-    fontsize=7.2, color="#666b74",
+    fontsize=7.2,
+    color="#666b74",
 )
 
 fig.savefig(os.path.join(HERE, "timeline-chart.png"), dpi=200, bbox_inches="tight", facecolor="white")
 print("written", os.path.join(HERE, "timeline-chart.png"))
-print(f"phases end at: LOW {t_low_done:.1f}, HIGH {t_high_done:.1f}, STEADY {t_steady_done:.1f}, stop {t_load_stop:.1f}")
-print(f"scale_out: decision {so_decision:.3f} completion {so_completion:.3f} (dur {so['completed_at']-so['triggered_at']:.1f}s)")
-print(f"scale_in:  decision {si_decision:.3f} completion {si_completion:.3f} (dur {si['completed_at']-si['triggered_at']:.1f}s)")
+print(
+    f"phases end at: LOW {t_low_done:.1f}, HIGH {t_high_done:.1f}, STEADY {t_steady_done:.1f}, stop {t_load_stop:.1f}"
+)
+print(
+    f"scale_out: decision {so_decision:.3f} completion {so_completion:.3f} (dur {so['completed_at'] - so['triggered_at']:.1f}s)"
+)
+print(
+    f"scale_in:  decision {si_decision:.3f} completion {si_completion:.3f} (dur {si['completed_at'] - si['triggered_at']:.1f}s)"
+)
 print(f"scale-in inside STEADY: {t_high_done < si_decision and si_completion < t_steady_done}")

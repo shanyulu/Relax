@@ -365,8 +365,7 @@ def scripted_scenarios() -> dict[str, Any]:
             "keyed_noop_replayed_verbatim": noop_replay["status"] == "NOOP"
             and noop_replay.get("current") == 2
             and "request_id" not in noop_replay,
-            "keyed_noop_blocks_new_execution": noop_at_two["status"] == "NOOP"
-            and cleanup_failure.current == 1,
+            "keyed_noop_blocks_new_execution": noop_at_two["status"] == "NOOP" and cleanup_failure.current == 1,
             "unknown_request_404": unknown_status["http"] == 404,
             "final_capacity": [normal.current, normal.ready],
             "manager_pg_released": "manager-pg-1" not in normal.pg_live,

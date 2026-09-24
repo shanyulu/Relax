@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 
 
-HTML = r'''<!doctype html>
+HTML = r"""<!doctype html>
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Relax · GenRM scaling contract</title>
 <style>
@@ -48,7 +48,7 @@ function render(){const events=D.scenarios[selected],e=events[index];$('current'
 }
 names.forEach((name,i)=>{const button=n('button',name);button.onclick=()=>{selected=name;index=0;document.querySelectorAll('#tabs button').forEach((b,j)=>b.classList.toggle('active',j===i));render()};$('tabs').append(button)});
 $('step').oninput=e=>{index=Number(e.target.value);render()};document.querySelector('#tabs button').click();
-</script></html>'''
+</script></html>"""
 
 
 def main() -> None:

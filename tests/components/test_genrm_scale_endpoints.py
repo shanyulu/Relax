@@ -52,7 +52,8 @@ _ENGINES = [("192.0.2.1", 16001)]
 
 
 def _fake_manager(hooks: dict = None):
-    """A manager fake: only ``get_engine_hosts_ports`` and optional scale hooks."""
+    """A manager fake: only ``get_engine_hosts_ports`` and optional scale
+    hooks."""
     manager = SimpleNamespace(
         get_engine_hosts_ports=SimpleNamespace(remote=lambda: _ENGINES),
     )
@@ -82,7 +83,8 @@ def _run(coro):
 class TestScaleOutEndpoint(unittest.TestCase):
     def test_pending_with_manager_hook_detail_when_manager_lacks_hooks(self):
         """Admitted operation stays PENDING and the response carries
-        detail='manager_scale_not_implemented' (GenRMManager has no scale hooks)."""
+        detail='manager_scale_not_implemented' (GenRMManager has no scale
+        hooks)."""
         replica = _replica()
         response = _run(replica.scale_out(_GenRMScaleRequest(num_replicas=2)))
         self.assertEqual(response.status, "PENDING")

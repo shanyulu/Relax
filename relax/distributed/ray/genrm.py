@@ -188,17 +188,19 @@ class GenRMManager(MultiEngineManager):
             return dict(self._scale_progress.get(request_id) or {})
 
     def confirm_scale_drained(self, request_id: str) -> None:
-        """Component-side drain proof: no in-flight request targets the
-        current victim any more."""
+        """Component-side drain proof: no in-flight request targets the current
+        victim any more."""
         with self._scale_lock:
             event = self._scale_drain_confirmed.get(request_id)
         if event is not None:
             event.set()
 
     def abort_scale_op(self, request_id: str) -> None:
-        """Ask the lifecycle thread to stop at the next safe point. Draining
-        victims stay unroutable and keep their resources (failure isolation);
-        no new engine is created after the abort."""
+        """Ask the lifecycle thread to stop at the next safe point.
+
+        Draining victims stay unroutable and keep their resources (failure
+        isolation); no new engine is created after the abort.
+        """
         with self._scale_lock:
             event = self._scale_abort.get(request_id)
         if event is not None:
@@ -209,8 +211,11 @@ class GenRMManager(MultiEngineManager):
     def _capacity_counts(self) -> tuple:
         """RFC capacity semantics: ``current`` counts live published engines
         plus draining victims; ``ready`` counts only routable engines
-        (admission open).  Failed cleanup is resource occupancy, not service
-        capacity, so unpublished candidates never inflate ``current``."""
+        (admission open).
+
+        Failed cleanup is resource occupancy, not service capacity, so
+        unpublished candidates never inflate ``current``.
+        """
         current = 0
         for rank in range(0, len(self.all_engines), self.nodes_per_engine):
             with self._scale_lock:
@@ -235,8 +240,10 @@ class GenRMManager(MultiEngineManager):
 
     def get_engine_capacity(self) -> dict:
         """Capacity snapshot for the component's /engines endpoint:
+
         ``current`` (service capacity), ``ready`` (routable capacity), and
-        separately observable physical resource occupancy."""
+        separately observable physical resource occupancy.
+        """
         current, ready = self._capacity_counts()
         with self._scale_lock:
             pending_cleanup = len(self._failed_holding_ranks | self._unreleased_candidate_ranks)
@@ -250,9 +257,9 @@ class GenRMManager(MultiEngineManager):
     def _wait_for_owned_pg_release(self, rank: int, timeout_s: float = 60.0) -> bool:
         """Wait for Ray to confirm an owned elastic PG is REMOVED.
 
-        ``remove_placement_group`` is asynchronous.  This bounded wait is
-        used only on lifecycle/reconcile paths, never on request routing; a
-        timeout leaves the owner in ``_pending_pg_cleanup`` for retry.
+        ``remove_placement_group`` is asynchronous.  This bounded wait is used
+        only on lifecycle/reconcile paths, never on request routing; a timeout
+        leaves the owner in ``_pending_pg_cleanup`` for retry.
         """
         deadline = time.monotonic() + timeout_s
         while time.monotonic() < deadline:
@@ -269,7 +276,8 @@ class GenRMManager(MultiEngineManager):
         operation already selected (never a new one) once the component has
         proven its in-flight count at zero, then retry its PG release. On
         success the component clears the registry's cleanup_required flag;
-        the operation's terminal status itself is immutable."""
+        the operation's terminal status itself is immutable.
+        """
         with self._scale_lock:
             progress = dict(self._scale_progress.get(request_id) or {})
         result = {
@@ -379,7 +387,8 @@ class GenRMManager(MultiEngineManager):
         -- before the readiness wait and the physical-GPU probe -- so any
         failure on those paths reaches the caller's fenced release instead of
         stranding an unowned PG (RFC: register the cleanup handle at PG
-        request time)."""
+        request time).
+        """
         import ray
         from ray.util.placement_group import placement_group
         from ray.util.scheduling_strategies import PlacementGroupSchedulingStrategy
@@ -473,9 +482,11 @@ class GenRMManager(MultiEngineManager):
 
     def _scale_out_add_one(self, request_id: str) -> int:
         """Bring up one candidate engine and publish it after its health check.
+
         Raises on failure after cleaning the candidate up. Progress phases may
         oscillate per engine (CREATING -> HEALTH_CHECKING); the component's
-        watcher maps them onto the registry's monotonic chain."""
+        watcher maps them onto the registry's monotonic chain.
+        """
         abort = self._scale_abort[request_id]
         # Allocate the rank before creating the PG: _create_scale_pg
         # registers ownership under this rank immediately after creation, so
@@ -535,11 +546,13 @@ class GenRMManager(MultiEngineManager):
 
     def _release_owned_scale_pg(self, rank: int, request_id: str, *, timeout_s: float = 60.0) -> bool:
         """Fenced release of a scale-out PG owned by ``rank``: submit removal,
-        poll until Ray confirms REMOVED, then deregister the owner. Returns
-        True when the release is confirmed. On timeout the rank stays in
-        ``_pending_pg_cleanup`` and ``_unreleased_candidate_ranks`` with
+        poll until Ray confirms REMOVED, then deregister the owner.
+
+        Returns True when the release is confirmed. On timeout the rank stays
+        in ``_pending_pg_cleanup`` and ``_unreleased_candidate_ranks`` with
         ``cleanup_required`` set on the operation, keeping the model's scale
-        mutex until reconcile confirms the release."""
+        mutex until reconcile confirms the release.
+        """
         if self._wait_for_owned_pg_release(rank, timeout_s=timeout_s):
             # Release confirmed: the failed candidate's slot is gone for
             # good.  Retire it (the same recovery exemption a scale-in
@@ -638,7 +651,8 @@ class GenRMManager(MultiEngineManager):
         super()._retire_engines(ranks)
 
     def recover(self) -> set:
-        """Recover failures, but never recreate intentionally scaled-in slots."""
+        """Recover failures, but never recreate intentionally scaled-in
+        slots."""
         with self._scale_lock:
             excluded = (
                 set(self._retired_scale_ranks)

@@ -173,8 +173,8 @@ def import_genrm_manager():
     The manager class needs its base class (multi_engine_manager, which
     evaluates ``ray.exceptions.RayActorError`` at import time) and the
     ``GenRMEngine`` actor class only as a constructor argument, so the deep
-    SGLang chain can be cut at that bridge. The real module is used whenever
-    it is importable (full CI environments).
+    SGLang chain can be cut at that bridge. The real module is used whenever it
+    is importable (full CI environments).
     """
     try:
         return importlib.import_module("relax.distributed.ray.genrm")

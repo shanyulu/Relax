@@ -1,6 +1,7 @@
 # Copyright (c) 2026 Relax Authors. All Rights Reserved.
 
-"""GenRM scale-operation registry: state machine, idempotency, mutual exclusion.
+"""GenRM scale-operation registry: state machine, idempotency, mutual
+exclusion.
 
 This module holds the Task 4 contract core for GenRM elastic scaling:
 
@@ -358,7 +359,8 @@ class GenRMScaleRegistry:
             return {"http": 200, "status": "PENDING", "request_id": operation.request_id, "dispatch": True}
 
     def _blocking_operation_locked(self, model_name: str) -> Optional[GenRMScaleOperation]:
-        """An in-flight operation, or a terminal one with unresolved cleanup."""
+        """An in-flight operation, or a terminal one with unresolved
+        cleanup."""
         for op in self._operations.values():
             if op.model_name != model_name:
                 continue
@@ -428,7 +430,8 @@ class GenRMScaleRegistry:
             return op.to_dict()
 
     def set_detail(self, request_id: str, detail: Optional[str]) -> None:
-        """Attach an execution detail (e.g. 'manager_scale_not_implemented')."""
+        """Attach an execution detail (e.g.
+        'manager_scale_not_implemented')."""
         with self._lock:
             self._operations[request_id].detail = detail
             self._operations[request_id].updated_at = time.time()
@@ -436,10 +439,10 @@ class GenRMScaleRegistry:
     def clear_cleanup(self, request_id: str) -> bool:
         """Clear ``cleanup_required`` after a successful reconcile.
 
-        The flag is what blocks new scale requests for the model, so it is
-        only ever set on terminal operations. Returns ``True`` when the flag
-        was set and is now cleared; ``False`` for an unknown request or one
-        that was already clean (making the reconcile replay idempotent).
+        The flag is what blocks new scale requests for the model, so it is only
+        ever set on terminal operations. Returns ``True`` when the flag was set
+        and is now cleared; ``False`` for an unknown request or one that was
+        already clean (making the reconcile replay idempotent).
         """
         with self._lock:
             op = self._operations.get(request_id)

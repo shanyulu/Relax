@@ -79,10 +79,10 @@ class GenRMScaleRequest(BaseModel):
     """Request model for GenRM scale-out / scale-in.
 
     ``num_replicas`` is the target *absolute* total engine count (not a delta).
-    Idempotency is keyed on the request-body fingerprint
-    (model_name, num_replicas, timeout_secs): same key + same fingerprint
-    returns the original operation; a keyed NOOP decision is replayed
-    verbatim; a different fingerprint is rejected with 409.
+    Idempotency is keyed on the request-body fingerprint (model_name,
+    num_replicas, timeout_secs): same key + same fingerprint returns the
+    original operation; a keyed NOOP decision is replayed verbatim; a different
+    fingerprint is rejected with 409.
     """
 
     model_name: str = Field(default="default", description="GenRM instance (route key) to scale")
@@ -130,10 +130,10 @@ class GenRMScaleStatusResponse(BaseModel):
 class GenRMScaleReconcileResponse(BaseModel):
     """Response model for GenRM scale-operation reconcile.
 
-    Reconcile continues the *original* operation (no new request ID, no
-    victim re-selection, no re-scaling); it only retries unfinished resource
-    cleanup. ``cleanup_required`` therefore reports whether the model is
-    still blocked from new scale operations after the attempt.
+    Reconcile continues the *original* operation (no new request ID, no victim
+    re-selection, no re-scaling); it only retries unfinished resource cleanup.
+    ``cleanup_required`` therefore reports whether the model is still blocked
+    from new scale operations after the attempt.
     """
 
     request_id: str
@@ -179,8 +179,11 @@ class _EngineCacheState:
 
     def force_refresh(self) -> None:
         """Drop the cached list immediately, bypassing the invalidation
-        cooldown. Reserved for scale operations, where the routing table
-        changed and the next pick must observe it."""
+        cooldown.
+
+        Reserved for scale operations, where the routing table changed and the
+        next pick must observe it.
+        """
         self.hosts_ports = None
 
 
@@ -471,11 +474,12 @@ class GenRM(Base):
     async def metrics(self) -> dict:
         """Metrics endpoint; reports per-instance stats with live capacity.
 
-        ``num_engines`` follows the manager's actual capacity (elastic
-        scaling changes it after startup); ``ready_engines``/``occupied``/
+        ``num_engines`` follows the manager's actual capacity (elastic scaling
+        changes it after startup); ``ready_engines``/``occupied``/
         ``pending_cleanup`` use the same accounting as ``/engines``. When the
         capacity query fails, the startup count is kept and ``capacity_error``
-        is surfaced instead of fabricating numbers."""
+        is surfaced instead of fabricating numbers.
+        """
         instances: Dict[str, Any] = {}
         for key, spec in self.instance_specs.items():
             entry = {
@@ -584,7 +588,8 @@ class GenRM(Base):
 
     @app.post("/scale_in/{request_id}/reconcile", response_model=GenRMScaleReconcileResponse)
     async def reconcile_scale_in(self, request_id: str) -> GenRMScaleReconcileResponse:
-        """Retry unfinished cleanup of a scale-in (fixed victim, no re-selection)."""
+        """Retry unfinished cleanup of a scale-in (fixed victim, no re-
+        selection)."""
         return await self._reconcile_scale("scale_in", request_id)
 
     def _resolve_scale_model(self, model_name: Optional[str]) -> str:
@@ -599,7 +604,8 @@ class GenRM(Base):
         return list(ray.get(manager.get_engine_hosts_ports.remote()))
 
     def _genrm_capacity(self, key: str, ready: int) -> Dict[str, int]:
-        """Read capacity from the real manager while preserving fake support."""
+        """Read capacity from the real manager while preserving fake
+        support."""
         manager = self.genrm_managers[key]
         if getattr(manager, "get_engine_capacity", None) is None:
             return {"current": ready, "ready": ready, "occupied": ready, "pending_cleanup": 0}
@@ -698,10 +704,11 @@ class GenRM(Base):
 
         The manager reports oscillating per-engine phases; this watcher maps
         them onto the registry's monotonic chain, closes the component-side
-        admission cache for draining victims, proves the drain (in-flight
-        count zero) and confirms it, then finishes the registry with the
-        manager's snapshot counts. ``/scale_out|in/{id}`` status queries see
-        only registry state, so this loop is the single writer."""
+        admission cache for draining victims, proves the drain (in-flight count
+        zero) and confirms it, then finishes the registry with the manager's
+        snapshot counts. ``/scale_out|in/{id}`` status queries see only
+        registry state, so this loop is the single writer.
+        """
         manager = self.genrm_managers[model]
         terminal = {"ACTIVE", "PARTIAL", "FAILED"} if direction == "scale_out" else {"COMPLETED", "FAILED"}
         op = self._scale_registry.get_status(direction, request_id) or {}
@@ -783,7 +790,8 @@ class GenRM(Base):
         Manager phases may oscillate per engine (CREATING -> HEALTH_CHECKING ->
         CREATING for the next one); the registry only ever moves forward along
         its legal transition chain. FAILED is legal from any live status,
-        PARTIAL from HEALTH_CHECKING or READY."""
+        PARTIAL from HEALTH_CHECKING or READY.
+        """
         if not phase or phase in ("PENDING",):
             return
         current = (self._scale_registry.get_status(direction, request_id) or {}).get("status", "PENDING")
@@ -839,7 +847,8 @@ class GenRM(Base):
 
         The manager already excludes draining victims from its published list;
         this closes the component-side staleness window. After this call any
-        pick refreshes from the manager and cannot select the victim."""
+        pick refreshes from the manager and cannot select the victim.
+        """
         host, port = victim[0], victim[1]
         cache = self._engine_caches[model]
         if cache.hosts_ports and (host, port) in [tuple(x) for x in cache.hosts_ports]:
@@ -858,8 +867,8 @@ class GenRM(Base):
     async def _reconcile_scale(self, direction: str, request_id: str) -> GenRMScaleReconcileResponse:
         """Retry unfinished cleanup for one operation (RFC reconcile).
 
-        Continues the original operation: no new request ID, no re-selection
-        of a scale-in victim, no re-scaling. Idempotent -- an operation whose
+        Continues the original operation: no new request ID, no re-selection of
+        a scale-in victim, no re-scaling. Idempotent -- an operation whose
         cleanup already completed replays as a no-op success. The terminal
         status and the prior ``removed`` count are preserved; only the
         ``cleanup_required`` gate is cleared once the manager confirms the

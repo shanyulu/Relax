@@ -251,7 +251,8 @@ class AutoscalerService(Base):
         )
 
     def _rebuild_service_runtimes(self) -> None:
-        """Construct independent policy/decision state for every configured target."""
+        """Construct independent policy/decision state for every configured
+        target."""
         names = {"rollout", *self.config.service_targets}
         previous = getattr(self, "_services", {})
         runtimes: Dict[str, ServiceRuntime] = {}

@@ -83,7 +83,8 @@ class ScaleInPolicy:
 
 @dataclass
 class ServiceScalingPolicy:
-    """Per-service scaling thresholds; ``None`` fields inherit the rollout defaults.
+    """Per-service scaling thresholds; ``None`` fields inherit the rollout
+    defaults.
 
     Used with ``AutoscalerConfig.service_policies`` so a service such as GenRM
     can be configured with independent bounds and token-usage thresholds while
@@ -284,8 +285,8 @@ class AutoscalerConfig:
     def get_effective_policies(self, service: str = "rollout") -> ServiceScalingPolicy:
         """Effective scaling thresholds for ``service``.
 
-        Unset per-service fields inherit the global (rollout) configuration,
-        so the result is always fully resolved.
+        Unset per-service fields inherit the global (rollout) configuration, so
+        the result is always fully resolved.
         """
         override = self.service_policies.get(service)
         if override is None:

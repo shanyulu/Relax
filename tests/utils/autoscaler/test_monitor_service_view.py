@@ -2,12 +2,12 @@
 
 """Unit tests for the autoscaler monitor's service selection (Task 4).
 
-``--service genrm`` must show the GenRM runtime's own state: the client
-sends ``service=`` query params where the backend filters (/conditions,
+``--service genrm`` must show the GenRM runtime's own state: the client sends
+``service=`` query params where the backend filters (/conditions,
 /scale_history), projects the aggregated /status payload onto the selected
 service client-side, resolves per-service policy overrides onto the config
-view, and renders ``unknown`` (never zeros, never the rollout alias) when
-the selected service is not configured.
+view, and renders ``unknown`` (never zeros, never the rollout alias) when the
+selected service is not configured.
 """
 
 import asyncio

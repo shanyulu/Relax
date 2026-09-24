@@ -24,6 +24,7 @@ genrm_module = import_genrm_component()
 
 import ray  # noqa: E402  (real or stubbed -- guaranteed importable after stub install)
 
+
 # The scripted manager's ``.remote()`` facade returns plain dicts, never real
 # ObjectRefs.  A real ``ray.get`` rejects non-ObjectRef inputs, but only after
 # spinning up a local Ray instance (~10s per call), which starves the event
@@ -44,6 +45,7 @@ def setUpModule():
 
 def tearDownModule():
     ray.get = _orig_ray_get
+
 
 _GenRM = genrm_module.GenRM.func_or_class
 _GenRMEngineCacheState = genrm_module._EngineCacheState
@@ -116,7 +118,8 @@ class _ScriptedManager:
 
 
 def _remote_wrap(manager):
-    """Wrap each protocol method with a .remote(arg) facade like a Ray handle."""
+    """Wrap each protocol method with a .remote(arg) facade like a Ray
+    handle."""
 
     def wrap(fn):
         def remote(*args, **kwargs):
@@ -294,13 +297,13 @@ class TestScaleOutWatcher(unittest.TestCase):
 class TestScaleOutWatcherFenceRace(unittest.TestCase):
     """Deterministic regression for the watcher's physical-completion fence.
 
-    The sleep-yield tests above can pass while the watcher coroutine has
-    never processed a single poll (deleting the fence keeps them green).
-    Here the barrier is the watcher's own poll sleep: the watcher only
-    reaches ``asyncio.sleep`` inside its loop after it has fully processed a
-    poll that reported a terminal phase with ``physical_done=False`` and
-    deliberately declined to finish the registry.  A fence-less watcher
-    finishes on that same poll and never parks, so the barrier wait fails.
+    The sleep-yield tests above can pass while the watcher coroutine has never
+    processed a single poll (deleting the fence keeps them green). Here the
+    barrier is the watcher's own poll sleep: the watcher only reaches
+    ``asyncio.sleep`` inside its loop after it has fully processed a poll that
+    reported a terminal phase with ``physical_done=False`` and deliberately
+    declined to finish the registry.  A fence-less watcher finishes on that
+    same poll and never parks, so the barrier wait fails.
     """
 
     def _submit(self, replica, target=2):
@@ -384,9 +387,9 @@ class TestScaleOutWatcherFenceRace(unittest.TestCase):
         self.assertEqual(admitted["http"], 200)
 
     def test_fence_release_with_cleanup_required_keeps_model_exclusive(self):
-        """When the finished progress is dirty (cleanup_required), the
-        terminal operation keeps blocking new scale requests until
-        reconcile clears it (registry finish semantics)."""
+        """When the finished progress is dirty (cleanup_required), the terminal
+        operation keeps blocking new scale requests until reconcile clears it
+        (registry finish semantics)."""
         replica, request_id = self._run_fence_scenario({"cleanup_required": True})
         result = replica._scale_registry.get_status("scale_out", request_id)
         self.assertEqual(result["status"], "FAILED")

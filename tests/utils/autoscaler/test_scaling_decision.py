@@ -146,8 +146,8 @@ def test_scaling_decision_non_terminal_pending_blocks():
 
 def test_scaling_decision_terminal_dirty_pending_blocks_scale_out():
     """A terminal request with unresolved cleanup (GenRM terminal-dirty)
-    freezes decisions: the target keeps answering 409 until reconcile
-    clears it, so re-issuing every cycle is pure noise."""
+    freezes decisions: the target keeps answering 409 until reconcile clears
+    it, so re-issuing every cycle is pure noise."""
     engine = _engine()
     agg = _busy_metrics(coverage=1.0)
     pending = [{"action": "scale_out", "status": "FAILED", "delta": 2, "cleanup_required": True}]

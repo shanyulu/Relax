@@ -69,8 +69,12 @@ class TestStateMachine(unittest.TestCase):
         for stop in ("PENDING", "CREATING", "HEALTH_CHECKING", "READY"):
             registry = _registry()
             request_id = _submit_out(registry, 2)["request_id"]
-            chain = {"PENDING": [], "CREATING": ["CREATING"], "HEALTH_CHECKING": ["CREATING", "HEALTH_CHECKING"],
-                     "READY": ["CREATING", "HEALTH_CHECKING", "READY"]}[stop]
+            chain = {
+                "PENDING": [],
+                "CREATING": ["CREATING"],
+                "HEALTH_CHECKING": ["CREATING", "HEALTH_CHECKING"],
+                "READY": ["CREATING", "HEALTH_CHECKING", "READY"],
+            }[stop]
             for status in chain:
                 registry.advance(request_id, status)
             registry.finish(request_id, status="FAILED", current=1, ready=1, failed=1)
@@ -107,8 +111,9 @@ class TestStateMachine(unittest.TestCase):
             self.assertFalse(is_scale_request_terminal("scale_in", status))
 
     def test_finish_carries_terminal_result_fields(self):
-        """Terminal status must report target/current/ready/created/removed/failed/
-        cleanup_required (RFC API contract)."""
+        """Terminal status must report
+        target/current/ready/created/removed/failed/ cleanup_required (RFC API
+        contract)."""
         registry = _registry()
         request_id = _submit_out(registry, 3)["request_id"]
         registry.advance(request_id, "CREATING")
@@ -180,9 +185,11 @@ class TestIdempotency(unittest.TestCase):
         self.assertEqual(conflict["http"], 409)
 
     def test_key_is_scoped_per_direction(self):
-        """The same key on scale_out and scale_in are independent records: after
-        the scale-out reaches a terminal state, the same key on scale_in admits
-        a *new* operation instead of replaying the scale-out one."""
+        """The same key on scale_out and scale_in are independent records:
+
+        after the scale-out reaches a terminal state, the same key on scale_in
+        admits a *new* operation instead of replaying the scale-out one.
+        """
         registry = _registry()
         out = _submit_out(registry, 2, idempotency_key="same-key")
         registry.finish(out["request_id"], status="ACTIVE", current=2, ready=2, created=1)
@@ -222,9 +229,7 @@ class TestMutualExclusion(unittest.TestCase):
         the model until reconciled (RFC: 资源持续保留是失败隔离手段)."""
         registry = _registry()
         request_id = _submit_out(registry, 2)["request_id"]
-        registry.finish(
-            request_id, status="FAILED", current=1, ready=1, failed=1, cleanup_required=True
-        )
+        registry.finish(request_id, status="FAILED", current=1, ready=1, failed=1, cleanup_required=True)
         blocked = _submit_out(registry, 2)
         self.assertEqual(blocked["http"], 409)
         self.assertEqual(registry.active_operation("__default__")["request_id"], request_id)
@@ -263,7 +268,9 @@ class TestAbsoluteTargetValidation(unittest.TestCase):
 
     def test_unkeyed_noop_is_not_recorded_for_replay(self):
         """Without a key, a NOOP after a capacity change re-evaluates (demo:
-        unkeyed NOOP is a fresh decision each time)."""
+
+        unkeyed NOOP is a fresh decision each time).
+        """
         registry = _registry()
         first = _submit_out(registry, 2, current=2, ready=2)
         second = _submit_out(registry, 2, current=1, ready=1)

@@ -437,15 +437,16 @@ class AutoscalerApiClient:
 def _select_service_view(status: JsonDict, service: str) -> JsonDict:
     """Project the aggregated /status payload onto one service's view.
 
-    The autoscaler keeps one runtime per service (rollout plus any
-    configured service targets); /status returns global fields plus a
-    ``services`` map. For a non-rollout service the per-service fields
-    overlay the global ones so every existing renderer keeps working, and
-    per-service policy overrides are resolved onto the top-level policies
-    the same way the backend's ``get_effective_policies`` does. A service
-    absent from ``services`` keeps the payload but is flagged via
-    ``selected_service_missing`` so the UI renders ``unknown`` instead of
-    fabricating zeros or showing the rollout alias."""
+    The autoscaler keeps one runtime per service (rollout plus any configured
+    service targets); /status returns global fields plus a ``services`` map.
+    For a non-rollout service the per-service fields overlay the global ones so
+    every existing renderer keeps working, and per-service policy overrides are
+    resolved onto the top-level policies the same way the backend's
+    ``get_effective_policies`` does. A service absent from ``services`` keeps
+    the payload but is flagged via ``selected_service_missing`` so the UI
+    renders ``unknown`` instead of fabricating zeros or showing the rollout
+    alias.
+    """
     if service == "rollout":
         return status
     services = _as_dict(status.get("services"))

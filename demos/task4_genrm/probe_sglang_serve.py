@@ -2,10 +2,10 @@
 
 """Pre-flight probe: can the installed sglang serve Qwen3-0.6B on this box?
 
-Isolates sglang-engine issues from relax integration issues. Launches a
-vanilla sglang server exactly the way GenRMEngine does (same ServerArgs
-fields _compute_genrm_server_args produces), waits for health, runs one
-greedy generation, checks /metrics exists, then shuts down.
+Isolates sglang-engine issues from relax integration issues. Launches a vanilla
+sglang server exactly the way GenRMEngine does (same ServerArgs fields
+_compute_genrm_server_args produces), waits for health, runs one greedy
+generation, checks /metrics exists, then shuts down.
 """
 
 import argparse
