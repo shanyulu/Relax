@@ -55,7 +55,7 @@ The four sessions above were re-run with `--aa-pairs 4`: four additional pairs w
 | Bootstrap mean 95% interval | −0.3332% to +0.1728% | −0.1894% to +3.0036% (one +3.00% outlier in session C) |
 | Range | −1.3455% to +0.5510% | −0.6119% to +3.0036% |
 
-Pooled paired overhead across all four A/A sessions (32 pairs): median +0.1844%, bootstrap mean 95% interval −0.0580% to +0.7061%. The A/A median being indistinguishable from zero while off/off pairs drift by tenths of a percent (and occasionally whole percents) supports the claim that the remaining spread is dominated by run-to-run environment drift rather than observer bias. It does **not** by itself bring the pooled overhead's upper bound below 0.5%; the acceptance plan (recipe runs, more pairs) stands.
+Pooled paired overhead of the off/on pairs from all four A/A sessions (16 pairs; the A/A pairs themselves are pure observer-noise trials and are deliberately not pooled into the overhead estimate): median +0.1844%, bootstrap mean 95% interval −0.0580% to +0.7061%. The A/A median being indistinguishable from zero while off/off pairs drift by tenths of a percent (and occasionally whole percents) supports the claim that the remaining spread is dominated by run-to-run environment drift rather than observer bias. It does **not** by itself bring the pooled overhead's upper bound below 0.5%; the acceptance plan (recipe runs, more pairs) stands.
 
 What the spread says, honestly:
 
