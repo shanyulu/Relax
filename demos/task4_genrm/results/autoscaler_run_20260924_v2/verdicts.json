@@ -1,0 +1,13 @@
+{
+  "scale_out_triggered": true,
+  "elastic_engine_served_traffic": true,
+  "scale_in_triggered": false,
+  "final_count_is_initial": false,
+  "initial_engine_survived": true,
+  "zero_load_failures": true,
+  "load_total_requests": 44038,
+  "scale_history_len": 1,
+  "conditions_recorded": true,
+  "timeline_rows": 517,
+  "E2E_PASS": false
+}

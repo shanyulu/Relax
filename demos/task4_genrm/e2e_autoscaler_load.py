@@ -323,6 +323,13 @@ def main() -> int:
                 "scale_in_policy": {
                     "token_usage_threshold": 0.05,
                     "queue_depth_threshold": 0,
+                    # 48 concurrent short greedy requests complete in bursts,
+                    # so a 0.6B engine's token throughput legitimately swings
+                    # (measured variance 0.77 under LOW load); the default 0.1
+                    # would never consider it stable. The low-load signal is
+                    # carried by token_usage/queue; this guard only rules out
+                    # scaling in while throughput is still ramping.
+                    "throughput_variance_threshold": 1.0,
                     "condition_duration_secs": 45.0,
                     "max_delta": 1,
                     "projected_usage_max": 0.9,
