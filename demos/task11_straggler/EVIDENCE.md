@@ -62,7 +62,21 @@ What the spread says, honestly:
 - Between-session drift is the same order as the measured effect: session medians span 0.0017%–0.2536%, and the A–D difference (0.178 pp) exceeds every session median except D's. A single-session number would have been luck, which is exactly why the acceptance plan demands ≥3 fresh sessions plus A/A controls.
 - Session D (GPUs 2,3) has the highest median and contains the largest single pair (1.03%), but this experiment cannot attribute that difference to the GPU pair: A/B/C all ran on GPUs 0,1 and D ran last, so hardware pair and run order are fully confounded. Whether the 0.05 pp cross-pair tolerance holds is therefore untested by this design. Pairing and controls must stay within one hardware pair.
 - The off/off sign flips between sessions (A all positive, B all negative, C/D mixed); the direction of the systematic bias is not stable. This confirms the v4 observation that control drift can exceed the median overhead.
-- Detection behaviour was consistent across all four sessions: the injected extra-forward case alerted on rank 1 forward (first alert at step 8 in A/B/C, step 16 in D), the recovery case returned to peer range, the unequal-workload case was labelled `workload_imbalance` with no hardware verdict, host stall produced a backward-stage alert with cause `undetermined`, and the control case raised no alert. Sustained false-positive alerts during clean bench-on segments: 2/1/2/0 across A/B/C/D.
+- Detection behaviour was consistent across all four sessions: the injected extra-forward case alerted on rank 1 forward (first alert at step 8 in A/B/C, step 16 in D), the recovery case returned to peer range, the unequal-workload case was labelled `workload_imbalance` with no hardware verdict, host stall produced a backward-stage alert with cause `undetermined`, and the control case raised no alert. Clean bench-on alerts with explicit denominators (bench-on alerts ÷ bench-on complete windows): 2/1/2/0 in the first batch (÷4,000 each → 0.050%/0.025%/0.050%/0%) and 14/0/0/0 in the A/A batch (A: 0.35%); all causes are `undetermined`, so a real host stall cannot be excluded and they are not labelled "false positives".
+
+### Pooled statistics revision (2026-09-25)
+
+[Analysis script and raw output](results/multisession-20260924/analyze_pooled.py) · [pooled-stats-20260925.json](results/multisession-20260924/pooled-stats-20260925.json). The estimator is unified on the pre-registered paired **median**, with a session-aware hierarchical bootstrap interval on the same statistic (sessions resampled with replacement first, then pairs within each drawn session; 10,000 reps, seed 20260925):
+
+| Pool | Median | Median hierarchical 95% | Mean hierarchical 95% | Worst pair | Whole-run wall-clock increment |
+| --- | --- | --- | --- | --- | --- |
+| First batch off/on (16 pairs) | +0.0861% | [+0.0017%, +0.2536%] | [+0.0621%, +0.2958%] | +1.035% | +0.1632% (629.4 s vs 628.4 s) |
+| A/A-batch off/on (16 pairs) | +0.1844% | [+0.0762%, +0.2963%] | [+0.0875%, +0.4812%] | +2.548% | +0.2824% (626.8 s vs 625.0 s) |
+| A/A differences (16 pairs) | +0.0135% | [−0.3890%, +0.4767%] | [−0.3492%, +0.1512%] | +0.551% | — |
+| off/off nulls, first batch | −0.0494% | [−0.1488%, +0.1862%] | — | +0.331% | — |
+| off/off nulls, A/A batch | +0.2130% | [−0.0643%, +0.3380%] | [+0.0123%, +0.7515%] | +3.004% | — |
+
+Under the unified estimator every off/on interval's upper bound is below 0.5%. This is **not** declared a pass: the historical pair-level bootstrap **mean** interval for the A/A batch reaches +0.7061%; four sessions are only four clusters (~256 distinct hierarchical resamples), so the interval granularity is coarse; and the +2.5% worst pair shows that rare expensive episodes exist, which a median can mask. Which interval (median or mean) defines the acceptance bound is a mentor decision; recipe-level measurement remains the final arbiter. Per-step stage totals on bench-on segments (observer-on arms only — off arms have no per-step data by construction): p50 ≈ 2.45 ms, p95 ≈ 2.50 ms, p99 2.50–3.18 ms, max 3.8–5.3 ms; report-lag peaks 103–107 ms.
 
 These are standalone-mechanism numbers on a toy training loop with real gradient all-reduce; they are not a Relax recipe result and do not measure MetricsService transfer, PP/VPP, multi-node behaviour or root-cause accuracy.
 
