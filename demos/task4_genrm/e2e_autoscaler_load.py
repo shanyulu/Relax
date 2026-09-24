@@ -98,7 +98,10 @@ class PhaseLoadGenerator:
                 # decode running -- the two signals the scale-out thresholds
                 # watch (token_usage / queue depth). Short prompts leave a
                 # 4090-sized 0.6B engine under 5% utilization at any concurrency.
-                prompt, max_new, timeout = HIGH_PROMPT, 512, 900
+                # The worker id prefix defeats the radix prefix cache: identical
+                # prompts would be KV-shared and leave the pool empty.
+                prompt = f"[request {wid}]\n{HIGH_PROMPT}"
+                max_new, timeout = 512, 900
             elif phase == "STEADY":
                 prompt, max_new, timeout = PROMPTS[i % len(PROMPTS)], 256, 300
             else:
