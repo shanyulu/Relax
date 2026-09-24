@@ -166,13 +166,13 @@ reconcile 延续原 operation，不产生新 request ID、不重新选择 victim
 | 已验证（回归 + mutation-check） | 扩容失败候选在 PG 释放确认后从恢复路径退役；reconcile 延迟释放同样不再引用已删 PG | manager 级回归，bug 版 2 failed → 修复后通过 |
 | 已验证（回归 + mutation-check） | Autoscaler 终态带未决清理时本地冻结该服务决策；各服务状态、策略与历史相互隔离 | 决策引擎与服务隔离测试 |
 | 已验证（真实 Ray/SGLang GPU E2E，2026-09-24） | 持续打分下手动 1→2→1：扩容 `CREATING→HEALTH_CHECKING→ACTIVE`（45 s，弹性引擎落在独立探测的 PG/GPU 上）、缩容 `DRAINING→COMPLETED`（1 s）；初始引擎全程存活，恰好移除弹性引擎；弹性引擎实际服务 511 个请求；三个阶段的贪心打分逐字一致；全程 4,163 个负载请求零失败（扩容窗口 2,434 个、缩容窗口 52 个）；缩容后 GPU 显存与 Ray 空闲 GPU 归还基线 | 4×4090 + Qwen3-0.6B，`demos/task4_genrm/results/e2e_run_20260924`（E2E_PASS） |
+| 已验证（真实 Ray/SGLang GPU E2E，2026-09-24） | **Autoscaler 全周期自动扩缩**：LOW 单引擎不误扩 → HIGH 持续饱和 60 s 内自动 1→2（`token_usage_high`，ACTIVE）→ STEADY 双引擎服务（弹性引擎 516 请求）→ 持续低载自动 2→1（`token_usage_low + no_queue + throughput_stable` 全条件，COMPLETED）→ 终态副本数 == 初始、初始引擎存活、3,202 请求零失败；决策与历史落 `/scale_history`，1 Hz 容量时间线留档。GenRM 使用独立于 Rollout 的服务目标与阈值 | 4×4090 + Qwen3-0.6B，`demos/task4_genrm/results/autoscaler_run_20260924_v3`（E2E_PASS，feat/task4-genrm-scale-api 分支） |
 | 已实现、经逐行审查（暂无专门测试） | PG 删除后轮询 Ray 状态至 `REMOVED` 才视为释放；缩容 victim 未确认释放时保留容量计数、不继续选下一个、不报成功；`recover` 排除候选、排空中、退役与待清理 rank；GenRM 发现任意时刻聚合出多个有引擎的模型时跳过自动缩放，避免扩错目标 | 工作区 diff 审查记录；PG 释放路径已由上述 E2E 的缩容阶段实际走到（GPU/PG 归还基线） |
-| 进行中 | Autoscaler 实负载自动扩缩（LOW→HIGH→STEADY→LOW' 负载曲线、独立阈值、决策/历史时间线） | 4×4090 实验运行中，结果落库后更新本表 |
-| 未验证（需真实资源） | Autoscaler 多轮高低负载与采集失败场景；训练不中断（扩缩期间 actor/rollout 持续推进） | 下一阶段 |
+| 未验证（需真实资源） | 训练不中断（扩缩期间 actor/rollout 持续推进）——数据集（dapo-math-17k）已就位，为下一阶段工作 | — |
 
 官方示例的 judge 为 Qwen3-VL-30B-A3B-Instruct × 8 GPU，本机 4×4090 无法承载；E2E 采用 Qwen3-0.6B 作为 GenRM judge 验证生命周期与路由正确性（官方要求的"新引擎打分与初始引擎一致"以贪心逐字一致证明），最终 recipe 级训练验收仍需导师确认可用的文本 GenRM 模型规模。
 
-现有 CPU 测试检查接口契约、fake-manager 行为与上表已验证项；真实训练连续性仍需单独取证。
+现有 CPU 测试检查接口契约、fake-manager 行为与上表已验证项；真实训练连续性仍需单独取证。实测过程暴露并修复了若干仅在真实 Ray/SGLang 下可见的问题（ray 2.5x 无 `wait_for_ready`、scale-out PG 需探测物理 GPU 而非本地索引、Serve 代理容器内仅绑 localhost、radix cache 使相同 prompt 的 KV 共享导致负载不饱和），修复均有独立 commit 与复现记录。
 
 ## 如何验收
 
