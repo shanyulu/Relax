@@ -21,6 +21,19 @@ class ContractDemoTest(unittest.TestCase):
         self.assertNotIn("manager-pg-1", demo.pg_live)
         self.assertFalse(demo.late_health_ack("genrm-1"))
 
+    def test_existing_replicas_do_not_make_a_failed_operation_partial(self) -> None:
+        demo = ContractDemo()
+        demo.scale_out(demo.request("out", 2)["request_id"])
+        request_id = demo.request("out", 3)["request_id"]
+        self.assertEqual(demo.scale_out(request_id, health_ok=False), "FAILED")
+        self.assertEqual((demo.current, demo.ready), (2, 2))
+
+    def test_partial_means_this_operation_added_capacity(self) -> None:
+        demo = ContractDemo()
+        request_id = demo.request("out", 3)["request_id"]
+        self.assertEqual(demo.scale_out(request_id, health_ok=(True, False)), "PARTIAL")
+        self.assertEqual((demo.current, demo.ready), (2, 2))
+
     def test_idempotency_key_replays_only_the_same_request(self) -> None:
         demo = ContractDemo()
         first = demo.request("out", 2, idempotency_key="client-7")

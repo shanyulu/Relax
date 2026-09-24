@@ -121,6 +121,7 @@ class ContractDemo:
         self.requests[request_id] = {
             "direction": direction,
             "target": target,
+            "starting_current": self.current,
             "model": model,
             "timeout_secs": timeout_secs,
             "status": "PENDING",
@@ -155,8 +156,9 @@ class ContractDemo:
             raise ValueError("request is not active for this direction")
         return self.requests[request_id]
 
-    def scale_out(self, request_id: str, *, health_ok: bool = True, cleanup_ok: bool = True) -> str:
+    def scale_out(self, request_id: str, *, health_ok: bool | tuple[bool, ...] = True, cleanup_ok: bool = True) -> str:
         request = self._request(request_id, "out")
+        attempt = 0
         while self.current < request["target"]:
             number = len([r for r in self.replicas.values() if r.owner == "manager"]) + 1
             replica_id, pg = f"genrm-{number}", f"manager-pg-{number}"
@@ -167,8 +169,10 @@ class ContractDemo:
             self._record("PG_ALLOCATED", f"{replica_id}: manager owns {pg}; two mock workers created")
             request["status"] = "HEALTH_CHECKING"
             self._record("HEALTH_CHECKING", f"{replica_id}: health result pending; route unchanged")
-            if not health_ok:
-                request["status"] = "PARTIAL" if self.current > 1 else "FAILED"
+            candidate_healthy = health_ok[attempt] if isinstance(health_ok, tuple) else health_ok
+            attempt += 1
+            if not candidate_healthy:
+                request["status"] = "PARTIAL" if self.current > request["starting_current"] else "FAILED"
                 if cleanup_ok:
                     candidate.released = True
                     self.pg_live.remove(pg)
