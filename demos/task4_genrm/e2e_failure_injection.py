@@ -134,14 +134,55 @@ def scale_out_to_2(ev: "Evidence", num_gpus: int) -> tuple:
     return engine_ids(after)
 
 
-def pid_for_port(port: int):
-    """PID of the process LISTENing on ``port`` (psutil; the container has
-    no ss/lsof)."""
+def pid_for_port(port: int, ev=None):
+    """PID of the process LISTENing on ``port``: psutil first, then a
+    /proc/net/tcp{,6} inode walk (namespace-robust). Dumps the listen table
+    on failure for diagnosis."""
     import psutil
 
     for conn in psutil.net_connections(kind="tcp"):
         if conn.laddr and conn.laddr.port == port and conn.status == psutil.CONN_LISTEN and conn.pid:
             return conn.pid
+    # /proc fallback: find the socket inode for the port, then the pid whose
+    # fd links to it.
+    hexport = f"{port:04X}"
+    inodes = set()
+    for path in ("/proc/net/tcp", "/proc/net/tcp6"):
+        try:
+            with open(path) as f:
+                next(f)
+                for line in f:
+                    parts = line.split()
+                    if parts[1].split(":")[1] == hexport and parts[3] == "0A":  # LISTEN
+                        inodes.add(parts[9])
+        except OSError:
+            continue
+    for pid_dir in os.listdir("/proc"):
+        if not pid_dir.isdigit():
+            continue
+        fd_dir = f"/proc/{pid_dir}/fd"
+        try:
+            for fd in os.listdir(fd_dir):
+                try:
+                    target = os.readlink(f"{fd_dir}/{fd}")
+                except OSError:
+                    continue
+                if target.startswith("socket:["):
+                    inode = target[8:-1]
+                    if inode in inodes:
+                        return int(pid_dir)
+        except OSError:
+            continue
+    if ev is not None:
+        try:
+            table = [
+                (c.laddr.port if c.laddr else None, c.status, c.pid)
+                for c in psutil.net_connections(kind="tcp")
+                if c.status == psutil.CONN_LISTEN
+            ]
+            ev.log("pid_for_port_failed", port=port, listen_table=table[:40])
+        except Exception:  # noqa: BLE001
+            pass
     return None
 
 
@@ -297,12 +338,13 @@ def main() -> int:
         ids_after = scale_out_to_2(ev, cfg.genrm_num_gpus)
         ev.log("s2_engines", ids=sorted(map(list, ids_after)))
         # Two long requests so one is in flight on the victim (round-robin
-        # alternates engines); ~2600 tokens decode in ~6 s at ~450 tok/s,
-        # comfortably outliving the 3 s operation deadline.
-        longs2 = [LongRequest(f"[s2-{i}]\n{prompt}", 2600).start() for i in range(2)]
+        # alternates engines). 8000 tokens decode ~17 s at ~470 tok/s --
+        # comfortably outliving the 5 s operation deadline, so the watcher
+        # provably aborts while the victim request is still running.
+        longs2 = [LongRequest(f"[s2-{i}]\n{prompt}", 8000).start() for i in range(2)]
         time.sleep(4.0)
-        rid2 = submit_scale("scale_in", cfg.genrm_num_gpus, 3.0)  # deadline < decode
-        ev.log("s2_scale_in_submitted", request_id=rid2, timeout_secs=3.0)
+        rid2 = submit_scale("scale_in", cfg.genrm_num_gpus, 5.0)  # deadline << decode
+        ev.log("s2_scale_in_submitted", request_id=rid2, timeout_secs=5.0)
 
         # The watcher aborts at the deadline and fails the registry dirty;
         # new scale operations for the model must be rejected meanwhile.
@@ -347,7 +389,7 @@ def main() -> int:
         ids_after = scale_out_to_2(ev, cfg.genrm_num_gpus)
         elastic3 = (ids_after - initial_ids).pop()
         ev.log("s3_engines", initial=sorted(map(list, initial_ids)), victim=list(elastic3))
-        longs3 = [LongRequest(f"[s3-{i}]\n{prompt}", 2600).start() for i in range(2)]
+        longs3 = [LongRequest(f"[s3-{i}]\n{prompt}", 8000).start() for i in range(2)]
         time.sleep(4.0)
         rid3 = submit_scale("scale_in", cfg.genrm_num_gpus, 600.0)
         ev.log("s3_scale_in_submitted", request_id=rid3)
@@ -362,7 +404,12 @@ def main() -> int:
                 break
             time.sleep(1.0)
         victim_port = elastic3[1]
-        pid = pid_for_port(victim_port)
+        pid = None
+        for _ in range(10):  # the listener is momentarily busy, retry
+            pid = pid_for_port(victim_port, ev)
+            if pid:
+                break
+            time.sleep(1.0)
         ev.log("s3_victim_identified", port=victim_port, pid=pid, status=st["status"])
         if pid is None:
             raise RuntimeError(f"could not find PID for victim port {victim_port}")
