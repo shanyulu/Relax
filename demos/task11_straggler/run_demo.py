@@ -162,7 +162,7 @@ def worker(rank: int, world: int, port: int, args: argparse.Namespace, sink: mp.
             interval=args.interval,
             sink=sink,
         )
-        for pair in range(max(args.pairs, args.null_pairs)):
+        for pair in range(max(args.pairs, args.null_pairs, args.aa_pairs)):
             # AB/BA ordering reduces drift from clocks, caches and temperature.
             if pair < args.pairs:
                 for mode in (("off", "on") if pair % 2 == 0 else ("on", "off")):
@@ -195,6 +195,25 @@ def worker(rank: int, world: int, port: int, args: argparse.Namespace, sink: mp.
                         sink=sink,
                     )
                     sink.put(result)
+            if pair < args.aa_pairs:
+                # A/A control: both arms run with the observer active. The
+                # difference isolates measurement noise under the instrumented
+                # configuration, complementing the off/off null pairs.
+                for repeat in ("first", "second"):
+                    result = train_run(
+                        case=f"aa_{pair}_{repeat}",
+                        rank=rank,
+                        device=rank,
+                        model=model,
+                        initial=initial,
+                        batch=batch,
+                        larger_batch=larger_batch,
+                        steps=args.steps,
+                        interval=args.interval,
+                        sink=sink,
+                        observe=True,
+                    )
+                    sink.put(result)
         for injection in ("control", "compute_slow", "compute_recovery", "load_skew", "host_stall"):
             result = train_run(
                 case=injection,
@@ -222,6 +241,12 @@ def main() -> None:
     parser.add_argument("--gpus", type=int, default=2)
     parser.add_argument("--pairs", type=int, default=4)
     parser.add_argument("--null-pairs", type=int, default=0)
+    parser.add_argument(
+        "--aa-pairs",
+        type=int,
+        default=0,
+        help="A/A control pairs: both arms run with the observer active",
+    )
     parser.add_argument("--steps", type=int, default=140)
     parser.add_argument("--injection-steps", type=int, default=24)
     parser.add_argument("--warmup", type=int, default=12)
@@ -239,6 +264,8 @@ def main() -> None:
         parser.error("all counts must be positive")
     if args.null_pairs < 0:
         parser.error("null pairs cannot be negative")
+    if args.aa_pairs < 0:
+        parser.error("aa pairs cannot be negative")
     if args.compute_extra_forwards < 1:
         parser.error("compute-extra-forwards must be positive")
     context = mp.get_context("spawn")
@@ -281,7 +308,7 @@ def main() -> None:
     by_case: dict[str, list[dict[str, Any]]] = {}
     for run in runs:
         by_case.setdefault(run["case"], []).append(run)
-    expected = args.gpus * (args.pairs * 2 + args.null_pairs * 2 + 5)
+    expected = args.gpus * (args.pairs * 2 + args.null_pairs * 2 + args.aa_pairs * 2 + 5)
     if len(runs) != expected or any(len(group) != args.gpus for group in by_case.values()):
         raise RuntimeError(f"missing run results: got {len(runs)} of {expected}")
     paired: list[dict[str, Any]] = []
@@ -294,6 +321,13 @@ def main() -> None:
         first = max(row["elapsed_s"] for row in by_case[f"null_{pair}_first"])
         second = max(row["elapsed_s"] for row in by_case[f"null_{pair}_second"])
         null_trials.append(
+            {"pair": pair, "first_s": first, "second_s": second, "difference_pct": (second / first - 1) * 100}
+        )
+    aa_trials: list[dict[str, Any]] = []
+    for pair in range(args.aa_pairs):
+        first = max(row["elapsed_s"] for row in by_case[f"aa_{pair}_first"])
+        second = max(row["elapsed_s"] for row in by_case[f"aa_{pair}_second"])
+        aa_trials.append(
             {"pair": pair, "first_s": first, "second_s": second, "difference_pct": (second / first - 1) * 100}
         )
     overheads = [row["overhead_pct"] for row in paired]
@@ -316,6 +350,7 @@ def main() -> None:
         "config": {key: value for key, value in vars(args).items() if key != "output"},
         "paired_trials": paired,
         "null_trials": null_trials,
+        "aa_trials": aa_trials,
         "max_paired_final_loss_difference": max(
             abs(
                 next(row["final_loss"] for row in by_case[f"bench_{pair}_on"] if row["rank"] == rank)

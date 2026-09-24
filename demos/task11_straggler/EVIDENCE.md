@@ -45,6 +45,18 @@ Four fresh-process sessions on the same machine (4× RTX 4090, driver 595.71.05,
 
 Pooled over all 16 pairs: median 0.0861%, mean 0.1641%. Every session median is below 0.5%, but session D fails the acceptance criterion that the bootstrap mean 95% upper bound also stay below 0.5%: its interval reaches 0.8367%. Sessions A/B/C stay below 0.5% at both the median and the upper bound. Every session received all planned samples with zero drops, zero loss differences and zero parameter mismatches.
 
+### A/A control sessions (2026-09-24, added the same day)
+
+The four sessions above were re-run with `--aa-pairs 4`: four additional pairs where **both arms run with the observer active** (`aa-session-A/B/C/D.json`, same protocol, 24,160/24,160 samples per session, zero drops, zero loss differences, zero parameter mismatches). The A/A difference isolates the observer's own timing bias from environment drift, which the off/off null pairs cannot:
+
+| Measure | Pooled A/A (16 trials) | Pooled off/off null (16 trials) |
+| --- | --- | --- |
+| Median difference | +0.0135% | +0.2130% |
+| Bootstrap mean 95% interval | −0.3332% to +0.1728% | −0.1894% to +3.0036% (one +3.00% outlier in session C) |
+| Range | −1.3455% to +0.5510% | −0.6119% to +3.0036% |
+
+Pooled paired overhead across all four A/A sessions (32 pairs): median +0.1844%, bootstrap mean 95% interval −0.0580% to +0.7061%. The A/A median being indistinguishable from zero while off/off pairs drift by tenths of a percent (and occasionally whole percents) supports the claim that the remaining spread is dominated by run-to-run environment drift rather than observer bias. It does **not** by itself bring the pooled overhead's upper bound below 0.5%; the acceptance plan (recipe runs, more pairs) stands.
+
 What the spread says, honestly:
 
 - Between-session drift is the same order as the measured effect: session medians span 0.0017%–0.2536%, and the A–D difference (0.178 pp) exceeds every session median except D's. A single-session number would have been luck, which is exactly why the acceptance plan demands ≥3 fresh sessions plus A/A controls.
