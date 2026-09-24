@@ -139,3 +139,29 @@ cd demos/task11_straggler && python run_demo.py --gpus 2 --pairs 4 --null-pairs 
 ```
 
 参数已与 `aa-session-*.json` 内记录的 config 逐字段核对一致（`injection_steps 128` 等全部吻合）。
+
+---
+
+## 2026-09-24 深夜增量（Task 4：真实 GPU E2E）
+
+### 已验证（真实 Ray 2.58 + SGLang 0.5.5.post3 + Qwen3-0.6B，4×4090）
+
+| 项 | 结果 | 证据 |
+| --- | --- | --- |
+| 手动 1→2→1 全生命周期 | **E2E_PASS**：扩容 `CREATING→HEALTH_CHECKING→ACTIVE`（45s）、缩容 `DRAINING→COMPLETED`（1s）；初始引擎存活、恰好移除弹性引擎；三阶段贪心打分逐字一致；4,163 负载请求零失败（扩容窗 2,434 / 缩容窗 52）；GPU 显存与 Ray 空闲 GPU 归还基线 | `demos/task4_genrm/results/e2e_run_20260924`（task4-integration 分支 commit a2ca6cb） |
+| Autoscaler 自动扩容 | HIGH 负载 60s 内自动 1→2（token_usage_high 触发）；弹性引擎实际服务 520 请求；36,931 请求零失败 | `autoscaler_run_20260924`（scale_out ACTIVE 入 history） |
+| Autoscaler 自动缩容 | **未通过**（第一次运行）：per-service cooldown 不在 ServiceScalingPolicy 内，全局 300s scale-in cooldown 超出 LOW' 观察窗 | 已定位根因；v2 运行中（运行时 PATCH cooldown 60s + 窗口 500s） |
+
+### 过程中修掉的真实 bug（全部先在 E2E 中暴露、后修复、均有 commit）
+
+1. `wait_for_ready` 在 ray 2.5x 的 `ray.util.placement_group` 不存在 → 改 `pg.ready()+ray.wait`（a7186ca）
+2. scale-out PG 返回本地 GPU 索引 0 而非物理 GPU id → 弹性引擎与初始引擎同卡 OOM → InfoActor 探测（edad49e）
+3. Serve 代理容器内只绑 localhost → URL 重写 127.0.0.1（55bf992）
+4. autoscaler E2E 三个 API 层 bug（`get_deployment_handle` 误用、`DeploymentResponse` 不能 `ray.get`、`/scale_history`/`/conditions` 缺 `service=genrm` 导致必误判）（d9802b6）
+5. HIGH 负载不饱和（短 prompt 低占用；相同 prompt 被 radix cache KV 共享）→ 长上下文 + 唯一前缀（6eeea72、17a1776 前序）
+
+### 环境事实
+
+- sglang 版本链：PyPI 0.5.17 需 torch 2.11（与 relax docker 的源码版不同）；**0.5.5.post3 是唯一精确匹配 torch 2.8.0 的版本**，`ServerArgs`/`launch_server` API 面与 relax 引擎代码兼容（探针验证 + E2E 验证）
+- 官方 judge（Qwen3-VL-30B-A3B × 8 GPU）本机不可承载；E2E 以 Qwen3-0.6B 验证生命周期/路由/一致性语义
+- 数据集 dapo-math-17k 已就位（训练 E2E 用）
