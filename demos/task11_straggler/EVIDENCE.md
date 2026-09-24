@@ -34,21 +34,21 @@ Nineteen tests cover diagnosis, queue pressure, readout/transport exceptions, re
 
 ## Multi-session mechanism check (2026-09-24)
 
-Four fresh-process sessions on the same machine (4× RTX 4090, driver 595.71.05, torch 2.8.0+cu128), each with four off/on pairs and four off/off pairs at the v4 protocol (`--steps 8000 --interval 8 --batch 48 --dim 1024`, ~5 min 23 s per session). Sessions A/B/C ran on GPUs 0,1; session D ran on GPUs 2,3. The current source adds a fifth observed case (`compute_recovery`) versus the v4 snapshot, so each session plans 8,080 samples. Raw JSON and logs: [multisession-20260924](results/multisession-20260924/).
+Four fresh-process sessions on the same machine (4× RTX 4090, driver 595.71.05, torch 2.8.0+cu128), each with four off/on pairs and four off/off pairs at the v4 protocol (`--steps 8000 --interval 8 --batch 48 --dim 1024`, ~5 min 23 s per session). Each timed trial here lasted about 19.6–19.7 s versus 10.3–10.4 s in the v4 snapshot at the same step count, so the machine was in a different load state; overhead is a ratio and is not directly affected, but this difference belongs in any between-run drift discussion. Sessions A/B/C ran on GPUs 0,1; session D ran on GPUs 2,3. The current source adds a fifth observed case (`compute_recovery`) versus the v4 snapshot, so each session plans 8,080 samples. Raw JSON: [multisession-20260924](results/multisession-20260924/); the per-session `.log` files are kept only on the local machine and are not part of the repository.
 
-| Session | GPUs | Pair overheads (%)            | Median (%) | off/off range (%)      | Received |
-| ------- | ---- | ----------------------------- | ---------- | ---------------------- | -------- |
-| A       | 0,1  | 0.4089 / −0.1176 / 0.2693 / −0.1215 | 0.0759 | +0.1812 … +0.3308 | 8,080/8,080 |
-| B       | 0,1  | −0.1119 / 0.2273 / −0.0324 / 0.0359 | 0.0017 | −0.1792 … −0.0887 | 8,080/8,080 |
-| C       | 0,1  | 0.4378 / 0.0267 / 0.0525 / 0.1197 | 0.0861 | −0.1599 … +0.0560 | 8,080/8,080 |
-| D       | 2,3  | 1.0346 / 0.2641 / −0.1105 / 0.2431 | 0.2536 | −0.1894 … +0.1850 | 8,080/8,080 |
+| Session | GPUs | Pair overheads (%)            | Median (%) | Bootstrap mean 95% upper bound (%) | off/off range (%)      | Received |
+| ------- | ---- | ----------------------------- | ---------- | ---------------------------------- | ---------------------- | -------- |
+| A       | 0,1  | 0.4089 / −0.1176 / 0.2693 / −0.1215 | 0.0759 | 0.3391 | +0.1812 … +0.3308 | 8,080/8,080 |
+| B       | 0,1  | −0.1119 / 0.2273 / −0.0324 / 0.0359 | 0.0017 | 0.1623 | −0.1792 … −0.0887 | 8,080/8,080 |
+| C       | 0,1  | 0.4378 / 0.0267 / 0.0525 / 0.1197 | 0.0861 | 0.3415 | −0.1599 … +0.0560 | 8,080/8,080 |
+| D       | 2,3  | 1.0346 / 0.2641 / −0.1105 / 0.2431 | 0.2536 | **0.8367** | −0.1894 … +0.1850 | 8,080/8,080 |
 
-Pooled over all 16 pairs: median 0.0861%, mean 0.1641%. Every session median is far below 0.5%, and every session received all planned samples with zero drops, zero loss differences and zero parameter mismatches.
+Pooled over all 16 pairs: median 0.0861%, mean 0.1641%. Every session median is below 0.5%, but session D fails the acceptance criterion that the bootstrap mean 95% upper bound also stay below 0.5%: its interval reaches 0.8367%. Sessions A/B/C stay below 0.5% at both the median and the upper bound. Every session received all planned samples with zero drops, zero loss differences and zero parameter mismatches.
 
 What the spread says, honestly:
 
 - Between-session drift is the same order as the measured effect: session medians span 0.0017%–0.2536%, and the A–D difference (0.178 pp) exceeds every session median except D's. A single-session number would have been luck, which is exactly why the acceptance plan demands ≥3 fresh sessions plus A/A controls.
-- Cross-GPU-pair invariance does not hold at a 0.05 pp tolerance: session D (GPUs 2,3) is the highest and contains the largest single pair (1.03%). Pairing and controls must stay within one hardware pair.
+- Session D (GPUs 2,3) has the highest median and contains the largest single pair (1.03%), but this experiment cannot attribute that difference to the GPU pair: A/B/C all ran on GPUs 0,1 and D ran last, so hardware pair and run order are fully confounded. Whether the 0.05 pp cross-pair tolerance holds is therefore untested by this design. Pairing and controls must stay within one hardware pair.
 - The off/off sign flips between sessions (A all positive, B all negative, C/D mixed); the direction of the systematic bias is not stable. This confirms the v4 observation that control drift can exceed the median overhead.
 - Detection behaviour was consistent across all four sessions: the injected extra-forward case alerted on rank 1 forward (first alert at step 8 in A/B/C, step 16 in D), the recovery case returned to peer range, the unequal-workload case was labelled `workload_imbalance` with no hardware verdict, host stall produced a backward-stage alert with cause `undetermined`, and the control case raised no alert. Sustained false-positive alerts during clean bench-on segments: 2/1/2/0 across A/B/C/D.
 
@@ -119,7 +119,7 @@ The demo does not verify PP/VPP identity, attention/MoE hooks, real MetricsServi
 Current-source smoke check and report (run from this directory):
 
 ```bash
-python -m unittest -v test_diagnosis.py test_probe.py test_rank_view.py
+python -m unittest -v test_diagnosis.py test_probe.py test_rank_view.py test_replay.py
 python run_demo.py --gpus 2 --pairs 1 --null-pairs 1 --steps 256 --injection-steps 64 --warmup 12 --interval 8 --batch 48 --dim 1024 --output results/reproduction.json
 python render_report.py results/reproduction.json --output results/reproduction.png
 python render_rank_view.py results/reproduction.json --markdown results/reproduction.md
