@@ -374,10 +374,15 @@ class GenRMManager(MultiEngineManager):
     def _create_scale_pg(self):
         """Create one dedicated single-GPU placement group for a scale-out
         engine (RFC: new replicas request free resources on their own PG)."""
-        from ray.util.placement_group import placement_group, remove_placement_group, wait_for_ready
+        import ray
+        from ray.util.placement_group import placement_group, remove_placement_group
 
         pg = placement_group([{"GPU": 1.0, "CPU": 2.0}], strategy="STRICT_PACK")
-        if not wait_for_ready(pg, timeout_s=120):
+        # ray.util.placement_group exports no wait_for_ready in ray 2.5x;
+        # pg.ready() + ray.wait(timeout=...) is the supported readiness wait
+        # (same pattern as the rollout scale-out PG polling).
+        ready, _ = ray.wait([pg.ready()], timeout=120)
+        if not ready:
             remove_placement_group(pg)
             raise RuntimeError("scale-out placement group did not become ready within 120s")
         # Local bundle/gpu indices: the engine actor sees exactly the one GPU
