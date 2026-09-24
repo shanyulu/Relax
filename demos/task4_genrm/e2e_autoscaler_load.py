@@ -58,6 +58,21 @@ PROMPTS = [
     "Question: What is 15% of 200? Candidate answer: 30. Is the candidate answer correct? Reply with exactly YES or NO.",
 ]
 
+# HIGH-phase prompt: ~1,800 tokens of context so a batch of concurrent
+# requests actually fills the 0.6B engine's KV pool (~170k tokens) and drives
+# token_usage over the scale-out threshold. Short 30-token prompts leave a
+# 4090-sized 0.6B engine under 5% utilization no matter the concurrency.
+FILLER = (
+    "You are a meticulous mathematics reviewer. Before answering, reproduce "
+    "the full derivation, check each algebraic step, and list every assumption "
+    "you make. Take your time and be exhaustive. "
+) * 60
+HIGH_PROMPT = (
+    FILLER
+    + "Now the question: What is 17 * 23? Candidate answer: 391. "
+    "Is the candidate answer correct? Reply with exactly YES or NO."
+)
+
 
 class PhaseLoadGenerator:
     """Continuous scoring load whose concurrency follows a phase variable.
@@ -79,18 +94,22 @@ class PhaseLoadGenerator:
         while not self._stop.is_set():
             phase = self.phase
             if phase == "HIGH":
-                max_new, timeout = 768, 600
+                # Long context + long generation: fills the KV pool and keeps
+                # decode running -- the two signals the scale-out thresholds
+                # watch (token_usage / queue depth). Short prompts leave a
+                # 4090-sized 0.6B engine under 5% utilization at any concurrency.
+                prompt, max_new, timeout = HIGH_PROMPT, 512, 900
             elif phase == "STEADY":
-                max_new, timeout = 256, 300
+                prompt, max_new, timeout = PROMPTS[i % len(PROMPTS)], 256, 300
             else:
-                max_new, timeout = 16, 120
+                prompt, max_new, timeout = PROMPTS[i % len(PROMPTS)], 16, 120
             t = time.time()
             try:
                 code, body = http_post(
                     GENRM_BASE,
                     "/generate",
                     {
-                        "messages": [{"role": "user", "content": PROMPTS[i % len(PROMPTS)]}],
+                        "messages": [{"role": "user", "content": prompt}],
                         "sampling_params": {"temperature": 0, "max_new_tokens": max_new},
                     },
                     timeout=timeout,
@@ -291,7 +310,7 @@ def main() -> int:
                 "min_engines": cfg.genrm_num_gpus,
                 "max_engines": cfg.genrm_num_gpus + 1,
                 "scale_out_policy": {
-                    "token_usage_threshold": 0.5,
+                    "token_usage_threshold": 0.3,
                     "queue_depth_per_engine": 4,
                     "queue_time_p95_threshold": 3.0,
                     "ttft_p95_threshold": 3.0,
@@ -343,7 +362,7 @@ def main() -> int:
     timeline = Timeline(ev)
     load = PhaseLoadGenerator(ev)
     timeline.start()
-    load.start(workers=32)
+    load.start(workers=48)
 
     initial_ids = None
     try:
