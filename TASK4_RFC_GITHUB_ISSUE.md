@@ -29,7 +29,7 @@
 
 ## API 契约
 
-`num_replicas` 是目标绝对总数，不是增减数量。POST 另接收可选模型选择、`timeout_secs` 和 `idempotency_key`。同一模型、同一 key、同一请求体的重试返回原 request；同 key 不同请求体返回 409。没有 key 的第二个在途请求仍返回 409。这样既保留并发保护，也覆盖客户端丢失首个响应后的安全重试。
+`num_replicas` 是目标绝对总数，不是增减数量。POST 另接收可选模型选择、`timeout_secs` 和 `idempotency_key`。请求体指纹覆盖模型选择、目标数量与 `timeout_secs`：同 key 同指纹的重试返回原 operation；`NOOP` 同样是被记录的决策，同 key 重试逐字重放首次响应（携带决策时刻的 `current`，容量变化后也不会执行新操作）；同 key 不同指纹返回 409。没有 key 的第二个在途请求仍返回 409。key 记录保留到对应操作终态后的可配置重放窗口，超期按新请求处理。这样既保留并发保护，也覆盖客户端丢失首个响应后的安全重试。
 
 | 接口                                           | 用途                                          |
 | ---------------------------------------------- | --------------------------------------------- |
@@ -46,7 +46,7 @@
 | 顺序     | 规则                                                                                                 |
 | -------- | ---------------------------------------------------------------------------------------------------- |
 | 校验     | 数量须为正整数；所有目标不得低于 `initial`，缩容不得低于初始值；类型错误 422，范围或模型选择错误 400 |
-| 幂等重放 | 命中同 key、同 body 时返回原 operation；同 key、不同 body 返回 409                                   |
+| 幂等重放 | 同 key、同指纹（模型/目标/timeout）返回原 operation 或逐字重放 NOOP；同 key、不同指纹返回 409          |
 | 互斥     | 其余请求若同模型有在途操作或未处理完的生命周期异常，返回 409，包括无 key 的同目标重复请求            |
 | 执行     | 扩容目标 ≤ current、缩容目标 ≥ current：`200 NOOP`；否则 `200 PENDING`，返回 request ID 后异步执行   |
 
@@ -54,7 +54,7 @@
 
 请求状态与副本状态分开，沿用 Rollout 扩缩语义：
 
-- operation：扩容为 `PENDING/RUNNING/COMPLETED/PARTIAL/FAILED`，缩容为 `PENDING/RUNNING/COMPLETED/FAILED`；终态必须带 `target/current/ready/created/removed/failed/cleanup_required`。
+- operation：扩容 `PENDING → CREATING → HEALTH_CHECKING → READY → ACTIVE`，终态 `ACTIVE/PARTIAL/FAILED`。成功终态沿用 Rollout `ScaleOutStatus` 的 `ACTIVE`，Autoscaler 现有终态判定可直接复用；不提供 `CANCELLED`，未竟清理走 reconcile。缩容 `PENDING → DRAINING → REMOVING → COMPLETED/FAILED`，对齐 `ScaleInStatus`。终态必须带 `target/current/ready/created/removed/failed/cleanup_required`。
 - replica：`CREATING → HEALTH_CHECKING → READY → ACTIVE → DRAINING → REMOVING → REMOVED`，另有 `FAILED`。GenRM 不出现 `WEIGHT_SYNCING`。
 
 ## 生命周期
