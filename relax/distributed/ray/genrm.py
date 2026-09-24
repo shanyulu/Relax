@@ -371,23 +371,39 @@ class GenRMManager(MultiEngineManager):
             params = self._scale_op_params.get(request_id) or {}
         return params.get("target"), params.get("direction")
 
-    def _create_scale_pg(self):
+    def _create_scale_pg(self, rank: int):
         """Create one dedicated single-GPU placement group for a scale-out
-        engine (RFC: new replicas request free resources on their own PG)."""
+        engine (RFC: new replicas request free resources on their own PG).
+
+        The PG is registered in the ownership maps immediately after creation
+        -- before the readiness wait and the physical-GPU probe -- so any
+        failure on those paths reaches the caller's fenced release instead of
+        stranding an unowned PG (RFC: register the cleanup handle at PG
+        request time)."""
         import ray
-        from ray.util.placement_group import placement_group, remove_placement_group
+        from ray.util.placement_group import placement_group
         from ray.util.scheduling_strategies import PlacementGroupSchedulingStrategy
 
         from relax.distributed.ray.placement_group import InfoActor
         from relax.utils.utils import get_ray_accelerator_kwargs
 
         pg = placement_group([{"GPU": 1.0, "CPU": 2.0}], strategy="STRICT_PACK")
+        # Ownership before readiness.  The placeholder gpu id is never used
+        # for scheduling: _resolve_placement is only reached via _init_engines
+        # (which runs after the probed tuple below is stored) and recover()
+        # skips candidate ranks; _engine_placements is what makes
+        # _remove_owned_pg able to see the PG from this moment on.
+        pg_tuple = (pg, [0], [0])
+        with self._scale_lock:
+            self._scale_placements[rank] = pg_tuple
+            self._engine_placements[rank] = (pg_tuple, True)
         # ray.util.placement_group exports no wait_for_ready in ray 2.5x;
         # pg.ready() + ray.wait(timeout=...) is the supported readiness wait
         # (same pattern as the rollout scale-out PG polling).
         ready, _ = ray.wait([pg.ready()], timeout=120)
         if not ready:
-            remove_placement_group(pg)
+            # The caller's fenced release owns PG removal; removing here
+            # would bypass the REMOVED-confirmation bookkeeping.
             raise RuntimeError("scale-out placement group did not become ready within 120s")
         # Probe the physical GPU inside the bundle.  Engine env vars keep
         # RAY_EXPERIMENTAL_NOSET_CUDA_VISIBLE_DEVICES=1 (multi-GPU engines
@@ -406,8 +422,18 @@ class GenRMManager(MultiEngineManager):
         try:
             _, gpu_id = ray.get(info.get_ip_and_gpu_id.remote(), timeout=60)
         finally:
-            ray.kill(info)
-        return (pg, [0], [int(gpu_id)])
+            # The InfoActor is scheduled on the PG bundle, so PG removal
+            # reaps it anyway; a kill failure must not mask the original
+            # error nor skip the caller's fenced release.
+            try:
+                ray.kill(info)
+            except Exception:  # noqa: BLE001
+                logger.warning("GenRM scale-out: failed to kill PG probe InfoActor", exc_info=True)
+        pg_tuple = (pg, [0], [int(gpu_id)])
+        with self._scale_lock:
+            self._scale_placements[rank] = pg_tuple
+            self._engine_placements[rank] = (pg_tuple, True)
+        return pg_tuple
 
     def _scale_out_lifecycle(self, request_id: str) -> None:
         abort = self._scale_abort[request_id]
@@ -451,13 +477,19 @@ class GenRMManager(MultiEngineManager):
         oscillate per engine (CREATING -> HEALTH_CHECKING); the component's
         watcher maps them onto the registry's monotonic chain."""
         abort = self._scale_abort[request_id]
-        pg_tuple = self._create_scale_pg()
+        # Allocate the rank before creating the PG: _create_scale_pg
+        # registers ownership under this rank immediately after creation, so
+        # every failure exit (readiness wait, InfoActor create/probe/kill)
+        # flows through the fenced release in the except handler below
+        # instead of stranding an unowned PG.
         with self._scale_lock:
             rank = len(self.all_engines)
             self.all_engines.append(None)
-            self._scale_placements[rank] = pg_tuple
             self._candidate_ranks.add(rank)
         try:
+            pg_tuple = self._create_scale_pg(rank)
+            with self._scale_lock:
+                self._scale_placements[rank] = pg_tuple
             # Record ownership before checking abort: PG creation is not
             # interruptible, so an abort immediately after it must flow
             # through the normal confirmed-cleanup path.
@@ -498,24 +530,34 @@ class GenRMManager(MultiEngineManager):
                     ray.kill(engine)
                 except Exception:
                     pass
-            if not self._wait_for_owned_pg_release(rank):
-                # PG release failed: the rank still occupies resources and
-                # must keep blocking new scale operations until reconcile.
-                self._update_progress(request_id, cleanup_required=True)
-                with self._scale_lock:
-                    self._unreleased_candidate_ranks.add(rank)
-            else:
-                # Release confirmed: the failed candidate's slot is gone for
-                # good.  Retire it (the same recovery exemption a scale-in
-                # victim gets) and drop the placement so recover() can
-                # neither rebuild the slot on the stale REMOVED PG nor on an
-                # out-of-range default placement -- a failed scale-out
-                # attempt is not recoverable capacity; the next scale-out
-                # appends a fresh slot with a fresh PG instead.
-                with self._scale_lock:
-                    self._retired_scale_ranks.add(rank)
-                    self._scale_placements.pop(rank, None)
+            self._release_owned_scale_pg(rank, request_id)
             raise
+
+    def _release_owned_scale_pg(self, rank: int, request_id: str, *, timeout_s: float = 60.0) -> bool:
+        """Fenced release of a scale-out PG owned by ``rank``: submit removal,
+        poll until Ray confirms REMOVED, then deregister the owner. Returns
+        True when the release is confirmed. On timeout the rank stays in
+        ``_pending_pg_cleanup`` and ``_unreleased_candidate_ranks`` with
+        ``cleanup_required`` set on the operation, keeping the model's scale
+        mutex until reconcile confirms the release."""
+        if self._wait_for_owned_pg_release(rank, timeout_s=timeout_s):
+            # Release confirmed: the failed candidate's slot is gone for
+            # good.  Retire it (the same recovery exemption a scale-in
+            # victim gets) and drop the placement so recover() can neither
+            # rebuild the slot on the stale REMOVED PG nor on an
+            # out-of-range default placement -- a failed scale-out attempt
+            # is not recoverable capacity; the next scale-out appends a
+            # fresh slot with a fresh PG instead.
+            with self._scale_lock:
+                self._retired_scale_ranks.add(rank)
+                self._scale_placements.pop(rank, None)
+            return True
+        # PG release failed: the rank still occupies resources and must keep
+        # blocking new scale operations until reconcile.
+        self._update_progress(request_id, cleanup_required=True)
+        with self._scale_lock:
+            self._unreleased_candidate_ranks.add(rank)
+        return False
 
     def _scale_in_lifecycle(self, request_id: str) -> None:
         abort = self._scale_abort[request_id]
