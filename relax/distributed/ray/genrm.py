@@ -376,6 +376,10 @@ class GenRMManager(MultiEngineManager):
         engine (RFC: new replicas request free resources on their own PG)."""
         import ray
         from ray.util.placement_group import placement_group, remove_placement_group
+        from ray.util.scheduling_strategies import PlacementGroupSchedulingStrategy
+
+        from relax.distributed.ray.placement_group import InfoActor
+        from relax.utils.utils import get_ray_accelerator_kwargs
 
         pg = placement_group([{"GPU": 1.0, "CPU": 2.0}], strategy="STRICT_PACK")
         # ray.util.placement_group exports no wait_for_ready in ray 2.5x;
@@ -385,9 +389,25 @@ class GenRMManager(MultiEngineManager):
         if not ready:
             remove_placement_group(pg)
             raise RuntimeError("scale-out placement group did not become ready within 120s")
-        # Local bundle/gpu indices: the engine actor sees exactly the one GPU
-        # of this bundle, so base_gpu_id 0 is the correct local index.
-        return (pg, [0], [0])
+        # Probe the physical GPU inside the bundle.  Engine env vars keep
+        # RAY_EXPERIMENTAL_NOSET_CUDA_VISIBLE_DEVICES=1 (multi-GPU engines
+        # address physical GPUs via base_gpu_id), so the PG's gpu id list
+        # must contain the *physical* GPU id -- a local ``0`` here would
+        # point the scaled-out engine at physical GPU 0 and collide with
+        # the initial engine.  Same InfoActor probing rollout uses for its
+        # per-replica PGs.
+        info = InfoActor.options(
+            scheduling_strategy=PlacementGroupSchedulingStrategy(
+                placement_group=pg,
+                placement_group_bundle_index=0,
+            ),
+            **get_ray_accelerator_kwargs(1),
+        ).remote()
+        try:
+            _, gpu_id = ray.get(info.get_ip_and_gpu_id.remote(), timeout=60)
+        finally:
+            ray.kill(info)
+        return (pg, [0], [int(gpu_id)])
 
     def _scale_out_lifecycle(self, request_id: str) -> None:
         abort = self._scale_abort[request_id]
