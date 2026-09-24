@@ -29,7 +29,10 @@ class ContractDemo:
         self.initial_capacity = 1
         self.pg_live = {"training-pg"}
         self.requests: dict[str, dict[str, Any]] = {}
-        self.idempotency: dict[tuple[str, str], tuple[int, str]] = {}
+        # (direction, idempotency_key) -> (fingerprint, outcome). The fingerprint
+        # covers the full request body minus the key itself; the outcome is either
+        # a recorded NOOP response (replayed verbatim) or the original request id.
+        self.idempotency: dict[tuple[str, str], tuple[tuple[Any, ...], dict[str, Any]]] = {}
         self.active_request: str | None = None
         self.paused = False
         self.next_id = 1
@@ -62,39 +65,71 @@ class ContractDemo:
             }
         )
 
-    def request(self, direction: str, target: Any, *, idempotency_key: str | None = None) -> dict[str, Any]:
+    def request(
+        self,
+        direction: str,
+        target: Any,
+        *,
+        model: str = "default",
+        timeout_secs: Any = None,
+        idempotency_key: str | None = None,
+    ) -> dict[str, Any]:
         if direction not in ("out", "in"):
             raise ValueError("direction must be 'out' or 'in'")
         if isinstance(target, bool) or not isinstance(target, int):
             return {"http": 422, "status": "INVALID_TYPE"}
         if target < self.initial_capacity or (direction == "in" and target < self.initial_capacity):
             return {"http": 400, "status": "INVALID_RANGE"}
+        # The fingerprint is the full request body minus the key itself: the
+        # normalized model selection, the absolute target and timeout_secs.
+        # Direction is part of the record key, so a key reused across the
+        # scale_out/scale_in endpoints never collides.
+        fingerprint = (model, target, timeout_secs)
+        record_key = (direction, idempotency_key)
         if idempotency_key is not None:
-            existing = self.idempotency.get((direction, idempotency_key))
+            existing = self.idempotency.get(record_key)
             if existing is not None:
-                existing_target, request_id = existing
-                if existing_target != target:
+                existing_fingerprint, outcome = existing
+                if existing_fingerprint != fingerprint:
                     self._record("REJECT_409", "Idempotency key was reused with a different request body")
                     return {"http": 409, "status": "IDEMPOTENCY_CONFLICT"}
-                request = self.requests[request_id]
-                self._record("IDEMPOTENT_REPLAY", f"{request_id}: returned the original operation")
-                return {"http": 200, "status": request["status"], "request_id": request_id}
+                if outcome["kind"] == "noop":
+                    # A NOOP decision replays verbatim, including the current
+                    # observed at decision time; the retry never re-evaluates
+                    # capacity, so it can never execute a new operation.
+                    self._record("IDEMPOTENT_REPLAY", "NOOP: returned the original response without re-evaluating")
+                    return dict(outcome["response"])
+                request = self.requests[outcome["request_id"]]
+                self._record("IDEMPOTENT_REPLAY", f"{outcome['request_id']}: returned the original operation")
+                return {"http": 200, "status": request["status"], "request_id": outcome["request_id"]}
         if self.active_request or self.paused:
             self._record("REJECT_409", "Another lifecycle operation is active or cleanup is unresolved")
             return {"http": 409, "status": "CONFLICT"}
         if (direction == "out" and target <= self.current) or (direction == "in" and target >= self.current):
-            self._record("NOOP", f"{direction} target {target} already satisfied")
-            return {"http": 200, "status": "NOOP", "current": self.current}
+            # A keyed NOOP is a decision about this request, so it is recorded
+            # like any other decision. Otherwise a retry after a capacity change
+            # would execute a new operation the client never asked for.
+            response = {"http": 200, "status": "NOOP", "current": self.current}
+            if idempotency_key is not None:
+                self.idempotency[record_key] = (fingerprint, {"kind": "noop", "response": response})
+                self._record("NOOP", f"{direction} target {target} already satisfied; response recorded for replay")
+            else:
+                self._record("NOOP", f"{direction} target {target} already satisfied")
+            return response
         request_id = f"req-{self.next_id:02d}"
         self.next_id += 1
         self.requests[request_id] = {
             "direction": direction,
             "target": target,
+            "model": model,
+            "timeout_secs": timeout_secs,
             "status": "PENDING",
             "idempotency_key": idempotency_key,
         }
         if idempotency_key is not None:
-            self.idempotency[(direction, idempotency_key)] = (target, request_id)
+            # The record is written together with the admission decision, so a
+            # concurrent duplicate of this first request can only replay or 409.
+            self.idempotency[record_key] = (fingerprint, {"kind": "operation", "request_id": request_id})
         self.active_request = request_id
         self._record("PENDING", f"{direction} to absolute target {target}", request_id=request_id)
         return {"http": 200, "status": "PENDING", "request_id": request_id}
@@ -290,6 +325,13 @@ def scripted_scenarios() -> dict[str, Any]:
     cleanup_retry = cleanup_failure.retry_cleanup(failure["request_id"])
     retry_request = cleanup_failure.request("out", 2)
     cleanup_failure.scale_out(retry_request["request_id"])
+    # A keyed NOOP is recorded; after capacity changes, the same key and body
+    # must replay the original NOOP instead of executing a new scale-out.
+    noop_at_two = cleanup_failure.request("out", 2, idempotency_key="recheck")
+    back_in = cleanup_failure.request("in", 1)
+    cleanup_failure.close_admission(back_in["request_id"])
+    cleanup_failure.finish_scale_in(back_in["request_id"])
+    noop_replay = cleanup_failure.request("out", 2, idempotency_key="recheck")
     unknown_status = health_failure.get_status("req-99")
     failed_drain_keeps_pg = busy_backend.paused and "manager-pg-1" in busy_backend.pg_live
     drain_retry = busy_backend.retry_scale_in(inward["request_id"])
@@ -316,6 +358,11 @@ def scripted_scenarios() -> dict[str, Any]:
             "cleanup_retry_reconciles": cleanup_retry == "RECONCILED"
             and "manager-pg-1" not in cleanup_failure.pg_live,
             "drain_retry_completes": drain_retry == "COMPLETED" and not busy_backend.paused,
+            "keyed_noop_replayed_verbatim": noop_replay["status"] == "NOOP"
+            and noop_replay.get("current") == 2
+            and "request_id" not in noop_replay,
+            "keyed_noop_blocks_new_execution": noop_at_two["status"] == "NOOP"
+            and cleanup_failure.current == 1,
             "unknown_request_404": unknown_status["http"] == 404,
             "final_capacity": [normal.current, normal.ready],
             "manager_pg_released": "manager-pg-1" not in normal.pg_live,

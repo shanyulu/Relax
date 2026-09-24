@@ -777,6 +777,97 @@
         ],
         "paused": false,
         "request_id": "req-02"
+      },
+      {
+        "kind": "NOOP",
+        "message": "out target 2 already satisfied; response recorded for replay",
+        "current": 2,
+        "ready": 2,
+        "published": [
+          "genrm-2",
+          "initial-0"
+        ],
+        "inflight": {},
+        "live_pgs": [
+          "manager-pg-2",
+          "training-pg"
+        ],
+        "paused": false
+      },
+      {
+        "kind": "PENDING",
+        "message": "in to absolute target 1",
+        "current": 2,
+        "ready": 2,
+        "published": [
+          "genrm-2",
+          "initial-0"
+        ],
+        "inflight": {},
+        "live_pgs": [
+          "manager-pg-2",
+          "training-pg"
+        ],
+        "paused": false,
+        "request_id": "req-03"
+      },
+      {
+        "kind": "DRAINING",
+        "message": "genrm-2: route removed, admission closed; accepted calls retained",
+        "current": 2,
+        "ready": 1,
+        "published": [
+          "initial-0"
+        ],
+        "inflight": {},
+        "live_pgs": [
+          "manager-pg-2",
+          "training-pg"
+        ],
+        "paused": false
+      },
+      {
+        "kind": "REMOVING",
+        "message": "genrm-2: backend idle; stopping all mock workers",
+        "current": 2,
+        "ready": 1,
+        "published": [
+          "initial-0"
+        ],
+        "inflight": {},
+        "live_pgs": [
+          "manager-pg-2",
+          "training-pg"
+        ],
+        "paused": false
+      },
+      {
+        "kind": "RELEASED",
+        "message": "genrm-2: all workers stopped; manager PG released",
+        "current": 1,
+        "ready": 1,
+        "published": [
+          "initial-0"
+        ],
+        "inflight": {},
+        "live_pgs": [
+          "training-pg"
+        ],
+        "paused": false
+      },
+      {
+        "kind": "IDEMPOTENT_REPLAY",
+        "message": "NOOP: returned the original response without re-evaluating",
+        "current": 1,
+        "ready": 1,
+        "published": [
+          "initial-0"
+        ],
+        "inflight": {},
+        "live_pgs": [
+          "training-pg"
+        ],
+        "paused": false
       }
     ]
   },
@@ -793,6 +884,8 @@
     "failed_drain_keeps_pg": true,
     "cleanup_retry_reconciles": true,
     "drain_retry_completes": true,
+    "keyed_noop_replayed_verbatim": true,
+    "keyed_noop_blocks_new_execution": true,
     "unknown_request_404": true,
     "final_capacity": [
       1,

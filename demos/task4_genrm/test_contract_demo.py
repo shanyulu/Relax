@@ -34,6 +34,46 @@ class ContractDemoTest(unittest.TestCase):
         self.assertEqual(terminal_replay["request_id"], first["request_id"])
         self.assertEqual(terminal_replay["status"], "ACTIVE")
 
+    def test_keyed_noop_replay_never_executes_after_capacity_change(self) -> None:
+        """Regression: a keyed NOOP must be recorded and replayed verbatim.
+
+        Before the fix, the NOOP path returned without writing an idempotency
+        record, so a retry after capacity changed executed a new scale-out.
+        """
+        demo = ContractDemo()
+        demo.scale_out(demo.request("out", 2)["request_id"])
+        first = demo.request("out", 2, idempotency_key="retry")
+        self.assertEqual(first["status"], "NOOP")
+        inward = demo.request("in", 1)["request_id"]
+        demo.close_admission(inward)
+        demo.finish_scale_in(inward)
+        self.assertEqual(demo.current, 1)
+        replay = demo.request("out", 2, idempotency_key="retry")
+        self.assertEqual(replay["status"], "NOOP")
+        self.assertEqual(replay["current"], 2)
+        self.assertNotIn("request_id", replay)
+        self.assertIsNone(demo.active_request)
+        # A new request without the key still executes by actual difference.
+        fresh = demo.request("out", 2)
+        self.assertEqual(fresh["status"], "PENDING")
+
+    def test_idempotency_fingerprint_covers_model_and_timeout(self) -> None:
+        demo = ContractDemo()
+        first = demo.request("out", 2, model="judge-a", timeout_secs=60, idempotency_key="k")
+        self.assertEqual(first["status"], "PENDING")
+        self.assertEqual(demo.request("out", 2, model="judge-b", timeout_secs=60, idempotency_key="k")["http"], 409)
+        self.assertEqual(demo.request("out", 2, model="judge-a", timeout_secs=120, idempotency_key="k")["http"], 409)
+        replay = demo.request("out", 2, model="judge-a", timeout_secs=60, idempotency_key="k")
+        self.assertEqual(replay["request_id"], first["request_id"])
+
+    def test_idempotent_replay_of_failed_operation(self) -> None:
+        demo = ContractDemo()
+        request_id = demo.request("out", 2, idempotency_key="f")["request_id"]
+        demo.scale_out(request_id, health_ok=False)
+        replay = demo.request("out", 2, idempotency_key="f")
+        self.assertEqual(replay["status"], "FAILED")
+        self.assertEqual(replay["request_id"], request_id)
+
     def test_drain_waits_for_accepted_call_and_backend(self) -> None:
         demo = ContractDemo()
         demo.scale_out(demo.request("out", 2)["request_id"])
