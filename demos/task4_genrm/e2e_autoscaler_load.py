@@ -260,6 +260,15 @@ def main() -> int:
     serve.run(GenRM.bind(None, pg, cfg.genrm_num_gpus, cfg, "genrm"), name="genrm", route_prefix="/genrm")
     global GENRM_BASE, AUTOSCALER_BASE
     GENRM_BASE = get_serve_url("/genrm")
+    # Single-node E2E: the Serve HTTP proxy binds to localhost inside this
+    # container (container IP refused, 127.0.0.1 reachable); rewrite host.
+    from urllib.parse import urlsplit, urlunsplit
+
+    def _loopback(url: str) -> str:
+        u = urlsplit(url)
+        return urlunsplit((u.scheme, f"127.0.0.1:{u.port}", u.path, "", ""))
+
+    GENRM_BASE = _loopback(GENRM_BASE)
 
     # Demo-tuned autoscaler config: fast scale-out on sustained saturation,
     # conservative scale-in on sustained low load, cooldowns against flapping.
@@ -312,7 +321,7 @@ def main() -> int:
         name="autoscaler_genrm",
         route_prefix="/autoscaler_genrm",
     )
-    AUTOSCALER_BASE = get_serve_url("/autoscaler_genrm")
+    AUTOSCALER_BASE = _loopback(get_serve_url("/autoscaler_genrm"))
     ev.log("deployed", genrm=GENRM_BASE, autoscaler=AUTOSCALER_BASE)
 
     # Wait for the initial engine, then start autoscaler + load + timeline.

@@ -398,6 +398,13 @@ def main() -> int:
     serve.run(deployment, name="genrm", route_prefix="/genrm")
     global GENRM_BASE
     GENRM_BASE = get_serve_url("/genrm")
+    # Single-node E2E: inside this container the Serve HTTP proxy binds to
+    # localhost only (verified: 127.0.0.1 reachable, container IP refused),
+    # so rewrite the host while keeping the port and path.
+    from urllib.parse import urlsplit, urlunsplit
+
+    _u = urlsplit(GENRM_BASE)
+    GENRM_BASE = urlunsplit((_u.scheme, f"127.0.0.1:{_u.port}", _u.path, "", ""))
     ev.log("serve_run", url=GENRM_BASE)
 
     # ------------------------------------------------------------------ #
