@@ -1,6 +1,7 @@
 # Copyright (c) 2026 Relax Authors. All Rights Reserved.
 
-"""Task 4 reward-consistency E2E: identical inputs, both engines, real protocol.
+"""Task 4 reward-consistency E2E: identical inputs, both engines, real
+protocol.
 
 Exercises the production dapo-genrm judge protocol end-to-end: the exact
 prompt template, in-context examples and loose parser from
@@ -97,7 +98,8 @@ _STRICT_RE = re.compile(r"^\s*(?:Judgement:\s*)?([01])\s*$")
 
 
 def strict_parse(text: str):
-    """Strict verdict: the reply is exactly 'Judgement: 1'/'0' (or bare 1/0)."""
+    """Strict verdict: the reply is exactly 'Judgement: 1'/'0' (or bare
+    1/0)."""
     m = _STRICT_RE.match((text or "").strip())
     return int(m.group(1)) if m else None
 
@@ -121,9 +123,14 @@ def loose_parse(text: str):
 # ---------------------------------------------------------------------------
 def load_inputs(dataset_path: str, num_pairs: int) -> list:
     """``num_pairs`` dataset rows become 2 cases each: a positive (model
-    answer == ground truth, expected verdict 1) and a negative (corrupted
-    answer, expected verdict 0). The ``model_answer`` plays the role of the
-    extracted actor answer (what ``_extract_answer`` hands the judge)."""
+    answer.
+
+    == ground truth, expected verdict 1) and a negative (corrupted answer,
+    expected verdict 0).
+
+    The ``model_answer`` plays the role of the extracted actor answer (what
+    ``_extract_answer`` hands the judge).
+    """
     cases = []
     with open(dataset_path) as f:
         for line in f:
@@ -161,7 +168,6 @@ def load_inputs(dataset_path: str, num_pairs: int) -> list:
 # Scale orchestration (same recording contract as e2e_genrm_scale.py)
 # ---------------------------------------------------------------------------
 def run_scale_op(ev: "Evidence", direction: str, target: int, expect_terminal: str, timeout_s: float) -> dict:
-    t_start = time.time() - ev.t0
     body = http_post(f"/{direction}", {"num_replicas": target, "timeout_secs": timeout_s})
     ev.log(f"{direction}_submitted", request_id=body.get("request_id"), status=body.get("status"))
     if body.get("status") == "NOOP":
