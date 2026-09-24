@@ -21,6 +21,19 @@ class ContractDemoTest(unittest.TestCase):
         self.assertNotIn("manager-pg-1", demo.pg_live)
         self.assertFalse(demo.late_health_ack("genrm-1"))
 
+    def test_idempotency_key_replays_only_the_same_request(self) -> None:
+        demo = ContractDemo()
+        first = demo.request("out", 2, idempotency_key="client-7")
+        replay = demo.request("out", 2, idempotency_key="client-7")
+        conflict = demo.request("out", 3, idempotency_key="client-7")
+        self.assertEqual(replay["request_id"], first["request_id"])
+        self.assertEqual(replay["status"], "PENDING")
+        self.assertEqual(conflict["http"], 409)
+        demo.scale_out(first["request_id"])
+        terminal_replay = demo.request("out", 2, idempotency_key="client-7")
+        self.assertEqual(terminal_replay["request_id"], first["request_id"])
+        self.assertEqual(terminal_replay["status"], "ACTIVE")
+
     def test_drain_waits_for_accepted_call_and_backend(self) -> None:
         demo = ContractDemo()
         demo.scale_out(demo.request("out", 2)["request_id"])

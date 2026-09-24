@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 530" role="img" aria-labelledby="title desc">
+  <title id="title">TP2、PP2、DP2 下的慢 rank 对照组</title>
+  <desc id="desc">每个 TP 与 PP 位置只在相同位置的两个 DP 副本之间比较。不同分片位置之间不比较；工作量不可比或缺报时标记为证据不足。</desc>
+  <rect width="1200" height="530" fill="#f8fafc"/>
+  <text x="48" y="56" fill="#142744" font-family="Arial, sans-serif" font-size="30" font-weight="700">慢卡只能和等价副本比较</text>
+  <text x="48" y="88" fill="#526174" font-family="Arial, sans-serif" font-size="17">例：TP 2 × PP 2 × DP 2；图中不暗示实际 global rank 编号</text>
+
+  <rect x="49" y="121" width="528" height="332" rx="14" fill="#eaf3fc" stroke="#91b9db"/>
+  <rect x="623" y="121" width="528" height="332" rx="14" fill="#e8f6f2" stroke="#8fc6b6"/>
+  <text x="79" y="159" fill="#1b639d" font-family="Arial, sans-serif" font-size="22" font-weight="700">DP 副本 0</text>
+  <text x="653" y="159" fill="#126d5c" font-family="Arial, sans-serif" font-size="22" font-weight="700">DP 副本 1</text>
+
+  <g font-family="Arial, sans-serif" font-size="18" font-weight="600" text-anchor="middle">
+    <rect x="79" y="185" width="468" height="47" rx="8" fill="#fff" stroke="#9ab6ce"/><text x="313" y="215" fill="#294359">TP 0 · PP 0</text>
+    <rect x="79" y="254" width="468" height="47" rx="8" fill="#fff" stroke="#9ab6ce"/><text x="313" y="284" fill="#294359">TP 1 · PP 0</text>
+    <rect x="79" y="323" width="468" height="47" rx="8" fill="#fff" stroke="#9ab6ce"/><text x="313" y="353" fill="#294359">TP 0 · PP 1</text>
+    <rect x="79" y="392" width="468" height="47" rx="8" fill="#fff" stroke="#9ab6ce"/><text x="313" y="422" fill="#294359">TP 1 · PP 1</text>
+    <rect x="653" y="185" width="468" height="47" rx="8" fill="#fff" stroke="#91c2b2"/><text x="887" y="215" fill="#294359">TP 0 · PP 0</text>
+    <rect x="653" y="254" width="468" height="47" rx="8" fill="#fff" stroke="#91c2b2"/><text x="887" y="284" fill="#294359">TP 1 · PP 0</text>
+    <rect x="653" y="323" width="468" height="47" rx="8" fill="#fff" stroke="#91c2b2"/><text x="887" y="353" fill="#294359">TP 0 · PP 1</text>
+    <rect x="653" y="392" width="468" height="47" rx="8" fill="#fff" stroke="#91c2b2"/><text x="887" y="422" fill="#294359">TP 1 · PP 1</text>
+  </g>
+  <g stroke="#cc821f" stroke-width="3" fill="none">
+    <path d="M548 208 H652"/><path d="M548 277 H652"/><path d="M548 346 H652"/><path d="M548 415 H652"/>
+  </g>
+  <text x="600" y="480" text-anchor="middle" fill="#8b6719" font-family="Arial, sans-serif" font-size="18" font-weight="700">同一位置、同一阶段、工作量可比且样本齐全，才进入持续异常判断</text>
+  <text x="600" y="507" text-anchor="middle" fill="#526174" font-family="Arial, sans-serif" font-size="16">缺少等价 peer 或样本：保留画像，结论记为 uncertain</text>
+</svg>
