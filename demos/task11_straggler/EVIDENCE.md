@@ -47,7 +47,7 @@ Pooled over all 16 pairs: median 0.0861%, mean 0.1641%. Every session median is 
 
 ### A/A control sessions (2026-09-24, added the same day)
 
-The four sessions above were re-run with `--aa-pairs 4`: four additional pairs where **both arms run with the observer active** (`aa-session-A/B/C/D.json`, same protocol, 24,160/24,160 samples per session, zero drops, zero loss differences, zero parameter mismatches). The A/A difference isolates the observer's own timing bias from environment drift, which the off/off null pairs cannot:
+The four sessions above were re-run with `--aa-pairs 4`: four additional pairs where **both arms run with the observer active** (`aa-session-A/B/C/D.json`, same protocol, 24,160/24,160 samples per session, zero drops, zero loss differences, zero parameter mismatches). The A/A difference characterizes repeatability with the observer active on both arms; it cannot identify common-mode observer cost shared by both arms, which the off/off null pairs (environment drift, observer off) cannot substitute for:
 
 | Measure | Pooled A/A (16 trials) | Pooled off/off null (16 trials) |
 | --- | --- | --- |
@@ -55,7 +55,7 @@ The four sessions above were re-run with `--aa-pairs 4`: four additional pairs w
 | Bootstrap mean 95% interval | −0.3332% to +0.1728% | −0.1894% to +3.0036% (one +3.00% outlier in session C) |
 | Range | −1.3455% to +0.5510% | −0.6119% to +3.0036% |
 
-Pooled paired overhead of the off/on pairs from all four A/A sessions (16 pairs; the A/A pairs themselves are pure observer-noise trials and are deliberately not pooled into the overhead estimate): median +0.1844%, bootstrap mean 95% interval −0.0580% to +0.7061%. The A/A median being indistinguishable from zero while off/off pairs drift by tenths of a percent (and occasionally whole percents) supports the claim that the remaining spread is dominated by run-to-run environment drift rather than observer bias. It does **not** by itself bring the pooled overhead's upper bound below 0.5%; the acceptance plan (recipe runs, more pairs) stands.
+Pooled paired overhead of the off/on pairs from all four A/A sessions (16 pairs; the A/A pairs themselves are pure observer-noise trials and are deliberately not pooled into the overhead estimate): median +0.1844%, bootstrap mean 95% interval −0.0580% to +0.7061%. The A/A median being consistent with zero while off/off pairs drift by tenths of a percent (and occasionally whole percents) indicates the remaining spread is dominated by run-to-run environment drift; this control cannot rule out a common-mode observer cost shared by both arms — that is what the off/on comparison addresses. It does **not** by itself bring the pooled overhead's upper bound below 0.5%; the acceptance plan (recipe runs, more pairs) stands.
 
 What the spread says, honestly:
 

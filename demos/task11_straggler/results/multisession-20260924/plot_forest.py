@@ -110,12 +110,12 @@ ax2.set_yticklabels(
     [g[0] for g in groups] + [f"off/off {n} null pairs" for n, _ in aa_sessions], fontsize=8.5,
 )
 ax2.set_xlabel("Difference between arms (%)  \u2014 A/A: median + CI; off/off: per-pair scatter + median", fontsize=9)
-ax2.set_title("(b) Observer-bias controls, A/A batch\nA/A \u2248 0 (observer unbiased) vs off/off drift (environment)", fontsize=9.5)
+ax2.set_title("(b) Repeatability controls, A/A batch\nA/A consistent with zero (common-mode cost untested); off/off = environment drift", fontsize=9.5)
 ax2.grid(axis="x", color="#d8dce2", lw=0.6, alpha=0.7)
 ax2.tick_params(labelsize=8.5)
 ax2.text(
     0.97, 0.04,
-    "A/A pooled median +0.014%, CI [\u22120.33%, +0.17%]\noff/off drift spans \u22120.6% \u2026 +3.0% \u2014 session drift\ndominates; single-session numbers are not evidence",
+    "A/A pooled median +0.014%, CI [\u22120.33%, +0.17%] includes zero\n(consistent with zero; common-mode observer cost not identified);\noff/off drift \u22120.6% \u2026 +3.0% far exceeds the A/A spread",
     transform=ax2.transAxes, ha="right", va="bottom", fontsize=8, color="#444a54",
 )
 
