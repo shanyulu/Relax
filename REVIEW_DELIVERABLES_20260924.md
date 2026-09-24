@@ -165,3 +165,7 @@ cd demos/task11_straggler && python run_demo.py --gpus 2 --pairs 4 --null-pairs 
 - sglang 版本链：PyPI 0.5.17 需 torch 2.11（与 relax docker 的源码版不同）；**0.5.5.post3 是唯一精确匹配 torch 2.8.0 的版本**，`ServerArgs`/`launch_server` API 面与 relax 引擎代码兼容（探针验证 + E2E 验证）
 - 官方 judge（Qwen3-VL-30B-A3B × 8 GPU）本机不可承载；E2E 以 Qwen3-0.6B 验证生命周期/路由/一致性语义
 - 数据集 dapo-math-17k 已就位（训练 E2E 用）
+
+### 终局（2026-09-24 深夜收尾）
+
+Autoscaler 全周期第三轮通过（`autoscaler_run_20260924_v3`，E2E_PASS）：t=154s 自动扩容 1→2（token_usage_high）、t=212s 自动缩容 2→1（三条件全满足）、弹性引擎服务 516 请求、3,202 请求零失败、终态 == 初始。缩容被卡的根因是默认 throughput_variance_threshold=0.1 对 48 并发短请求的突发吞吐过严（实测方差 0.77），以 per-service 阈值 1.0 解决——这本身即 Task 4"GenRM 独立阈值"能力的实证。issue #351 正文已同步更新。
