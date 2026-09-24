@@ -110,8 +110,9 @@ class TestScaleOutEndpoint(unittest.TestCase):
 
     def test_target_below_initial_is_400(self):
         replica = _replica()
+        replica._scale_registry.register_initial("__default__", 2)
         with self.assertRaises(_HTTPException) as ctx:
-            _run(replica.scale_in(_GenRMScaleRequest(num_replicas=0)))
+            _run(replica.scale_in(_GenRMScaleRequest(num_replicas=1)))
         self.assertEqual(ctx.exception.status_code, 400)
 
     def test_unknown_model_is_400(self):
