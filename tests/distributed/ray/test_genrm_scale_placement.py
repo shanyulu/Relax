@@ -1,0 +1,199 @@
+# Copyright (c) 2026 Relax Authors. All Rights Reserved.
+
+"""GenRM manager placement hygiene after a failed scale-out (Task 4).
+
+A failed scale-out candidate whose placement-group release Ray has *confirmed*
+must not leave a resolvable stale placement behind: ``recover()`` rebuilds
+every non-excluded dead slot via ``_resolve_placement``, and scheduling that
+rebuild on an already-REMOVED PG fails on every recovery cycle, permanently
+degrading the slot. These tests drive the real ``_scale_out_add_one`` failure
+path (and its reconcile counterpart) against a stubbed Ray placement-group
+table and assert the exclusion-set / placement bookkeeping: a released failed
+candidate is retired exactly like a scale-in victim, so recovery never
+resolves the deleted PG. The default-placement fallback is not an option for
+scale-out ranks (their gpu-index math only covers initial slots), so the
+correct post-release semantics are "explicitly never rebuild".
+
+Run: python -m pytest tests/distributed/ray/test_genrm_scale_placement.py -q
+"""
+
+import threading
+import time
+import unittest
+from unittest.mock import patch
+
+from tests.utils._dep_stubs import import_genrm_manager
+
+
+genrm_module = import_genrm_manager()
+
+_GenRMManager = genrm_module.GenRMManager
+
+import ray.util.placement_group as _ray_pg_module  # noqa: E402
+
+
+def _manager(num_slots: int = 1):
+    """Bare GenRMManager: elastic-scaling state only, no Ray construction."""
+    manager = object.__new__(_GenRMManager)
+    manager._scale_lock = threading.RLock()
+    manager._scale_progress = {}
+    manager._scale_op_params = {}
+    manager._scale_abort = {}
+    manager._scale_added_ranks = []
+    manager._candidate_ranks = set()
+    manager._draining_ranks = set()
+    manager._scale_placements = {}
+    manager._scale_drain_confirmed = {}
+    manager._scale_physical_done = {}
+    manager._retired_scale_ranks = set()
+    manager._failed_holding_ranks = set()
+    manager._unreleased_candidate_ranks = set()
+    manager._scale_drain_timeout_s = 600.0
+    manager.all_engines = [object() for _ in range(num_slots)]
+    manager._engine_placements = {}
+    manager._engine_addr_and_ports = {}
+    manager._pending_pg_cleanup = set()
+    manager.num_gpu_per_engine = 1
+    manager.nodes_per_engine = 1
+    manager.args = type(
+        "Args",
+        (),
+        {"fully_async": True, "rollout_num_gpus": 0, "_genrm_colocate_with_rollout": False},
+    )()
+    manager.pg = "BASE_PG"
+    return manager
+
+
+class _PgTablePatch:
+    """Make Ray's placement-group table report a fixed state.
+
+    ``_remove_owned_pg`` imports ``placement_group_table`` /
+    ``remove_placement_group`` from ``ray.util.placement_group`` at call
+    time, so patching the (real or stubbed) module attribute steers both the
+    release confirmation and the asynchronous removal submit.
+    """
+
+    def __init__(self, state: str):
+        self._state = state
+
+    def __enter__(self):
+        self._patches = [
+            patch.object(_ray_pg_module, "placement_group_table", lambda pg: {"state": self._state}, create=True),
+            patch.object(_ray_pg_module, "remove_placement_group", lambda pg: None, create=True),
+        ]
+        for patcher in self._patches:
+            patcher.start()
+        return self
+
+    def __exit__(self, *exc):
+        for patcher in self._patches:
+            patcher.stop()
+        return False
+
+
+class TestFailedScaleOutCandidateRelease(unittest.TestCase):
+    def _prepare_failed_scale_out(self, manager, stale_pg):
+        """Register a scale-out op whose engine init always fails after the
+        slot has reserved its owned placement group."""
+        manager.begin_scale_op("req-1", "scale_out", 2)
+        manager._scale_abort["req-1"] = threading.Event()
+        manager._scale_progress["req-1"] = manager._new_progress("CREATING")
+
+        def _failing_init(ranks):
+            # Mimic the real ``_init_engines`` failure: the slot reserved its
+            # owned PG, actor creation failed, the slot is left None.
+            for rank in ranks:
+                manager._engine_placements[rank] = (stale_pg, True)
+                manager.all_engines[rank] = None
+            raise RuntimeError("engine init failed")
+
+        manager._create_scale_pg = lambda: stale_pg
+        manager._init_engines = _failing_init
+
+    def _recording_init(self, manager):
+        """Replace ``_init_engines`` with one that records and 'succeeds'."""
+        calls = []
+
+        def _init(ranks):
+            calls.append(list(ranks))
+            for rank in ranks:
+                manager.all_engines[rank] = object()
+            return len(ranks)
+
+        manager._init_engines = _init
+        return calls
+
+    def test_confirmed_release_retires_failed_candidate(self):
+        """Scale-out fails, Ray confirms the PG release: the slot must be
+        retired (never rebuilt by recover()) and its stale placement must be
+        gone; a genuinely dead initial engine is still rebuilt."""
+        manager = _manager(num_slots=1)
+        stale_pg = ("SCALE_PG", [0], [0])
+        self._prepare_failed_scale_out(manager, stale_pg)
+
+        with _PgTablePatch("REMOVED"):
+            with self.assertRaises(RuntimeError):
+                manager._scale_out_add_one("req-1")
+
+        self.assertIsNone(manager.all_engines[1])
+        self.assertNotIn(1, manager._candidate_ranks)
+        self.assertNotIn(1, manager._unreleased_candidate_ranks)
+        self.assertFalse(manager.get_scale_progress("req-1")["cleanup_required"])
+        # The released failed candidate is retired like a scale-in victim and
+        # its REMOVED placement is no longer resolvable.
+        self.assertIn(1, manager._retired_scale_ranks)
+        self.assertNotIn(1, manager._scale_placements)
+
+        # recover() rebuilds real dead engines but never the failed candidate.
+        manager.all_engines[0] = None
+        calls = self._recording_init(manager)
+        rebuilt = manager.recover()
+        self.assertEqual(calls, [[0]])
+        self.assertEqual(rebuilt, {0})
+
+    def test_unreleased_candidate_excluded_until_reconcile_confirms_release(self):
+        """Scale-out fails and Ray does not confirm the release in the
+        bounded wait: the slot blocks via ``_unreleased_candidate_ranks``;
+        once reconcile confirms the release the slot is retired, so recover()
+        never resolves the deleted PG on any cycle."""
+        manager = _manager(num_slots=1)
+        stale_pg = ("SCALE_PG", [0], [0])
+        self._prepare_failed_scale_out(manager, stale_pg)
+
+        clock = {"now": 1000.0}
+
+        def fast_monotonic():
+            # Each call advances past the previous one so the 60s bounded
+            # wait expires after a couple of iterations.
+            clock["now"] += 30.0
+            return clock["now"]
+
+        with (
+            _PgTablePatch("PENDING"),
+            patch.object(time, "monotonic", fast_monotonic),
+            patch.object(time, "sleep", lambda _s: None),
+        ):
+            with self.assertRaises(RuntimeError):
+                manager._scale_out_add_one("req-1")
+
+        self.assertIn(1, manager._unreleased_candidate_ranks)
+        self.assertTrue(manager.get_scale_progress("req-1")["cleanup_required"])
+        calls = self._recording_init(manager)
+        self.assertEqual(manager.recover(), set())
+        self.assertEqual(calls, [])
+
+        # Lifecycle thread finishes; reconcile retries and Ray now confirms.
+        manager._scale_physical_done["req-1"] = True
+        with _PgTablePatch("REMOVED"):
+            result = manager.reconcile_scale_op("req-1")
+        self.assertFalse(result["cleanup_required"])
+        self.assertNotIn(1, manager._unreleased_candidate_ranks)
+        self.assertIn(1, manager._retired_scale_ranks)
+        self.assertNotIn(1, manager._scale_placements)
+        # And recovery still ignores the released failed candidate.
+        self.assertEqual(manager.recover(), set())
+        self.assertEqual(calls, [])
+
+
+if __name__ == "__main__":
+    unittest.main()

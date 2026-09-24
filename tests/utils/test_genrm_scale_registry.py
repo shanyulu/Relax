@@ -14,6 +14,7 @@ import unittest
 
 from tests.utils._dep_stubs import install_web_framework_stubs
 
+
 install_web_framework_stubs()  # relax.utils.autoscaler's package __init__ imports fastapi
 
 from relax.utils.autoscaler.scaling_decision import (  # noqa: E402

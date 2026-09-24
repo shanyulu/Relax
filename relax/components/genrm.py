@@ -127,6 +127,23 @@ class GenRMScaleStatusResponse(BaseModel):
     detail: Optional[str] = None
 
 
+class GenRMScaleReconcileResponse(BaseModel):
+    """Response model for GenRM scale-operation reconcile.
+
+    Reconcile continues the *original* operation (no new request ID, no
+    victim re-selection, no re-scaling); it only retries unfinished resource
+    cleanup. ``cleanup_required`` therefore reports whether the model is
+    still blocked from new scale operations after the attempt.
+    """
+
+    request_id: str
+    direction: str
+    status: str
+    cleanup_required: bool
+    victim_cleared: bool = False
+    detail: Optional[str] = None
+
+
 class _EngineCacheState:
     """Per-instance round-robin cache over a GenRMManager's live engine list.
 
@@ -469,10 +486,9 @@ class GenRM(Base):
     # Elastic scaling (Task 4). The endpoints are thin: validation,
     # idempotency, mutual exclusion and the operation state machine live in
     # ``GenRMScaleRegistry``; actual Ray lifecycle execution is delegated to
-    # manager hooks (``execute_genrm_scale_out`` / ``execute_genrm_scale_in``)
-    # which GenRMManager does not implement yet -- until it does, admitted
-    # operations stay in PENDING and responses carry
-    # ``detail="manager_scale_not_implemented"``.
+    # manager hooks (``execute_genrm_scale_out`` / ``execute_genrm_scale_in``).
+    # The component owns public registry state; manager progress remains the
+    # authority for physical lifecycle completion and cleanup.
     # ------------------------------------------------------------------
 
     @app.post("/scale_out")
@@ -506,10 +522,26 @@ class GenRM(Base):
                         "served": self._engine_served.get(stats_key, 0),
                     }
                 )
+            # ``current`` is service capacity (including a draining victim),
+            # while physical occupancy and pending cleanup are separate.
+            current = len(engines)
+            occupied = current
+            pending_cleanup = 0
+            manager = self.genrm_managers[key]
+            if getattr(manager, "get_engine_capacity", None) is not None:
+                try:
+                    capacity = ray.get(manager.get_engine_capacity.remote())
+                    current = int(capacity.get("current", len(engines)))
+                    occupied = int(capacity.get("occupied", current))
+                    pending_cleanup = int(capacity.get("pending_cleanup", 0))
+                except Exception as e:
+                    self._logger.warning(f"GenRM capacity query failed for '{key}': {e}")
             instances[key] = {
                 "engines": engine_views,
-                "current": len(engines),
+                "current": current,
                 "ready": len(engines),
+                "occupied": occupied,
+                "pending_cleanup": pending_cleanup,
             }
         if list(instances) == [_DEFAULT_INSTANCE_KEY]:
             return {"service": "genrm", **instances[_DEFAULT_INSTANCE_KEY]}
@@ -523,6 +555,16 @@ class GenRM(Base):
     async def get_scale_in_status(self, request_id: str) -> GenRMScaleStatusResponse:
         return self._genrm_scale_status("scale_in", request_id)
 
+    @app.post("/scale_out/{request_id}/reconcile", response_model=GenRMScaleReconcileResponse)
+    async def reconcile_scale_out(self, request_id: str) -> GenRMScaleReconcileResponse:
+        """Retry unfinished cleanup of a scale-out (no re-scaling)."""
+        return await self._reconcile_scale("scale_out", request_id)
+
+    @app.post("/scale_in/{request_id}/reconcile", response_model=GenRMScaleReconcileResponse)
+    async def reconcile_scale_in(self, request_id: str) -> GenRMScaleReconcileResponse:
+        """Retry unfinished cleanup of a scale-in (fixed victim, no re-selection)."""
+        return await self._reconcile_scale("scale_in", request_id)
+
     def _resolve_scale_model(self, model_name: Optional[str]) -> str:
         """Map the API's ``model_name`` onto a configured instance key."""
         if model_name in (None, "default") and len(self.genrm_managers) == 1:
@@ -534,10 +576,28 @@ class GenRM(Base):
         manager = self.genrm_managers[key]
         return list(ray.get(manager.get_engine_hosts_ports.remote()))
 
+    def _genrm_capacity(self, key: str, ready: int) -> Dict[str, int]:
+        """Read capacity from the real manager while preserving fake support."""
+        manager = self.genrm_managers[key]
+        if getattr(manager, "get_engine_capacity", None) is None:
+            return {"current": ready, "ready": ready, "occupied": ready, "pending_cleanup": 0}
+        try:
+            data = ray.get(manager.get_engine_capacity.remote())
+            return {
+                "current": int(data.get("current", ready)),
+                "ready": int(data.get("ready", ready)),
+                "occupied": int(data.get("occupied", ready)),
+                "pending_cleanup": int(data.get("pending_cleanup", 0)),
+            }
+        except Exception as e:
+            self._logger.warning(f"GenRM capacity query failed for '{key}': {e}")
+            return {"current": ready, "ready": ready, "occupied": ready, "pending_cleanup": 0}
+
     async def _genrm_scale(self, direction: str, request: GenRMScaleRequest) -> GenRMScaleResponse:
         try:
             key = self._resolve_scale_model(request.model_name)
             engines = self._genrm_engine_list(key)
+            capacity = self._genrm_capacity(key, len(engines))
         except RuntimeError as e:
             raise HTTPException(status_code=400, detail=str(e))
         except Exception as e:
@@ -550,8 +610,8 @@ class GenRM(Base):
             target=request.num_replicas,
             timeout_secs=request.timeout_secs,
             idempotency_key=request.idempotency_key,
-            current=len(engines),
-            ready=len(engines),
+            current=capacity["current"],
+            ready=capacity["ready"],
         )
         if decision.get("http", 200) != 200:
             raise HTTPException(
@@ -566,8 +626,8 @@ class GenRM(Base):
             return GenRMScaleResponse(
                 status="PENDING",
                 request_id=request_id,
-                current=len(engines),
-                ready=len(engines),
+                current=capacity["current"],
+                ready=capacity["ready"],
                 detail=detail,
             )
         # Replay of an existing operation (no dispatch) or a fresh/replayed
@@ -621,14 +681,14 @@ class GenRM(Base):
         manager's snapshot counts. ``/scale_out|in/{id}`` status queries see
         only registry state, so this loop is the single writer."""
         manager = self.genrm_managers[model]
-        chain = self._SCALE_OUT_CHAIN if direction == "scale_out" else self._SCALE_IN_CHAIN
         terminal = {"ACTIVE", "PARTIAL", "FAILED"} if direction == "scale_out" else {"COMPLETED", "FAILED"}
         op = self._scale_registry.get_status(direction, request_id) or {}
-        # Generous margin over the client's timeout: engine bring-up loads a
-        # full model, which routinely outlasts a short drain timeout.
-        deadline = time.monotonic() + float(op.get("timeout_secs") or 600.0) + 900.0
+        # timeout_secs is the operation's TOTAL timeout, counted from submit
+        # time (registry created_at), not from watcher start.
+        timeout_secs = float(op.get("timeout_secs") or 600.0)
+        deadline = float(op.get("created_at") or time.time()) + timeout_secs
         try:
-            while time.monotonic() < deadline:
+            while time.time() < deadline:
                 progress = await asyncio.to_thread(self._manager_progress, manager, request_id)
                 phase = progress.get("phase")
 
@@ -637,28 +697,55 @@ class GenRM(Base):
                     if victim:
                         self._close_victim_admission(model, victim)
                         if self._victim_inflight_zero(model, victim):
-                            await asyncio.to_thread(
-                                ray.get, manager.confirm_scale_drained.remote(request_id)
-                            )
+                            await asyncio.to_thread(ray.get, manager.confirm_scale_drained.remote(request_id))
 
-                if phase in terminal:
+                # A manager terminal phase is only a *reported* result until
+                # its lifecycle thread has stopped.  In particular, aborting
+                # a placement-group wait can report FAILED long before the
+                # worker which owns that PG has returned.  Fail closed when a
+                # legacy/failed poll omits the flag.
+                if phase in terminal and progress.get("physical_done") is True:
                     self._finish_scale_from_progress(direction, request_id, phase, progress)
                     return
-                self._advance_registry_towards(direction, request_id, phase)
+                # Do not advance the public state machine into a terminal
+                # state before the physical-completion fence above.  A
+                # terminal registry state without cleanup_required releases
+                # the per-model mutual-exclusion gate.
+                if phase not in terminal:
+                    self._advance_registry_towards(direction, request_id, phase)
                 await asyncio.sleep(0.5)
-            # Deadline exceeded: abort the physical lifecycle, then fail the
-            # registry from whatever the manager last reported.
+            # Deadline exceeded: abort the physical lifecycle, then wait up to
+            # 60s for the manager thread to observe the abort (PG waits and
+            # engine init are not interruptible; a late healthy replica is
+            # discarded there rather than published). Only then fail the
+            # registry with the manager's last snapshot.
             await asyncio.to_thread(ray.get, manager.abort_scale_op.remote(request_id))
-            for _ in range(20):
+            progress = {}
+            for _ in range(120):
                 progress = await asyncio.to_thread(self._manager_progress, manager, request_id)
-                if progress.get("phase") == "FAILED":
+                if progress.get("physical_done") is True:
                     break
                 await asyncio.sleep(0.5)
+            if progress.get("physical_done") is not True:
+                # The lifecycle thread still owns a PG/actor transition. Mark
+                # this terminal operation dirty so registry mutual exclusion
+                # remains in force until reconcile can prove cleanup.
+                progress["cleanup_required"] = True
+                progress.setdefault("error", "abort requested; physical lifecycle still stopping")
             self._finish_scale_from_progress(direction, request_id, "FAILED", progress or {})
         except Exception as e:
             self._logger.error(f"GenRM scale watcher for {request_id} crashed: {e}")
             self._finish_scale_from_progress(
-                direction, request_id, "FAILED", {"error": f"watcher crashed: {e}"}
+                direction,
+                request_id,
+                "FAILED",
+                {
+                    "error": f"watcher crashed: {e}",
+                    # A watcher failure gives us no proof that the manager
+                    # has released actors or its placement group.  Keep the
+                    # model blocked until reconcile obtains that proof.
+                    "cleanup_required": True,
+                },
             )
 
     def _manager_progress(self, manager: Any, request_id: str) -> dict:
@@ -678,15 +765,10 @@ class GenRM(Base):
         if not phase or phase in ("PENDING",):
             return
         current = (self._scale_registry.get_status(direction, request_id) or {}).get("status", "PENDING")
-        if phase == "FAILED":
-            self._safe_advance(direction, request_id, "FAILED")
-            return
-        if phase == "PARTIAL":
-            if current == "CREATING":
-                self._safe_advance(direction, request_id, "HEALTH_CHECKING")
-            elif current == "READY":
-                pass
-            self._safe_advance(direction, request_id, "PARTIAL")
+        # Terminal phases are deliberately finished only by the watcher after
+        # it has seen ``physical_done is True``.  See the fence in
+        # _watch_scale_operation.
+        if phase in {"FAILED", "PARTIAL", "ACTIVE", "COMPLETED"}:
             return
         chain = self._SCALE_OUT_CHAIN if direction == "scale_out" else self._SCALE_IN_CHAIN
         if phase not in chain or current not in chain:
@@ -704,9 +786,7 @@ class GenRM(Base):
             # registry stays the authority, never crash the watcher on it.
             self._logger.debug(f"GenRM scale advance {request_id} -> {status} skipped: {e}")
 
-    def _finish_scale_from_progress(
-        self, direction: str, request_id: str, phase: str, progress: dict
-    ) -> None:
+    def _finish_scale_from_progress(self, direction: str, request_id: str, phase: str, progress: dict) -> None:
         try:
             self._scale_registry.finish(
                 request_id,
@@ -716,6 +796,7 @@ class GenRM(Base):
                 created=int(progress.get("created", 0) or 0),
                 removed=int(progress.get("removed", 0) or 0),
                 failed=int(progress.get("failed", 0) or 0),
+                cleanup_required=bool(progress.get("cleanup_required", False)),
                 error_message=progress.get("error"),
             )
         except (KeyError, ValueError) as e:
@@ -751,6 +832,62 @@ class GenRM(Base):
         if result is None:
             raise HTTPException(status_code=404, detail=f"Scale request {request_id} not found")
         return GenRMScaleStatusResponse(**result)
+
+    async def _reconcile_scale(self, direction: str, request_id: str) -> GenRMScaleReconcileResponse:
+        """Retry unfinished cleanup for one operation (RFC reconcile).
+
+        Continues the original operation: no new request ID, no re-selection
+        of a scale-in victim, no re-scaling. Idempotent -- an operation whose
+        cleanup already completed replays as a no-op success. The terminal
+        status and the prior ``removed`` count are preserved; only the
+        ``cleanup_required`` gate is cleared once the manager confirms the
+        resources were released.
+        """
+        op = self._scale_registry.get_status(direction, request_id)
+        if op is None:
+            raise HTTPException(status_code=404, detail=f"Scale request {request_id} not found")
+        if not op.get("cleanup_required"):
+            # Nothing withheld: replay the decision verbatim (idempotent).
+            return GenRMScaleReconcileResponse(
+                request_id=request_id,
+                direction=direction,
+                status=op["status"],
+                cleanup_required=False,
+            )
+        model = op["model_name"]
+        manager = self.genrm_managers[model]
+        reconcile = getattr(manager, "reconcile_scale_op", None)
+        if reconcile is None:
+            raise HTTPException(status_code=503, detail="manager does not support reconcile")
+        if direction == "scale_in":
+            # The manager retires the *fixed* victim only once the component
+            # proves its in-flight count is zero. Refuse rather than break the
+            # drain contract (and never pick a different victim).
+            progress = await asyncio.to_thread(self._manager_progress, manager, request_id)
+            victim = progress.get("victim")
+            if victim and not self._victim_inflight_zero(model, victim):
+                raise HTTPException(
+                    status_code=409,
+                    detail="victim still has in-flight requests; retry reconcile after drain",
+                )
+            if victim:
+                self._close_victim_admission(model, victim)
+        result = await asyncio.to_thread(ray.get, reconcile.remote(request_id))
+        if not result.get("known"):
+            raise HTTPException(status_code=503, detail="manager lost lifecycle state; cleanup remains blocked")
+        if result.get("in_progress"):
+            raise HTTPException(status_code=409, detail="physical lifecycle is still stopping; retry reconcile")
+        if not result.get("cleanup_required"):
+            self._scale_registry.clear_cleanup(request_id)
+            self._engine_caches[model].force_refresh()
+        refreshed = self._scale_registry.get_status(direction, request_id) or op
+        return GenRMScaleReconcileResponse(
+            request_id=request_id,
+            direction=direction,
+            status=refreshed["status"],
+            cleanup_required=bool(refreshed.get("cleanup_required", False)),
+            victim_cleared=bool(result.get("victim_cleared", False)),
+        )
 
     def get_genrm_manager(self, route_key: Optional[str] = None) -> Any:
         """Get one GenRM manager by route key.

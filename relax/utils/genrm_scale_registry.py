@@ -108,9 +108,7 @@ _SCALE_OUT_TRANSITIONS: Dict[str, frozenset] = {
 
 _SCALE_IN_TRANSITIONS: Dict[str, frozenset] = {
     GenRMScaleInStatus.PENDING.value: frozenset({GenRMScaleInStatus.DRAINING.value, GenRMScaleInStatus.FAILED.value}),
-    GenRMScaleInStatus.DRAINING.value: frozenset(
-        {GenRMScaleInStatus.REMOVING.value, GenRMScaleInStatus.FAILED.value}
-    ),
+    GenRMScaleInStatus.DRAINING.value: frozenset({GenRMScaleInStatus.REMOVING.value, GenRMScaleInStatus.FAILED.value}),
     GenRMScaleInStatus.REMOVING.value: frozenset(
         {GenRMScaleInStatus.COMPLETED.value, GenRMScaleInStatus.FAILED.value}
     ),
@@ -434,6 +432,23 @@ class GenRMScaleRegistry:
         with self._lock:
             self._operations[request_id].detail = detail
             self._operations[request_id].updated_at = time.time()
+
+    def clear_cleanup(self, request_id: str) -> bool:
+        """Clear ``cleanup_required`` after a successful reconcile.
+
+        The flag is what blocks new scale requests for the model, so it is
+        only ever set on terminal operations. Returns ``True`` when the flag
+        was set and is now cleared; ``False`` for an unknown request or one
+        that was already clean (making the reconcile replay idempotent).
+        """
+        with self._lock:
+            op = self._operations.get(request_id)
+            if op is None or not op.cleanup_required:
+                return False
+            op.cleanup_required = False
+            op.updated_at = time.time()
+            logger.info("GenRM scale op %s: cleanup_required cleared after reconcile", request_id)
+            return True
 
     # ------------------------------------------------------------------
     # Queries

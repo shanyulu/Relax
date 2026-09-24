@@ -18,6 +18,7 @@ from types import SimpleNamespace
 
 from tests.utils._dep_stubs import import_genrm_component
 
+
 genrm_module = import_genrm_component()
 
 # Deployment-unwrapped class (the @serve.deployment wrapper stores it).
