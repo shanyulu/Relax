@@ -1,0 +1,52 @@
+[
+  {
+    "request_id": "genrm-scale-7385fa8d-1f06-404e-8f0a-fddc66696970",
+    "action": "scale_out",
+    "status": "ACTIVE",
+    "triggered_at": 1790259387.6394775,
+    "completed_at": 1790259428.0241797,
+    "from_engines": 1,
+    "to_engines": 2,
+    "delta": 1,
+    "reason": "Conditions met: token_usage_high",
+    "triggered_conditions": [
+      "token_usage_high"
+    ],
+    "metrics_snapshot": {
+      "num_engines": 1,
+      "total_queue_reqs": 0,
+      "total_running_reqs": 47,
+      "avg_token_usage": 0.6802935558226356,
+      "total_throughput": 2619.5445610606976,
+      "max_queue_time_p95": 0.09737871674491394,
+      "max_ttft_p95": 0.94135593220339,
+      "max_itl_p95": 0.019793911777140977,
+      "throughput_variance": 1.0,
+      "max_queue_time_p95_overflow": false,
+      "max_ttft_p95_overflow": false,
+      "max_itl_p95_overflow": false,
+      "is_empty": false,
+      "coverage": 1.0,
+      "field_coverage": {
+        "token_usage": 1.0,
+        "num_queue_reqs": 1.0,
+        "num_running_reqs": 1.0,
+        "gen_throughput": 1.0,
+        "max_total_num_tokens": 0.0,
+        "num_used_tokens": 1.0,
+        "num_prefill_prealloc_queue_reqs": 1.0,
+        "num_prefill_inflight_queue_reqs": 1.0,
+        "num_decode_prealloc_queue_reqs": 1.0,
+        "num_decode_transfer_queue_reqs": 1.0,
+        "queue_time_p95": 1.0,
+        "ttft_p95": 1.0,
+        "itl_p95": 1.0,
+        "e2e_latency_p95": 1.0
+      },
+      "unknown_engines": [],
+      "timestamp": 1790259387.6070802
+    },
+    "error_message": null,
+    "failure_categories": []
+  }
+]

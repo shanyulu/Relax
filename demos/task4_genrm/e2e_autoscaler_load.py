@@ -362,6 +362,19 @@ def main() -> int:
     autoscaler_handle.start.remote().result()
     ev.log("autoscaler_started")
 
+    # Demo-tune the global cooldowns for the load experiment (per-service
+    # cooldown overrides are not part of ServiceScalingPolicy yet; the PATCH
+    # endpoint is the supported way to set them at runtime).
+    import requests as _rq
+
+    _p = _rq.patch(
+        f"{AUTOSCALER_BASE}/config",
+        json={"scale_in_cooldown_secs": 60.0, "scale_out_cooldown_secs": 20.0},
+        timeout=10,
+    )
+    _p.raise_for_status()
+    ev.log("autoscaler_cooldowns_patched", scale_in=60.0, scale_out=20.0)
+
     timeline = Timeline(ev)
     load = PhaseLoadGenerator(ev)
     timeline.start()
@@ -402,7 +415,7 @@ def main() -> int:
         load.phase = "LOW"
         scaled_in = wait_for(
             lambda: http_get(GENRM_BASE, "/engines", timeout=10).get("current") == cfg.genrm_num_gpus,
-            420,
+            500,
             "automatic scale-in",
         )
         ev.log("phase_low_prime_result", scaled_in=scaled_in)

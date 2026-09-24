@@ -1,0 +1,59 @@
+[
+  {
+    "t": 19.228,
+    "event": "ray_init",
+    "gpus": 4.0
+  },
+  {
+    "t": 34.323,
+    "event": "deployed",
+    "genrm": "http://127.0.0.1:8000/genrm",
+    "autoscaler": "http://127.0.0.1:8000/autoscaler_genrm"
+  },
+  {
+    "t": 73.533,
+    "event": "initial_engine_up"
+  },
+  {
+    "t": 73.704,
+    "event": "autoscaler_started"
+  },
+  {
+    "t": 74.13,
+    "event": "load_started",
+    "workers": 48
+  },
+  {
+    "t": 94.166,
+    "event": "phase_low_done",
+    "current": 1,
+    "ids": [
+      [
+        "172.17.0.6",
+        16000
+      ]
+    ]
+  },
+  {
+    "t": 154.7,
+    "event": "phase_high_result",
+    "scaled_out": true
+  },
+  {
+    "t": 215.306,
+    "event": "phase_steady_done",
+    "elastic_served": 520
+  },
+  {
+    "t": 635.872,
+    "event": "phase_low_prime_result",
+    "scaled_in": false
+  },
+  {
+    "t": 646.26,
+    "event": "load_stopped",
+    "total": 36931,
+    "failed": 0,
+    "failures": []
+  }
+]
