@@ -22,6 +22,29 @@ from tests.utils._dep_stubs import import_genrm_component
 
 genrm_module = import_genrm_component()
 
+import ray  # noqa: E402  (real or stubbed -- guaranteed importable after stub install)
+
+# The scripted manager's ``.remote()`` facade returns plain dicts, never real
+# ObjectRefs.  A real ``ray.get`` rejects non-ObjectRef inputs, but only after
+# spinning up a local Ray instance (~10s per call), which starves the event
+# barriers below.  Pass ``ray.get`` through for the duration of this module,
+# following the direct-attribute-replacement pattern of
+# tests/distributed/ray/conftest.py (patch("ray.get", ...) is unreliable once
+# Ray is initialised).
+_orig_ray_get = ray.get
+
+
+def _passthrough_ray_get(ref, timeout=None, **kwargs):
+    return ref
+
+
+def setUpModule():
+    ray.get = _passthrough_ray_get
+
+
+def tearDownModule():
+    ray.get = _orig_ray_get
+
 _GenRM = genrm_module.GenRM.func_or_class
 _GenRMEngineCacheState = genrm_module._EngineCacheState
 _GenRMScaleRegistry = genrm_module.GenRMScaleRegistry

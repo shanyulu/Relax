@@ -27,9 +27,21 @@ from tests.utils._dep_stubs import import_genrm_manager
 
 genrm_module = import_genrm_manager()
 
-_GenRMManager = genrm_module.GenRMManager
+# Under a real Ray install, ``GenRMManager`` comes back as an ActorClass
+# wrapper; unwrap the original Python class (same pattern as
+# tests/distributed/ray/conftest.py) so ``object.__new__`` works everywhere.
+_GenRMManager = getattr(
+    getattr(genrm_module.GenRMManager, "__ray_metadata__", None), "modified_class", None
+) or genrm_module.GenRMManager
 
-import ray.util.placement_group as _ray_pg_module  # noqa: E402
+import importlib  # noqa: E402
+
+# ``import ray.util.placement_group as X`` binds X to the *factory function*
+# of the same name when ray.util's __init__ re-exports it, not to the module
+# (verified: ``X is sys.modules['ray.util.placement_group']`` is False under a
+# real Ray install).  Resolve the real module object explicitly so the
+# patches below actually steer the production function-scope imports.
+_ray_pg_module = importlib.import_module("ray.util.placement_group")
 
 
 def _manager(num_slots: int = 1):
