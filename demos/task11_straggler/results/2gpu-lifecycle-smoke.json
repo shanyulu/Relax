@@ -1,7 +1,7 @@
 {
   "bootstrap_mean_95pct_interval_pct": [
-    0.526723517973382,
-    0.526723517973382
+    0.3212655014278365,
+    0.3212655014278365
   ],
   "config": {
     "absolute_ms": 0.02,
@@ -18,32 +18,43 @@
     "warmup": 12
   },
   "diagnosis": {
-    "alert_count": 2,
+    "alert_count": 3,
     "alerts": [
       {
         "case": "compute_slow",
         "cause": "undetermined",
         "evidence": "persistent_stage_slowdown",
-        "observed_ms": 0.1024,
-        "peer_median_ms": 0.0532,
+        "observed_ms": 0.0983,
+        "peer_median_ms": 0.0543,
         "rank": 1,
-        "ratio": 1.925,
+        "ratio": 1.81,
         "stage": "forward",
         "step": 8
+      },
+      {
+        "case": "compute_recovery",
+        "cause": "undetermined",
+        "evidence": "persistent_stage_slowdown",
+        "observed_ms": 0.0993,
+        "peer_median_ms": 0.0543,
+        "rank": 1,
+        "ratio": 1.829,
+        "stage": "forward",
+        "step": 24
       },
       {
         "case": "host_stall",
         "cause": "undetermined",
         "evidence": "persistent_stage_slowdown",
-        "observed_ms": 0.3338,
-        "peer_median_ms": 0.0522,
+        "observed_ms": 0.4219,
+        "peer_median_ms": 0.0524,
         "rank": 1,
-        "ratio": 6.395,
+        "ratio": 8.052,
         "stage": "backward",
-        "step": 32
+        "step": 16
       }
     ],
-    "complete_windows": 64,
+    "complete_windows": 72,
     "duplicate_count": 0,
     "incomplete_windows": 0,
     "uncertain": [
@@ -103,30 +114,30 @@
   "max_paired_final_loss_difference": 0.0,
   "null_trials": [
     {
-      "difference_pct": -0.036800809631787335,
-      "first_s": 0.333216343075037,
+      "difference_pct": 0.13667881704473306,
+      "first_s": 0.6407361254096031,
       "pair": 0,
-      "second_s": 0.33309371676295996
+      "second_s": 0.6416118759661913
     }
   ],
-  "overhead_median_pct": 0.526723517973382,
+  "overhead_median_pct": 0.3212655014278365,
   "overhead_range_pct": [
-    0.526723517973382,
-    0.526723517973382
+    0.3212655014278365,
+    0.3212655014278365
   ],
   "paired_parameter_mismatches": 0,
   "paired_trials": [
     {
-      "off_s": 0.3344715042039752,
-      "on_s": 0.33623324427753687,
-      "overhead_pct": 0.526723517973382,
+      "off_s": 0.6446313951164484,
+      "on_s": 0.6467023734003305,
+      "overhead_pct": 0.3212655014278365,
       "pair": 0
     }
   ],
   "runs": [
     {
       "case": "bench_0_off",
-      "elapsed_s": 0.33446456538513303,
+      "elapsed_s": 0.6446135193109512,
       "final_loss": 0.039059117436409,
       "injection": null,
       "parameter_sha256": "e0dc04be48e6f517a1467e18ff306d2892414c0fc5a94f5d2b06b472d2fa1894",
@@ -136,7 +147,7 @@
     },
     {
       "case": "bench_0_off",
-      "elapsed_s": 0.3344715042039752,
+      "elapsed_s": 0.6446313951164484,
       "final_loss": 0.03903282433748245,
       "injection": null,
       "parameter_sha256": "e0dc04be48e6f517a1467e18ff306d2892414c0fc5a94f5d2b06b472d2fa1894",
@@ -146,7 +157,7 @@
     },
     {
       "case": "bench_0_on",
-      "elapsed_s": 0.33581991819664836,
+      "elapsed_s": 0.6466154828667641,
       "final_loss": 0.039059117436409,
       "injection": null,
       "parameter_sha256": "e0dc04be48e6f517a1467e18ff306d2892414c0fc5a94f5d2b06b472d2fa1894",
@@ -159,20 +170,20 @@
         "dropped_queue": 0,
         "dropped_shutdown": 0,
         "dropped_sink": 0,
-        "payload_bytes": 7910,
-        "pending_peak": 6,
+        "payload_bytes": 7917,
+        "pending_peak": 5,
         "planned": 32,
         "recorded": 32,
-        "report_lag_max_ms": 55.460961,
+        "report_lag_max_ms": 87.363241,
         "reported": 32,
-        "startup_ms": 0.246857
+        "startup_ms": 0.301346
       },
       "rank": 0,
       "type": "run"
     },
     {
       "case": "bench_0_on",
-      "elapsed_s": 0.33623324427753687,
+      "elapsed_s": 0.6467023734003305,
       "final_loss": 0.03903282433748245,
       "injection": null,
       "parameter_sha256": "e0dc04be48e6f517a1467e18ff306d2892414c0fc5a94f5d2b06b472d2fa1894",
@@ -185,20 +196,20 @@
         "dropped_queue": 0,
         "dropped_shutdown": 0,
         "dropped_sink": 0,
-        "payload_bytes": 7916,
+        "payload_bytes": 7913,
         "pending_peak": 6,
         "planned": 32,
         "recorded": 32,
-        "report_lag_max_ms": 55.328245,
+        "report_lag_max_ms": 106.404424,
         "reported": 32,
-        "startup_ms": 0.336196
+        "startup_ms": 0.391571
       },
       "rank": 1,
       "type": "run"
     },
     {
       "case": "null_0_first",
-      "elapsed_s": 0.333216343075037,
+      "elapsed_s": 0.6407335475087166,
       "final_loss": 0.039059117436409,
       "injection": null,
       "parameter_sha256": "e0dc04be48e6f517a1467e18ff306d2892414c0fc5a94f5d2b06b472d2fa1894",
@@ -208,7 +219,7 @@
     },
     {
       "case": "null_0_first",
-      "elapsed_s": 0.3331635072827339,
+      "elapsed_s": 0.6407361254096031,
       "final_loss": 0.03903282433748245,
       "injection": null,
       "parameter_sha256": "e0dc04be48e6f517a1467e18ff306d2892414c0fc5a94f5d2b06b472d2fa1894",
@@ -218,7 +229,7 @@
     },
     {
       "case": "null_0_second",
-      "elapsed_s": 0.33309371676295996,
+      "elapsed_s": 0.6415924839675426,
       "final_loss": 0.039059117436409,
       "injection": null,
       "parameter_sha256": "e0dc04be48e6f517a1467e18ff306d2892414c0fc5a94f5d2b06b472d2fa1894",
@@ -228,7 +239,7 @@
     },
     {
       "case": "null_0_second",
-      "elapsed_s": 0.3330887909978628,
+      "elapsed_s": 0.6416118759661913,
       "final_loss": 0.03903282433748245,
       "injection": null,
       "parameter_sha256": "e0dc04be48e6f517a1467e18ff306d2892414c0fc5a94f5d2b06b472d2fa1894",
@@ -238,8 +249,8 @@
     },
     {
       "case": "control",
-      "elapsed_s": 0.08511734008789062,
-      "final_loss": 0.03908727318048477,
+      "elapsed_s": 0.16080793738365173,
+      "final_loss": 0.03911430761218071,
       "injection": null,
       "parameter_sha256": "dd1be891f5a431e0c805a88666806d98e449a4b9d47a68cad4ef5a565383a9a7",
       "probe": {
@@ -255,17 +266,17 @@
         "pending_peak": 3,
         "planned": 8,
         "recorded": 8,
-        "report_lag_max_ms": 27.995366,
+        "report_lag_max_ms": 56.318176,
         "reported": 8,
-        "startup_ms": 0.300114
+        "startup_ms": 0.250775
       },
-      "rank": 1,
+      "rank": 0,
       "type": "run"
     },
     {
       "case": "control",
-      "elapsed_s": 0.08535227971151471,
-      "final_loss": 0.03911430761218071,
+      "elapsed_s": 0.16064722649753094,
+      "final_loss": 0.03908727318048477,
       "injection": null,
       "parameter_sha256": "dd1be891f5a431e0c805a88666806d98e449a4b9d47a68cad4ef5a565383a9a7",
       "probe": {
@@ -277,46 +288,20 @@
         "dropped_queue": 0,
         "dropped_shutdown": 0,
         "dropped_sink": 0,
-        "payload_bytes": 1944,
-        "pending_peak": 3,
+        "payload_bytes": 1946,
+        "pending_peak": 2,
         "planned": 8,
         "recorded": 8,
-        "report_lag_max_ms": 29.467184,
+        "report_lag_max_ms": 33.701072,
         "reported": 8,
-        "startup_ms": 0.31294
+        "startup_ms": 0.358688
       },
-      "rank": 0,
+      "rank": 1,
       "type": "run"
     },
     {
       "case": "compute_slow",
-      "elapsed_s": 0.08755994122475386,
-      "final_loss": 0.03911430761218071,
-      "injection": "compute_slow",
-      "parameter_sha256": "dd1be891f5a431e0c805a88666806d98e449a4b9d47a68cad4ef5a565383a9a7",
-      "probe": {
-        "collector_alive": 0,
-        "collector_error": 0,
-        "collector_timeout": 0,
-        "dropped_collector": 0,
-        "dropped_pool": 0,
-        "dropped_queue": 0,
-        "dropped_shutdown": 0,
-        "dropped_sink": 0,
-        "payload_bytes": 1985,
-        "pending_peak": 3,
-        "planned": 8,
-        "recorded": 8,
-        "report_lag_max_ms": 32.074414,
-        "reported": 8,
-        "startup_ms": 0.230264
-      },
-      "rank": 0,
-      "type": "run"
-    },
-    {
-      "case": "compute_slow",
-      "elapsed_s": 0.08800593297928572,
+      "elapsed_s": 0.16109056212008,
       "final_loss": 0.03908727318048477,
       "injection": "compute_slow",
       "parameter_sha256": "dd1be891f5a431e0c805a88666806d98e449a4b9d47a68cad4ef5a565383a9a7",
@@ -329,23 +314,23 @@
         "dropped_queue": 0,
         "dropped_shutdown": 0,
         "dropped_sink": 0,
-        "payload_bytes": 1984,
+        "payload_bytes": 1988,
         "pending_peak": 3,
         "planned": 8,
         "recorded": 8,
-        "report_lag_max_ms": 26.127978,
+        "report_lag_max_ms": 46.229285,
         "reported": 8,
-        "startup_ms": 0.246235
+        "startup_ms": 0.213278
       },
       "rank": 1,
       "type": "run"
     },
     {
-      "case": "load_skew",
-      "elapsed_s": 0.08675525104627013,
-      "final_loss": 0.03883717209100723,
-      "injection": "load_skew",
-      "parameter_sha256": "427001a6867c505747d1b1c708254655e1da465f707c5914e8dd1feab2527c2f",
+      "case": "compute_slow",
+      "elapsed_s": 0.16078961081802845,
+      "final_loss": 0.03911430761218071,
+      "injection": "compute_slow",
+      "parameter_sha256": "dd1be891f5a431e0c805a88666806d98e449a4b9d47a68cad4ef5a565383a9a7",
       "probe": {
         "collector_alive": 0,
         "collector_error": 0,
@@ -355,20 +340,72 @@
         "dropped_queue": 0,
         "dropped_shutdown": 0,
         "dropped_sink": 0,
-        "payload_bytes": 1963,
+        "payload_bytes": 1988,
         "pending_peak": 3,
         "planned": 8,
         "recorded": 8,
-        "report_lag_max_ms": 30.038391,
+        "report_lag_max_ms": 53.100904,
         "reported": 8,
-        "startup_ms": 0.256614
+        "startup_ms": 0.17082
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "compute_recovery",
+      "elapsed_s": 0.16100291907787323,
+      "final_loss": 0.03911430761218071,
+      "injection": "compute_recovery",
+      "parameter_sha256": "dd1be891f5a431e0c805a88666806d98e449a4b9d47a68cad4ef5a565383a9a7",
+      "probe": {
+        "collector_alive": 0,
+        "collector_error": 0,
+        "collector_timeout": 0,
+        "dropped_collector": 0,
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "dropped_shutdown": 0,
+        "dropped_sink": 0,
+        "payload_bytes": 2020,
+        "pending_peak": 3,
+        "planned": 8,
+        "recorded": 8,
+        "report_lag_max_ms": 55.150836,
+        "reported": 8,
+        "startup_ms": 0.188621
+      },
+      "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "compute_recovery",
+      "elapsed_s": 0.16158054023981094,
+      "final_loss": 0.03908727318048477,
+      "injection": "compute_recovery",
+      "parameter_sha256": "dd1be891f5a431e0c805a88666806d98e449a4b9d47a68cad4ef5a565383a9a7",
+      "probe": {
+        "collector_alive": 0,
+        "collector_error": 0,
+        "collector_timeout": 0,
+        "dropped_collector": 0,
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "dropped_shutdown": 0,
+        "dropped_sink": 0,
+        "payload_bytes": 2021,
+        "pending_peak": 3,
+        "planned": 8,
+        "recorded": 8,
+        "report_lag_max_ms": 44.484141,
+        "reported": 8,
+        "startup_ms": 0.204815
       },
       "rank": 1,
       "type": "run"
     },
     {
       "case": "load_skew",
-      "elapsed_s": 0.08758423291146755,
+      "elapsed_s": 0.1626957319676876,
       "final_loss": 0.039114370942115784,
       "injection": "load_skew",
       "parameter_sha256": "427001a6867c505747d1b1c708254655e1da465f707c5914e8dd1feab2527c2f",
@@ -385,19 +422,19 @@
         "pending_peak": 3,
         "planned": 8,
         "recorded": 8,
-        "report_lag_max_ms": 30.732293,
+        "report_lag_max_ms": 49.325191,
         "reported": 8,
-        "startup_ms": 0.241374
+        "startup_ms": 0.205459
       },
       "rank": 0,
       "type": "run"
     },
     {
-      "case": "host_stall",
-      "elapsed_s": 0.47406391287222505,
-      "final_loss": 0.03908727318048477,
-      "injection": "host_stall",
-      "parameter_sha256": "dd1be891f5a431e0c805a88666806d98e449a4b9d47a68cad4ef5a565383a9a7",
+      "case": "load_skew",
+      "elapsed_s": 0.16289278492331505,
+      "final_loss": 0.03883717209100723,
+      "injection": "load_skew",
+      "parameter_sha256": "427001a6867c505747d1b1c708254655e1da465f707c5914e8dd1feab2527c2f",
       "probe": {
         "collector_alive": 0,
         "collector_error": 0,
@@ -407,20 +444,20 @@
         "dropped_queue": 0,
         "dropped_shutdown": 0,
         "dropped_sink": 0,
-        "payload_bytes": 1965,
-        "pending_peak": 1,
+        "payload_bytes": 1961,
+        "pending_peak": 3,
         "planned": 8,
         "recorded": 8,
-        "report_lag_max_ms": 9.527736,
+        "report_lag_max_ms": 47.779822,
         "reported": 8,
-        "startup_ms": 0.252775
+        "startup_ms": 0.217481
       },
       "rank": 1,
       "type": "run"
     },
     {
       "case": "host_stall",
-      "elapsed_s": 0.4744642460718751,
+      "elapsed_s": 0.5539825074374676,
       "final_loss": 0.03911430761218071,
       "injection": "host_stall",
       "parameter_sha256": "dd1be891f5a431e0c805a88666806d98e449a4b9d47a68cad4ef5a565383a9a7",
@@ -433,15 +470,41 @@
         "dropped_queue": 0,
         "dropped_shutdown": 0,
         "dropped_sink": 0,
-        "payload_bytes": 1978,
+        "payload_bytes": 1975,
         "pending_peak": 6,
         "planned": 8,
         "recorded": 8,
-        "report_lag_max_ms": 311.584658,
+        "report_lag_max_ms": 367.14368,
         "reported": 8,
-        "startup_ms": 0.229167
+        "startup_ms": 0.197728
       },
       "rank": 0,
+      "type": "run"
+    },
+    {
+      "case": "host_stall",
+      "elapsed_s": 0.5543642658740282,
+      "final_loss": 0.03908727318048477,
+      "injection": "host_stall",
+      "parameter_sha256": "dd1be891f5a431e0c805a88666806d98e449a4b9d47a68cad4ef5a565383a9a7",
+      "probe": {
+        "collector_alive": 0,
+        "collector_error": 0,
+        "collector_timeout": 0,
+        "dropped_collector": 0,
+        "dropped_pool": 0,
+        "dropped_queue": 0,
+        "dropped_shutdown": 0,
+        "dropped_sink": 0,
+        "payload_bytes": 1971,
+        "pending_peak": 1,
+        "planned": 8,
+        "recorded": 8,
+        "report_lag_max_ms": 11.381236,
+        "reported": 8,
+        "startup_ms": 0.217801
+      },
+      "rank": 1,
       "type": "run"
     }
   ],
@@ -450,13 +513,29 @@
       "case": "bench_0_on",
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 4.274,
+      "stages_ms": {
+        "backward": 1.0865,
+        "collective_interval": 2.2528,
+        "forward": 0.3,
+        "optimizer": 0.0154
+      },
+      "step": 0,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 4.0283,
+      "report_lag_ms": 5.1342,
       "stages_ms": {
-        "backward": 0.6051,
-        "collective_interval": 1.9876,
-        "forward": 0.2652,
-        "optimizer": 0.0143
+        "backward": 0.8479,
+        "collective_interval": 2.9665,
+        "forward": 0.1894,
+        "optimizer": 0.0145
       },
       "step": 0,
       "type": "sample",
@@ -467,27 +546,11 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 4.1049,
+      "report_lag_ms": 13.3871,
       "stages_ms": {
-        "backward": 0.7473,
-        "collective_interval": 1.7316,
-        "forward": 0.2714,
-        "optimizer": 0.0143
-      },
-      "step": 0,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 4.3297,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1776,
-        "forward": 0.0563,
+        "backward": 0.0522,
+        "collective_interval": 2.3255,
+        "forward": 0.0543,
         "optimizer": 0.0154
       },
       "step": 8,
@@ -499,12 +562,12 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 5.5993,
+      "report_lag_ms": 14.1545,
       "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1837,
-        "forward": 0.0532,
-        "optimizer": 0.0143
+        "backward": 0.0523,
+        "collective_interval": 2.3265,
+        "forward": 0.0543,
+        "optimizer": 0.0154
       },
       "step": 8,
       "type": "sample",
@@ -515,27 +578,11 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 8.1136,
+      "report_lag_ms": 20.3806,
       "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1878,
-        "forward": 0.0543,
-        "optimizer": 0.0143
-      },
-      "step": 16,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 8.0985,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1827,
-        "forward": 0.0573,
+        "backward": 0.0532,
+        "collective_interval": 2.3142,
+        "forward": 0.0553,
         "optimizer": 0.0154
       },
       "step": 16,
@@ -547,11 +594,43 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 10.9235,
+      "report_lag_ms": 18.6028,
       "stages_ms": {
         "backward": 0.0532,
-        "collective_interval": 1.1796,
-        "forward": 0.0564,
+        "collective_interval": 2.3153,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 16,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 16.2919,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3183,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 24,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 26.4825,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3183,
+        "forward": 0.0543,
         "optimizer": 0.0154
       },
       "step": 24,
@@ -563,28 +642,12 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 12.1323,
+      "report_lag_ms": 17.6191,
       "stages_ms": {
-        "backward": 0.0512,
-        "collective_interval": 1.1848,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 24,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 14.8143,
-      "stages_ms": {
-        "backward": 0.0532,
-        "collective_interval": 1.1776,
-        "forward": 0.0532,
-        "optimizer": 0.0154
+        "backward": 0.0522,
+        "collective_interval": 2.3562,
+        "forward": 0.0543,
+        "optimizer": 0.0144
       },
       "step": 32,
       "type": "sample",
@@ -595,11 +658,11 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 14.5351,
+      "report_lag_ms": 31.4032,
       "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1725,
-        "forward": 0.0572,
+        "backward": 0.0532,
+        "collective_interval": 2.3562,
+        "forward": 0.0543,
         "optimizer": 0.0143
       },
       "step": 32,
@@ -611,122 +674,106 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 17.6864,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1848,
-        "forward": 0.0543,
-        "optimizer": 0.0143
-      },
-      "step": 40,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 17.2394,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1807,
-        "forward": 0.0563,
-        "optimizer": 0.0143
-      },
-      "step": 40,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 19.9409,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1735,
-        "forward": 0.0563,
-        "optimizer": 0.0154
-      },
-      "step": 48,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 21.5365,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1786,
-        "forward": 0.0532,
-        "optimizer": 0.0133
-      },
-      "step": 48,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 24.5145,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1837,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 56,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 23.7053,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1786,
-        "forward": 0.0563,
-        "optimizer": 0.0143
-      },
-      "step": 56,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 27.4467,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1798,
-        "forward": 0.0543,
-        "optimizer": 0.0143
-      },
-      "step": 64,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 26.4568,
+      "report_lag_ms": 22.9811,
       "stages_ms": {
         "backward": 0.0532,
-        "collective_interval": 1.1738,
+        "collective_interval": 2.3204,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 40,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 35.6337,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3224,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 40,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 27.6064,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3255,
+        "forward": 0.0543,
+        "optimizer": 0.0143
+      },
+      "step": 48,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 37.87,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3265,
+        "forward": 0.0543,
+        "optimizer": 0.0143
+      },
+      "step": 48,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 31.3365,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3511,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 56,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 41.0555,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3521,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 56,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 34.4579,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3357,
         "forward": 0.0563,
         "optimizer": 0.0154
       },
@@ -739,11 +786,43 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 29.1089,
+      "report_lag_ms": 38.3296,
       "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1745,
-        "forward": 0.0563,
+        "backward": 0.0532,
+        "collective_interval": 2.3368,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 64,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 41.3578,
+      "stages_ms": {
+        "backward": 0.0512,
+        "collective_interval": 2.3398,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 72,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 36.5794,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3378,
+        "forward": 0.0543,
         "optimizer": 0.0143
       },
       "step": 72,
@@ -754,27 +833,11 @@
       "case": "bench_0_on",
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 31.5656,
+      "rank": 1,
+      "report_lag_ms": 44.1395,
       "stages_ms": {
-        "backward": 0.0512,
-        "collective_interval": 1.1807,
-        "forward": 0.0532,
-        "optimizer": 0.0133
-      },
-      "step": 72,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 34.5979,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.195,
+        "backward": 0.0532,
+        "collective_interval": 2.3562,
         "forward": 0.0532,
         "optimizer": 0.0143
       },
@@ -786,12 +849,12 @@
       "case": "bench_0_on",
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 33.1214,
+      "rank": 0,
+      "report_lag_ms": 39.6896,
       "stages_ms": {
-        "backward": 0.0532,
-        "collective_interval": 1.1899,
-        "forward": 0.0563,
+        "backward": 0.0522,
+        "collective_interval": 2.3572,
+        "forward": 0.0543,
         "optimizer": 0.0154
       },
       "step": 80,
@@ -803,157 +866,141 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 37.4824,
-      "stages_ms": {
-        "backward": 0.0512,
-        "collective_interval": 1.1796,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 88,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 35.8657,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1738,
-        "forward": 0.0573,
-        "optimizer": 0.0144
-      },
-      "step": 88,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 38.9899,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1725,
-        "forward": 0.0563,
-        "optimizer": 0.0144
-      },
-      "step": 96,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 41.616,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1786,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 96,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 43.9562,
-      "stages_ms": {
-        "backward": 0.0524,
-        "collective_interval": 1.1848,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 104,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 40.9622,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1786,
-        "forward": 0.0563,
-        "optimizer": 0.0154
-      },
-      "step": 104,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 46.2733,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.194,
-        "forward": 0.0532,
-        "optimizer": 0.0134
-      },
-      "step": 112,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 41.6131,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1901,
-        "forward": 0.0562,
-        "optimizer": 0.0154
-      },
-      "step": 112,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 46.5731,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1684,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 120,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 44.4029,
+      "report_lag_ms": 38.1917,
       "stages_ms": {
         "backward": 0.0532,
-        "collective_interval": 1.1622,
+        "collective_interval": 2.3276,
         "forward": 0.0553,
         "optimizer": 0.0143
       },
+      "step": 88,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 40.131,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3286,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 88,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 37.5543,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3419,
+        "forward": 0.0553,
+        "optimizer": 0.0143
+      },
+      "step": 96,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 42.8336,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3429,
+        "forward": 0.0532,
+        "optimizer": 0.0154
+      },
+      "step": 96,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 39.6194,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.306,
+        "forward": 0.0543,
+        "optimizer": 0.0143
+      },
+      "step": 104,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 46.7743,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.306,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 104,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 41.6619,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3276,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 112,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 48.5242,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3276,
+        "forward": 0.0553,
+        "optimizer": 0.0143
+      },
+      "step": 112,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 45.2571,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3532,
+        "forward": 0.0543,
+        "optimizer": 0.0144
+      },
       "step": 120,
       "type": "sample",
       "workload": 48
@@ -963,11 +1010,27 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 47.1013,
+      "report_lag_ms": 50.9616,
       "stages_ms": {
         "backward": 0.0532,
-        "collective_interval": 1.1868,
-        "forward": 0.0563,
+        "collective_interval": 2.3542,
+        "forward": 0.0543,
+        "optimizer": 0.0143
+      },
+      "step": 120,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 50.8126,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3409,
+        "forward": 0.0543,
         "optimizer": 0.0154
       },
       "step": 128,
@@ -979,12 +1042,12 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 50.6732,
+      "report_lag_ms": 48.2696,
       "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1909,
-        "forward": 0.0532,
-        "optimizer": 0.0143
+        "backward": 0.0532,
+        "collective_interval": 2.3398,
+        "forward": 0.0553,
+        "optimizer": 0.0154
       },
       "step": 128,
       "type": "sample",
@@ -994,11 +1057,27 @@
       "case": "bench_0_on",
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 53.5677,
+      "rank": 1,
+      "report_lag_ms": 44.3557,
       "stages_ms": {
-        "backward": 0.0515,
-        "collective_interval": 1.195,
+        "backward": 0.0532,
+        "collective_interval": 2.348,
+        "forward": 0.0543,
+        "optimizer": 0.0143
+      },
+      "step": 136,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 48.2697,
+      "stages_ms": {
+        "backward": 0.0543,
+        "collective_interval": 2.347,
         "forward": 0.0543,
         "optimizer": 0.0143
       },
@@ -1011,14 +1090,14 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 50.8103,
+      "report_lag_ms": 42.0011,
       "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1889,
-        "forward": 0.0573,
-        "optimizer": 0.0143
+        "backward": 0.0532,
+        "collective_interval": 2.3593,
+        "forward": 0.0543,
+        "optimizer": 0.0154
       },
-      "step": 136,
+      "step": 144,
       "type": "sample",
       "workload": 48
     },
@@ -1027,12 +1106,12 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 51.4864,
+      "report_lag_ms": 48.1476,
       "stages_ms": {
-        "backward": 0.0514,
-        "collective_interval": 1.1786,
-        "forward": 0.0532,
-        "optimizer": 0.0133
+        "backward": 0.0532,
+        "collective_interval": 2.3583,
+        "forward": 0.0543,
+        "optimizer": 0.0143
       },
       "step": 144,
       "type": "sample",
@@ -1043,27 +1122,11 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 48.3473,
+      "report_lag_ms": 42.3089,
       "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1725,
-        "forward": 0.0563,
-        "optimizer": 0.0145
-      },
-      "step": 144,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 51.5085,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1919,
-        "forward": 0.0563,
+        "backward": 0.0532,
+        "collective_interval": 2.3583,
+        "forward": 0.0543,
         "optimizer": 0.0143
       },
       "step": 152,
@@ -1075,12 +1138,12 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 54.7703,
+      "report_lag_ms": 51.984,
       "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1981,
-        "forward": 0.0532,
-        "optimizer": 0.0143
+        "backward": 0.0532,
+        "collective_interval": 2.3562,
+        "forward": 0.0543,
+        "optimizer": 0.0154
       },
       "step": 152,
       "type": "sample",
@@ -1091,27 +1154,11 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 54.7783,
+      "report_lag_ms": 54.2903,
       "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1786,
-        "forward": 0.0543,
-        "optimizer": 0.0133
-      },
-      "step": 160,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 55.0988,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1735,
-        "forward": 0.0572,
+        "backward": 0.0532,
+        "collective_interval": 2.3286,
+        "forward": 0.0553,
         "optimizer": 0.0154
       },
       "step": 160,
@@ -1123,206 +1170,14 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 54.809,
+      "report_lag_ms": 48.1938,
       "stages_ms": {
         "backward": 0.0532,
-        "collective_interval": 1.1684,
-        "forward": 0.0563,
-        "optimizer": 0.0154
-      },
-      "step": 168,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 55.4537,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1735,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 168,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 54.7456,
-      "stages_ms": {
-        "backward": 0.0532,
-        "collective_interval": 1.1694,
-        "forward": 0.0561,
-        "optimizer": 0.0144
-      },
-      "step": 176,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 55.461,
-      "stages_ms": {
-        "backward": 0.0532,
-        "collective_interval": 1.1735,
-        "forward": 0.0532,
-        "optimizer": 0.0134
-      },
-      "step": 176,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 54.8183,
-      "stages_ms": {
-        "backward": 0.0524,
-        "collective_interval": 1.1756,
-        "forward": 0.0532,
-        "optimizer": 0.0154
-      },
-      "step": 184,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 55.3282,
-      "stages_ms": {
-        "backward": 0.0532,
-        "collective_interval": 1.1694,
-        "forward": 0.0573,
-        "optimizer": 0.0154
-      },
-      "step": 184,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 54.8727,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1786,
-        "forward": 0.0565,
-        "optimizer": 0.0154
-      },
-      "step": 192,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 55.3892,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1837,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 192,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 52.6861,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1827,
-        "forward": 0.0563,
-        "optimizer": 0.0154
-      },
-      "step": 200,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 54.9432,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1899,
-        "forward": 0.0533,
-        "optimizer": 0.0143
-      },
-      "step": 200,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 54.507,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1796,
+        "collective_interval": 2.3296,
         "forward": 0.0543,
         "optimizer": 0.0143
       },
-      "step": 208,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 55.0785,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1738,
-        "forward": 0.0564,
-        "optimizer": 0.0154
-      },
-      "step": 208,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 50.5492,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1725,
-        "forward": 0.0563,
-        "optimizer": 0.0154
-      },
-      "step": 216,
+      "step": 160,
       "type": "sample",
       "workload": 48
     },
@@ -1331,30 +1186,14 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 52.0097,
+      "report_lag_ms": 57.7256,
       "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1776,
-        "forward": 0.0532,
+        "backward": 0.0532,
+        "collective_interval": 2.3347,
+        "forward": 0.0553,
         "optimizer": 0.0143
       },
-      "step": 216,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "bench_0_on",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 54.927,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.194,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 224,
+      "step": 168,
       "type": "sample",
       "workload": 48
     },
@@ -1363,12 +1202,220 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 54.649,
+      "report_lag_ms": 56.6036,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3357,
+        "forward": 0.0543,
+        "optimizer": 0.0143
+      },
+      "step": 168,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 62.4998,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3183,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 176,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 65.2737,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3204,
+        "forward": 0.0532,
+        "optimizer": 0.0154
+      },
+      "step": 176,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 70.7525,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3409,
+        "forward": 0.0543,
+        "optimizer": 0.0143
+      },
+      "step": 184,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 66.9846,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3388,
+        "forward": 0.0553,
+        "optimizer": 0.0143
+      },
+      "step": 184,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 69.8566,
       "stages_ms": {
         "backward": 0.0533,
-        "collective_interval": 1.1889,
-        "forward": 0.0563,
+        "collective_interval": 2.3173,
+        "forward": 0.0543,
         "optimizer": 0.0154
+      },
+      "step": 192,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 79.1933,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3194,
+        "forward": 0.0543,
+        "optimizer": 0.0143
+      },
+      "step": 192,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 70.5623,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3552,
+        "forward": 0.0543,
+        "optimizer": 0.0143
+      },
+      "step": 200,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 87.8149,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3562,
+        "forward": 0.0532,
+        "optimizer": 0.0154
+      },
+      "step": 200,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 71.8447,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3245,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 208,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 90.6584,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3245,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 208,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 99.2926,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3706,
+        "forward": 0.0532,
+        "optimizer": 0.0143
+      },
+      "step": 216,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 74.2904,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3685,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 216,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 77.0127,
+      "stages_ms": {
+        "backward": 0.0543,
+        "collective_interval": 2.3757,
+        "forward": 0.0553,
+        "optimizer": 0.0143
       },
       "step": 224,
       "type": "sample",
@@ -1379,11 +1426,27 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 54.8349,
+      "report_lag_ms": 106.4044,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3777,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 224,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "bench_0_on",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 80.9532,
       "stages_ms": {
         "backward": 0.0543,
-        "collective_interval": 1.1786,
-        "forward": 0.0564,
+        "collective_interval": 2.3542,
+        "forward": 0.0553,
         "optimizer": 0.0143
       },
       "step": 232,
@@ -1394,13 +1457,13 @@
       "case": "bench_0_on",
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 55.4061,
+      "rank": 1,
+      "report_lag_ms": 106.0578,
       "stages_ms": {
         "backward": 0.0522,
-        "collective_interval": 1.1827,
-        "forward": 0.0543,
-        "optimizer": 0.0143
+        "collective_interval": 2.3552,
+        "forward": 0.0553,
+        "optimizer": 0.0154
       },
       "step": 232,
       "type": "sample",
@@ -1411,11 +1474,11 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 54.8772,
+      "report_lag_ms": 84.5673,
       "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1848,
-        "forward": 0.0532,
+        "backward": 0.0532,
+        "collective_interval": 2.3521,
+        "forward": 0.0553,
         "optimizer": 0.0143
       },
       "step": 240,
@@ -1427,12 +1490,12 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 55.3094,
+      "report_lag_ms": 105.5387,
       "stages_ms": {
-        "backward": 0.0535,
-        "collective_interval": 1.1776,
-        "forward": 0.0563,
-        "optimizer": 0.0154
+        "backward": 0.0532,
+        "collective_interval": 2.3521,
+        "forward": 0.0543,
+        "optimizer": 0.0143
       },
       "step": 240,
       "type": "sample",
@@ -1442,13 +1505,13 @@
       "case": "bench_0_on",
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 54.6844,
+      "rank": 0,
+      "report_lag_ms": 87.3632,
       "stages_ms": {
         "backward": 0.0532,
-        "collective_interval": 1.1776,
-        "forward": 0.0563,
-        "optimizer": 0.0145
+        "collective_interval": 2.3726,
+        "forward": 0.0543,
+        "optimizer": 0.0154
       },
       "step": 248,
       "type": "sample",
@@ -1458,13 +1521,13 @@
       "case": "bench_0_on",
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 55.3914,
+      "rank": 1,
+      "report_lag_ms": 105.11,
       "stages_ms": {
         "backward": 0.0522,
-        "collective_interval": 1.1837,
-        "forward": 0.0532,
-        "optimizer": 0.0143
+        "collective_interval": 2.3736,
+        "forward": 0.0543,
+        "optimizer": 0.0154
       },
       "step": 248,
       "type": "sample",
@@ -1474,28 +1537,12 @@
       "case": "control",
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 3.0558,
-      "stages_ms": {
-        "backward": 1.0506,
-        "collective_interval": 1.2687,
-        "forward": 0.2601,
-        "optimizer": 0.0134
-      },
-      "step": 0,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "control",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 3.1345,
+      "report_lag_ms": 4.3208,
       "stages_ms": {
-        "backward": 0.8139,
-        "collective_interval": 1.5206,
-        "forward": 0.2501,
+        "backward": 0.8652,
+        "collective_interval": 2.3081,
+        "forward": 0.1843,
         "optimizer": 0.0143
       },
       "step": 0,
@@ -1507,109 +1554,141 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 5.8187,
+      "report_lag_ms": 4.5529,
+      "stages_ms": {
+        "backward": 0.8479,
+        "collective_interval": 2.3828,
+        "forward": 0.1772,
+        "optimizer": 0.0154
+      },
+      "step": 0,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "control",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 14.2525,
       "stages_ms": {
         "backward": 0.0522,
-        "collective_interval": 1.1766,
+        "collective_interval": 2.3194,
+        "forward": 0.0553,
+        "optimizer": 0.0143
+      },
+      "step": 8,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "control",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 13.356,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3204,
+        "forward": 0.0532,
+        "optimizer": 0.0154
+      },
+      "step": 8,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "control",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 24.428,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3634,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 16,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "control",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 23.2491,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3634,
+        "forward": 0.0553,
+        "optimizer": 0.0143
+      },
+      "step": 16,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "control",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 23.1654,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3419,
+        "forward": 0.0532,
+        "optimizer": 0.0143
+      },
+      "step": 24,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "control",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 33.3881,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3398,
+        "forward": 0.0553,
+        "optimizer": 0.0143
+      },
+      "step": 24,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "control",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 25.0095,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3429,
+        "forward": 0.0553,
+        "optimizer": 0.0143
+      },
+      "step": 32,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "control",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 40.7893,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3429,
         "forward": 0.0543,
         "optimizer": 0.0143
       },
-      "step": 8,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "control",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 5.6234,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1704,
-        "forward": 0.0563,
-        "optimizer": 0.0143
-      },
-      "step": 8,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "control",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 9.19,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1827,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 16,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "control",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 8.7205,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1766,
-        "forward": 0.0565,
-        "optimizer": 0.0143
-      },
-      "step": 16,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "control",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 12.9413,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.193,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 24,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "control",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 12.2027,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1878,
-        "forward": 0.0563,
-        "optimizer": 0.0154
-      },
-      "step": 24,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "control",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 17.6299,
-      "stages_ms": {
-        "backward": 0.0524,
-        "collective_interval": 1.1796,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
       "step": 32,
       "type": "sample",
       "workload": 48
@@ -1619,14 +1698,14 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 16.6451,
+      "report_lag_ms": 27.502,
       "stages_ms": {
-        "backward": 0.0535,
-        "collective_interval": 1.1745,
-        "forward": 0.0565,
-        "optimizer": 0.0154
+        "backward": 0.0532,
+        "collective_interval": 2.3112,
+        "forward": 0.0553,
+        "optimizer": 0.0143
       },
-      "step": 32,
+      "step": 40,
       "type": "sample",
       "workload": 48
     },
@@ -1635,77 +1714,61 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 21.2532,
+      "report_lag_ms": 47.1828,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3112,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 40,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "control",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 30.6548,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3245,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 48,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "control",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 52.2289,
+      "stages_ms": {
+        "backward": 0.0543,
+        "collective_interval": 2.3235,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 48,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "control",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 33.7011,
       "stages_ms": {
         "backward": 0.0522,
-        "collective_interval": 1.1756,
+        "collective_interval": 2.348,
         "forward": 0.0543,
         "optimizer": 0.0143
       },
-      "step": 40,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "control",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 19.9629,
-      "stages_ms": {
-        "backward": 0.0532,
-        "collective_interval": 1.1694,
-        "forward": 0.0565,
-        "optimizer": 0.0154
-      },
-      "step": 40,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "control",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 23.8531,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1756,
-        "forward": 0.0563,
-        "optimizer": 0.0154
-      },
-      "step": 48,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "control",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 25.1983,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1817,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 48,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "control",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 27.9954,
-      "stages_ms": {
-        "backward": 0.0532,
-        "collective_interval": 1.1786,
-        "forward": 0.0563,
-        "optimizer": 0.0154
-      },
       "step": 56,
       "type": "sample",
       "workload": 48
@@ -1715,12 +1778,12 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 29.4672,
+      "report_lag_ms": 56.3182,
       "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1827,
-        "forward": 0.0532,
-        "optimizer": 0.0143
+        "backward": 0.0532,
+        "collective_interval": 2.346,
+        "forward": 0.0543,
+        "optimizer": 0.0154
       },
       "step": 56,
       "type": "sample",
@@ -1731,11 +1794,11 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 3.141,
+      "report_lag_ms": 4.1922,
       "stages_ms": {
-        "backward": 0.9143,
-        "collective_interval": 1.3535,
-        "forward": 0.2232,
+        "backward": 0.8632,
+        "collective_interval": 2.4361,
+        "forward": 0.1782,
         "optimizer": 0.0143
       },
       "step": 0,
@@ -1747,12 +1810,12 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 3.1624,
+      "report_lag_ms": 4.3349,
       "stages_ms": {
-        "backward": 0.9246,
-        "collective_interval": 1.239,
-        "forward": 0.3141,
-        "optimizer": 0.0154
+        "backward": 0.9513,
+        "collective_interval": 2.2231,
+        "forward": 0.2703,
+        "optimizer": 0.0143
       },
       "step": 0,
       "type": "sample",
@@ -1763,12 +1826,12 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 6.1125,
+      "report_lag_ms": 13.7024,
       "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.2288,
-        "forward": 0.0532,
-        "optimizer": 0.0143
+        "backward": 0.0533,
+        "collective_interval": 2.3439,
+        "forward": 0.0543,
+        "optimizer": 0.0154
       },
       "step": 8,
       "type": "sample",
@@ -1779,11 +1842,11 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 5.4257,
+      "report_lag_ms": 12.6234,
       "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1766,
-        "forward": 0.1024,
+        "backward": 0.0532,
+        "collective_interval": 2.302,
+        "forward": 0.0983,
         "optimizer": 0.0154
       },
       "step": 8,
@@ -1795,11 +1858,11 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 10.5554,
+      "report_lag_ms": 22.6378,
       "stages_ms": {
         "backward": 0.0522,
-        "collective_interval": 1.239,
-        "forward": 0.0532,
+        "collective_interval": 2.346,
+        "forward": 0.0543,
         "optimizer": 0.0143
       },
       "step": 16,
@@ -1811,11 +1874,11 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 8.8751,
+      "report_lag_ms": 21.2395,
       "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1889,
-        "forward": 0.1016,
+        "backward": 0.0532,
+        "collective_interval": 2.3009,
+        "forward": 0.0983,
         "optimizer": 0.0143
       },
       "step": 16,
@@ -1826,12 +1889,28 @@
       "case": "compute_slow",
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 31.3473,
+      "stages_ms": {
+        "backward": 0.0543,
+        "collective_interval": 2.3429,
+        "forward": 0.0553,
+        "optimizer": 0.0143
+      },
+      "step": 24,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_slow",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 11.6455,
+      "report_lag_ms": 28.2793,
       "stages_ms": {
         "backward": 0.0532,
-        "collective_interval": 1.1837,
-        "forward": 0.1025,
+        "collective_interval": 2.2979,
+        "forward": 0.0983,
         "optimizer": 0.0143
       },
       "step": 24,
@@ -1843,28 +1922,12 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 15.1248,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.237,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 24,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "compute_slow",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 18.5464,
+      "report_lag_ms": 38.3465,
       "stages_ms": {
         "backward": 0.0532,
-        "collective_interval": 1.2329,
-        "forward": 0.0532,
-        "optimizer": 0.0143
+        "collective_interval": 2.3296,
+        "forward": 0.0543,
+        "optimizer": 0.0154
       },
       "step": 32,
       "type": "sample",
@@ -1875,254 +1938,382 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 15.4443,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1817,
-        "forward": 0.1034,
-        "optimizer": 0.0154
-      },
-      "step": 32,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "compute_slow",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 23.2171,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.2278,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 40,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "compute_slow",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 19.0573,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.1766,
-        "forward": 0.1034,
-        "optimizer": 0.0154
-      },
-      "step": 40,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "compute_slow",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 27.4874,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.2431,
-        "forward": 0.0532,
-        "optimizer": 0.0154
-      },
-      "step": 48,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "compute_slow",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 23.1474,
-      "stages_ms": {
-        "backward": 0.0535,
-        "collective_interval": 1.1909,
-        "forward": 0.1016,
-        "optimizer": 0.0154
-      },
-      "step": 48,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "compute_slow",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 26.128,
-      "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 1.193,
-        "forward": 0.1024,
-        "optimizer": 0.0154
-      },
-      "step": 56,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "compute_slow",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 32.0744,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.2442,
-        "forward": 0.0533,
-        "optimizer": 0.0143
-      },
-      "step": 56,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 4.1581,
-      "stages_ms": {
-        "backward": 0.8789,
-        "collective_interval": 2.0695,
-        "forward": 0.2212,
-        "optimizer": 0.0154
-      },
-      "step": 0,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 4.2832,
-      "stages_ms": {
-        "backward": 1.5771,
-        "collective_interval": 1.2636,
-        "forward": 0.3082,
-        "optimizer": 0.0154
-      },
-      "step": 0,
-      "type": "sample",
-      "workload": 96
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 5.9398,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.196,
-        "forward": 0.0522,
-        "optimizer": 0.0133
-      },
-      "step": 8,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 5.6824,
-      "stages_ms": {
-        "backward": 0.0686,
-        "collective_interval": 1.1715,
-        "forward": 0.0614,
-        "optimizer": 0.0154
-      },
-      "step": 8,
-      "type": "sample",
-      "workload": 96
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 10.4052,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.2073,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 16,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 9.9989,
-      "stages_ms": {
-        "backward": 0.0717,
-        "collective_interval": 1.1796,
-        "forward": 0.0625,
-        "optimizer": 0.0154
-      },
-      "step": 16,
-      "type": "sample",
-      "workload": 96
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 14.0869,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.2001,
-        "forward": 0.0532,
-        "optimizer": 0.0144
-      },
-      "step": 24,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 13.5677,
-      "stages_ms": {
-        "backward": 0.0696,
-        "collective_interval": 1.1727,
-        "forward": 0.0625,
-        "optimizer": 0.0144
-      },
-      "step": 24,
-      "type": "sample",
-      "workload": 96
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 18.5483,
+      "report_lag_ms": 34.0903,
       "stages_ms": {
         "backward": 0.0512,
-        "collective_interval": 1.2002,
-        "forward": 0.0522,
-        "optimizer": 0.0135
+        "collective_interval": 2.2866,
+        "forward": 0.0983,
+        "optimizer": 0.0143
       },
       "step": 32,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_slow",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 44.3923,
+      "stages_ms": {
+        "backward": 0.0543,
+        "collective_interval": 2.2927,
+        "forward": 0.0563,
+        "optimizer": 0.0154
+      },
+      "step": 40,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_slow",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 39.4242,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.2508,
+        "forward": 0.0984,
+        "optimizer": 0.0154
+      },
+      "step": 40,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_slow",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 49.2111,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3552,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 48,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_slow",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 43.8992,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3142,
+        "forward": 0.0983,
+        "optimizer": 0.0154
+      },
+      "step": 48,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_slow",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 53.1009,
+      "stages_ms": {
+        "backward": 0.0543,
+        "collective_interval": 2.3316,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 56,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_slow",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 46.2293,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.2886,
+        "forward": 0.0983,
+        "optimizer": 0.0143
+      },
+      "step": 56,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 4.2364,
+      "stages_ms": {
+        "backward": 0.9175,
+        "collective_interval": 2.4156,
+        "forward": 0.1731,
+        "optimizer": 0.0143
+      },
+      "step": 0,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 4.2831,
+      "stages_ms": {
+        "backward": 0.9103,
+        "collective_interval": 2.3777,
+        "forward": 0.1833,
+        "optimizer": 0.0154
+      },
+      "step": 0,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 13.8153,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3132,
+        "forward": 0.0553,
+        "optimizer": 0.0143
+      },
+      "step": 8,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 12.9831,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3132,
+        "forward": 0.0543,
+        "optimizer": 0.0143
+      },
+      "step": 8,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 22.0782,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.2661,
+        "forward": 0.0993,
+        "optimizer": 0.0154
+      },
+      "step": 16,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 24.8874,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3101,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 16,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 29.2432,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.2579,
+        "forward": 0.0993,
+        "optimizer": 0.0154
+      },
+      "step": 24,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 33.4943,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.303,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 24,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 40.1216,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3521,
+        "forward": 0.0553,
+        "optimizer": 0.0144
+      },
+      "step": 32,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 35.0804,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3081,
+        "forward": 0.0993,
+        "optimizer": 0.0143
+      },
+      "step": 32,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 46.1488,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3337,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 40,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 39.9756,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.2897,
+        "forward": 0.0993,
+        "optimizer": 0.0154
+      },
+      "step": 40,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 43.6206,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3153,
+        "forward": 0.0532,
+        "optimizer": 0.0143
+      },
+      "step": 48,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 51.1031,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3142,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 48,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 55.1508,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3378,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 56,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "compute_recovery",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 44.4841,
+      "stages_ms": {
+        "backward": 0.0522,
+        "collective_interval": 2.3398,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 56,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "load_skew",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 5.289,
+      "stages_ms": {
+        "backward": 0.9349,
+        "collective_interval": 3.4918,
+        "forward": 0.1935,
+        "optimizer": 0.0143
+      },
+      "step": 0,
       "type": "sample",
       "workload": 48
     },
@@ -2131,14 +2322,14 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 17.9169,
+      "report_lag_ms": 5.3715,
       "stages_ms": {
-        "backward": 0.0686,
-        "collective_interval": 1.1725,
-        "forward": 0.0625,
+        "backward": 2.0818,
+        "collective_interval": 2.2589,
+        "forward": 0.255,
         "optimizer": 0.0143
       },
-      "step": 32,
+      "step": 0,
       "type": "sample",
       "workload": 96
     },
@@ -2146,285 +2337,397 @@
       "case": "load_skew",
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 14.3181,
+      "stages_ms": {
+        "backward": 0.0543,
+        "collective_interval": 2.3695,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 8,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "load_skew",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 21.4268,
+      "report_lag_ms": 12.774,
       "stages_ms": {
         "backward": 0.0707,
-        "collective_interval": 1.1727,
-        "forward": 0.0604,
-        "optimizer": 0.0143
-      },
-      "step": 40,
-      "type": "sample",
-      "workload": 96
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 23.1544,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1991,
-        "forward": 0.0532,
-        "optimizer": 0.0133
-      },
-      "step": 40,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 26.4188,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.195,
-        "forward": 0.0532,
-        "optimizer": 0.0133
-      },
-      "step": 48,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 25.7593,
-      "stages_ms": {
-        "backward": 0.0676,
-        "collective_interval": 1.1684,
-        "forward": 0.0614,
-        "optimizer": 0.0143
-      },
-      "step": 48,
-      "type": "sample",
-      "workload": 96
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 30.7323,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 1.1991,
-        "forward": 0.0533,
-        "optimizer": 0.0143
-      },
-      "step": 56,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "load_skew",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 30.0384,
-      "stages_ms": {
-        "backward": 0.0696,
-        "collective_interval": 1.1735,
-        "forward": 0.0614,
-        "optimizer": 0.0144
-      },
-      "step": 56,
-      "type": "sample",
-      "workload": 96
-    },
-    {
-      "case": "host_stall",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 9.5277,
-      "stages_ms": {
-        "backward": 0.8047,
-        "collective_interval": 7.3103,
-        "forward": 0.2243,
-        "optimizer": 0.0144
-      },
-      "step": 0,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "host_stall",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 9.6825,
-      "stages_ms": {
-        "backward": 0.8211,
-        "collective_interval": 7.296,
-        "forward": 0.2233,
-        "optimizer": 0.0143
-      },
-      "step": 0,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "host_stall",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 9.2223,
-      "stages_ms": {
-        "backward": 0.1331,
-        "collective_interval": 7.3175,
-        "forward": 0.0562,
+        "collective_interval": 2.346,
+        "forward": 0.0594,
         "optimizer": 0.0143
       },
       "step": 8,
       "type": "sample",
-      "workload": 48
+      "workload": 96
     },
     {
-      "case": "host_stall",
+      "case": "load_skew",
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 60.9594,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 7.4199,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 8,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "host_stall",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 8.2731,
-      "stages_ms": {
-        "backward": 0.0512,
-        "collective_interval": 7.2335,
-        "forward": 0.0563,
-        "optimizer": 0.0143
-      },
-      "step": 16,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "host_stall",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 116.3253,
-      "stages_ms": {
-        "backward": 0.0512,
-        "collective_interval": 7.2388,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 16,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "host_stall",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 8.6861,
-      "stages_ms": {
-        "backward": 0.1475,
-        "collective_interval": 7.339,
-        "forward": 0.0563,
-        "optimizer": 0.0143
-      },
-      "step": 24,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "host_stall",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 167.7573,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 7.4537,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 24,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "host_stall",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 9.0768,
-      "stages_ms": {
-        "backward": 0.3338,
-        "collective_interval": 7.3226,
-        "forward": 0.0562,
-        "optimizer": 0.0154
-      },
-      "step": 32,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "host_stall",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 221.1469,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 7.6228,
-        "forward": 0.0532,
-        "optimizer": 0.0143
-      },
-      "step": 32,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "host_stall",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 273.4504,
-      "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 6.9919,
-        "forward": 0.0543,
-        "optimizer": 0.0154
-      },
-      "step": 40,
-      "type": "sample",
-      "workload": 48
-    },
-    {
-      "case": "host_stall",
-      "cohort": "dp0",
-      "measurement_kind": "gpu_stream_interval",
-      "rank": 1,
-      "report_lag_ms": 8.4844,
+      "report_lag_ms": 23.6735,
       "stages_ms": {
         "backward": 0.0532,
-        "collective_interval": 6.9857,
-        "forward": 0.0564,
+        "collective_interval": 2.3142,
+        "forward": 0.0553,
         "optimizer": 0.0143
+      },
+      "step": 16,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "load_skew",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 21.3389,
+      "stages_ms": {
+        "backward": 0.0717,
+        "collective_interval": 2.2917,
+        "forward": 0.0594,
+        "optimizer": 0.0143
+      },
+      "step": 16,
+      "type": "sample",
+      "workload": 96
+    },
+    {
+      "case": "load_skew",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 28.519,
+      "stages_ms": {
+        "backward": 0.0707,
+        "collective_interval": 2.3183,
+        "forward": 0.0594,
+        "optimizer": 0.0143
+      },
+      "step": 24,
+      "type": "sample",
+      "workload": 96
+    },
+    {
+      "case": "load_skew",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 32.8898,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3409,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 24,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "load_skew",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 36.6328,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.303,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 32,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "load_skew",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 34.3419,
+      "stages_ms": {
+        "backward": 0.0707,
+        "collective_interval": 2.2794,
+        "forward": 0.0594,
+        "optimizer": 0.0154
+      },
+      "step": 32,
+      "type": "sample",
+      "workload": 96
+    },
+    {
+      "case": "load_skew",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 41.2866,
+      "stages_ms": {
+        "backward": 0.0543,
+        "collective_interval": 2.345,
+        "forward": 0.0563,
+        "optimizer": 0.0143
+      },
+      "step": 40,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "load_skew",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 39.1225,
+      "stages_ms": {
+        "backward": 0.0717,
+        "collective_interval": 2.3235,
+        "forward": 0.0594,
+        "optimizer": 0.0143
+      },
+      "step": 40,
+      "type": "sample",
+      "workload": 96
+    },
+    {
+      "case": "load_skew",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 43.3597,
+      "stages_ms": {
+        "backward": 0.0717,
+        "collective_interval": 2.3327,
+        "forward": 0.0594,
+        "optimizer": 0.0154
+      },
+      "step": 48,
+      "type": "sample",
+      "workload": 96
+    },
+    {
+      "case": "load_skew",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 46.0941,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3562,
+        "forward": 0.0553,
+        "optimizer": 0.0143
+      },
+      "step": 48,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "load_skew",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 49.3252,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 2.3378,
+        "forward": 0.0543,
+        "optimizer": 0.0143
+      },
+      "step": 56,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "load_skew",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 47.7798,
+      "stages_ms": {
+        "backward": 0.0717,
+        "collective_interval": 2.3142,
+        "forward": 0.0594,
+        "optimizer": 0.0143
+      },
+      "step": 56,
+      "type": "sample",
+      "workload": 96
+    },
+    {
+      "case": "host_stall",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 9.692,
+      "stages_ms": {
+        "backward": 0.9155,
+        "collective_interval": 8.2084,
+        "forward": 0.1773,
+        "optimizer": 0.0143
+      },
+      "step": 0,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "host_stall",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 9.6747,
+      "stages_ms": {
+        "backward": 0.8837,
+        "collective_interval": 8.2043,
+        "forward": 0.1864,
+        "optimizer": 0.0154
+      },
+      "step": 0,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "host_stall",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 10.7423,
+      "stages_ms": {
+        "backward": 0.3635,
+        "collective_interval": 8.4234,
+        "forward": 0.0543,
+        "optimizer": 0.0143
+      },
+      "step": 8,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "host_stall",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 63.404,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 8.7726,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 8,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "host_stall",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 122.6561,
+      "stages_ms": {
+        "backward": 0.0524,
+        "collective_interval": 8.83,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 16,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "host_stall",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 11.0584,
+      "stages_ms": {
+        "backward": 0.4219,
+        "collective_interval": 8.4224,
+        "forward": 0.0543,
+        "optimizer": 0.0154
+      },
+      "step": 16,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "host_stall",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 180.4113,
+      "stages_ms": {
+        "backward": 0.0543,
+        "collective_interval": 8.7798,
+        "forward": 0.0563,
+        "optimizer": 0.0143
+      },
+      "step": 24,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "host_stall",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 11.3812,
+      "stages_ms": {
+        "backward": 0.3533,
+        "collective_interval": 8.4439,
+        "forward": 0.0553,
+        "optimizer": 0.0143
+      },
+      "step": 24,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "host_stall",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 237.4145,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 8.8074,
+        "forward": 0.0553,
+        "optimizer": 0.0154
+      },
+      "step": 32,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "host_stall",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 1,
+      "report_lag_ms": 10.693,
+      "stages_ms": {
+        "backward": 0.3912,
+        "collective_interval": 8.4306,
+        "forward": 0.0543,
+        "optimizer": 0.0143
+      },
+      "step": 32,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "host_stall",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 292.0229,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 8.7511,
+        "forward": 0.0553,
+        "optimizer": 0.0154
       },
       "step": 40,
       "type": "sample",
@@ -2435,14 +2738,14 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 8.7741,
+      "report_lag_ms": 11.1722,
       "stages_ms": {
-        "backward": 0.0543,
-        "collective_interval": 7.0513,
-        "forward": 0.0563,
-        "optimizer": 0.0146
+        "backward": 0.3676,
+        "collective_interval": 8.3978,
+        "forward": 0.0553,
+        "optimizer": 0.0154
       },
-      "step": 48,
+      "step": 40,
       "type": "sample",
       "workload": 48
     },
@@ -2450,12 +2753,12 @@
       "case": "host_stall",
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
-      "rank": 0,
-      "report_lag_ms": 311.5847,
+      "rank": 1,
+      "report_lag_ms": 10.7388,
       "stages_ms": {
-        "backward": 0.0522,
-        "collective_interval": 7.0564,
-        "forward": 0.0543,
+        "backward": 0.4475,
+        "collective_interval": 8.406,
+        "forward": 0.0532,
         "optimizer": 0.0143
       },
       "step": 48,
@@ -2467,12 +2770,28 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 0,
-      "report_lag_ms": 308.1908,
+      "report_lag_ms": 346.9187,
       "stages_ms": {
         "backward": 0.0522,
-        "collective_interval": 7.6104,
+        "collective_interval": 8.8402,
+        "forward": 0.0553,
+        "optimizer": 0.0144
+      },
+      "step": 48,
+      "type": "sample",
+      "workload": 48
+    },
+    {
+      "case": "host_stall",
+      "cohort": "dp0",
+      "measurement_kind": "gpu_stream_interval",
+      "rank": 0,
+      "report_lag_ms": 367.1437,
+      "stages_ms": {
+        "backward": 0.0532,
+        "collective_interval": 8.6016,
         "forward": 0.0543,
-        "optimizer": 0.0143
+        "optimizer": 0.0154
       },
       "step": 56,
       "type": "sample",
@@ -2483,11 +2802,11 @@
       "cohort": "dp0",
       "measurement_kind": "gpu_stream_interval",
       "rank": 1,
-      "report_lag_ms": 9.3419,
+      "report_lag_ms": 11.1379,
       "stages_ms": {
-        "backward": 0.2059,
-        "collective_interval": 7.4045,
-        "forward": 0.0563,
+        "backward": 0.3318,
+        "collective_interval": 8.2842,
+        "forward": 0.0543,
         "optimizer": 0.0143
       },
       "step": 56,
@@ -2499,7 +2818,7 @@
   "source_sha256": {
     "diagnosis.py": "8cd48af25b9de1ea2b6c647e79f0dbc65de6539279efe3701f540d20c79c814d",
     "probe.py": "b7a36ed00d0b4a98d4a721d63ca2bb4a3c3ac6b71c5d4ee049fd5b4f0891dbb4",
-    "run_demo.py": "30fcf09b8b69cb1c5f8ec621bd526795b195823edefafd9457144afcc9672bee"
+    "run_demo.py": "f5f61d27d1a1560817578ac80cf76cb0b11287581b2e3d9b9bac78c1d0bb0eb3"
   },
   "telemetry": {
     "collector_alive": 0,
@@ -2510,10 +2829,10 @@
     "dropped_queue": 0,
     "dropped_shutdown": 0,
     "dropped_sink": 0,
-    "json_payload_bytes": 31554,
-    "max_report_lag_ms": 311.584658,
-    "planned": 128,
-    "received": 128,
-    "reported": 128
+    "json_payload_bytes": 35609,
+    "max_report_lag_ms": 367.14368,
+    "planned": 144,
+    "received": 144,
+    "reported": 144
   }
 }
