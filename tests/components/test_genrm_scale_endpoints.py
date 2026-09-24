@@ -267,5 +267,50 @@ class TestMetricsDynamicCapacity(unittest.TestCase):
         self.assertNotIn("capacity_error", out)
 
 
+class TestGenerateEngineAttribution(unittest.TestCase):
+    """/generate must attribute each reply to the engine that served it and
+    surface finish metadata — the basis for per-engine reward-consistency
+    evidence and truncation checks."""
+
+    def test_call_engine_stashes_final_engine(self):
+        replica = _replica()
+
+        async def fake_tracked(route_key, key, host, port, inflight_holder, messages, sampling_params=None):
+            return {"text": " Judgement: 1", "meta_info": {"finish_reason": {"type": "stop"}, "completion_tokens": 4}}
+
+        replica._call_engine_tracked = fake_tracked
+        out = _run(replica._call_engine(None, [{"role": "user", "content": "q"}]))
+        self.assertEqual(out["engine_host"], _ENGINES[0][0])
+        self.assertEqual(out["engine_port"], _ENGINES[0][1])
+        self.assertEqual(out["text"], " Judgement: 1")
+
+    def test_generate_response_exposes_engine_and_finish_metadata(self):
+        replica = _replica()
+
+        async def fake_call(route_key, messages, sampling_params=None):
+            return {
+                "text": " Judgement: 1 ",
+                "engine_host": "192.0.2.9",
+                "engine_port": 16007,
+                "meta_info": {"finish_reason": {"type": "length"}, "completion_tokens": 8},
+            }
+
+        replica._call_engine = fake_call
+        request = genrm_module.GenerateRequest(messages=[{"role": "user", "content": "q"}])
+        response = _run(replica.generate(request))
+        self.assertEqual(response.response, "Judgement: 1")
+        self.assertEqual(response.engine_host, "192.0.2.9")
+        self.assertEqual(response.engine_port, 16007)
+        self.assertEqual(response.finish_reason, "length")  # truncation is observable
+        self.assertEqual(response.completion_tokens, 8)
+
+    def test_generate_response_fields_default_to_none(self):
+        response = genrm_module.GenerateResponse(response="Judgement: 0")
+        self.assertIsNone(response.engine_host)
+        self.assertIsNone(response.engine_port)
+        self.assertIsNone(response.finish_reason)
+        self.assertIsNone(response.completion_tokens)
+
+
 if __name__ == "__main__":
     unittest.main()

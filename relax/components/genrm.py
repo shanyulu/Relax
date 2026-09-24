@@ -69,10 +69,18 @@ class GenerateRequest(BaseModel):
 class GenerateResponse(BaseModel):
     """Response model for genRM generation.
 
-    Returns the raw model response text.
+    Returns the raw model response text plus, when available, which engine
+    served the request and the SGLang finish metadata. This makes per-engine
+    reward-consistency experiments and truncation checks possible without
+    touching the training path; clients that only read ``response`` are
+    unaffected.
     """
 
     response: str
+    engine_host: Optional[str] = None
+    engine_port: Optional[int] = None
+    finish_reason: Optional[str] = None
+    completion_tokens: Optional[int] = None
 
 
 class GenRMScaleRequest(BaseModel):
@@ -289,7 +297,15 @@ class GenRM(Base):
         try:
             output = await self._call_engine(request.route_key, request.messages, request.sampling_params)
             response = output.get("text", "").strip()
-            return GenerateResponse(response=response)
+            meta_info = output.get("meta_info") or {}
+            finish_reason = meta_info.get("finish_reason") if isinstance(meta_info, dict) else None
+            return GenerateResponse(
+                response=response,
+                engine_host=output.get("engine_host"),
+                engine_port=output.get("engine_port"),
+                finish_reason=(finish_reason.get("type") if isinstance(finish_reason, dict) else None),
+                completion_tokens=(meta_info.get("completion_tokens") if isinstance(meta_info, dict) else None),
+            )
 
         except Exception as e:
             self._logger.error(f"GenRM generation failed (route_key={request.route_key}): {e}")
@@ -348,9 +364,16 @@ class GenRM(Base):
         # engine so this finally decrements the engine actually used.
         inflight_holder = [inflight_key]
         try:
-            return await self._call_engine_tracked(
+            output = await self._call_engine_tracked(
                 route_key, key, host, port, inflight_holder, messages, sampling_params
             )
+            # Attribute the reply to the engine that actually served it (the
+            # holder's final key follows retry re-picks), so per-engine
+            # consistency evidence does not have to infer routing.
+            final_key = inflight_holder[0]
+            output["engine_host"] = final_key[1]
+            output["engine_port"] = final_key[2]
+            return output
         finally:
             final_key = inflight_holder[0]
             remaining = self._engine_inflight.get(final_key, 0) - 1
