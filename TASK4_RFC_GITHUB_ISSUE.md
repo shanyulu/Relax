@@ -6,20 +6,7 @@
 
 ![GenRM 弹性扩缩容：控制、打分与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/cover.jpg)
 
-## 先确定 Task 3 边界
-
-复用 Task 3 [RFC #71](https://github.com/redai-studio/Relax/issues/71) 的逻辑副本、路由与资源清理。#71 已承诺：Manager 幂等操作（`activate/drain/deactivate/shutdown`）、候选创建到发布的原子拓扑（`topology_revision` 递增）、PG ownership 表和 head-only discovery。当前候选 [PR #347](https://github.com/redai-studio/Relax/pull/347)（head `7813d61`）与 [PR #356](https://github.com/redai-studio/Relax/pull/356)（head `375ed00`）均未合入；按 2026-09-24 快照核对：#347 的 `AdmissionGate.close()` 会取消已进入代理的在途请求；#356 有拓扑与 drain 生命周期，但没有逐请求 admission 记账。两者都不能直接证明“已接收请求完整返回后才回收”。
-
-#71 没有承诺逐请求 admission lease 或 drain fence。下表前两行是 Task 4 接入需要、两套候选都未提供的能力，属于 Task 3 评选时要裁决的缺口，而不是既成规范：
-
-| 能力                                                                  | #71 是否承诺 | Task 4 依赖它保证什么                                |
-| --------------------------------------------------------------------- | ------------ | ---------------------------------------------------- |
-| 对单个逻辑副本原子关闭 admission，且不取消已接收请求                  | 否           | 迟到 dispatch 被拒绝，已有打分继续完成               |
-| drain fence：入口租约与后端任务均已终态的可查询证明                   | 否           | 不能只凭 HTTP 连接关闭或 Prometheus 瞬时为零回收 GPU |
-| 清理一个逻辑副本的全部 workers，并返回资源释放结果                    | 部分（PG ownership 表） | PG 未确认释放前保留 owner 与清理句柄，不误报成功     |
-| 原子拓扑发布（`topology_revision`）、迟到结果丢弃（engine generation）| 拓扑发布是；generation 否 | 旧快照与超时后的迟到初始化结果不能重新发布           |
-
-本期不做 Manager 重启恢复，因此不要求 `registry_epoch`：快照排序用 `topology_revision`，迟到初始化用 engine generation 区分。
+## 首期范围
 
 | 首期选择                      | 原因与限制                                                               |
 | ----------------------------- | ------------------------------------------------------------------------ |
@@ -99,14 +86,6 @@ reconcile 延续原 operation：不产生新 request ID，成功后原 operation
 
 </details>
 
-## 可运行契约 demo
-
-[交互回放（下载后打开）](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo.html) · [预览图](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo-preview.jpg) · [事件记录](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo.json) · [源码与测试](https://github.com/shanyulu/Relax/tree/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm)
-
-![Task 4 契约回放预览：路由、在途请求与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo-preview.jpg)
-
-回放覆盖 `1→2→1`、在途 `409`、未知请求 `404`、健康检查失败、迟到 dispatch、后端未排空、PG 清理失败、retry/reconcile 与 keyed NOOP 重放。页面逐步展示路由资格、在途请求与 PG owner。它使用 mock 对象验证提案中的状态和返回值；真实接入、打分与 GPU 回收还要在 Relax 中验收。HTML 需下载后用浏览器打开。
-
 ## Autoscaler 与监控
 
 复用现有策略、持续窗口和 cooldown，配置 GenRM 独立阈值，容量下限不低于 initial。手动与自动扩缩共用模型锁；Autoscaler 等待请求终态，按实际结果记录 history。
@@ -128,6 +107,29 @@ reconcile 延续原 operation：不产生新 request ID，成功后原 operation
 | 字段缺失、过期或采集失败             | 无效       | 暂停并在 `/conditions` 显示字段与原因     |
 
 各字段的聚合方式（均值或分位）、单位、采样窗和分母（`ready`）在配置中固定并随 `/conditions` 暴露。只有 discovery 完整、无生命周期异常、连续窗口满足覆盖要求时才决策；手动 API 与打分不受影响。Autoscaler 等待 operation 终态后按实际结果写 history。
+
+## 可运行契约 demo
+
+[交互回放（下载后打开）](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo.html) · [预览图](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo-preview.jpg) · [事件记录](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo.json) · [源码与测试](https://github.com/shanyulu/Relax/tree/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm)
+
+![Task 4 契约回放预览：路由、在途请求与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo-preview.jpg)
+
+回放覆盖 `1→2→1`、在途 `409`、未知请求 `404`、健康检查失败、迟到 dispatch、后端未排空、PG 清理失败、retry/reconcile 与 keyed NOOP 重放。页面逐步展示路由资格、在途请求与 PG owner。它使用 mock 对象验证提案中的状态和返回值；真实接入、打分与 GPU 回收还要在 Relax 中验收。HTML 需下载后用浏览器打开。
+
+## Task 3 依赖边界
+
+复用 Task 3 [RFC #71](https://github.com/redai-studio/Relax/issues/71) 的逻辑副本、路由与资源清理。#71 已承诺：Manager 幂等操作（`activate/drain/deactivate/shutdown`）、候选创建到发布的原子拓扑（`topology_revision` 递增）、PG ownership 表和 head-only discovery。当前候选 [PR #347](https://github.com/redai-studio/Relax/pull/347)（head `7813d61`）与 [PR #356](https://github.com/redai-studio/Relax/pull/356)（head `375ed00`）均未合入；按 2026-09-24 快照核对：#347 的 `AdmissionGate.close()` 会取消已进入代理的在途请求；#356 有拓扑与 drain 生命周期，但没有逐请求 admission 记账。两者都不能直接证明“已接收请求完整返回后才回收”。
+
+#71 没有承诺逐请求 admission lease 或 drain fence。下表前两行是 Task 4 接入需要、两套候选都未提供的能力，属于 Task 3 评选时要裁决的缺口，而不是既成规范：
+
+| 能力                                                                  | #71 是否承诺 | Task 4 依赖它保证什么                                |
+| --------------------------------------------------------------------- | ------------ | ---------------------------------------------------- |
+| 对单个逻辑副本原子关闭 admission，且不取消已接收请求                  | 否           | 迟到 dispatch 被拒绝，已有打分继续完成               |
+| drain fence：入口租约与后端任务均已终态的可查询证明                   | 否           | 不能只凭 HTTP 连接关闭或 Prometheus 瞬时为零回收 GPU |
+| 清理一个逻辑副本的全部 workers，并返回资源释放结果                    | 部分（PG ownership 表） | PG 未确认释放前保留 owner 与清理句柄，不误报成功     |
+| 原子拓扑发布（`topology_revision`）、迟到结果丢弃（engine generation）| 拓扑发布是；generation 否 | 旧快照与超时后的迟到初始化结果不能重新发布           |
+
+不要求 `registry_epoch`：快照排序用 `topology_revision`，迟到初始化用 engine generation 区分，重启恢复不在本期范围。
 
 ## 接入路径
 
@@ -154,6 +156,6 @@ reconcile 延续原 operation：不产生新 request ID，成功后原 operation
 
 文本 recipe 验收计划：常驻 decoupled GenRM 从单机文本打分模型起步，固定输入集与确定性采样；持续打分下执行 1→2→1，留存操作日志（事件流与 demo 同构）、路由表前后对照（`/genrm/engines`）、每副本 GPU 与 PG 释放证据、Autoscaler 决策日志与指标窗口；新旧副本评分一致性按预定容差判定。
 
-请导师确认 **Task 3 入选实现与「先确定 Task 3 边界」一节需要裁决的两项缺口**（admission 关闭不取消已接收请求、drain fence）。首期限定常驻 decoupled、独占新增 PG、单 Gateway、单模型 Autoscaler。
+请导师确认 **Task 3 入选实现与「Task 3 依赖边界」一节需要裁决的两项缺口**（admission 关闭不取消已接收请求、drain fence）。首期限定常驻 decoupled、独占新增 PG、单 Gateway、单模型 Autoscaler。
 
 参考：[官方 Task 4](https://github.com/redai-studio/community/blob/main/contributor-program/2026-cohort-2/official-task.md) · [Task 3 RFC](https://github.com/redai-studio/Relax/issues/71) · [当前 main 快照](https://github.com/redai-studio/Relax/tree/353ea7cec2c0d3f0745bc7929943089e51282e10)
