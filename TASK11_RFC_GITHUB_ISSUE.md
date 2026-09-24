@@ -18,7 +18,7 @@
 
 ## 怎么接入
 
-现有 `Timer` 看阶段总时长，`TrainProfiler` 做短时分析，两者保持原用途。Relax 当前在三处把 `config.timers` 置 None（`relax/backends/megatron/model.py` 的 optimizer 配置、评估与训练路径）；向该接口注入非阻塞 timer 即可激活 Megatron 既有调用点——#363 走此路线（自报复用 22 处调用点、不改 Megatron 源码），零侵入，但区间粒度受既有调用点限制。外包 `train_one_step` 则拆不开 `forward_backward_func`。因此接入第一步是用短 trace 核定既有调用点对所需边界的实际覆盖：够用的直接复用 timer 接口，拆不开 forward/backward 的位置才改 MCore schedule。持续采集分三处接入，**尚未集成到 Relax**：
+现有 `Timer` 看阶段总时长，`TrainProfiler` 做短时分析，两者保持原用途。Relax 当前在三处把 `config.timers` 置 None（`relax/backends/megatron/model.py` 的 optimizer 配置、评估与训练路径）；向该接口注入非阻塞 timer 即可激活 Megatron 既有调用点；#363 走的正是这条路线（自报 22 处调用点、不改 Megatron 源码），但区间粒度受既有调用点限制。外包 `train_one_step` 则拆不开 `forward_backward_func`。因此接入第一步是用短 trace 核定既有调用点对所需边界的实际覆盖：够用的直接复用 timer 接口，拆不开 forward/backward 的位置才改 MCore schedule。持续采集分三处接入，**尚未集成到 Relax**：
 
 | 位置                       | 方案与约束                                                                                           |
 | -------------------------- | ---------------------------------------------------------------------------------------------------- |
@@ -41,11 +41,11 @@ stage_schema, workload{tokens,sequences,microbatches}, stages_ms{}, recorded_at
 
 `(run_id, topology_epoch, global_rank, sample_seq)` 是幂等键；重复包忽略，旧 topology 数据不与新成员集合拼窗。collector 按 cohort 的 expected member set 与 TTL 关闭窗口：成员缺失、迟到或 stage schema 不一致都输出 `uncertain` 和 coverage，不把缺报补零。内存按 cohort 数、待完成窗口数和历史条数三重限界；淘汰必须产生 drop reason。
 
-demo 验证过的机制与接入时才落地的设计分开：双卡 demo 已实现 Event 池取用、有界队列、按 (run, step, rank) 去重、乱序/缺报/schema 冲突的 `uncertain` 输出与按成员收齐关窗（传输为进程内队列，非 HTTP）；独立 CPU-only 服务、服务发现、run_id/topology_epoch 的生成与传播、批量 HTTP、发送超时、collector 重启恢复与时钟 TTL 属于接入时的设计承诺，尚无实现。后台 sender 的 GIL、Event query 与 HTTP 序列化成本未做隔离测量——demo 只测得含采集在内的整体配对开销。
+demo 验证过的机制与接入时才落地的设计分开：双卡 demo 已实现 Event 池取用、有界队列、按 (case, step, rank) 去重、乱序/缺报/schema 冲突的 `uncertain` 输出与按成员收齐关窗（传输为进程内队列，非 HTTP）；独立 CPU-only 服务、服务发现、run_id/topology_epoch 的生成与传播、批量 HTTP、发送超时、collector 重启恢复与时钟 TTL 属于接入时的设计承诺，尚无实现。后台 sender 的 GIL、Event query 与 HTTP 序列化成本没有隔离测量，demo 测得的只是含采集在内的整体配对开销。
 
-报文预算：envelope 实测 248 bytes/report（单 rank 单次上报、序列化后口径）。作业级速率 = 248 B × 每 rank 采样频率 × rank 数；例如 1024 rank、每 8 步采样、约 1 step/s 时约 32 KB/s（未含 HTTP 头与批量封装）。collector 的 CPU/内存与平台指标基数按 8/64/256/1024 rank 四档在接入后实测补齐，此处不预填。聚合结果送平台的同时保留逐 rank 样本的可回看查询，保存范围与保留时长随首期 recipe 确定；告警跳转关联样本。
+报文预算：早期 demo 的简化 JSON payload 约 248 bytes/report，未包含上文拟议的完整 envelope，也不包含 HTTP 头和批量封装。作业级速率 = 完整报文实测字节数 × 每 rank 采样频率 × rank 数；若仍按 248 B 估算，1024 rank、每 8 步采样、约 1 step/s 时约 32 KB/s。这只是简化报文的参考量级，不能作为正式传输预算或上限。collector 的 CPU/内存与平台指标基数按 8/64/256/1024 rank 四档在接入后实测补齐，此处不预填。聚合结果送平台，逐 rank 样本仍可回查，保存范围与保留时长随首期 recipe 确定；告警可跳转到关联样本。
 
-cohort 不是全 world。比较对象必须处于相同 TP/PP/VPP/CP/EP/ETP 位置，只在对应 DP/EDP replica 轴上不同；整步 forward/backward 还要求 token、sequence 与 microbatch 数在容差内。cohort 至少 2 个成员：目标 rank 之外至少 1 个对照；没有等价对照就只保存画像，不产生慢卡结论。双卡 demo 每个目标只有 1 个对照，是置信下界。首期文本场景无 MoE；dense 与 expert 阶段的对照组规则（EP 轴如何参与等价判定）留待 MoE 挂点验收时确定，不提前承诺。
+cohort 不是全 world。比较对象必须处于相同 TP/PP/VPP/CP/EP/ETP 位置，只在对应 DP/EDP replica 轴上不同；整步 forward/backward 还要求 token、sequence 与 microbatch 数在容差内。cohort 至少 2 个成员：目标 rank 之外至少 1 个对照；没有等价对照就只保存画像，不产生慢卡结论。双卡 demo 每个目标只有 1 个对照，刚满足这一下限。首期文本场景无 MoE；dense 与 expert 阶段的对照组规则（EP 轴如何参与等价判定）留待 MoE 挂点验收时确定，不提前承诺。
 
 ![TP2、PP2、DP2 示例：只比较同一分片位置的 DP 副本](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task11_straggler/results/cohort-map.svg)
 
@@ -56,9 +56,9 @@ cohort 不是全 world。比较对象必须处于相同 TP/PP/VPP/CP/EP/ETP 位�
 - `collective_interval` 只在已验证的 collective 边界上报。启用 overlap 时，外层墙钟区间不能代表 NCCL GPU 时间；没有可靠完成边界就报告 unavailable，而不是伪造 0；
 - attention/MoE 只保留关闭状态的 schema capability，未完成真实挂点和开销验收前不算 v1 交付。
 
-告警只比较同 cohort、同阶段、工作量可比的 rank；缺报、乱序和不可比样本打断连续异常判断。对端计算慢也会拉长本卡通信等待，因此报告异常区间，不直接归因网络。组内 `no alert` 也不能排除所有卡同时变慢。CUDA Event 区间度量 GPU stream 段，不含 CPU 发射停顿，两者并列展示、不互相冒充；采样步之间的短暂异常可能整体漏采，“无告警”只表示已采样窗口未满足判定条件，不等于无故障。根因输出在未完成通信边界核实前按假设表述，不冒充确认。
+告警只比较同 cohort、同阶段、工作量可比的 rank；缺报、乱序和不可比样本打断连续异常判断。对端计算慢也会拉长本卡通信等待，因此报告异常区间，不直接归因网络。组内 `no alert` 也不能排除所有卡同时变慢。CUDA Event 区间度量 GPU stream 段，不含 CPU 发射停顿，两者在画像中并列展示、各自标注口径；采样步之间的短暂异常可能整体漏采，“无告警”只说明已采样窗口未满足判定条件，不等于无故障。根因输出在通信边界核实前一律标注为假设。
 
-observer 的异常边界也必须明确：初始化、Event 分配、`record/query/elapsed_time`、序列化和发送中的异常都只禁用 observer 并留下计数，不从观测代码主动抛穿训练；如果 CUDA context 本身已经损坏，训练随后自行失败，不能把它包装成“观测降级成功”。关闭时有固定 deadline，未完成 Event 作废且不回池，后台线程不得阻止 actor 退出。
+observer 的异常边界也需要明确：初始化、Event 分配、`record/query/elapsed_time`、序列化和发送中的异常都只禁用 observer 并留下计数，不从观测代码主动抛穿训练；如果 CUDA context 本身已经损坏，训练随后自行失败，不能把它包装成“观测降级成功”。关闭时有固定 deadline，未完成 Event 作废且不回池，后台线程不得阻止 actor 退出。
 
 <details>
 <summary>采集流程与告警规则</summary>
@@ -88,7 +88,7 @@ observer 的异常边界也必须明确：初始化、Event 分配、`record/que
 
 ![Task 11 交互回放预览：异常、恢复与 rank × 阶段轨迹](https://raw.githubusercontent.com/shanyulu/Relax/7159d9096a22024078cbbae6b75d0b5bd8510132/demos/task11_straggler/results/2gpu-recovery-demo-preview.jpg)
 
-**尚未完成官方验收。** 真实 recipe、collector/MetricsService 和通算 overlap 均未验证。当前 demo 的初始化和 Event.record 异常仍会抛出；上文描述的是 production 接入必须满足的故障隔离契约，不把它冒充成现有证据。
+**尚未完成官方验收。** 真实 recipe、collector/MetricsService 和通算 overlap 均未验证。当前 demo 的初始化和 Event.record 异常仍会抛出；上文描述的是 production 接入要满足的故障隔离契约，不是现有 demo 已具备的行为。
 
 <details>
 <summary>实验图、复现方法与完整记录</summary>
@@ -101,7 +101,7 @@ v4 每轮含 4 组 8000-step off/on 与 4 组 off/off，每次约 10.3–10.4 �
 
 | 官方要求                     | 检查方法                                                                                                                                                                     |
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 整体开销 \<0.5%（官方门槛） | 固定 recipe、工作量、采样和上报配置，交错 AB/BA、off/off 与 A/A 三种对照；计入后台、网络和 collector 成本；启动段与稳态段分开报告；估计对象为配对开销中位数，bootstrap 95% 上界同样 \<0.5%。窗口内多个 step 存在自相关，不当作独立样本；3 个新进程会话与观测覆盖率 ≥99% 是我方验收门槛（严于官方），用于对冲 off/off 观察到的运行间漂移 |
+| 整体开销 \<0.5%（官方门槛） | 固定 recipe、工作量、采样和上报配置，交错 AB/BA、off/off 与 A/A 三种对照；计入后台、网络和 collector 成本；启动段与稳态段分开报告；估计对象为配对开销中位数，bootstrap 95% 上界同样 \<0.5%。窗口内多个 step 存在自相关，不当作独立样本；3 个新进程会话与观测覆盖率 ≥99% 是我方验收门槛（严于官方），为的是覆盖 off/off 观察到的运行间漂移 |
 | 精度、loss、overlap 不受影响 | 对照 loss、参数和训练进度；短时 trace 检查已有通算 overlap，容差事先约定                                                                                                     |
 | 实时上报、便于定位           | 展示 rank/阶段/cohort、覆盖率、drop reason 和从采样到平台可见的延迟；注入覆盖无注入对照、轻微与明显计算变慢、短暂与持续异常、恢复、工作量不均、host stall、通信等待与缺报乱序，报告检出率、误报、检测/恢复延迟和 `undetermined` 占比 |
 | 观测失败不伤训练             | 注入 Event 池耗尽、队列满、collector 超时/重启、乱序/重复包和退出时未完成 Event；训练 step、loss 与 checkpoint 继续推进                                                      |
@@ -112,7 +112,7 @@ v4 每轮含 4 组 8000-step off/on 与 4 组 off/off，每次约 10.3–10.4 �
 
 ## 取舍
 
-与 [#363](https://github.com/redai-studio/Relax/pull/363) 在训练进程内周期性 Gloo all-gather 汇总、primary 判定的做法相比：独立 CPU collector 的代价是多一跳传输和一个服务的运维；换来的是拼窗与判定不占训练进程、逐 rank 样本在聚合结果之外仍可回看、观测上报与训练指标通路解耦。该取舍的传输与 CPU 成本未实测，接入后按上文四档预算补齐；若实测显示独立服务的成本收益不成立，收敛为进程内汇总也是可接受的结论，不预设架构优劣。
+与 [#363](https://github.com/redai-studio/Relax/pull/363) 在训练进程内用周期性 Gloo all-gather 汇总、由 primary 判定的做法相比，独立 CPU collector 多一跳传输和一个服务的运维，换来三点：拼窗与判定不占训练进程、逐 rank 样本在聚合结果之外仍可回看、观测上报与训练指标通路解耦。这条取舍的传输与 CPU 成本尚未实测，接入后按上文四档预算补齐；若实测表明独立服务不划算，收敛回进程内汇总也是可接受的结果。
 
 | 现有方案                                                                                                                     | 采用                             | 不直接采用                                                               |
 | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------ |
