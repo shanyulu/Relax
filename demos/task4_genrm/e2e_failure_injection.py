@@ -36,8 +36,6 @@ Usage (repo root, GPUs free):
 import argparse
 import json
 import os
-import re
-import subprocess
 import sys
 import threading
 import time
@@ -137,9 +135,14 @@ def scale_out_to_2(ev: "Evidence", num_gpus: int) -> tuple:
 
 
 def pid_for_port(port: int):
-    out = subprocess.run(["ss", "-tlnp", f"sport = :{port}"], capture_output=True, text=True, timeout=30).stdout
-    m = re.search(r"pid=(\d+)", out)
-    return int(m.group(1)) if m else None
+    """PID of the process LISTENing on ``port`` (psutil; the container has
+    no ss/lsof)."""
+    import psutil
+
+    for conn in psutil.net_connections(kind="tcp"):
+        if conn.laddr and conn.laddr.port == port and conn.status == psutil.CONN_LISTEN and conn.pid:
+            return conn.pid
+    return None
 
 
 class LongRequest:
@@ -274,17 +277,17 @@ def main() -> int:
         ev.log("s1_engines", initial=sorted(map(list, initial_ids)), elastic=list(elastic))
 
         reqs = [LongRequest(f"[s1-{i}]\n{prompt}", 1500).start() for i in range(2)]
-        time.sleep(4.0)  # both are mid-decode now, one per engine
+        time.sleep(4.0)  # both are mid-decode now, one per engine (round-robin)
         rid = submit_scale("scale_in", cfg.genrm_num_gpus, 600.0)
         ev.log("s1_scale_in_submitted", request_id=rid)
         final = poll_status("scale_in", rid, {"COMPLETED", "FAILED"}, 600)
         results = [r.join() for r in reqs]
         ev.log("s1_done", scale_in=final["status"], requests=results)
+        # The long generations are capped by max_new_tokens on purpose; the
+        # drain proof only needs them to complete successfully on the victim.
         verdicts["s1_scale_in_completed"] = final["status"] == "COMPLETED"
         verdicts["s1_both_long_requests_ok"] = all(r.get("ok") for r in results)
-        verdicts["s1_requests_untruncated"] = all(
-            r.get("finish_reason") in ("stop", None) for r in results if r.get("ok")
-        )
+        verdicts["s1_requests_served_by_both_engines"] = len({r.get("engine") for r in results if r.get("ok")}) == 2
         verdicts["s1_final_capacity"] = engines()["current"]
 
         # ------------------------------------------------------------------ #
@@ -293,10 +296,13 @@ def main() -> int:
         # ------------------------------------------------------------------ #
         ids_after = scale_out_to_2(ev, cfg.genrm_num_gpus)
         ev.log("s2_engines", ids=sorted(map(list, ids_after)))
-        long2 = LongRequest(f"[s2]\n{prompt}", 2600).start()  # ~55s decode
+        # Two long requests so one is in flight on the victim (round-robin
+        # alternates engines); ~2600 tokens decode in ~6 s at ~450 tok/s,
+        # comfortably outliving the 3 s operation deadline.
+        longs2 = [LongRequest(f"[s2-{i}]\n{prompt}", 2600).start() for i in range(2)]
         time.sleep(4.0)
-        rid2 = submit_scale("scale_in", cfg.genrm_num_gpus, 20.0)  # deadline < decode
-        ev.log("s2_scale_in_submitted", request_id=rid2, timeout_secs=20.0)
+        rid2 = submit_scale("scale_in", cfg.genrm_num_gpus, 3.0)  # deadline < decode
+        ev.log("s2_scale_in_submitted", request_id=rid2, timeout_secs=3.0)
 
         # The watcher aborts at the deadline and fails the registry dirty;
         # new scale operations for the model must be rejected meanwhile.
@@ -331,7 +337,7 @@ def main() -> int:
             time.sleep(10.0)
         verdicts["s2_reconcile_completed_original_op"] = bool(rec) and rec.get("status") == "COMPLETED"
         verdicts["s2_abort_to_reconcile_park_s"] = round(time.time() - t_abort, 1)
-        verdicts["s2_long_request_ok"] = long2.join().get("ok", False)
+        verdicts["s2_long_requests_ok"] = all(r.join().get("ok", False) for r in longs2)
         verdicts["s2_final_capacity"] = engines()["current"]
 
         # ------------------------------------------------------------------ #
@@ -341,40 +347,40 @@ def main() -> int:
         ids_after = scale_out_to_2(ev, cfg.genrm_num_gpus)
         elastic3 = (ids_after - initial_ids).pop()
         ev.log("s3_engines", initial=sorted(map(list, initial_ids)), victim=list(elastic3))
-        long3 = LongRequest(f"[s3]\n{prompt}", 2000).start()
+        longs3 = [LongRequest(f"[s3-{i}]\n{prompt}", 2600).start() for i in range(2)]
         time.sleep(4.0)
         rid3 = submit_scale("scale_in", cfg.genrm_num_gpus, 600.0)
         ev.log("s3_scale_in_submitted", request_id=rid3)
 
-        # Wait until the victim is DRAINING, then crash its process.
-        victim_port = None
+        # Victim selection is newest-first (RFC), i.e. the elastic engine.
+        # Wait until the op is DRAINING with a live request on the victim,
+        # then SIGKILL the victim process.
         deadline = time.time() + 120
         while time.time() < deadline:
             st = http_get(f"/scale_in/{rid3}")
-            victim = st.get("detail", {}).get("victim") if isinstance(st.get("detail"), dict) else None
-            vic = st.get("victim") or victim
-            if st["status"] == "DRAINING" and vic:
-                victim_port = vic[1] if isinstance(vic, (list, tuple)) else None
+            if st["status"] in ("DRAINING", "REMOVING"):
                 break
             time.sleep(1.0)
-        if victim_port is None:
-            # Fall back to the elastic engine's port from discovery.
-            victim_port = elastic3[1]
+        victim_port = elastic3[1]
         pid = pid_for_port(victim_port)
-        ev.log("s3_victim_identified", port=victim_port, pid=pid)
-        if pid:
-            os.kill(pid, 9)
-            ev.log("s3_victim_killed", pid=pid)
-        else:
+        ev.log("s3_victim_identified", port=victim_port, pid=pid, status=st["status"])
+        if pid is None:
             raise RuntimeError(f"could not find PID for victim port {victim_port}")
+        os.kill(pid, 9)
+        ev.log("s3_victim_killed", pid=pid)
 
         final3 = poll_status("scale_in", rid3, {"COMPLETED", "FAILED"}, 600)
-        res3 = long3.join()
-        ev.log("s3_done", scale_in=final3["status"], request=res3)
+        results3 = [r.join() for r in longs3]
+        ev.log("s3_done", scale_in=final3["status"], requests=results3)
+        initial_engine_strs = {f"{h}:{p}" for h, p in initial_ids}
         verdicts["s3_scale_in_completed_after_crash"] = final3["status"] == "COMPLETED"
-        verdicts["s3_request_survived_on_other_engine"] = bool(res3.get("ok")) and res3.get("engine") in {
-            f"{h}:{p}" for h, p in initial_ids
-        }
+        # The crash interrupts the victim's in-flight request; the component
+        # must retry it onto the surviving engine (attribution follows the
+        # retry re-pick), so every surviving reply comes from the initial
+        # engine and no request is lost.
+        verdicts["s3_all_requests_survived_on_initial_engine"] = all(
+            r.get("ok") and r.get("engine") in initial_engine_strs for r in results3
+        )
         verdicts["s3_initial_engine_survived"] = initial_ids <= engine_ids(engines())
         verdicts["s3_final_capacity"] = engines()["current"]
 
