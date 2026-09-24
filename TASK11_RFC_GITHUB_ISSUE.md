@@ -22,7 +22,7 @@
 
 | 位置                       | 方案与约束                                                                                           |
 | -------------------------- | ---------------------------------------------------------------------------------------------------- |
-| MCore schedule             | 分开记录 forward/backward，附 step/PP 上下文；外包 `train_one_step` 无法拆开 `forward_backward_func` |
+| MCore schedule             | 分开记录 forward/backward，附 step/PP 上下文；适用 actor 与 critic 两类角色；外包 `train_one_step` 无法拆开 `forward_backward_func` |
 | Relax optimizer / 通信挂点 | optimizer 在调用边界计时；通信先用 trace 核实 stream 和完成边界                                      |
 | rank 本地采集              | 训练线程只从预分配池取 Event、`record()`、把句柄放入有界 SPSC 队列                                   |
 | 后台 → Straggler collector | 查询已完成 Event，经有界批量 HTTP 发送；不使用训练 process group                                     |
@@ -39,7 +39,7 @@ tp_rank, pp_rank, vpp_rank, cp_rank, ep_rank, etp_rank, dp_rank, edp_rank,
 stage_schema, workload{tokens,sequences,microbatches}, stages_ms{}, recorded_at
 ```
 
-`(run_id, topology_epoch, global_rank, sample_seq)` 是幂等键；重复包忽略，旧 topology 数据不与新成员集合拼窗。collector 按 cohort 的 expected member set 与 TTL 关闭窗口：成员缺失、迟到或 stage schema 不一致都输出 `uncertain` 和 coverage，不把缺报补零。内存按 cohort 数、待完成窗口数和历史条数三重限界；淘汰必须产生 drop reason。
+`(run_id, topology_epoch, global_rank, sample_seq)` 是幂等键；重复包忽略，旧 topology 数据不与新成员集合拼窗。窗口按 optimizer step 对齐，不用 rollout 步。collector 按 cohort 的 expected member set 与 TTL 关闭窗口：成员缺失、迟到或 stage schema 不一致都输出 `uncertain` 和 coverage，不把缺报补零。内存按 cohort 数、待完成窗口数和历史条数三重限界；淘汰必须产生 drop reason。
 
 demo 验证过的机制与接入时才落地的设计分开：双卡 demo 已实现 Event 池取用、有界队列、按 (case, step, rank) 去重、乱序/缺报/schema 冲突的 `uncertain` 输出与按成员收齐关窗（传输为进程内队列，非 HTTP）；独立 CPU-only 服务、服务发现、run_id/topology_epoch 的生成与传播、批量 HTTP、发送超时、collector 重启恢复与时钟 TTL 属于接入时的设计承诺，尚无实现。后台 sender 的 GIL、Event query 与 HTTP 序列化成本没有隔离测量，demo 测得的只是含采集在内的整体配对开销。
 
@@ -68,6 +68,16 @@ observer 的异常边界也需要明确：初始化、Event 分配、`record/que
 ![先核对等价副本和工作量，再判断持续异常](https://raw.githubusercontent.com/shanyulu/Relax/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task11_straggler/results/diagnosis.jpg)
 
 </details>
+
+## 取舍
+
+与 [#363](https://github.com/redai-studio/Relax/pull/363) 在训练进程内用周期性 Gloo all-gather 汇总、由 primary 判定的做法相比，独立 CPU collector 多一跳传输和一个服务的运维。按其当前 diff（head `91b58bef`）核对，这笔代价买到两点它没有的性质：其一，它的判定与上报在 primary 训练线程内同步执行（reporter 经 `immediate=True` 同步发 HTTP），它自记的 late_arrival 案例正源于同类同步上报路径；把采集、判定、上报全部移出训练进程，正是本方案的第一动机；其二，它的窗口聚合是逐段累计和（每 rank 18 个 float64），无法还原 per-step 分布，间歇性变慢会被均值稀释，本方案保留逐采样步原始记录，p50/p95/max 随时可算。此外逐 rank 样本在聚合结果之外仍可回看，观测上报与训练指标通路解耦。这条取舍的传输与 CPU 成本尚未实测，接入后按上文四档预算补齐；若实测表明独立服务不划算，收敛回进程内汇总也是可接受的结果。
+
+| 现有方案                                                                                                                     | 采用                             | 不直接采用                                                               |
+| ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------ |
+| [Megatron Core StragglerDetector](https://docs.nvidia.com/megatron-core/developer-guide/0.18.1/apidocs/core/core.utils.html) | CUDA Event、默认关闭、粗粒度区间 | 它的既有汇总与控制面不足以表达 Relax 的 rank × stage × workload 持久画像 |
+| [NVIDIA Resiliency Extension](https://nvidia.github.io/nvidia-resiliency-ext/)                                               | 相对 peer、采样间隔、只观测模式  | v1 不终止训练，不把外部依赖作为必需项                                    |
+| [PyTorch Profiler](https://docs.pytorch.org/docs/stable/profiler.html) / `TrainProfiler`                                     | 用短 trace 校验挂点和 overlap    | 不常开 per-op trace，不把大文件作为持续上报格式                          |
 
 ## Demo 与未验证项
 
@@ -109,15 +119,5 @@ v4 每轮含 4 组 8000-step off/on 与 4 组 off/off，每次约 10.3–10.4 �
 判定规则首期固定为：同 cohort、同 stage set、工作量差 ≤5%，且连续两个采样窗口满足 `observed / peer ≥ ratio` 与 `observed − peer ≥ absolute_ms`；缺报、乱序、stage 不一致均进入 `uncertain`，不进入持续异常计数。默认值只用于 demo，接入时由 recipe 校准。
 
 实现顺序：用短 trace 核定 MCore 挂点和 overlap 语义；接通 rank 到 collector 的数据面；再接 MetricsService，跑完整 recipe 对照。采样率和覆盖率一起报告。请导师确认**首期 recipe、PP 配置，以及独立 CPU-only collector 的接入方式**。
-
-## 取舍
-
-与 [#363](https://github.com/redai-studio/Relax/pull/363) 在训练进程内用周期性 Gloo all-gather 汇总、由 primary 判定的做法相比，独立 CPU collector 多一跳传输和一个服务的运维，换来三点：拼窗与判定不占训练进程、逐 rank 样本在聚合结果之外仍可回看、观测上报与训练指标通路解耦。这条取舍的传输与 CPU 成本尚未实测，接入后按上文四档预算补齐；若实测表明独立服务不划算，收敛回进程内汇总也是可接受的结果。
-
-| 现有方案                                                                                                                     | 采用                             | 不直接采用                                                               |
-| ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------ |
-| [Megatron Core StragglerDetector](https://docs.nvidia.com/megatron-core/developer-guide/0.18.1/apidocs/core/core.utils.html) | CUDA Event、默认关闭、粗粒度区间 | 它的既有汇总与控制面不足以表达 Relax 的 rank × stage × workload 持久画像 |
-| [NVIDIA Resiliency Extension](https://nvidia.github.io/nvidia-resiliency-ext/)                                               | 相对 peer、采样间隔、只观测模式  | v1 不终止训练，不把外部依赖作为必需项                                    |
-| [PyTorch Profiler](https://docs.pytorch.org/docs/stable/profiler.html) / `TrainProfiler`                                     | 用短 trace 校验挂点和 overlap    | 不常开 per-op trace，不把大文件作为持续上报格式                          |
 
 参考：[官方 Task 11](https://github.com/redai-studio/community/blob/main/contributor-program/2026-cohort-2/official-task.md) · [导师背景补充](https://github.com/redai-studio/Relax/issues/334#issuecomment-5757682517) · [当前 main 的训练入口](https://github.com/redai-studio/Relax/blob/353ea7cec2c0d3f0745bc7929943089e51282e10/relax/backends/megatron/model.py#L1191)
