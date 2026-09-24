@@ -45,6 +45,9 @@ def _replica(manager=None, engines=_ENGINES):
     replica._scale_registry = _GenRMScaleRegistry()
     replica._scale_registry.register_initial("__default__", 1)
     replica._logger_instance = None  # Base.__init__ normally sets this
+    replica._engine_inflight = {}
+    replica._engine_served = {}
+    replica._engine_caches = {"__default__": genrm_module._EngineCacheState()}
     if engines is not None:
         replica._genrm_engine_list = lambda key: list(engines)
     return replica
@@ -161,7 +164,11 @@ class TestEnginesEndpoint(unittest.TestCase):
         self.assertEqual(result["current"], 2)
         self.assertEqual(result["ready"], 2)
         self.assertEqual(
-            result["engines"], [{"host": "192.0.2.1", "port": 16001}, {"host": "192.0.2.2", "port": 16002}]
+            result["engines"],
+            [
+                {"host": "192.0.2.1", "port": 16001, "inflight": 0, "served": 0},
+                {"host": "192.0.2.2", "port": 16002, "inflight": 0, "served": 0},
+            ],
         )
 
     def test_multi_instance_nested_shape(self):
@@ -171,6 +178,8 @@ class TestEnginesEndpoint(unittest.TestCase):
             "safety": _fake_manager(),
         }
         replica._logger_instance = None
+        replica._engine_inflight = {}
+        replica._engine_served = {}
         replica._genrm_engine_list = lambda key: [("192.0.2.1", 16001)] if key == "quality" else []
         result = _run(replica.get_engines())
         self.assertEqual(result["service"], "genrm")

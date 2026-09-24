@@ -131,7 +131,7 @@ def install_web_framework_stubs() -> None:
     _ensure("fastapi", FastAPI=_StubFastAPI, HTTPException=_StubHTTPException, Request=object, Response=object)
     _ensure("fastapi.responses", StreamingResponse=object)
     _ensure("pydantic", BaseModel=_StubBaseModel, Field=_stub_field)
-    _ensure("ray", serve=_StubServe, remote=_stub_remote, get=lambda ref: ref)
+    _ensure("ray", serve=_StubServe, remote=_stub_remote, get=lambda ref, timeout=None, **kwargs: ref)
     _ensure("ray.serve")
     _ensure("ray.serve.schema", LoggingConfig=lambda **kwargs: types.SimpleNamespace(**kwargs))
     # ray.util submodules referenced by the placement-group import chain.
