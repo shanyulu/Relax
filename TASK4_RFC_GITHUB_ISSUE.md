@@ -2,198 +2,142 @@
 
 提案人：@shanyulu · 导师：@RexFlux · 状态：待评审
 
-目标是在训练持续打分时，让 GenRM 从 1 个副本扩到 2 个，再缩回 1 个。新副本健康后才接流量；旧副本完成已接收的请求后才释放 GPU。手动 API 和 Autoscaler 使用同一套生命周期。GenRM 加载的是冻结模型，扩容不做权重同步。
+让 GenRM 在训练持续请求奖励时扩缩副本：新副本健康后接流量，缩容副本处理完已接收请求后释放 GPU。手动 API 与 Autoscaler 共用生命周期；模型冻结，不做权重同步。
 
-当前可公开复现的除契约 demo 外还有实现分支：生命周期失败路径（物理完成栅栏、PG 释放确认、容量口径与 recovery 边界）已实现并用回归测试钉住；2026-09-24 在 4×4090 + Qwen3-0.6B 上通过真实 Ray/SGLang E2E——持续打分下手动 `1→2→1` 与 Autoscaler 全周期自动 `1→2→1` 均 E2E_PASS（证据与时间线见「接入路径」末尾）。训练不中断取证与 failure-injection 抽查为剩余工作。下文描述交付行为与验收口径。
+**截至 2026-09-24：真实 Ray/SGLang 已跑通手动和自动 `1→2→1`，尚未完成官方验收。** 完整奖励一致性、训练连续性、故障路径和 TUI 仍需补齐。下面的契约是交付目标，不代表当前实现已全部满足。
 
-## 先确认 Task 3 接入边界
+## Task 3 接入边界
 
-Task 4 复用 Task 3 的统一推理基础设施，不另建公开 ingress。内部只定义 `DrainTracker` 适配接口：关闭指定副本的新请求接收，按 generation 等待已接收请求归零，再允许销毁。组件内计数用于单 Gateway 测试，不能证明 direct client 或跨 Gateway 的请求已经排空。
+复用 [Task 3 RFC #71](https://github.com/redai-studio/Relax/issues/71) 的统一推理基础设施，不另建公开 ingress。Task 4 内部定义私有 `DrainTracker` 适配接口：关闭指定副本 admission，按 engine generation 等待已接收请求结束。
 
-需要与 Task 3 确认的是 admission 关闭与后端排空证明由谁提供。逐请求 lease 和按 generation 的排空证明是本提案的接入需求，不能当作 Task 3 已承诺或已实现的能力。生命周期、自动决策和单 Gateway 验证可以先推进。
+当前组件内计数只用于单 Gateway 验证。它不能证明 direct client、跨 Gateway 或客户端超时后仍在后端执行的请求已排空。**admission 关闭和后端排空证明由谁提供，需要与 Task 3 维护者确认；逐请求 lease/drain fence 不是 #71 已承诺的能力。**
 
-![GenRM 弹性扩缩容：控制、打分与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/cover.jpg)
+首期限定常驻 decoupled GenRM、新增副本独占 PG、单 Gateway、单 GPU 逻辑副本。手动 API 可选模型；Autoscaler 只管理单模型 GenRM。运行期 onload/offload、共享 GPU、多节点 TP/PP、Manager 重启恢复和多 Gateway 一致性不在本期验收范围；不支持的弹性配置应在启动时拒绝。
 
-## 首期范围
+## 官方要求与现有证据
 
-| 首期选择                      | 原因与限制                                                               |
-| ----------------------------- | ------------------------------------------------------------------------ |
-| 仅常驻 decoupled GenRM        | 不跨训练阶段搬迁；启动时拒绝 defer、共享 GPU、运行期 onload/offload 组合 |
-| 新增副本独占 PG               | 只申请空闲资源，便于回滚与回收；初始 PG 和 owner 不变                    |
-| 单 Gateway、单模型 Autoscaler | 手动 API 可选模型；别名归一后按模型互斥                                  |
+GPU 实验使用 4×4090 服务器、Qwen3-0.6B 和单 Gateway 适配器，验证的是小模型生命周期，不替代正式训练 recipe 验收。
 
-首期从单 GPU 逻辑副本开始，多节点 TP/PP 留待后续验证。正常打分不增加逐次 Manager RPC；已缩掉的副本不能被 recovery 拉回。本期不做 Manager 重启恢复、多 Gateway 一致性或多模型自动调度。
+| 官方 Task 4 要求 | 已有证据 | 尚需完成 |
+| --- | --- | --- |
+| Manager 管理 PG、引擎启停与路由 | 手动 `1→2→1`；初始引擎存活，移除对象确为新增引擎 | PG ownership 失败出口、迟到初始化与清理失败注入 |
+| 绝对目标、幂等、409/4xx、初始保护 | CPU 接口与生命周期回归 | 修复后的最终代码回归及故障路径复核 |
+| 优雅排空、冻结模型、评分一致 | 持续生成时扩缩；三阶段短生成前缀一致 | 完整可解析奖励、逐请求引擎归属、后端排空证明 |
+| GenRM 独立阈值与自动扩缩 | 一次自动 `1→2→1`，条件、历史和容量时间线留档 | 多轮与无效指标场景、动态容量指标、按 service 的 TUI |
+| 训练不中断 | 生成负载没有请求失败 | 真实 recipe 中 actor、rollout、reward 同时持续推进 |
 
-| 官方 Task 4 要求 | 对应交付 |
+原始记录固定到产生该次证据的 commit：
+
+| 实验 | 结果 | 证据边界 |
+| --- | --- | --- |
+| [手动扩缩](https://github.com/shanyulu/Relax/tree/a2ca6cb5b80fd20b372aa6e982805e345ce95dcd/demos/task4_genrm/results/e2e_run_20260924) | 扩容约 45 s、缩容约 1 s；4,163 个负载请求零失败；新增引擎服务 511 个请求 | `max_new_tokens=8`，只能证明短生成前缀一致，不能证明奖励评分一致 |
+| [自动扩缩 v3](https://github.com/shanyulu/Relax/tree/105c69b59ae3896cfca7dd0e01bf5b606f00c0a7/demos/task4_genrm/results/autoscaler_run_20260924_v3) | 3,202 个请求零失败；新增引擎服务 516 个请求；最终容量回到初始值 | 一轮实验；使用实验阈值，不代表通用策略已校准 |
+| 手动实验的资源记录 | Ray 空闲 GPU 为 `3→2→3`；新增 GPU 显存快照约 `4 MiB→21,792 MiB→4 MiB` | 正常路径回收证据；现有 verdict 尚未同时断言物理显存恢复与 PG `REMOVED` |
+
+自动实验需要更正一处阶段解释：时间线首次观察到容量 2 约在 t=153.6 s，回到 1 约在 t=212.1 s；脚本约在 t=214.2 s 才切入 LOW′。因此缩容发生在 **STEADY 阶段**，不是 LOW′ 触发。决策记录是 `token_usage_low + no_queue + throughput_stable`；当时仍有在途请求。“低 KV 使用率”不等于“无流量”，该次运行也没有验证独立的空闲阶段。v3 将吞吐方差阈值从 0.1 调至 1.0；调参运行与冻结配置后的验收运行须分开。
+
+下图由 v3 原始数据生成（绘制脚本与数据同目录），可视化上述阶段归属：上图为容量与决策/完成时刻——负载相位（阴影带）、`/scale_history` 决策时刻（虚线）与 operation 完成时刻（细实线）分别标出，缩容决策与完成均落在 STEADY 相位内；下图为初始/弹性引擎累计服务请求数。采样目标约 1 Hz（140 行覆盖约 149 s）；决策/完成时刻由 unix 时间戳经“完成时刻 ↔ 首次观测轮询”对齐（±1 s）映射到运行时钟。
+
+![Autoscaler 全周期时间线：容量随负载自动 1→2→1；扩缩决策与完成时刻分别取自 /scale_history](https://raw.githubusercontent.com/shanyulu/Relax/71f855bcb9048b6af74d88b8c3437873a833f565/demos/task4_genrm/results/autoscaler_run_20260924_v3/timeline-chart.png)
+
+## API 与容量口径
+
+`num_replicas` 为目标绝对总数。请求可带模型选择、`timeout_secs`、`idempotency_key`；模型别名归一后按模型互斥。
+
+| 接口 | 用途 |
 | --- | --- |
-| Manager 管理 PG、引擎启停和路由 | 健康后发布，停止 workers 并确认 PG 释放后完成缩容 |
-| 手动 API、绝对目标、幂等和并发保护 | 同模型一项在途操作；未决清理也阻止下一次扩缩 |
-| 优雅排空、保护初始副本 | 只移除新增副本，等待已接收请求结束 |
-| 独立阈值和监控 | GenRM 独立决策状态，接入接口与 TUI |
-| 评分一致、训练不中断 | 固定输入对照和真实文本训练 recipe 取证 |
+| POST `/genrm/scale_out`、`/genrm/scale_in` | 扩到或缩到目标总数；缩容仅 graceful |
+| GET `/genrm/engines` | 副本发现与路由 |
+| GET `/genrm/scale_out/{request_id}`、`/genrm/scale_in/{request_id}` | 操作状态、实际容量和逐副本结果 |
+| POST 上述状态路径的 `/reconcile` | 延续原操作的排空/清理，不新增副本、不重新选 victim |
 
-## API 契约
+处理顺序是校验、幂等重放、互斥检查、执行：
 
-`num_replicas` 是目标绝对总数，不是增减数量。POST 另接收可选模型选择、`timeout_secs` 和 `idempotency_key`。请求体指纹覆盖模型选择、目标数量与 `timeout_secs`。带 key 的重试按指纹分派：指纹一致时返回原 operation，`NOOP` 响应同样记录在案，重试逐字重放首次结果（含决策时刻的 `current`），容量变化后不会执行新操作；指纹不一致返回 409。没有 key 的第二个在途请求也返回 409。key 记录保留到操作终态后的可配置重放窗口，超期按新请求处理。并发保护与丢失响应后的安全重试由此同时成立。
+- 数量必须为正整数且不低于 `initial`；类型错误 422，范围或模型选择错误 400，未知 request ID 404。
+- 同 key、同指纹返回原操作；指纹包含模型、目标和 timeout。同 key、不同指纹返回 409。`NOOP` 也保存并逐字重放首次结果，不能因后来容量变化而执行新操作。记录保留至终态后的可配置重放窗口，过期视为新请求。
+- 除合法重放外，同模型有在途操作或未决清理时返回 409，包括无 key 的同目标请求。
+- 扩容目标 ≤ current、缩容目标 ≥ current 返回 `200 NOOP`；否则返回 `200 PENDING` 和 request ID，异步执行。
 
-| 接口                                           | 用途                                          |
-| ---------------------------------------------- | --------------------------------------------- |
-| POST `/genrm/scale_out`                        | 扩到目标总数                                  |
-| POST `/genrm/scale_in`                         | 缩到目标总数，仅 graceful                     |
-| GET `/genrm/engines`                           | 发现副本与路由                                |
-| GET `/genrm/scale_out/{request_id}`            | 扩容进度、实际数量与逐副本结果                |
-| GET `/genrm/scale_in/{request_id}`             | 缩容进度、实际数量与逐副本结果                |
-| POST `/genrm/scale_out/{request_id}/reconcile` | 重试未完成的候选清理，不重新扩容              |
-| POST `/genrm/scale_in/{request_id}/reconcile`  | 继续排空或清理已摘流量的副本，不重新选 victim |
+`initial` 是固定保护下限；`current` 是已发布且尚未确认移除的容量，`ready` 是可路由容量。资源占用和未决清理另报，不能用 ready 代替实际占用。
 
-请求依次经过以下检查；未知 request ID 返回 404。
+| 副本状态 | current | ready | 占用 PG/workers | cleanup_required |
+| --- | --- | --- | --- | --- |
+| 未发布候选：CREATING / HEALTH_CHECKING | 不计入 | 不计入 | 已申请部分 | 清理失败时是 |
+| ACTIVE，admission 开 | 计入 | 计入 | 是 | 否 |
+| DRAINING / REMOVING，admission 关 | 计入 | 不计入 | 尚未确认全部释放 | 否 |
+| FAILED：缩容 victim，PG 未确认释放 | 计入 | 不计入 | 未决 | 是 |
+| FAILED：未发布候选，PG 未确认释放 | 不计入 | 不计入 | 未决 | 是 |
+| REMOVED，已确认释放 | 不计入 | 不计入 | 否 | 否 |
 
-| 顺序     | 规则                                                                                                 |
-| -------- | ---------------------------------------------------------------------------------------------------- |
-| 校验     | 数量须为正整数；所有目标不得低于 `initial`，缩容不得低于初始值；类型错误 422，范围或模型选择错误 400 |
-| 幂等重放 | 同 key、同指纹（模型/目标/timeout）返回原 operation 或逐字重放 NOOP；同 key、不同指纹返回 409          |
-| 互斥     | 其余请求若同模型有在途操作或未处理完的生命周期异常，返回 409，包括无 key 的同目标重复请求            |
-| 执行     | 扩容目标 ≤ current、缩容目标 ≥ current：`200 NOOP`；否则 `200 PENDING`，返回 request ID 后异步执行   |
+扩容状态沿用 `ScaleOutStatus`：`PENDING → CREATING → HEALTH_CHECKING → READY → ACTIVE`，终态为 `ACTIVE/PARTIAL/FAILED`。缩容沿用 `ScaleInStatus`：`PENDING → DRAINING → REMOVING → COMPLETED/FAILED`。不引入 `RUNNING` 或 `WEIGHT_SYNCING`。
 
-`initial` 是固定保护下限。`current` 是服务容量口径、`ready` 是可路由口径，实际资源占用另行暴露，三者不互相替代：
+终态返回 `target/current/ready/created/removed/failed/cleanup_required`。`PARTIAL` 表示本次扩容已有部分副本发布、随后失败；可用性仍看 ready。FAILED/PARTIAL 不代表物理清理已经结束。
 
-| replica 状态                                   | current | ready | 占用 PG/workers | cleanup_required |
-| ---------------------------------------------- | ------- | ----- | --------------- | ---------------- |
-| 未发布候选（CREATING / HEALTH_CHECKING）       | −       | −     | 是              | 清理失败时是     |
-| ACTIVE（已发布、admission 开）                 | ✓       | ✓     | 是              | −                |
-| DRAINING / REMOVING（已摘流、admission 关）    | ✓       | −     | 是              | −                |
-| FAILED：缩容 victim，PG 未确认释放             | ✓       | −     | 是              | ✓                |
-| FAILED：未发布候选，PG 未确认释放              | −       | −     | 是              | ✓                |
-| REMOVED（已确认释放）                          | −       | −     | 否              | −                |
+## 生命周期：发布、排空与回收
 
-扩容候选清理失败时不计入 `current`，但资源仍被占用：`cleanup_required` 与模型互斥会挡住新的扩缩，直到 reconcile 完成。终态后重提按实际差额执行。
+| 路径 | 必须满足的约束 |
+| --- | --- |
+| 创建 | PG 创建后立即登记 owner，再等待 readiness、创建 workers 和健康检查；所有失败出口都能找到清理句柄 |
+| 发布 | 新旧副本固定模型 revision、tokenizer、模板、精度和并行配置；健康后才发布路由，超时后的迟到结果不得发布 |
+| 缩容 | 仅选择新增副本，newest-first；逐个关闭 admission、排空、停止全部 workers、确认 PG 释放 |
+| 失败 | 保留已发布的扩容成果；未发布候选清理失败不计容量，但保留资源账本和互斥。缩容失败 victim 不恢复路由、不重新选择 |
+| recovery | 弹性副本永久退役后不得被通用 `recover()` 重建；正常服务 shutdown 仍能清理初始副本 |
 
-请求状态与副本状态分开，沿用 Rollout 扩缩语义：
+操作超时只发 abort，不等于 Manager 物理线程已停止；`remove_placement_group()` 返回也不等于资源释放。原线程未结束时 reconcile 返回可重试冲突。只有物理执行结束、workers 清理完成且 PG 确认 `REMOVED`，才解除同模型互斥；未知状态继续保留 owner。
 
-- operation：扩容 `PENDING → CREATING → HEALTH_CHECKING → READY → ACTIVE`，终态 `ACTIVE/PARTIAL/FAILED`。成功终态沿用 Rollout `ScaleOutStatus` 的 `ACTIVE`，Autoscaler 现有终态判定可直接复用；不提供 `CANCELLED`，未竟清理走 reconcile。缩容 `PENDING → DRAINING → REMOVING → COMPLETED/FAILED`，对齐 `ScaleInStatus`。终态必须带 `target/current/ready/created/removed/failed/cleanup_required`。
-- replica：`CREATING → HEALTH_CHECKING → READY → ACTIVE → DRAINING → REMOVING → REMOVED`，另有 `FAILED`。GenRM 不出现 `WEIGHT_SYNCING`。
+reconcile 使用原 request ID 和固定 victim，只推进遗留排空/清理，不补做扩容。原失败终态保留，清理结果和实际容量更新。多副本缩容中途失败时，已释放副本不回滚，未选择副本保持 ACTIVE。
 
-## 生命周期
+下图是**拟议的接入契约，不是当前单 Gateway 计数已提供的保证**：
 
-|      | 正常路径                                                         | 失败处理                                                               |
-| ---- | ---------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| 扩容 | 独占 PG → 创建全部 workers → 加载冻结模型 → 健康检查 → 发布 head | 保留已就绪副本，清理未发布候选；超时后的迟到初始化不能发布             |
-| 缩容 | 关闭新请求入口 → 排空已接收请求 → 停止全部 workers → 释放新增 PG | 入口关闭或排空失败，不 kill、不释放 PG、不自动恢复路由，暂停该模型扩缩 |
-| 回收 | PG 申请后立即登记清理句柄                                        | worker/PG 未清理完则保留句柄重试，阻止继续扩缩；确认回收前不报成功     |
+![拟议 drain fence：关闭接收后等待已接收任务终态，再回收资源](https://raw.githubusercontent.com/shanyulu/Relax/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/drain-fence.svg)
 
-新旧副本固定相同 revision、tokenizer、模板、精度和并行配置。缩容只选新增副本，最近创建的优先；初始保护不妨碍服务 shutdown。扩容多副本逐个创建、独立健康检查，首个失败即停止：已发布副本保留并计入 `current`，operation 为 `PARTIAL`（`created/failed` 计数见终态字段），一个都没发布成功则 `FAILED`。`PARTIAL` 表示本次操作部分成功，不表示系统仍有可用副本；可用性以 `ready` 为准。
+入口必须在转发前登记 accepted request；关闭 admission 后只对明确未接收的请求返回带 `rejected_before_accept` 的 503，允许有界重选。连接失败、普通 503、响应超时或结果未知均不自动重放。客户端断线不能直接结束后端记账。
 
-拟议的最终接入路径是 Gateway 和 direct client 共用受控 ingress，具体由 Task 3 适配确认。入口在转发前记录已接收请求，scale-in 原子关闭新请求接收。关闭之后返回带 `rejected_before_accept` 标记的 503，只有这类响应允许安全重选；其他 503 不能证明请求未执行。已接收请求继续完成；响应结束、abort 已确认或后端返回明确终态后才结束记账。客户端断线而后端结果未知时，仍视为未完成。
-
-旧路由请求只有在**明确未被 ingress 接收**时才能有界重选；连接已建立、响应超时或结果未知时不自动重放。drain 完成要求 request leases 归零，并由 GenRM 后端的 drain 确认接口返回证明：入口 lease 计数为零，且按 victim 的 engine generation 过滤后已接收任务表为空；旧 generation 迟到完成的任务不参与该判定。Prometheus 的 running/queue 只用于观测和交叉检查，不能单独授权回收。
-
-![缩容接收边界：先取得租约的请求完成，关闭后的请求被拒绝；双重排空确认后才释放 GPU](https://raw.githubusercontent.com/shanyulu/Relax/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/drain-fence.svg)
-
-一次缩容按 newest-first **逐副本**执行：前一个副本确认释放后才处理下一个，避免同时摘除过多可用容量。若目标需要移除多个副本而中途失败，已释放副本不回滚，未选择副本保持 ACTIVE；operation 为 FAILED，返回实际容量和固定 victim 列表。失败副本保持不可路由并暂停该模型扩缩，只能通过对应 reconcile 接口继续，不能重新选 victim，也不能被 recovery 拉回。
-
-操作超时不等于物理线程停止，`remove_placement_group()` 返回也不等于资源释放。owner 和同模型互斥必须保留，直到物理执行结束、worker 清理完成且 Ray 确认 PG 为 `REMOVED`。查询失败或状态未知时继续阻止扩缩。
-
-reconcile 延续原 operation，不产生新 request ID、不重新选择 victim、不补做扩容。保留原失败终态，更新实际容量与清理结果；只有确认清理完成才能解除互斥。服务 shutdown 也按保留的 ownership 清理资源。
-
-<details>
-<summary>扩容与缩容流程图</summary>
-
-![扩容流程：独占 PG、初始化、健康检查后发布；失败清理候选](https://raw.githubusercontent.com/shanyulu/Relax/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/scale-out.jpg)
-
-![缩容流程：关入口、排空、停止 workers、释放 PG；超时保留资源](https://raw.githubusercontent.com/shanyulu/Relax/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/scale-in.jpg)
-
-</details>
+排空证明须覆盖 victim 对应 generation 的入口记录和后端已接收任务；旧 generation 的迟到回调不能抵扣当前计数。Prometheus running/queue 只用于交叉检查，不能独自授权销毁。未接通这条链路前，不声称具备 direct client 或跨 Gateway 优雅排空。
 
 ## Autoscaler 与监控
 
-保留单 deployment，为 Rollout 和 GenRM 分别保存 discovery、collector、策略、持续窗口、cooldown、pending requests、history 和错误状态。GenRM 的 `service_policies` 用于实际决策，容量下限不低于 initial。手动和自动扩缩共用模型锁；终态仍带 `cleanup_required` 时继续等待清理，history 记录实际结果。
+保留单 deployment，Rollout 与 GenRM 分别拥有 engine discovery、collector、decision engine、debounce/cooldown、pending requests、history 和错误状态。`service_policies` 必须进入实际决策器，不能只存在配置中。手动与自动扩缩共用模型锁；终态仍有 cleanup_required 时暂停该模型决策。
 
-| 采集                                            | 展示                                                |
-| ----------------------------------------------- | --------------------------------------------------- |
-| token/KV 使用率、排队数、running requests、TTFT | `/status`、`/conditions`、`/scale_history`、TUI     |
-| 指标有效性、目标与实际容量                      | initial/current/ready、触发条件、暂停原因、实际结果 |
+每个指标携带有效性、观测时间和样本数；HTTP 200 不代表所有 series 都存在。每个条件使用自身需要的字段、覆盖率和分母，缺值不填 0。
 
-指标经公共 discovery 和受控只读入口采集。现有 `MetricsCollector` 在 HTTP 200 但单个 Prometheus series 缺失时会用 0 填充；Task 4 需要把它改成**逐字段 validity**，否则“未暴露 TTFT”会被误判为低延迟。每个字段携带 `present/observed_at/sample_count`，缺失、过期或 histogram 无样本均不参与条件判断。
+| 观测情况 | 决策约束 |
+| --- | --- |
+| 所需字段有效、覆盖充分 | 正常判断 |
+| 所有活跃引擎的 queue/running 有效为 0 | 可作为零负载证据；TTFT 没样本本身不否定空闲 |
+| 新副本尚无样本 | 不把它当空闲；观测不足阻止缩容，不抹掉其他引擎有效的扩容证据 |
+| 字段缺失、过期或采集失败 | 禁止依赖该字段的条件触发；缩容须取得全部活跃引擎的必要证据 |
 
-首期门槛偏保守，但缺数据要按成因区分，不能让保守策略变成永久停摆：
+按服务暴露 initial/current/ready、资源占用、未决清理、每引擎指标、条件、历史及禁止缩容原因，保留原 Rollout 字段和行为。
 
-| 指标状态                             | 判定       | 自动扩缩行为                               |
-| ------------------------------------ | ---------- | ------------------------------------------ |
-| 所启用字段全部有效                   | 有效       | 正常决策                                   |
-| 整体零流量（queue/running 有效为 0） | 有效零负载 | 可触发缩容；TTFT 无样本不构成暂停         |
-| 新副本观测窗内尚无请求样本           | 观测未满   | 不阻塞整体决策；观测窗满仍缺按缺失处理   |
-| 字段缺失、过期或采集失败             | 无效       | 禁止依赖该字段的条件触发，在 `/conditions` 显示原因 |
+[实现快照 105c69b](https://github.com/shanyulu/Relax/tree/105c69b59ae3896cfca7dd0e01bf5b606f00c0a7) 已有服务隔离与自动扩缩链路，但不能据此声称监控交付完成：GenRM `/metrics` 的容量仍来自启动 spec；TUI 尚无 GenRM service 选择。PG owner 登记的失败窗口和 E2E 异常清理也需修复后重测。
 
-每个条件使用自身必要字段的有效覆盖率与分母，并随 `/conditions` 展示单位、采样窗和禁止缩容原因。缩容需要所有活跃引擎的必要负载字段有效；扩容可使用覆盖率足够的正向证据，缺 TTFT 不应抹掉有效的高排队数。新增副本观测不足时不据此缩容。接口和 TUI 提供按服务视图，并保留原 Rollout 字段。
+| 接入位置 | 职责 |
+| --- | --- |
+| `relax/components/genrm.py` | API、操作注册表、幂等/互斥、发现与动态容量 |
+| GenRMManager | PG ownership、workers 生命周期、发布/退役与 reconcile |
+| `relax/utils/autoscaler/` | 服务运行上下文、字段有效性、策略、条件与历史 |
+| monitor/TUI | 选择服务并展示该服务的数据；维持 Rollout 兼容 |
+| 仓库 recipe / E2E driver | 真实训练与故障注入；外层 finally 覆盖全部异常出口，只回收本次资源 |
 
-## 可运行契约 demo
+## 剩余验收
 
-[交互回放（下载后打开）](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo.html) · [预览图](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo-preview.jpg) · [事件记录](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo.json) · [源码与测试](https://github.com/shanyulu/Relax/tree/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm)
+1. **生命周期安全。** 回归覆盖超时后互斥、迟到初始化、PG 各失败出口、固定 victim、退役不被 recover、三种容量口径；GPU 抽查长请求跨 drain、超时与 reconcile。资源验收同时断言 PG REMOVED 和物理 GPU 显存恢复。
+2. **奖励一致性。** 固定完整输入集和模型配置，使用足够长的确定性生成，记录实际服务引擎并解析完整 judge 结果；容差在运行前写入 manifest。短前缀一致不计此项通过。
+3. **自动扩缩。** 冻结阈值后至少三轮负载复测，覆盖真空闲、新副本无样本、指标缺失和带流量缩容；证明剩余容量能承接请求，保存 conditions、history、时间线与 TUI。三轮是本提案的复测安排，不是官方新增门槛。
+4. **训练连续性。** 使用真实仓库 recipe/entrypoint，关联 actor 参数更新、rollout 产出、GenRM 请求完成与扩缩事件；报告停步时长、奖励延迟和样本返回率，排除 reward fallback 掩盖失败。不能以“脚本未报错”代替训练推进。
 
-![Task 4 契约回放预览：路由、在途请求与资源归属](https://raw.githubusercontent.com/shanyulu/Relax/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo-preview.jpg)
+最终代码版本重跑后，每项结论关联要求、测试、配置、代码 commit、原始数据、结果与限制。CPU 契约、单 Gateway GPU 实验和正式训练验收分开列示。
 
-回放覆盖 `1→2→1`、在途 `409`、未知请求 `404`、健康检查失败、迟到 dispatch、后端未排空、PG 清理失败、retry/reconcile 与 keyed NOOP 重放。页面逐步展示路由资格、在途请求与 PG owner。它使用 mock 对象验证提案中的状态和返回值；真实接入、打分与 GPU 回收还要在 Relax 中验收。HTML 需下载后用浏览器打开。
+<details>
+<summary>契约 demo（mock，不作 GPU 或训练验收）</summary>
 
-## Task 3 依赖边界
+[源码与测试](https://github.com/shanyulu/Relax/tree/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm) · [交互回放，下载后打开](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo.html) · [事件记录](https://github.com/shanyulu/Relax/blob/1ed58a3d289df84afdb21b120656aa2a1114cda5/demos/task4_genrm/results/contract-demo.json)
 
-复用 Task 3 [RFC #71](https://github.com/redai-studio/Relax/issues/71) 的逻辑副本、路由与资源清理。适配时需要逐项核对 Manager 幂等操作、原子拓扑发布、PG ownership 和 head-only discovery，并固定所采用的实现版本。
+覆盖幂等/NOOP、409/404、初始化失败、迟到 dispatch、排空与 PG 清理失败、retry/reconcile。它解释状态和接口行为，不证明真实 ingress 或后端排空。
 
-下表列出接入需求与 RFC 中的职责边界。逐请求 admission lease 和 drain fence 仍需与维护者确认：
+</details>
 
-| 能力                                                                  | #71 是否承诺 | Task 4 依赖它保证什么                                |
-| --------------------------------------------------------------------- | ------------ | ---------------------------------------------------- |
-| 对单个逻辑副本原子关闭 admission，且不取消已接收请求                  | 否           | 迟到 dispatch 被拒绝，已有打分继续完成               |
-| drain fence：入口租约与后端任务均已终态的可查询证明                   | 否           | 不能只凭 HTTP 连接关闭或 Prometheus 瞬时为零回收 GPU |
-| 清理一个逻辑副本的全部 workers，并返回资源释放结果                    | 部分（PG ownership 表） | PG 未确认释放前保留 owner 与清理句柄，不误报成功     |
-| 原子拓扑发布（`topology_revision`）、迟到结果丢弃（engine generation）| 拓扑发布是；generation 否 | 旧快照与超时后的迟到初始化结果不能重新发布           |
+请导师确认两项接入决定：**Task 3 的 admission/drain 适配责任；首期文本训练 recipe 与可接受的验收模型。**
 
-不要求 `registry_epoch`：快照排序用 `topology_revision`，迟到初始化用 engine generation 区分，重启恢复不在本期范围。
-
-## 接入路径
-
-| 改动点                                         | main `353ea7ce` 现状                       | [接口原型 `601ee05`](https://github.com/shanyulu/Relax/tree/601ee05ce5873aa15d408dfeff2070771f1b567c) 与待完成工作 |
-| ---------------------------------------------- | ------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `relax/components/genrm.py`                    | 只有 generate/health/metrics/onload/offload | `/genrm/scale_out`、`/scale_in`、`/engines` 与状态查询；状态机注册表复用 `ScaleOutStatus`/`ScaleInStatus`，含幂等（keyed NOOP 逐字重放）、互斥与绝对目标校验 |
-| `relax/utils/autoscaler/config.py` + `autoscaler_service.py` | 仅轮询单个 `rollout_service_url` | 已有服务目标和策略配置；独立运行状态、实际决策与监控仍需接通验证 |
-| `relax/utils/autoscaler/metrics_collector.py`  | HTTP 200 但 series 缺失时按 0 填充          | 逐字段 validity（`present/observed_at/sample_count`），并修复既有 N/A 格式化崩溃                        |
-| GenRMManager 生命周期 / Task 3 ingress         | 均未实现                                    | 本地原型已实现失败清理、容量口径与 recovery 排除（验证状态见下表）；排空证明依赖 Task 3 ingress；真实 PG/GPU 回收尚未验收 |
-
-生命周期原型的验证状态按证据强度分层，不以测试数量推导完成度：
-
-| 状态 | 内容 | 依据 |
-| --- | --- | --- |
-| 已验证（回归 + mutation-check） | 终态推进等待物理完成：manager 汇报终态但物理执行未结束时，同模型新请求持续 409 | 把栅栏检查临时改回旧语义后回归必红、恢复后必绿 |
-| 已验证（回归 + mutation-check） | 扩容失败候选在 PG 释放确认后从恢复路径退役；reconcile 延迟释放同样不再引用已删 PG | manager 级回归，bug 版 2 failed → 修复后通过 |
-| 已验证（回归 + mutation-check） | Autoscaler 终态带未决清理时本地冻结该服务决策；各服务状态、策略与历史相互隔离 | 决策引擎与服务隔离测试 |
-| 已验证（真实 Ray/SGLang GPU E2E，2026-09-24） | 持续打分下手动 1→2→1：扩容 `CREATING→HEALTH_CHECKING→ACTIVE`（45 s，弹性引擎落在独立探测的 PG/GPU 上）、缩容 `DRAINING→COMPLETED`（1 s）；初始引擎全程存活，恰好移除弹性引擎；弹性引擎实际服务 511 个请求；三个阶段的贪心打分逐字一致；全程 4,163 个负载请求零失败（扩容窗口 2,434 个、缩容窗口 52 个）；缩容后 GPU 显存与 Ray 空闲 GPU 归还基线 | 4×4090 + Qwen3-0.6B，`demos/task4_genrm/results/e2e_run_20260924`（E2E_PASS） |
-| 已验证（真实 Ray/SGLang GPU E2E，2026-09-24） | **Autoscaler 全周期自动扩缩**：LOW 单引擎不误扩 → HIGH 持续饱和 60 s 内自动 1→2（`token_usage_high`，ACTIVE）→ STEADY 双引擎服务（弹性引擎 516 请求）→ 持续低载自动 2→1（`token_usage_low + no_queue + throughput_stable` 全条件，COMPLETED）→ 终态副本数 == 初始、初始引擎存活、3,202 请求零失败；决策与历史落 `/scale_history`，1 Hz 容量时间线留档。GenRM 使用独立于 Rollout 的服务目标与阈值 | 4×4090 + Qwen3-0.6B，`demos/task4_genrm/results/autoscaler_run_20260924_v3`（E2E_PASS，feat/task4-genrm-scale-api 分支） |
-| 已实现、经逐行审查（暂无专门测试） | PG 删除后轮询 Ray 状态至 `REMOVED` 才视为释放；缩容 victim 未确认释放时保留容量计数、不继续选下一个、不报成功；`recover` 排除候选、排空中、退役与待清理 rank；GenRM 发现任意时刻聚合出多个有引擎的模型时跳过自动缩放，避免扩错目标 | 工作区 diff 审查记录；PG 释放路径已由上述 E2E 的缩容阶段实际走到（GPU/PG 归还基线） |
-| 未验证（需真实资源） | 训练不中断（扩缩期间 actor/rollout 持续推进）——数据集（dapo-math-17k）已就位，为下一阶段工作 | — |
-
-下图由 `autoscaler_run_20260924_v3` 的 140 行 1 Hz 原始时间线与事件流生成（绘制脚本与数据同目录），非示意稿：上图为容量与决策（LOW 不误扩 → HIGH 饱和自动扩容 → STEADY → 低载自动缩容），下图为初始/弹性引擎各自累计服务请求数。
-
-![Autoscaler 全周期时间线：容量随负载自动 1→2→1，弹性引擎实际分流 516 个请求后被排空回收](https://raw.githubusercontent.com/shanyulu/Relax/a835f59e931c23742ff39d8230eb0b6d8d91f89a/demos/task4_genrm/results/autoscaler_run_20260924_v3/timeline-chart.png)
-
-官方示例的 judge 为 Qwen3-VL-30B-A3B-Instruct × 8 GPU，本机 4×4090 无法承载；E2E 采用 Qwen3-0.6B 作为 GenRM judge 验证生命周期与路由正确性（官方要求的"新引擎打分与初始引擎一致"以贪心逐字一致证明），最终 recipe 级训练验收仍需导师确认可用的文本 GenRM 模型规模。
-
-现有 CPU 测试检查接口契约、fake-manager 行为与上表已验证项；真实训练连续性仍需单独取证。实测过程暴露并修复了若干仅在真实 Ray/SGLang 下可见的问题（ray 2.5x 无 `wait_for_ready`、scale-out PG 需探测物理 GPU 而非本地索引、Serve 代理容器内仅绑 localhost、radix cache 使相同 prompt 的 KV 共享导致负载不饱和），修复均有独立 commit 与复现记录。
-
-## 如何验收
-
-| 要求         | 检查方法                                                                                                        |
-| ------------ | --------------------------------------------------------------------------------------------------------------- |
-| API 与保护   | 绝对目标、终态后重复 NOOP、在途 409、非法 4xx；初始副本不删除，已缩副本不复活                                   |
-| 手动扩缩     | 持续打分下 1→2→1；健康后实际接流量，新旧评分一致，全程无权重同步                                                |
-| 排空与回滚   | 注入迟到 dispatch、客户端断线但后端仍忙、初始化失败、排空超时、worker/PG 清理失败；验证 reconcile 固定原 victim |
-| 自动扩缩     | 高低负载至少三轮，覆盖空闲窗口、新副本无样本与采集失败场景；保存指标、决策日志、容量变化与 TUI 记录 |
-| 文本训练 E2E | actor/rollout 持续推进，无新增打分失败或已接收请求丢失                                                          |
-
-评分一致性测试固定输入和模型配置，使用确定性采样，提前约定容差。CPU 契约测试与 GPU 结果分开；多节点 TP/PP 未经真实验证不声明支持，不支持的弹性配置在启动时拒绝。
-
-执行顺序：失败路径回归先行（栅栏、清理残留与决策冻结已按验证状态表钉住，其余注入项随 GPU 阶段补齐）；手动 GPU `1→2→1` 与首轮自动高低负载已于 2026-09-24 通过（见验证状态表），剩余为多轮自动负载复测、注入项抽查，最后用真实仓库 recipe/entrypoint 验证训练持续推进。按稳定副本标识核对新增与移除对象，保存每副本打分、worker、PG/GPU 释放、条件与历史记录。脚本用 `try/finally` 清理本次拥有的资源。三轮负载是本提案的复测安排，官方要求是自动扩缩及训练不中断。
-
-Task 3 公开 ingress 接通前，运行结果只标为单 Gateway 适配器证据，不宣称 direct client 或跨 Gateway 排空已验收。
-
-请导师确认 **Task 3 入选实现与「Task 3 依赖边界」一节需要裁决的两项缺口**（admission 关闭不取消已接收请求、drain fence）。首期限定常驻 decoupled、独占新增 PG、单 Gateway、单模型 Autoscaler。
-
-参考：[官方 Task 4](https://github.com/redai-studio/community/blob/main/contributor-program/2026-cohort-2/official-task.md) · [Task 3 RFC](https://github.com/redai-studio/Relax/issues/71) · [当前 main 快照](https://github.com/redai-studio/Relax/tree/353ea7cec2c0d3f0745bc7929943089e51282e10)
+参考：[官方 Task 4](https://github.com/redai-studio/community/blob/main/contributor-program/2026-cohort-2/official-task.md) · [Task 3 RFC #71](https://github.com/redai-studio/Relax/issues/71)

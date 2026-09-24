@@ -168,4 +168,4 @@ cd demos/task11_straggler && python run_demo.py --gpus 2 --pairs 4 --null-pairs 
 
 ### 终局（2026-09-24 深夜收尾）
 
-Autoscaler 全周期第三轮通过（`autoscaler_run_20260924_v3`，E2E_PASS）：t=154s 自动扩容 1→2（token_usage_high）、t=212s 自动缩容 2→1（三条件全满足）、弹性引擎服务 516 请求、3,202 请求零失败、终态 == 初始。缩容被卡的根因是默认 throughput_variance_threshold=0.1 对 48 并发短请求的突发吞吐过严（实测方差 0.77），以 per-service 阈值 1.0 解决——这本身即 Task 4"GenRM 独立阈值"能力的实证。issue #351 正文已同步更新。
+Autoscaler 全周期第三轮通过（`autoscaler_run_20260924_v3`，E2E_PASS）：扩容决策 t≈111s（HIGH 相位内、相位开始后 ~16s，ACTIVE 完成于 t≈152s）、缩容决策 t≈207s、完成 t≈212s——决策与完成均落在 STEADY 相位内（相位结束 t≈214s；扩容后负载分摊使平均 token 使用率降至 ~1.8%，低于 5% 阈值），不是 LOW′ 触发。弹性引擎服务 516 请求、3,202 请求零失败、终态 == 初始。缩容被卡的根因是默认 throughput_variance_threshold=0.1 对 48 并发短请求的突发吞吐过严（实测方差 0.77），以 per-service 阈值 1.0 解决——这本身即 Task 4"GenRM 独立阈值"能力的实证（该轮属调参轮，冻结阈值的验收轮另行执行）。issue #351 正文已同步更新。
