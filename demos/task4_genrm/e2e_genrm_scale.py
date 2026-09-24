@@ -353,189 +353,276 @@ def main() -> int:
     from relax.core.service import create_placement_group
     from relax.utils.utils import get_serve_url
 
-    ray.init(ignore_reinit_error=True)
-    ev.log(
-        "ray_init",
-        node_ips=[n["NodeManagerAddress"] for n in ray.nodes() if n.get("Alive")],
-        resources={k: v for k, v in ray.cluster_resources().items() if k.startswith("GPU") or k == "CPU"},
-    )
-
-    # Minimal production-shaped config namespace (the same fields the real
-    # entrypoint resolves for the single-instance --genrm-model-path path).
-    cfg = Namespace(
-        genrm_model_path=os.path.abspath(args_cli.model_path),
-        genrm_num_gpus=args_cli.genrm_num_gpus,
-        genrm_num_gpus_per_engine=1,
-        genrm_engine_config={"mem_fraction_static": 0.85},
-        genrm_sampling_config={},
-        num_gpus_per_node=4,
-        rollout_num_gpus=0,
-        sglang_dp_size=1,
-        seed=42,
-        fully_async=True,
-        rollout_external=False,
-        rollout_num_gpus_per_engine=1,
-        use_slime_router=False,
-        offload_rollout=False,
-        debug_train_only=False,
-        fp16=False,
-        use_rollout_routing_replay=False,
-    )
-    cfg._genrm_instances_resolved = {
-        "__default__": {
-            "model_path": cfg.genrm_model_path,
-            "num_gpus": cfg.genrm_num_gpus,
-            "num_gpus_per_engine": 1,
-            "engine_config": cfg.genrm_engine_config,
-            "sampling_config": cfg.genrm_sampling_config,
-        }
-    }
-
-    pg = create_placement_group(num_gpus=cfg.genrm_num_gpus, node_group_affinity=False)
-    ev.log("pg_created", bundles=len(pg[1]), gpu_ids=pg[2])
-
-    deployment = GenRM.bind(None, pg, cfg.genrm_num_gpus, cfg, "genrm")
-    serve.run(deployment, name="genrm", route_prefix="/genrm")
-    global GENRM_BASE
-    GENRM_BASE = get_serve_url("/genrm")
-    # Single-node E2E: inside this container the Serve HTTP proxy binds to
-    # localhost only (verified: 127.0.0.1 reachable, container IP refused),
-    # so rewrite the host while keeping the port and path.
-    from urllib.parse import urlsplit, urlunsplit
-
-    _u = urlsplit(GENRM_BASE)
-    GENRM_BASE = urlunsplit((_u.scheme, f"127.0.0.1:{_u.port}", _u.path, "", ""))
-    ev.log("serve_run", url=GENRM_BASE)
-
-    # ------------------------------------------------------------------ #
-    # Phase 0: baseline (1 engine)
-    # ------------------------------------------------------------------ #
-    base_engines = wait_for_engines(cfg.genrm_num_gpus)
-    ev.log("phase0_engines", **base_engines)
-    ev.snapshot_gpu("baseline-1-engine")
-    baseline_free_gpus = ray.available_resources().get("GPU", 0)
-    ev.log("baseline_ray_free_gpus", free=baseline_free_gpus)
-    scores_0 = score_once("baseline")
-    ev.log("phase0_scores", scores=scores_0)
-    initial_ids = engine_ids(base_engines)
-    if len(initial_ids) != cfg.genrm_num_gpus:
-        raise RuntimeError(f"expected {cfg.genrm_num_gpus} initial engine ids, got {initial_ids}")
-    ev.log("phase0_initial_engine_ids", ids=sorted(map(list, initial_ids)))
-
-    load = LoadGenerator(ev)
+    # Cleanup contract: the outer finally covers every failure exit
+    # (deployment prep, load, sampling, assertions, file writes); each
+    # cleanup step handles its own exception; evidence dumping is never a
+    # precondition for cleanup; and only resources this run created are
+    # released. Functional and cleanup outcomes are reported separately.
+    load = None
+    load_stopped = False
     verdicts: dict = {}
-    passed = False
+    functional_error = None
+    pg = None
+    app_started = False
+    cleanup_pass = True
+    cleanup_errors: list = []
+    leftover_free_gpus = None
+
     try:
-        load.start()
-        time.sleep(5.0)  # let the load ramp before scaling
-
-        # -------------------------------------------------------------- #
-        # Phase 1: scale out 1 -> 2
-        # -------------------------------------------------------------- #
-        out_op = run_scale_op(ev, "scale_out", cfg.genrm_num_gpus + 1, "ACTIVE", args_cli.scale_out_timeout)
-        after_out = wait_for_engines(cfg.genrm_num_gpus + 1, timeout_s=60)
-        ev.log("phase1_engines", **after_out)
-        ev.snapshot_gpu("after-scale-out-2-engines")
-        ids_after_out = engine_ids(after_out)
-        added_ids = ids_after_out - initial_ids
-        if len(added_ids) != 1:
-            raise RuntimeError(f"scale-out added {sorted(map(list, added_ids))}, expected exactly 1 new engine id")
-        elastic_id = next(iter(added_ids))
+        ray.init(ignore_reinit_error=True)
         ev.log(
-            "phase1_elastic_engine_id",
-            id=list(elastic_id),
-            initial_survived=sorted(map(list, initial_ids & ids_after_out)),
-        )
-        served_elastic_t1 = served_by(after_out, elastic_id)
-        ev.log("phase1_served_counts", elastic_served=served_elastic_t1)
-
-        scores_1 = score_once("after-scale-out")
-        ev.log("phase1_scores", scores=scores_1)
-
-        # Let the load generator hit the elastic engine for a while.
-        time.sleep(15.0)
-        mid_out = engines()
-        served_elastic_t2 = served_by(mid_out, elastic_id)
-        ev.log(
-            "phase1_served_counts_mid",
-            elastic_served=served_elastic_t2,
-            **{"current": mid_out["current"], "ready": mid_out["ready"]},
+            "ray_init",
+            node_ips=[n["NodeManagerAddress"] for n in ray.nodes() if n.get("Alive")],
+            resources={k: v for k, v in ray.cluster_resources().items() if k.startswith("GPU") or k == "CPU"},
         )
 
-        time.sleep(5.0)
-
-        # -------------------------------------------------------------- #
-        # Phase 2: scale in 2 -> 1 (victim drained while load is running)
-        # -------------------------------------------------------------- #
-        in_op = run_scale_op(ev, "scale_in", cfg.genrm_num_gpus, "COMPLETED", args_cli.scale_in_timeout)
-        after_in = wait_for_engines(cfg.genrm_num_gpus, timeout_s=60)
-        ev.log("phase2_engines", **after_in)
-        ev.snapshot_gpu("after-scale-in-1-engine")
-        ids_after_in = engine_ids(after_in)
-        removed_ids = ids_after_out - ids_after_in
-        scores_2 = score_once("after-scale-in")
-        ev.log("phase2_scores", scores=scores_2)
-
-        load_summary = load.stop()
-
-        # Requests served during each scale-op window (drain proof needs live
-        # traffic overlapping the operation, not merely zero failures).
-        out_w = out_op["window"]
-        in_w = in_op["window"]
-        reqs_during_out = sum(1 for r in load_requests(load) if out_w[0] <= r["t"] <= out_w[1] and r["ok"])
-        reqs_during_in = sum(1 for r in load_requests(load) if in_w[0] <= r["t"] <= in_w[1] and r["ok"])
-
-        # Resource release: Ray free GPUs must return to the baseline level
-        # (the elastic engine's dedicated PG returned its GPU).
-        free_after_in = ray.available_resources().get("GPU", 0)
-
-        # ------------------------------------------------------------------ #
-        # Verdicts
-        # ------------------------------------------------------------------ #
-        verdicts = {
-            "scale_out_active": out_op["final"]["status"] == "ACTIVE",
-            "scale_out_transition_chain": out_op["transitions"],
-            "scale_out_added_exactly_one_engine": len(added_ids) == 1,
-            "scale_out_initial_survived": initial_ids <= ids_after_out,
-            "elastic_engine_served_traffic": served_elastic_t2 > served_elastic_t1,
-            "scale_in_completed": in_op["final"]["status"] == "COMPLETED",
-            "scale_in_transition_chain": in_op["transitions"],
-            "scale_in_removed_exactly_the_elastic_engine": removed_ids == {elastic_id},
-            "scale_in_initial_survived": initial_ids <= ids_after_in,
-            "scoring_identical_out": compare_scores(scores_0, scores_1, "out") == [],
-            "scoring_identical_in": compare_scores(scores_0, scores_2, "in") == [],
-            "load_zero_failures": load_summary["failed"] == 0,
-            "load_total_requests": load_summary["total"],
-            "load_requests_during_scale_out": reqs_during_out,
-            "load_requests_during_scale_in": reqs_during_in,
-            "load_served_during_both_ops": reqs_during_out > 0 and reqs_during_in > 0,
-            "gpu_resources_returned": free_after_in >= baseline_free_gpus,
-            "baseline_free_gpus": baseline_free_gpus,
-            "free_gpus_after_scale_in": free_after_in,
-            "scores_diff_out": compare_scores(scores_0, scores_1, "out"),
-            "scores_diff_in": compare_scores(scores_0, scores_2, "in"),
+        # Minimal production-shaped config namespace (the same fields the real
+        # entrypoint resolves for the single-instance --genrm-model-path path).
+        cfg = Namespace(
+            genrm_model_path=os.path.abspath(args_cli.model_path),
+            genrm_num_gpus=args_cli.genrm_num_gpus,
+            genrm_num_gpus_per_engine=1,
+            genrm_engine_config={"mem_fraction_static": 0.85},
+            genrm_sampling_config={},
+            num_gpus_per_node=4,
+            rollout_num_gpus=0,
+            sglang_dp_size=1,
+            seed=42,
+            fully_async=True,
+            rollout_external=False,
+            rollout_num_gpus_per_engine=1,
+            use_slime_router=False,
+            offload_rollout=False,
+            debug_train_only=False,
+            fp16=False,
+            use_rollout_routing_replay=False,
+        )
+        cfg._genrm_instances_resolved = {
+            "__default__": {
+                "model_path": cfg.genrm_model_path,
+                "num_gpus": cfg.genrm_num_gpus,
+                "num_gpus_per_engine": 1,
+                "engine_config": cfg.genrm_engine_config,
+                "sampling_config": cfg.genrm_sampling_config,
+            }
         }
-        passed = all(v for k, v in verdicts.items() if isinstance(v, bool))
-        verdicts["E2E_PASS"] = passed
-        ev.log("verdicts", **verdicts)
-    finally:
-        # Load generator must stop even when a phase raises.
-        if load._pool is not None:
-            load.stop()
-        ev.dump()
 
-    with open(os.path.join(out_dir, "verdicts.json"), "w") as f:
-        json.dump(verdicts, f, indent=2, ensure_ascii=False)
+        pg = create_placement_group(num_gpus=cfg.genrm_num_gpus, node_group_affinity=False)
+        ev.log("pg_created", bundles=len(pg[1]), gpu_ids=pg[2])
 
-    # Cleanup only what this run owns, always.
-    try:
-        serve.delete("genrm")
-        time.sleep(5)
+        deployment = GenRM.bind(None, pg, cfg.genrm_num_gpus, cfg, "genrm")
+        serve.run(deployment, name="genrm", route_prefix="/genrm")
+        app_started = True
+        global GENRM_BASE
+        GENRM_BASE = get_serve_url("/genrm")
+        # Single-node E2E: inside this container the Serve HTTP proxy binds to
+        # localhost only (verified: 127.0.0.1 reachable, container IP refused),
+        # so rewrite the host while keeping the port and path.
+        from urllib.parse import urlsplit, urlunsplit
+
+        _u = urlsplit(GENRM_BASE)
+        GENRM_BASE = urlunsplit((_u.scheme, f"127.0.0.1:{_u.port}", _u.path, "", ""))
+        ev.log("serve_run", url=GENRM_BASE)
+
+        # ------------------------------------------------------------------ #
+        # Phase 0: baseline (1 engine)
+        # ------------------------------------------------------------------ #
+        base_engines = wait_for_engines(cfg.genrm_num_gpus)
+        ev.log("phase0_engines", **base_engines)
+        ev.snapshot_gpu("baseline-1-engine")
+        baseline_free_gpus = ray.available_resources().get("GPU", 0)
+        ev.log("baseline_ray_free_gpus", free=baseline_free_gpus)
+        scores_0 = score_once("baseline")
+        ev.log("phase0_scores", scores=scores_0)
+        initial_ids = engine_ids(base_engines)
+        if len(initial_ids) != cfg.genrm_num_gpus:
+            raise RuntimeError(f"expected {cfg.genrm_num_gpus} initial engine ids, got {initial_ids}")
+        ev.log("phase0_initial_engine_ids", ids=sorted(map(list, initial_ids)))
+
+        load = LoadGenerator(ev)
+        verdicts: dict = {}
+        passed = False
+        try:
+            load.start()
+            time.sleep(5.0)  # let the load ramp before scaling
+
+            # -------------------------------------------------------------- #
+            # Phase 1: scale out 1 -> 2
+            # -------------------------------------------------------------- #
+            out_op = run_scale_op(ev, "scale_out", cfg.genrm_num_gpus + 1, "ACTIVE", args_cli.scale_out_timeout)
+            after_out = wait_for_engines(cfg.genrm_num_gpus + 1, timeout_s=60)
+            ev.log("phase1_engines", **after_out)
+            ev.snapshot_gpu("after-scale-out-2-engines")
+            ids_after_out = engine_ids(after_out)
+            added_ids = ids_after_out - initial_ids
+            if len(added_ids) != 1:
+                raise RuntimeError(f"scale-out added {sorted(map(list, added_ids))}, expected exactly 1 new engine id")
+            elastic_id = next(iter(added_ids))
+            ev.log(
+                "phase1_elastic_engine_id",
+                id=list(elastic_id),
+                initial_survived=sorted(map(list, initial_ids & ids_after_out)),
+            )
+            served_elastic_t1 = served_by(after_out, elastic_id)
+            ev.log("phase1_served_counts", elastic_served=served_elastic_t1)
+
+            scores_1 = score_once("after-scale-out")
+            ev.log("phase1_scores", scores=scores_1)
+
+            # Let the load generator hit the elastic engine for a while.
+            time.sleep(15.0)
+            mid_out = engines()
+            served_elastic_t2 = served_by(mid_out, elastic_id)
+            ev.log(
+                "phase1_served_counts_mid",
+                elastic_served=served_elastic_t2,
+                **{"current": mid_out["current"], "ready": mid_out["ready"]},
+            )
+
+            time.sleep(5.0)
+
+            # -------------------------------------------------------------- #
+            # Phase 2: scale in 2 -> 1 (victim drained while load is running)
+            # -------------------------------------------------------------- #
+            in_op = run_scale_op(ev, "scale_in", cfg.genrm_num_gpus, "COMPLETED", args_cli.scale_in_timeout)
+            after_in = wait_for_engines(cfg.genrm_num_gpus, timeout_s=60)
+            ev.log("phase2_engines", **after_in)
+            ev.snapshot_gpu("after-scale-in-1-engine")
+            ids_after_in = engine_ids(after_in)
+            removed_ids = ids_after_out - ids_after_in
+            scores_2 = score_once("after-scale-in")
+            ev.log("phase2_scores", scores=scores_2)
+
+            load_summary = load.stop()
+            load_stopped = True
+
+            # Requests served during each scale-op window (drain proof needs live
+            # traffic overlapping the operation, not merely zero failures).
+            out_w = out_op["window"]
+            in_w = in_op["window"]
+            reqs_during_out = sum(1 for r in load_requests(load) if out_w[0] <= r["t"] <= out_w[1] and r["ok"])
+            reqs_during_in = sum(1 for r in load_requests(load) if in_w[0] <= r["t"] <= in_w[1] and r["ok"])
+
+            # Resource release: Ray free GPUs must return to the baseline level
+            # (the elastic engine's dedicated PG returned its GPU).
+            free_after_in = ray.available_resources().get("GPU", 0)
+
+            # ------------------------------------------------------------------ #
+            # Verdicts
+            # ------------------------------------------------------------------ #
+            verdicts = {
+                "scale_out_active": out_op["final"]["status"] == "ACTIVE",
+                "scale_out_transition_chain": out_op["transitions"],
+                "scale_out_added_exactly_one_engine": len(added_ids) == 1,
+                "scale_out_initial_survived": initial_ids <= ids_after_out,
+                "elastic_engine_served_traffic": served_elastic_t2 > served_elastic_t1,
+                "scale_in_completed": in_op["final"]["status"] == "COMPLETED",
+                "scale_in_transition_chain": in_op["transitions"],
+                "scale_in_removed_exactly_the_elastic_engine": removed_ids == {elastic_id},
+                "scale_in_initial_survived": initial_ids <= ids_after_in,
+                "scoring_identical_out": compare_scores(scores_0, scores_1, "out") == [],
+                "scoring_identical_in": compare_scores(scores_0, scores_2, "in") == [],
+                "load_zero_failures": load_summary["failed"] == 0,
+                "load_total_requests": load_summary["total"],
+                "load_requests_during_scale_out": reqs_during_out,
+                "load_requests_during_scale_in": reqs_during_in,
+                "load_served_during_both_ops": reqs_during_out > 0 and reqs_during_in > 0,
+                "gpu_resources_returned": free_after_in >= baseline_free_gpus,
+                "baseline_free_gpus": baseline_free_gpus,
+                "free_gpus_after_scale_in": free_after_in,
+                "scores_diff_out": compare_scores(scores_0, scores_1, "out"),
+                "scores_diff_in": compare_scores(scores_0, scores_2, "in"),
+            }
+            passed = all(v for k, v in verdicts.items() if isinstance(v, bool))
+            verdicts["E2E_PASS"] = passed
+            ev.log("verdicts", **verdicts)
+        finally:
+            # Load generator must stop even when a phase raises.
+            if load is not None and not load_stopped and load._pool is not None:
+                load.stop()
+            ev.dump()
+
     except Exception as exc:  # noqa: BLE001
-        ev.log("cleanup_serve_delete_failed", error=str(exc))
-    ray.shutdown()
-    ev.log("e2e_done", passed=passed)
-    return 0 if passed else 1
+        functional_error = exc
+        ev.log("functional_error", error=f"{type(exc).__name__}: {exc}")
+    finally:
+        # Every step handles its own exception: a failure here never masks
+        # the original error and never blocks the remaining steps.
+        try:
+            ev.dump()
+        except Exception as exc:  # noqa: BLE001
+            print(f"WARNING: evidence dump failed: {exc}", file=sys.stderr, flush=True)
+        try:
+            if app_started:
+                serve.delete("genrm")
+                time.sleep(5)
+        except Exception as exc:  # noqa: BLE001
+            cleanup_pass = False
+            cleanup_errors.append(f"serve_delete_genrm: {exc}")
+        try:
+            if pg is not None:
+                from ray.util.placement_group import placement_group_table, remove_placement_group
+
+                remove_placement_group(pg[0])
+                deadline = time.time() + 60
+                while time.time() < deadline:
+                    if placement_group_table(pg[0]).get("state") == "REMOVED":
+                        break
+                    time.sleep(1.0)
+                else:
+                    cleanup_pass = False
+                    cleanup_errors.append("pg_remove: driver PG not REMOVED within 60s")
+        except Exception as exc:  # noqa: BLE001
+            cleanup_pass = False
+            cleanup_errors.append(f"pg_remove: {exc}")
+        try:
+            leftover_free_gpus = ray.available_resources().get("GPU", 0)
+        except Exception:  # noqa: BLE001
+            leftover_free_gpus = None
+        try:
+            ray.shutdown()
+        except Exception as exc:  # noqa: BLE001
+            cleanup_pass = False
+            cleanup_errors.append(f"ray_shutdown: {exc}")
+        ev.log(
+            "cleanup_result",
+            cleanup_pass=cleanup_pass,
+            cleanup_errors=cleanup_errors,
+            leftover_ray_free_gpus=leftover_free_gpus,
+        )
+        ev.log(
+            "e2e_done",
+            functional_pass=functional_error is None and bool(verdicts.get("E2E_PASS")),
+            cleanup_pass=cleanup_pass,
+        )
+        try:
+            ev.dump()
+        except Exception:  # noqa: BLE001
+            pass
+
+    # Final record: functional and cleanup outcomes are separate; total PASS
+    # requires both. The original exception, if any, is re-raised after the
+    # verdict file is written so it is never masked.
+    functional_pass = functional_error is None and bool(verdicts.get("E2E_PASS"))
+    verdicts.update(
+        {
+            "functional_pass": functional_pass,
+            "cleanup_pass": cleanup_pass,
+            "cleanup_errors": cleanup_errors,
+            "leftover_ray_free_gpus": leftover_free_gpus,
+            "functional_error": (
+                None if functional_error is None else f"{type(functional_error).__name__}: {functional_error}"
+            ),
+        }
+    )
+    verdicts["PASS"] = functional_pass and cleanup_pass
+    try:
+        with open(os.path.join(out_dir, "verdicts.json"), "w") as f:
+            json.dump(verdicts, f, indent=2, ensure_ascii=False)
+    finally:
+        if functional_error is not None:
+            raise functional_error
+    return 0 if verdicts["PASS"] else 1
 
 
 if __name__ == "__main__":
