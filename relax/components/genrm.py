@@ -15,12 +15,12 @@ import asyncio
 import time
 from argparse import Namespace
 from itertools import cycle
-from typing import Any, List, Optional, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 import httpx
 import ray
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
 from ray import serve
 from ray.serve.schema import LoggingConfig
 
@@ -28,6 +28,7 @@ from relax.components.base import Base
 from relax.distributed.ray.placement_group import create_genrm_managers
 from relax.utils.data.processing_utils import load_tokenizer
 from relax.utils.env import Envs
+from relax.utils.genrm_scale_registry import GenRMScaleRegistry
 
 
 app = FastAPI()
@@ -72,6 +73,58 @@ class GenerateResponse(BaseModel):
     """
 
     response: str
+
+
+class GenRMScaleRequest(BaseModel):
+    """Request model for GenRM scale-out / scale-in.
+
+    ``num_replicas`` is the target *absolute* total engine count (not a delta).
+    Idempotency is keyed on the request-body fingerprint
+    (model_name, num_replicas, timeout_secs): same key + same fingerprint
+    returns the original operation; a keyed NOOP decision is replayed
+    verbatim; a different fingerprint is rejected with 409.
+    """
+
+    model_name: str = Field(default="default", description="GenRM instance (route key) to scale")
+    num_replicas: int = Field(..., gt=0, description="Target absolute total engine count")
+    timeout_secs: Optional[float] = Field(default=None, gt=0, description="Total timeout for the operation")
+    idempotency_key: Optional[str] = Field(default=None, description="Idempotency key for safe retries")
+
+
+class GenRMScaleResponse(BaseModel):
+    """Response model for GenRM scale operations.
+
+    NOOP responses intentionally carry no ``request_id`` (the decision is
+    replayed verbatim for keyed retries, per the Task 4 contract).
+    """
+
+    status: str
+    request_id: Optional[str] = None
+    current: Optional[int] = None
+    ready: Optional[int] = None
+    detail: Optional[str] = None
+
+
+class GenRMScaleStatusResponse(BaseModel):
+    """Response model for GenRM scale operation status queries."""
+
+    request_id: str
+    direction: str
+    status: str
+    model_name: str
+    target: int
+    timeout_secs: Optional[float] = None
+    idempotency_key: Optional[str] = None
+    created_at: float
+    updated_at: float
+    current: Optional[int] = None
+    ready: Optional[int] = None
+    created: int = 0
+    removed: int = 0
+    failed: int = 0
+    cleanup_required: bool = False
+    error_message: Optional[str] = None
+    detail: Optional[str] = None
 
 
 class _EngineCacheState:
@@ -154,6 +207,12 @@ class GenRM(Base):
         self.instance_specs = config._genrm_instances_resolved
 
         self._engine_caches: dict[str, _EngineCacheState] = {key: _EngineCacheState() for key in self.genrm_managers}
+        # Task 4 elastic-scaling contract core: operation registry with
+        # state machine / idempotency / mutual exclusion. The protected
+        # ``initial`` lower bound per instance is its engine count.
+        self._scale_registry = GenRMScaleRegistry()
+        for key, spec in self.instance_specs.items():
+            self._scale_registry.register_initial(key, spec["num_gpus"] // spec["num_gpus_per_engine"])
         self._logger.info(f"GenRM service initialized successfully: instances={list(self.genrm_managers)}")
         # Shared HTTP client for engine calls (avoids per-request connection overhead).
         # Raise pool limits well above httpx's default 100 so one replica can fan out
@@ -356,6 +415,129 @@ class GenRM(Base):
         if list(instances) == [_DEFAULT_INSTANCE_KEY]:
             return {"service": "genrm", **instances[_DEFAULT_INSTANCE_KEY]}
         return {"service": "genrm", "instances": instances}
+
+    # ------------------------------------------------------------------
+    # Elastic scaling (Task 4). The endpoints are thin: validation,
+    # idempotency, mutual exclusion and the operation state machine live in
+    # ``GenRMScaleRegistry``; actual Ray lifecycle execution is delegated to
+    # manager hooks (``execute_genrm_scale_out`` / ``execute_genrm_scale_in``)
+    # which GenRMManager does not implement yet -- until it does, admitted
+    # operations stay in PENDING and responses carry
+    # ``detail="manager_scale_not_implemented"``.
+    # ------------------------------------------------------------------
+
+    @app.post("/scale_out")
+    async def scale_out(self, request: GenRMScaleRequest) -> GenRMScaleResponse:
+        """Scale one GenRM instance to an absolute target engine count."""
+        return await self._genrm_scale("scale_out", request)
+
+    @app.post("/scale_in")
+    async def scale_in(self, request: GenRMScaleRequest) -> GenRMScaleResponse:
+        """Scale one GenRM instance down to an absolute target engine count."""
+        return await self._genrm_scale("scale_in", request)
+
+    @app.get("/engines")
+    async def get_engines(self) -> Dict[str, Any]:
+        """Discover engines per instance (``current`` = capacity, ``ready`` = routable)."""
+        instances: Dict[str, Any] = {}
+        for key in self.genrm_managers:
+            engines = self._genrm_engine_list(key)
+            instances[key] = {
+                "engines": [{"host": host, "port": port} for host, port in engines],
+                "current": len(engines),
+                "ready": len(engines),
+            }
+        if list(instances) == [_DEFAULT_INSTANCE_KEY]:
+            return {"service": "genrm", **instances[_DEFAULT_INSTANCE_KEY]}
+        return {"service": "genrm", "instances": instances}
+
+    @app.get("/scale_out/{request_id}", response_model=GenRMScaleStatusResponse)
+    async def get_scale_out_status(self, request_id: str) -> GenRMScaleStatusResponse:
+        return self._genrm_scale_status("scale_out", request_id)
+
+    @app.get("/scale_in/{request_id}", response_model=GenRMScaleStatusResponse)
+    async def get_scale_in_status(self, request_id: str) -> GenRMScaleStatusResponse:
+        return self._genrm_scale_status("scale_in", request_id)
+
+    def _resolve_scale_model(self, model_name: Optional[str]) -> str:
+        """Map the API's ``model_name`` onto a configured instance key."""
+        if model_name in (None, "default") and len(self.genrm_managers) == 1:
+            return next(iter(self.genrm_managers))
+        return self._resolve_instance_key(None if model_name == "default" else model_name)
+
+    def _genrm_engine_list(self, key: str) -> List[Tuple[str, int]]:
+        """Observe the live engine list of one instance from its manager."""
+        manager = self.genrm_managers[key]
+        return list(ray.get(manager.get_engine_hosts_ports.remote()))
+
+    async def _genrm_scale(self, direction: str, request: GenRMScaleRequest) -> GenRMScaleResponse:
+        try:
+            key = self._resolve_scale_model(request.model_name)
+            engines = self._genrm_engine_list(key)
+        except RuntimeError as e:
+            raise HTTPException(status_code=400, detail=str(e))
+        except Exception as e:
+            self._logger.error(f"GenRM engine discovery failed for model '{request.model_name}': {e}")
+            raise HTTPException(status_code=503, detail="GenRM engine discovery failed")
+
+        decision = self._scale_registry.submit(
+            direction,
+            model_name=key,
+            target=request.num_replicas,
+            timeout_secs=request.timeout_secs,
+            idempotency_key=request.idempotency_key,
+            current=len(engines),
+            ready=len(engines),
+        )
+        if decision.get("http", 200) != 200:
+            raise HTTPException(
+                status_code=decision["http"],
+                detail=decision.get("detail") or decision.get("status", "request rejected"),
+            )
+        if decision["status"] == "PENDING" and decision.get("dispatch"):
+            request_id = decision["request_id"]
+            detail = self._dispatch_genrm_scale(direction, key, request_id)
+            if detail is not None:
+                self._scale_registry.set_detail(request_id, detail)
+            return GenRMScaleResponse(
+                status="PENDING",
+                request_id=request_id,
+                current=len(engines),
+                ready=len(engines),
+                detail=detail,
+            )
+        # Replay of an existing operation (no dispatch) or a fresh/replayed
+        # NOOP -- the latter carries no request_id by contract.
+        return GenRMScaleResponse(
+            status=decision["status"],
+            request_id=decision.get("request_id"),
+            current=decision.get("current"),
+            ready=decision.get("ready"),
+        )
+
+    def _dispatch_genrm_scale(self, direction: str, model: str, request_id: str) -> Optional[str]:
+        """Fire-and-forget handoff to the manager lifecycle hook.
+
+        Returns ``None`` when the hook accepted the operation, else a detail
+        string explaining why execution is deferred (operation stays PENDING).
+        """
+        manager = self.genrm_managers[model]
+        hook_name = "execute_genrm_scale_out" if direction == "scale_out" else "execute_genrm_scale_in"
+        hook = getattr(manager, hook_name, None)
+        if hook is None:
+            return "manager_scale_not_implemented"
+        try:
+            hook.remote(request_id)
+        except Exception as e:
+            self._logger.error(f"GenRM scale hook {hook_name} failed for {request_id}: {e}")
+            return "manager_scale_not_implemented"
+        return None
+
+    def _genrm_scale_status(self, direction: str, request_id: str) -> GenRMScaleStatusResponse:
+        result = self._scale_registry.get_status(direction, request_id)
+        if result is None:
+            raise HTTPException(status_code=404, detail=f"Scale request {request_id} not found")
+        return GenRMScaleStatusResponse(**result)
 
     def get_genrm_manager(self, route_key: Optional[str] = None) -> Any:
         """Get one GenRM manager by route key.

@@ -141,6 +141,9 @@ class ConfigUpdateRequest(BaseModel):
         None, gt=0, description="Per-request scale-out timeout in seconds forwarded to the Rollout service"
     )
     rollout_service_url: Optional[str] = Field(None, description="Rollout service URL")
+    service_targets: Optional[Dict[str, str]] = Field(
+        None, description="Per-service target URLs, e.g. {rollout: url, genrm: url}"
+    )
     scale_out_policy: Optional[ScaleOutPolicyUpdate] = Field(None, description="Scale-out policy updates")
     scale_in_policy: Optional[ScaleInPolicyUpdate] = Field(None, description="Scale-in policy updates")
 
@@ -369,7 +372,7 @@ class AutoscalerService(Base):
         if self._http_session is None:
             return []
 
-        url = f"{self.config.rollout_service_url}/engines"
+        url = f"{self.config.get_service_url('rollout')}/engines"
 
         try:
             async with self._http_session.get(url) as response:
@@ -407,7 +410,7 @@ class AutoscalerService(Base):
             return
 
         target_count = current_engines + decision.delta
-        url = f"{self.config.rollout_service_url}/scale_out"
+        url = f"{self.config.get_service_url('rollout')}/scale_out"
         payload: Dict[str, Any] = {
             "model_name": "default",
             "num_replicas": target_count,
@@ -472,7 +475,7 @@ class AutoscalerService(Base):
             return
 
         target_count = current_engines - decision.delta
-        url = f"{self.config.rollout_service_url}/scale_in"
+        url = f"{self.config.get_service_url('rollout')}/scale_in"
         payload = {
             "model_name": "default",
             "num_replicas": target_count,
@@ -572,7 +575,7 @@ class AutoscalerService(Base):
 
             try:
                 endpoint = "scale_out" if action == "scale_out" else "scale_in"
-                url = f"{self.config.rollout_service_url}/{endpoint}/{req['request_id']}"
+                url = f"{self.config.get_service_url('rollout')}/{endpoint}/{req['request_id']}"
 
                 async with self._http_session.get(url) as response:
                     if response.status == 200:
@@ -816,6 +819,10 @@ class AutoscalerService(Base):
         if request.rollout_service_url is not None:
             self.config.rollout_service_url = request.rollout_service_url
             updates_made.append(f"rollout_service_url={request.rollout_service_url}")
+
+        if request.service_targets is not None:
+            self.config.service_targets = dict(request.service_targets)
+            updates_made.append(f"service_targets={sorted(request.service_targets)}")
 
         if request.scale_out_policy is not None:
             policy = request.scale_out_policy
