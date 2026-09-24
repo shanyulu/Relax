@@ -77,6 +77,7 @@ observer 的异常边界也需要明确：初始化、Event 分配、`record/que
 | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------ |
 | [Megatron Core StragglerDetector](https://docs.nvidia.com/megatron-core/developer-guide/0.18.1/apidocs/core/core.utils.html) | CUDA Event、默认关闭、粗粒度区间 | 它的既有汇总与控制面不足以表达 Relax 的 rank × stage × workload 持久画像 |
 | [NVIDIA Resiliency Extension](https://nvidia.github.io/nvidia-resiliency-ext/)                                               | 相对 peer、采样间隔、只观测模式  | v1 不终止训练，不把外部依赖作为必需项                                    |
+| [OSDI 2025 what-if 研究](https://www.usenix.org/system/files/osdi25-lin-jinkun.pdf)                                          | 五个月集群 trace 的结论：straggler 多因、非平凡硬件故障，支持保留上下文与 `undetermined` 输出 | 其反事实模拟是离线根因分析，依赖集群级 trace 与模拟器；首期做训练内实时观测，不建模拟器 |
 | [PyTorch Profiler](https://docs.pytorch.org/docs/stable/profiler.html) / `TrainProfiler`                                     | 用短 trace 校验挂点和 overlap    | 不常开 per-op trace，不把大文件作为持续上报格式                          |
 
 ## Demo 与未验证项
@@ -121,4 +122,4 @@ v4 每轮含 4 组 8000-step off/on 与 4 组 off/off，每次约 10.3–10.4 �
 
 实现顺序：用短 trace 核定 MCore 挂点和 overlap 语义；接通 rank 到 collector 的数据面；再接 MetricsService，跑完整 recipe 对照。采样率和覆盖率一起报告。请导师确认**首期 recipe、PP 配置，以及独立 CPU-only collector 的接入方式**。
 
-参考：[官方 Task 11](https://github.com/redai-studio/community/blob/main/contributor-program/2026-cohort-2/official-task.md) · [导师背景补充](https://github.com/redai-studio/Relax/issues/334#issuecomment-5757682517) · [当前 main 的训练入口](https://github.com/redai-studio/Relax/blob/353ea7cec2c0d3f0745bc7929943089e51282e10/relax/backends/megatron/model.py#L1191)
+参考：[官方 Task 11](https://github.com/redai-studio/community/blob/main/contributor-program/2026-cohort-2/official-task.md) · [导师背景补充](https://github.com/redai-studio/Relax/issues/334#issuecomment-5757682517) · [OSDI 2025 Straggler what-if 研究](https://www.usenix.org/system/files/osdi25-lin-jinkun.pdf) · [当前 main 的训练入口](https://github.com/redai-studio/Relax/blob/353ea7cec2c0d3f0745bc7929943089e51282e10/relax/backends/megatron/model.py#L1191)
