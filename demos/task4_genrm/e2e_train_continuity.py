@@ -129,10 +129,10 @@ def engines_sampler():
 def periodic_dump(out_dir: str):
     """Dump event evidence every 10 s so a monitor crash never loses it.
 
-    Lesson from run 3: the controller tears the serve apps down when
-    training finishes, and any unwrapped late poll crashes the monitor
-    before its final dump. Incremental dumps make the timeline survive;
-    verdicts.json stays untouched until the final verdict dump.
+    Lesson from run 3: the controller tears the serve apps down when training
+    finishes, and any unwrapped late poll crashes the monitor before its final
+    dump. Incremental dumps make the timeline survive; verdicts.json stays
+    untouched until the final verdict dump.
     """
     while not TAIL_STOP.is_set():
         try:

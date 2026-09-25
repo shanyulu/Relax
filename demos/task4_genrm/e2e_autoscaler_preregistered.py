@@ -2,25 +2,25 @@
 
 """Task 4 preregistered autoscaler rounds (frozen thresholds, 2026-09-25).
 
-Round A: a with-traffic LOW->HIGH->STEADY->LOW' cycle whose assertions were
-fixed before the run (autoscaler_preregistration_20260925.md): decisions are
-attributed to load phases via /scale_history ``triggered_at`` (unix) against
-phase boundaries recorded on the same clock -- never via poll-discovery
-times.
+Round A: a with-traffic LOW->HIGH->STEADY->LOW' cycle whose assertions
+were fixed before the run (autoscaler_preregistration_20260925.md):
+decisions are attributed to load phases via /scale_history
+``triggered_at`` (unix) against phase boundaries recorded on the same
+clock -- never via poll-discovery times.
 
-Round B: a true-idle scale-in -- manual scale-out to 2 with zero traffic,
-then the autoscaler must decide scale-in on valid idle evidence (queue/
-running observed 0) within the preregistered window.
+Round B: a true-idle scale-in -- manual scale-out to 2 with zero
+traffic, then the autoscaler must decide scale-in on valid idle evidence
+(queue/ running observed 0) within the preregistered window.
 
-Both rounds assert full resource return: Ray free GPUs, per-GPU memory vs
-the pre-scale-out snapshot, and the placement-group table count. TUI
+Both rounds assert full resource return: Ray free GPUs, per-GPU memory
+vs the pre-scale-out snapshot, and the placement-group table count. TUI
 screenshots (``--service genrm`` and default) are captured live during
 STEADY via the monitor's headless ``--screenshot`` mode.
 
 Usage (repo root, GPUs free):
 
-    python demos/task4_genrm/e2e_autoscaler_preregistered.py \
-        --model-path /path/to/Qwen3-0.6B
+python demos/task4_genrm/e2e_autoscaler_preregistered.py \     --model-
+path /path/to/Qwen3-0.6B
 """
 
 import argparse
@@ -174,12 +174,12 @@ def gpu_memory_vector():
 def pg_count():
     """Count placement groups in a non-terminal state.
 
-    Ray keeps tombstone entries for removed-and-confirmed ``REMOVED``
-    placement groups in ``placement_group_table()`` forever, so the raw
-    table length grows by one per completed scale-in and can never return
-    to its pre-run baseline (settled in the r2 post-mortem: commit 46ff87a;
-    reproduced CPU-only). Resource return is asserted by counting only
-    placement groups whose state is not ``REMOVED``.
+    Ray keeps tombstone entries for removed-and-confirmed ``REMOVED`` placement
+    groups in ``placement_group_table()`` forever, so the raw table length
+    grows by one per completed scale-in and can never return to its pre-run
+    baseline (settled in the r2 post-mortem: commit 46ff87a; reproduced CPU-
+    only). Resource return is asserted by counting only placement groups whose
+    state is not ``REMOVED``.
     """
     import ray
 
