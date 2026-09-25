@@ -215,7 +215,7 @@ def main() -> int:
     while time.time() < deadline:
         snap = engines()
         served = {
-            (e["host"], e["port"]): e.get("served", 0)
+            f"{e['host']}:{e['port']}": e.get("served", 0)
             for e in snap["engines"]
             if (e["host"], e["port"]) not in initial_ids
         }
