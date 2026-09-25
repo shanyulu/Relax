@@ -91,9 +91,9 @@ python results/autoscaler_run_20260924_v3/plot_timeline.py
 | `reward_consistency_20260925/replies.json` (evidence branch only)      | `2d6e7ba1cd4c0d67` |
 | `failure_injection_20260925_v4/verdicts.json`                          | `f1accf18a833fc8a` |
 | `failure_injection_20260925_v4/events.json`                            | `450af5517abae13f` |
-| `autoscaler_prereg_20260925_r2/verdicts.json`                          | `c3eaaed1e1faff2e` |
-| `autoscaler_prereg_20260925_r2/events.json`                            | `518abad5074e961b` |
-| `autoscaler_prereg_20260925_r2/scale_history.json`                     | `6fd0e6db05e37a80` |
-| `autoscaler_prereg_20260925_r2/scale_history_round_b.json`             | `09c731c3b7be4db8` |
+| `autoscaler_prereg_20260925_r2/verdicts.json`                          | `03f92aa80b6b0f31` |
+| `autoscaler_prereg_20260925_r2/events.json`                            | `c24046e3c42065eb` |
+| `autoscaler_prereg_20260925_r2/scale_history.json`                     | `5a0d1e39ab5222e2` |
+| `autoscaler_prereg_20260925_r2/scale_history_round_b.json`             | `6559b23237f5e96f` |
 | `b2_train_smoke_20260925/verdicts.json`                                | `8d5b2944510ccf3b` |
 | `b2_train_smoke_20260925/rollout_result_run2.jsonl`                    | `1d0949b60c51a049` |
