@@ -245,7 +245,14 @@ def main() -> int:
         log_event("final_engines_unavailable", error=f"{type(exc).__name__}: {exc}"[:120])
         with LOCK:
             last = next((e for e in reversed(EVENTS) if e.get("event") == "engines_snapshot"), None)
-        final = {"current": (last or {}).get("current"), "engines": []}
+        # Rebuild the engine list from the last good snapshot's served keys so
+        # the final-capacity assertion still sees engine identities (run-5
+        # lesson: an empty fallback list made it fail unconditionally).
+        engines_from_snap = []
+        for key in (last or {}).get("served") or {}:
+            host, _, port = key.rpartition(":")
+            engines_from_snap.append({"host": host, "port": int(port)})
+        final = {"current": (last or {}).get("current"), "engines": engines_from_snap}
         verdicts["final_engines_from_last_snapshot"] = True
     final_ids = {(e["host"], e["port"]) for e in final["engines"]}
 
