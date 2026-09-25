@@ -19,8 +19,8 @@ STEADY via the monitor's headless ``--screenshot`` mode.
 
 Usage (repo root, GPUs free):
 
-python demos/task4_genrm/e2e_autoscaler_preregistered.py \     --model-
-path /path/to/Qwen3-0.6B
+    python demos/task4_genrm/e2e_autoscaler_preregistered.py
+        --model-path /path/to/Qwen3-0.6B
 """
 
 import argparse
