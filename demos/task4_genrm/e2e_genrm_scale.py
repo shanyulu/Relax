@@ -333,7 +333,7 @@ def wait_for_engines(expected: int, timeout_s: float = 900) -> dict:
 # ---------------------------------------------------------------------------
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model-path", default="/root/autodl-tmp/models/Qwen2.5-0.5B-Instruct")
+    parser.add_argument("--model-path", required=True)
     parser.add_argument("--out-dir", default=None)
     parser.add_argument("--genrm-num-gpus", type=int, default=1, help="initial engine count")
     parser.add_argument("--scale-out-timeout", type=float, default=900.0)
