@@ -172,9 +172,19 @@ def gpu_memory_vector():
 
 
 def pg_count():
+    """Count placement groups in a non-terminal state.
+
+    Ray keeps tombstone entries for removed-and-confirmed ``REMOVED``
+    placement groups in ``placement_group_table()`` forever, so the raw
+    table length grows by one per completed scale-in and can never return
+    to its pre-run baseline (settled in the r2 post-mortem: commit 46ff87a;
+    reproduced CPU-only). Resource return is asserted by counting only
+    placement groups whose state is not ``REMOVED``.
+    """
     import ray
 
-    return len(ray.util.placement_group_table())
+    table = ray.util.placement_group_table()
+    return sum(1 for info in table.values() if info.get("state") != "REMOVED")
 
 
 def wait_for(cond, timeout_s, desc, poll=2.0):
