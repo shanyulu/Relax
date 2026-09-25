@@ -59,7 +59,8 @@ def engines() -> dict:
 
 
 def tail_log():
-    """Tail the job driver log, recording train events with epoch timestamps."""
+    """Tail the job driver log, recording train events with epoch
+    timestamps."""
     inode = None
     fh = None
     pos = 0
@@ -117,12 +118,34 @@ def engines_sampler():
             log_event(
                 "engines_snapshot",
                 current=snap["current"],
-                served={f"{e['host']}:{e['port']}": e.get("served", 0) for e in snap["engines"]},
-                inflight={f"{e['host']}:{e['port']}": e.get("inflight", 0) for e in snap["engines"]},
+                served={f'{e["host"]}:{e["port"]}': e.get("served", 0) for e in snap["engines"]},
+                inflight={f'{e["host"]}:{e["port"]}': e.get("inflight", 0) for e in snap["engines"]},
             )
         except Exception as exc:  # noqa: BLE001
             log_event("engines_snapshot_failed", error=f"{type(exc).__name__}: {exc}"[:120])
         time.sleep(2.0)
+
+
+def periodic_dump(out_dir: str):
+    """Dump event evidence every 10 s so a monitor crash never loses it.
+
+    Lesson from run 3: the controller tears the serve apps down when
+    training finishes, and any unwrapped late poll crashes the monitor
+    before its final dump. Incremental dumps make the timeline survive;
+    verdicts.json stays untouched until the final verdict dump.
+    """
+    while not TAIL_STOP.is_set():
+        try:
+            with LOCK:
+                events = list(EVENTS)
+                train_events = [{"ts": ts, "kind": kind} for ts, kind in sorted(TRAIN_EVENTS)]
+            with open(os.path.join(out_dir, "events.json"), "w") as f:
+                json.dump(events, f, indent=2, ensure_ascii=False)
+            with open(os.path.join(out_dir, "train_events.json"), "w") as f:
+                json.dump(train_events, f, indent=2, ensure_ascii=False)
+        except Exception:  # noqa: BLE001
+            pass
+        time.sleep(10.0)
 
 
 def main() -> int:
@@ -140,6 +163,7 @@ def main() -> int:
 
     threading.Thread(target=tail_log, daemon=True).start()
     threading.Thread(target=engines_sampler, daemon=True).start()
+    threading.Thread(target=lambda: periodic_dump(args.out_dir), daemon=True).start()
 
     verdicts: dict = {}
     # Boot transient: the app may 404 until the route is registered and the
@@ -212,7 +236,19 @@ def main() -> int:
     # Training must run to completion after the scale-in.
     finished = wait_for_train_event("All training steps finished", 1800, from_ts=si_done_ts - 1)
     time.sleep(5)
-    final = engines()
+    # The controller tears the serve apps down once training finishes; late
+    # polls must degrade to the last sampled snapshot instead of crashing
+    # (run-3 lesson: an unwrapped final poll lost the whole verdict).
+    try:
+        final = engines()
+    except Exception as exc:  # noqa: BLE001
+        log_event("final_engines_unavailable", error=f"{type(exc).__name__}: {exc}"[:120])
+        with LOCK:
+            last = next(
+                (e for e in reversed(EVENTS) if e.get("event") == "engines_snapshot"), None
+            )
+        final = {"current": (last or {}).get("current"), "engines": []}
+        verdicts["final_engines_from_last_snapshot"] = True
     final_ids = {(e["host"], e["port"]) for e in final["engines"]}
 
     with LOCK:
