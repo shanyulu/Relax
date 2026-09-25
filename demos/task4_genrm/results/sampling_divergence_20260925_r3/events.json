@@ -1,0 +1,164 @@
+[
+  {
+    "t": 0.0,
+    "event": "e2e_start",
+    "model_path": "/root/autodl-tmp/hf-cache/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+    "dataset": "/root/autodl-tmp/hf-cache/hub/datasets--zhuzilin--dapo-math-17k/snapshots/2e65612930298bde4c5d58fd97b3f23a483aaff9/dapo-math-17k.jsonl",
+    "out_dir": "demos/task4_genrm/results/sampling_divergence_20260925_r2"
+  },
+  {
+    "t": 18.224,
+    "event": "ray_init",
+    "gpus": 4.0
+  },
+  {
+    "t": 20.083,
+    "event": "pg_created",
+    "bundles": 1,
+    "gpu_ids": [
+      0
+    ]
+  },
+  {
+    "t": 31.428,
+    "event": "serve_run",
+    "url": "http://127.0.0.1:8000/genrm"
+  },
+  {
+    "t": 80.576,
+    "event": "phase0_engines",
+    "ids": [
+      [
+        "172.17.0.2",
+        16000
+      ]
+    ]
+  },
+  {
+    "t": 116.612,
+    "event": "divergence_phase_done",
+    "requests": 300,
+    "engine_a_served_delta": 300,
+    "history_divergence_request_count": 300
+  },
+  {
+    "t": 116.634,
+    "event": "scale_out_submitted",
+    "request_id": "genrm-scale-cc03508b-c976-4914-adda-952d16af5a80",
+    "status": "PENDING"
+  },
+  {
+    "t": 116.648,
+    "event": "scale_out_status",
+    "status": "CREATING",
+    "current": null,
+    "ready": null
+  },
+  {
+    "t": 158.175,
+    "event": "scale_out_status",
+    "status": "HEALTH_CHECKING",
+    "current": null,
+    "ready": null
+  },
+  {
+    "t": 159.19,
+    "event": "scale_out_status",
+    "status": "ACTIVE",
+    "current": 2,
+    "ready": 2
+  },
+  {
+    "t": 159.19,
+    "event": "scale_out_final",
+    "status": "ACTIVE",
+    "current": 2,
+    "transitions": [
+      "CREATING",
+      "HEALTH_CHECKING",
+      "ACTIVE"
+    ]
+  },
+  {
+    "t": 159.206,
+    "event": "phase2_engines",
+    "initial": "172.17.0.2:16000",
+    "elastic": "172.17.0.2:16001"
+  },
+  {
+    "t": 159.209,
+    "event": "probe_inputs_loaded",
+    "cases": 50
+  },
+  {
+    "t": 208.287,
+    "event": "probe_phase_done",
+    "replies": 400
+  },
+  {
+    "t": 208.311,
+    "event": "verdicts",
+    "experiment": "sampling-consistency under divergent request histories",
+    "history_divergence_request_count": 300,
+    "seed": 42,
+    "cases": 50,
+    "probe_replies_total": 400,
+    "attribution_covers_both_engines": true,
+    "parse_gate_independent": true,
+    "no_truncated_replies": true,
+    "truncated_count": 0,
+    "compared_cases": 50,
+    "flip_count": 0,
+    "flip_rate": 0.0,
+    "engine_a": "172.17.0.2:16000",
+    "engine_b": "172.17.0.2:16001",
+    "E2E_PASS": true
+  },
+  {
+    "t": 208.337,
+    "event": "scale_in_submitted",
+    "request_id": "genrm-scale-e065d2c2-d426-4581-b6b5-9b4c9f1ad8ca",
+    "status": "PENDING"
+  },
+  {
+    "t": 208.348,
+    "event": "scale_in_status",
+    "status": "DRAINING",
+    "current": null,
+    "ready": null
+  },
+  {
+    "t": 209.359,
+    "event": "scale_in_status",
+    "status": "COMPLETED",
+    "current": 1,
+    "ready": 1
+  },
+  {
+    "t": 209.359,
+    "event": "scale_in_final",
+    "status": "COMPLETED",
+    "current": 1,
+    "transitions": [
+      "DRAINING",
+      "COMPLETED"
+    ]
+  },
+  {
+    "t": 209.371,
+    "event": "final_engines",
+    "ids": [
+      [
+        "172.17.0.2",
+        16000
+      ]
+    ]
+  },
+  {
+    "t": 218.955,
+    "event": "cleanup_result",
+    "cleanup_pass": true,
+    "cleanup_errors": [],
+    "leftover_free_gpus": 3.0
+  }
+]

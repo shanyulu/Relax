@@ -1,0 +1,4002 @@
+[
+  {
+    "case": "pos-0",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.08
+  },
+  {
+    "case": "pos-0",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.156
+  },
+  {
+    "case": "pos-0",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.126
+  },
+  {
+    "case": "pos-0",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-0",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.064
+  },
+  {
+    "case": "pos-0",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.066
+  },
+  {
+    "case": "pos-0",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-0",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.125
+  },
+  {
+    "case": "neg-1",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.064
+  },
+  {
+    "case": "neg-1",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.078
+  },
+  {
+    "case": "neg-1",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.065
+  },
+  {
+    "case": "neg-1",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-1",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.067
+  },
+  {
+    "case": "neg-1",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.052
+  },
+  {
+    "case": "neg-1",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-1",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-2",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-2",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.066
+  },
+  {
+    "case": "pos-2",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-2",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-2",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.05
+  },
+  {
+    "case": "pos-2",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.054
+  },
+  {
+    "case": "pos-2",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.064
+  },
+  {
+    "case": "pos-2",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-3",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-3",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.069
+  },
+  {
+    "case": "neg-3",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-3",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-3",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-3",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.069
+  },
+  {
+    "case": "neg-3",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-3",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.053
+  },
+  {
+    "case": "pos-4",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-4",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.068
+  },
+  {
+    "case": "pos-4",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-4",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-4",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-4",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-4",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-4",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.066
+  },
+  {
+    "case": "neg-5",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-5",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-5",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-5",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-5",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-5",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.063
+  },
+  {
+    "case": "neg-5",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-5",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-6",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-6",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.063
+  },
+  {
+    "case": "pos-6",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-6",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-6",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-6",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-6",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.063
+  },
+  {
+    "case": "pos-6",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-7",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.064
+  },
+  {
+    "case": "neg-7",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-7",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-7",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-7",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-7",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-7",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-7",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "pos-8",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.067
+  },
+  {
+    "case": "pos-8",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-8",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-8",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.063
+  },
+  {
+    "case": "pos-8",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.063
+  },
+  {
+    "case": "pos-8",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-8",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-8",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-9",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-9",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-9",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-9",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.055
+  },
+  {
+    "case": "neg-9",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.055
+  },
+  {
+    "case": "neg-9",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-9",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.055
+  },
+  {
+    "case": "neg-9",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.054
+  },
+  {
+    "case": "pos-10",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-10",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-10",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-10",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-10",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.056
+  },
+  {
+    "case": "pos-10",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-10",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-10",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-11",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-11",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-11",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-11",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-11",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-11",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-11",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-11",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-12",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-12",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-12",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-12",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.055
+  },
+  {
+    "case": "pos-12",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.055
+  },
+  {
+    "case": "pos-12",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.054
+  },
+  {
+    "case": "pos-12",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.053
+  },
+  {
+    "case": "pos-12",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.053
+  },
+  {
+    "case": "neg-13",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-13",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-13",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-13",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.12
+  },
+  {
+    "case": "neg-13",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-13",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-13",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.051
+  },
+  {
+    "case": "neg-13",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.066
+  },
+  {
+    "case": "pos-14",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.065
+  },
+  {
+    "case": "pos-14",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.068
+  },
+  {
+    "case": "pos-14",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.069
+  },
+  {
+    "case": "pos-14",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.204
+  },
+  {
+    "case": "pos-14",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.065
+  },
+  {
+    "case": "pos-14",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.055
+  },
+  {
+    "case": "pos-14",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.073
+  },
+  {
+    "case": "pos-14",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.063
+  },
+  {
+    "case": "neg-15",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-15",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-15",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-15",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-15",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-15",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-15",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-15",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "pos-16",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.066
+  },
+  {
+    "case": "pos-16",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-16",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.063
+  },
+  {
+    "case": "pos-16",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-16",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-16",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.055
+  },
+  {
+    "case": "pos-16",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-16",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-17",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.064
+  },
+  {
+    "case": "neg-17",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-17",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-17",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-17",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-17",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-17",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-17",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-18",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-18",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.064
+  },
+  {
+    "case": "pos-18",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-18",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-18",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.055
+  },
+  {
+    "case": "pos-18",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.055
+  },
+  {
+    "case": "pos-18",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-18",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.053
+  },
+  {
+    "case": "neg-19",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-19",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-19",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-19",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.055
+  },
+  {
+    "case": "neg-19",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-19",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.055
+  },
+  {
+    "case": "neg-19",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.055
+  },
+  {
+    "case": "neg-19",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.055
+  },
+  {
+    "case": "pos-20",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-20",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.063
+  },
+  {
+    "case": "pos-20",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-20",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-20",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.056
+  },
+  {
+    "case": "pos-20",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-20",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-20",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-21",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-21",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-21",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-21",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-21",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-21",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-21",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.054
+  },
+  {
+    "case": "neg-21",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-22",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-22",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-22",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.055
+  },
+  {
+    "case": "pos-22",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.055
+  },
+  {
+    "case": "pos-22",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.055
+  },
+  {
+    "case": "pos-22",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.056
+  },
+  {
+    "case": "pos-22",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.055
+  },
+  {
+    "case": "pos-22",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-23",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-23",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-23",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-23",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-23",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-23",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-23",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-23",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-24",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-24",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-24",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-24",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.068
+  },
+  {
+    "case": "pos-24",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-24",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-24",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-24",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-25",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-25",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-25",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-25",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-25",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-25",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-25",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-25",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "pos-26",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-26",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.064
+  },
+  {
+    "case": "pos-26",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-26",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.066
+  },
+  {
+    "case": "pos-26",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.105
+  },
+  {
+    "case": "pos-26",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.138
+  },
+  {
+    "case": "pos-26",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.069
+  },
+  {
+    "case": "pos-26",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.17
+  },
+  {
+    "case": "neg-27",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.065
+  },
+  {
+    "case": "neg-27",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-27",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-27",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-27",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.063
+  },
+  {
+    "case": "neg-27",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-27",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-27",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.055
+  },
+  {
+    "case": "pos-28",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-28",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-28",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-28",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-28",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-28",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-28",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-28",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.054
+  },
+  {
+    "case": "neg-29",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.055
+  },
+  {
+    "case": "neg-29",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-29",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.052
+  },
+  {
+    "case": "neg-29",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.052
+  },
+  {
+    "case": "neg-29",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-29",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-29",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-29",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.07
+  },
+  {
+    "case": "pos-30",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-30",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-30",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-30",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-30",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-30",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-30",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-30",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-31",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-31",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-31",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-31",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-31",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-31",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-31",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-31",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-32",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-32",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.063
+  },
+  {
+    "case": "pos-32",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-32",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-32",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-32",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-32",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-32",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-33",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-33",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-33",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-33",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-33",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-33",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-33",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-33",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-34",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-34",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.067
+  },
+  {
+    "case": "pos-34",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-34",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.055
+  },
+  {
+    "case": "pos-34",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-34",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-34",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-34",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.069
+  },
+  {
+    "case": "neg-35",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.066
+  },
+  {
+    "case": "neg-35",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-35",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-35",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.055
+  },
+  {
+    "case": "neg-35",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.055
+  },
+  {
+    "case": "neg-35",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.054
+  },
+  {
+    "case": "neg-35",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-35",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-36",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-36",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-36",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-36",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-36",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.063
+  },
+  {
+    "case": "pos-36",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-36",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-36",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-37",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-37",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-37",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.07
+  },
+  {
+    "case": "neg-37",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.063
+  },
+  {
+    "case": "neg-37",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-37",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.067
+  },
+  {
+    "case": "neg-37",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-37",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.063
+  },
+  {
+    "case": "pos-38",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-38",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-38",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-38",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-38",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-38",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-38",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-38",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-39",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-39",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-39",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-39",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-39",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.069
+  },
+  {
+    "case": "neg-39",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.102
+  },
+  {
+    "case": "neg-39",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.122
+  },
+  {
+    "case": "neg-39",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.075
+  },
+  {
+    "case": "pos-40",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.129
+  },
+  {
+    "case": "pos-40",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.069
+  },
+  {
+    "case": "pos-40",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-40",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-40",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-40",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-40",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-40",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-41",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-41",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.066
+  },
+  {
+    "case": "neg-41",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-41",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.069
+  },
+  {
+    "case": "neg-41",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-41",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.063
+  },
+  {
+    "case": "neg-41",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.07
+  },
+  {
+    "case": "neg-41",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-42",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.073
+  },
+  {
+    "case": "pos-42",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-42",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.067
+  },
+  {
+    "case": "pos-42",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-42",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.063
+  },
+  {
+    "case": "pos-42",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.063
+  },
+  {
+    "case": "pos-42",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-42",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-43",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-43",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-43",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-43",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-43",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-43",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-43",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-43",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.063
+  },
+  {
+    "case": "pos-44",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.063
+  },
+  {
+    "case": "pos-44",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-44",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-44",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-44",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-44",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-44",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-44",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-45",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-45",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-45",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-45",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-45",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-45",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-45",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-45",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "pos-46",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-46",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-46",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-46",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-46",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.06
+  },
+  {
+    "case": "pos-46",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-46",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.062
+  },
+  {
+    "case": "pos-46",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.061
+  },
+  {
+    "case": "neg-47",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.064
+  },
+  {
+    "case": "neg-47",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-47",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-47",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.056
+  },
+  {
+    "case": "neg-47",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.076
+  },
+  {
+    "case": "neg-47",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.063
+  },
+  {
+    "case": "neg-47",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.062
+  },
+  {
+    "case": "neg-47",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.061
+  },
+  {
+    "case": "pos-48",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-48",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.053
+  },
+  {
+    "case": "pos-48",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.052
+  },
+  {
+    "case": "pos-48",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.054
+  },
+  {
+    "case": "pos-48",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "pos-48",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.059
+  },
+  {
+    "case": "pos-48",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.058
+  },
+  {
+    "case": "pos-48",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 1",
+    "strict": 1,
+    "loose": 1,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-49",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-49",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.06
+  },
+  {
+    "case": "neg-49",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.059
+  },
+  {
+    "case": "neg-49",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-49",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.058
+  },
+  {
+    "case": "neg-49",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-49",
+    "engine": "172.17.0.2:16000",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  },
+  {
+    "case": "neg-49",
+    "engine": "172.17.0.2:16001",
+    "finish_reason": "stop",
+    "completion_tokens": 6,
+    "text": "Judgement: 0",
+    "strict": 0,
+    "loose": 0,
+    "latency": 0.057
+  }
+]
