@@ -1,5 +1,6 @@
 # Copyright (c) 2026 Relax Authors. All Rights Reserved.
-"""Plot the training-continuity timeline from train_continuity_20260925 raw data.
+"""Plot the training-continuity timeline from train_continuity_20260925 raw
+data.
 
 Inputs : train_events.json (step/rollout log-tail timestamps, unix epoch),
          events.json (monitor events: scaling boundaries, engines snapshots)
