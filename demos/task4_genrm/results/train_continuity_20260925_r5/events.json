@@ -1,0 +1,1916 @@
+[
+  {
+    "t": 1790352563.715,
+    "event": "monitor_start",
+    "job_log": "/tmp/ray/session_latest/logs/job-driver-raysubmit_qT4vVNVyiMub3sur.log",
+    "genrm": "http://127.0.0.1:8000/genrm"
+  },
+  {
+    "t": 1790352563.722,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352565.724,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352567.727,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352569.73,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352571.732,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352573.734,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352575.736,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352577.739,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352579.741,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352581.744,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352583.747,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352585.749,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352587.751,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352589.755,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352591.758,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790352593.762,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352595.767,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352597.772,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352599.775,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352601.779,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352603.782,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352605.785,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352607.79,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352609.795,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352611.8,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352613.805,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352615.81,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352617.814,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352619.819,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352621.824,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352623.828,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352625.833,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352627.838,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352629.842,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352631.847,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352633.852,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352635.857,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352637.867,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352639.872,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352641.878,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352643.886,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790352705.948,
+    "event": "engines_snapshot_failed",
+    "error": "ReadTimeout: HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=60)"
+  },
+  {
+    "t": 1790352721.606,
+    "event": "baseline_engines",
+    "ids": [
+      [
+        "172.17.0.2",
+        16000
+      ]
+    ]
+  },
+  {
+    "t": 1790352721.611,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352723.632,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352725.65,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352727.671,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352729.688,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352731.703,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352733.723,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352735.739,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352737.756,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352739.773,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352741.789,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352743.812,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352745.829,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352747.847,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352749.864,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352751.881,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352753.607,
+    "event": "first_step_seen"
+  },
+  {
+    "t": 1790352753.635,
+    "event": "scale_out_submitted",
+    "request_id": "genrm-scale-1f5fdead-23a1-47bb-8e36-d9e8fae83af4"
+  },
+  {
+    "t": 1790352753.899,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352755.914,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352757.93,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352759.946,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352761.963,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352763.979,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352765.996,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352768.012,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352770.029,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352772.045,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352774.062,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352776.078,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352778.095,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352780.111,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352782.128,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352784.145,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352786.162,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352788.179,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352790.195,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352792.212,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352794.224,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352796.239,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352798.255,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352800.267,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352802.281,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352804.296,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352806.325,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352808.343,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352810.359,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352812.374,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352812.411,
+    "event": "scale_out_final",
+    "status": "ACTIVE"
+  },
+  {
+    "t": 1790352814.395,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352816.412,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352818.476,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352820.494,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352822.51,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352824.525,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352826.546,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352828.564,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352830.583,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352832.606,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352834.623,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352836.643,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352838.66,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352840.677,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352842.693,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352844.709,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352846.726,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352848.742,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352850.759,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352852.777,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 1,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352854.795,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 1,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790352856.817,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    }
+  },
+  {
+    "t": 1790352857.55,
+    "event": "elastic_served_check",
+    "served": {
+      "172.17.0.2:16001": 1
+    }
+  },
+  {
+    "t": 1790352857.574,
+    "event": "scale_in_submitted",
+    "request_id": "genrm-scale-07eac41b-cf3c-4c2c-8ee2-77e306ceae67"
+  },
+  {
+    "t": 1790352858.6,
+    "event": "scale_in_final",
+    "status": "COMPLETED"
+  },
+  {
+    "t": 1790352858.833,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 1
+    }
+  },
+  {
+    "t": 1790352860.85,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 1
+    }
+  },
+  {
+    "t": 1790352862.87,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352864.886,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352866.901,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352868.919,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352870.934,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352872.949,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352874.967,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352876.984,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352879.003,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352881.021,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352883.038,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352885.056,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352887.073,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352889.091,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352891.108,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352893.125,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352895.143,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352897.161,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352899.178,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352901.196,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352903.213,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352905.231,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352907.248,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 2
+    }
+  },
+  {
+    "t": 1790352909.267,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 2
+    },
+    "inflight": {
+      "172.17.0.2:16000": 4
+    }
+  },
+  {
+    "t": 1790352911.284,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 4
+    },
+    "inflight": {
+      "172.17.0.2:16000": 2
+    }
+  },
+  {
+    "t": 1790352913.301,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 6
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352915.316,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 6
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352917.334,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 6
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352919.351,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 6
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352921.372,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 6
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352923.39,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 6
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352925.406,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 6
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352927.422,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 6
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352929.438,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 6
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352931.487,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 6
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352933.506,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 6
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352935.523,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 6
+    },
+    "inflight": {
+      "172.17.0.2:16000": 2
+    }
+  },
+  {
+    "t": 1790352937.54,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 6
+    },
+    "inflight": {
+      "172.17.0.2:16000": 2
+    }
+  },
+  {
+    "t": 1790352939.556,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 7
+    },
+    "inflight": {
+      "172.17.0.2:16000": 1
+    }
+  },
+  {
+    "t": 1790352941.573,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 8
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352943.589,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 8
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352945.605,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 8
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352947.621,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 8
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352949.64,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 8
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352951.658,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 8
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352953.677,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 8
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352955.696,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 8
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352957.715,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 8
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352959.738,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 8
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352961.754,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 8
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352963.772,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 8
+    },
+    "inflight": {
+      "172.17.0.2:16000": 2
+    }
+  },
+  {
+    "t": 1790352965.788,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 8
+    },
+    "inflight": {
+      "172.17.0.2:16000": 2
+    }
+  },
+  {
+    "t": 1790352967.806,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352969.823,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352971.84,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352973.858,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352975.876,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352977.893,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352979.913,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352981.93,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352983.947,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352985.965,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352987.979,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352989.997,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 1
+    }
+  },
+  {
+    "t": 1790352992.014,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 1
+    }
+  },
+  {
+    "t": 1790352994.03,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 10
+    },
+    "inflight": {
+      "172.17.0.2:16000": 1
+    }
+  },
+  {
+    "t": 1790352996.047,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 11
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790352998.063,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 11
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790353000.079,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 11
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790353002.095,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 11
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790353004.112,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 11
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790353006.119,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 11
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790353008.139,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 11
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790353010.14,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790353012.143,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790353014.146,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790353015.611,
+    "event": "final_engines_unavailable",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790353015.611,
+    "event": "verdicts",
+    "final_engines_from_last_snapshot": true,
+    "scale_out_active": true,
+    "scale_in_completed": true,
+    "elastic_engine_served_rewards": true,
+    "train_events_before_scaling": true,
+    "train_events_between_operations": true,
+    "train_events_after_scale_in": true,
+    "no_train_stall_over_120s": true,
+    "training_finished_after_scale_in": true,
+    "final_capacity_is_initial": true,
+    "rollout_count": 8,
+    "num_rollout_expected": 8,
+    "all_rollouts_landed": true,
+    "E2E_PASS": true
+  }
+]
