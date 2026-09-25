@@ -10,7 +10,7 @@ clock -- never via poll-discovery times.
 
 Round B: a true-idle scale-in -- manual scale-out to 2 with zero
 traffic, then the autoscaler must decide scale-in on valid idle evidence
-(queue/ running observed 0) within the preregistered window.
+(queue/running observed 0) within the preregistered window.
 
 Both rounds assert full resource return: Ray free GPUs, per-GPU memory
 vs the pre-scale-out snapshot, and the placement-group table count. TUI
