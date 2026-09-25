@@ -1,0 +1,2535 @@
+[
+  {
+    "t": 1790340500.54,
+    "event": "monitor_start",
+    "job_log": "/tmp/ray/session_latest/logs/job-driver-raysubmit_qwfgNcnQ8EYaSeJw.log",
+    "genrm": "http://127.0.0.1:8000/genrm"
+  },
+  {
+    "t": 1790340500.546,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340502.549,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340504.551,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340506.555,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340508.557,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340510.561,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340512.564,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340514.567,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340516.569,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340518.572,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340520.575,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340522.577,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340524.58,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340526.583,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340528.585,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340530.588,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340532.594,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340534.6,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340536.604,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340538.61,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340540.615,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340542.62,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340544.625,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340546.63,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340548.635,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340550.639,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340552.644,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340554.647,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340556.651,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340558.656,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340560.662,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340562.667,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340564.672,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340566.677,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340568.682,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340570.686,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340572.689,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340574.701,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340576.784,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340578.791,
+    "event": "engines_snapshot_failed",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/engines"
+  },
+  {
+    "t": 1790340640.853,
+    "event": "engines_snapshot_failed",
+    "error": "ReadTimeout: HTTPConnectionPool(host='127.0.0.1', port=8000): Read timed out. (read timeout=60)"
+  },
+  {
+    "t": 1790340654.938,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340654.942,
+    "event": "baseline_engines",
+    "ids": [
+      [
+        "172.17.0.2",
+        16000
+      ]
+    ]
+  },
+  {
+    "t": 1790340656.961,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340658.979,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340661.001,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340663.026,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340665.043,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340667.063,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340669.081,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340671.099,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340673.117,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340675.135,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340676.944,
+    "event": "first_step_seen"
+  },
+  {
+    "t": 1790340676.97,
+    "event": "scale_out_submitted",
+    "request_id": "genrm-scale-64f0aa42-4b8d-4f6f-b7f4-3ceda3f3c50f"
+  },
+  {
+    "t": 1790340677.151,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340679.167,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340681.184,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340683.201,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340685.218,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340687.236,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340689.255,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340691.272,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340693.287,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340695.303,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340697.319,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340699.335,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340701.352,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340703.369,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340705.384,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340707.402,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340709.423,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340711.44,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340713.452,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340715.47,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340717.486,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340719.503,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340721.52,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340723.538,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340725.554,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340727.57,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340729.588,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340731.604,
+    "event": "engines_snapshot",
+    "current": 1,
+    "served": {
+      "172.17.0.2:16000": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0
+    }
+  },
+  {
+    "t": 1790340732.711,
+    "event": "scale_out_final",
+    "status": "ACTIVE"
+  },
+  {
+    "t": 1790340733.621,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340735.638,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340737.653,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340739.672,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340741.69,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340743.709,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340745.727,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340747.744,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340749.763,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340751.782,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340753.799,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340755.824,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340757.841,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340759.86,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340761.877,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340763.894,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340765.911,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340767.93,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340769.949,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340771.964,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 1,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340773.98,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 1,
+      "172.17.0.2:16001": 0
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340775.996,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 1,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340778.014,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340780.028,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340782.046,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340784.064,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340786.082,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340788.099,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340790.12,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340792.136,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340794.153,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340796.173,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340798.192,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340800.209,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340802.225,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340804.243,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340806.261,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340808.279,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340810.296,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340812.315,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340814.334,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340816.35,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340818.367,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340820.384,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340822.4,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340824.417,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 2,
+      "172.17.0.2:16001": 1
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 1
+    }
+  },
+  {
+    "t": 1790340826.436,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 3,
+      "172.17.0.2:16001": 3
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340828.455,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 3,
+      "172.17.0.2:16001": 3
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340830.471,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 3,
+      "172.17.0.2:16001": 3
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340832.488,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 3,
+      "172.17.0.2:16001": 3
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340834.508,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 3,
+      "172.17.0.2:16001": 3
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340836.528,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 3,
+      "172.17.0.2:16001": 3
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340838.545,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 3,
+      "172.17.0.2:16001": 3
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340840.562,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 3,
+      "172.17.0.2:16001": 3
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340842.583,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 3,
+      "172.17.0.2:16001": 3
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340844.602,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 3,
+      "172.17.0.2:16001": 3
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340846.619,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 3,
+      "172.17.0.2:16001": 3
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340848.636,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 4,
+      "172.17.0.2:16001": 3
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340850.65,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 5,
+      "172.17.0.2:16001": 4
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340852.668,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 5,
+      "172.17.0.2:16001": 4
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340854.684,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 5,
+      "172.17.0.2:16001": 4
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340856.7,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 5,
+      "172.17.0.2:16001": 4
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340858.722,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 5,
+      "172.17.0.2:16001": 4
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340860.741,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 5,
+      "172.17.0.2:16001": 4
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340862.759,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 5,
+      "172.17.0.2:16001": 4
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340864.775,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 5,
+      "172.17.0.2:16001": 4
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340866.792,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 5,
+      "172.17.0.2:16001": 4
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340868.81,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 5,
+      "172.17.0.2:16001": 4
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340870.827,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 5,
+      "172.17.0.2:16001": 4
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340872.843,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 5,
+      "172.17.0.2:16001": 4
+    },
+    "inflight": {
+      "172.17.0.2:16000": 1,
+      "172.17.0.2:16001": 1
+    }
+  },
+  {
+    "t": 1790340874.861,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340876.879,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340878.895,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340880.918,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340882.937,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340884.954,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340886.971,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340888.989,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340891.005,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340893.022,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340895.04,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340897.056,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340899.07,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340901.093,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340903.11,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340905.127,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340907.147,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340909.164,
+    "event": "engines_snapshot",
+    "current": 2,
+    "served": {
+      "172.17.0.2:16000": 6,
+      "172.17.0.2:16001": 5
+    },
+    "inflight": {
+      "172.17.0.2:16000": 0,
+      "172.17.0.2:16001": 0
+    }
+  },
+  {
+    "t": 1790340911.286,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+  },
+  {
+    "t": 1790340913.288,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340915.291,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340917.294,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340919.296,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340921.299,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340923.302,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340925.305,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340927.308,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340929.311,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340931.314,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340933.316,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340935.319,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340937.322,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340939.325,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340941.328,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340943.33,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340945.333,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340947.335,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340949.339,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340951.342,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340953.344,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340955.347,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340957.349,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340959.353,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340961.355,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340963.358,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340965.361,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340967.363,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340969.366,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340971.368,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340973.371,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340975.374,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340977.376,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340979.379,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340981.382,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340983.385,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340985.387,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340987.39,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340989.393,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340991.395,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340993.399,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340995.401,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340997.404,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790340999.407,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341001.41,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341003.413,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341005.415,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341007.417,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341009.42,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341011.422,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341013.425,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341015.429,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341017.432,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341019.434,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341021.437,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341023.439,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341025.443,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341027.446,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341029.448,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341031.451,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341033.452,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341035.455,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341037.459,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341039.461,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341041.464,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341043.466,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341045.469,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341047.472,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341049.475,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341051.478,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341053.48,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341055.483,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341057.486,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341059.489,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341061.491,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341063.493,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341065.495,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341067.498,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341069.501,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341071.503,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341073.506,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341075.508,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341077.511,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341079.513,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341081.517,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341083.519,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341085.521,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341087.524,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341089.526,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341091.529,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341093.532,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341095.534,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341097.537,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341099.539,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341101.542,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341103.545,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341105.548,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341107.55,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341109.552,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341111.555,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341113.557,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341115.561,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341117.563,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341119.566,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341121.568,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341123.571,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341125.574,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341127.577,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341129.579,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341131.581,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341133.584,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341135.586,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341137.589,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341139.592,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341141.594,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341143.597,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341145.599,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341147.602,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341149.605,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341151.607,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341153.61,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341155.614,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341157.617,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341159.62,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341161.623,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341163.625,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341165.628,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341167.63,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341169.162,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341171.164,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341173.167,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341175.169,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341177.172,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341179.174,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341181.177,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341183.18,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341185.182,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341187.184,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341189.185,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341191.187,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341193.19,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341195.193,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341197.195,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  },
+  {
+    "t": 1790341199.197,
+    "event": "engines_snapshot_failed",
+    "error": "ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /genrm/engines (Caused "
+  }
+]
