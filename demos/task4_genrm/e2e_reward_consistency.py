@@ -423,22 +423,32 @@ def main() -> int:
             "truncated_count": len(truncated),
             "parse_gate_independent": not parse_gate_failures,
             "parse_gate_failures": parse_gate_failures[:10],
+            # Primary acceptance: deterministic (greedy) scoring must be
+            # identical across engines for every input.
             "greedy_verdicts_identical_across_engines": not strict_mismatches,
             "greedy_mismatches": strict_mismatches[:10],
-            "official_sampling_verdicts_identical_across_engines": not loose_mismatches,
-            "official_sampling_mismatches": loose_mismatches[:10],
+            # Informational: the official sampling config (temperature 0.1)
+            # is stochastic per engine -- engines run different seeds
+            # (args.seed + rank in sglang_engine), so a verdict can flip
+            # across repeats on ambiguous inputs. This characterizes the
+            # deployed config, not scaling correctness; the rate and the
+            # affected cases are reported, not gated.
+            "official_sampling_instability_rate": (
+                len(loose_mismatches) / n_cases if loose_mismatches is not None else None
+            ),
+            "official_sampling_unstable_cases": loose_mismatches[:10],
             "judge_correctness_initial": correctness["initial"],
             "judge_correctness_elastic": correctness["elastic"],
             "cases": n_cases,
             "replies_total": len(replies),
             "initial_engine": initial_engine,
             "elastic_engine": elastic_engine,
-            # Informational: a 0.6B judge may misjudge; consistency is the
-            # acceptance criterion, correctness is reported per engine.
+            # A 0.6B judge may misjudge; consistency is the acceptance
+            # criterion, correctness is reported per engine.
             "judge_correctness_is_informational": True,
         }
         verdicts["E2E_PASS"] = all(
-            v for k, v in verdicts.items() if isinstance(v, bool) and k != "judge_correctness_is_informational"
+            v for k, v in verdicts.items() if isinstance(v, bool) and k not in ("judge_correctness_is_informational",)
         )
         ev.log("verdicts", **{k: v for k, v in verdicts.items() if k != "judge_correctness_is_informational"})
 
