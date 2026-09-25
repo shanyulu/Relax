@@ -1,0 +1,18 @@
+{
+  "s1_scale_in_completed": true,
+  "s1_both_long_requests_ok": true,
+  "s1_requests_untruncated": false,
+  "s1_final_capacity": 1,
+  "s2_deadline_abort_failed_dirty": false,
+  "s2_mutex_held_while_dirty": false,
+  "s2_reconcile_completed_original_op": true,
+  "s2_abort_to_reconcile_park_s": 1.1,
+  "s2_long_request_ok": true,
+  "s2_final_capacity": 1,
+  "functional_pass": false,
+  "cleanup_pass": true,
+  "cleanup_errors": [],
+  "leftover_ray_free_gpus": 3.0,
+  "functional_error": "FileNotFoundError: [Errno 2] No such file or directory: 'ss'",
+  "PASS": false
+}

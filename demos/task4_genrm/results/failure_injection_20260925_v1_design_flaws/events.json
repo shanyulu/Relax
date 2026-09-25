@@ -1,0 +1,181 @@
+[
+  {
+    "t": 0.0,
+    "event": "e2e_start",
+    "model_path": "/root/autodl-tmp/hf-cache/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+    "out_dir": "demos/task4_genrm/results/failure_injection_20260925"
+  },
+  {
+    "t": 19.704,
+    "event": "ray_init",
+    "gpus": 4.0
+  },
+  {
+    "t": 21.452,
+    "event": "pg_created",
+    "bundles": 1,
+    "gpu_ids": [
+      0
+    ]
+  },
+  {
+    "t": 32.777,
+    "event": "serve_run",
+    "url": "http://127.0.0.1:8000/genrm"
+  },
+  {
+    "t": 75.167,
+    "event": "baseline_engines",
+    "ids": [
+      [
+        "172.17.0.6",
+        16000
+      ]
+    ]
+  },
+  {
+    "t": 75.191,
+    "event": "scale_out_submitted",
+    "request_id": "genrm-scale-35034bac-92bf-4904-99eb-4848b0102a31"
+  },
+  {
+    "t": 114.714,
+    "event": "scale_out_final",
+    "status": "ACTIVE"
+  },
+  {
+    "t": 114.728,
+    "event": "s1_engines",
+    "initial": [
+      [
+        "172.17.0.6",
+        16000
+      ]
+    ],
+    "elastic": [
+      "172.17.0.6",
+      16001
+    ]
+  },
+  {
+    "t": 118.757,
+    "event": "s1_scale_in_submitted",
+    "request_id": "genrm-scale-bb4c036c-03ce-4315-8bc9-a3379c53c4fd"
+  },
+  {
+    "t": 119.78,
+    "event": "s1_done",
+    "scale_in": "COMPLETED",
+    "requests": [
+      {
+        "ok": true,
+        "engine": "172.17.0.6:16000",
+        "finish_reason": "length",
+        "len": 4621,
+        "latency": 3.27
+      },
+      {
+        "ok": true,
+        "engine": "172.17.0.6:16001",
+        "finish_reason": "length",
+        "len": 4779,
+        "latency": 3.26
+      }
+    ]
+  },
+  {
+    "t": 119.816,
+    "event": "scale_out_submitted",
+    "request_id": "genrm-scale-2d5b4b80-284a-4c9e-b601-7c11b52b78bd"
+  },
+  {
+    "t": 161.375,
+    "event": "scale_out_final",
+    "status": "ACTIVE"
+  },
+  {
+    "t": 161.393,
+    "event": "s2_engines",
+    "ids": [
+      [
+        "172.17.0.6",
+        16000
+      ],
+      [
+        "172.17.0.6",
+        16001
+      ]
+    ]
+  },
+  {
+    "t": 165.418,
+    "event": "s2_scale_in_submitted",
+    "request_id": "genrm-scale-929b7cbb-e62a-4d0e-9d6d-7c5c43e3b2cb",
+    "timeout_secs": 20.0
+  },
+  {
+    "t": 166.443,
+    "event": "s2_registry_failed_dirty",
+    "status": "COMPLETED",
+    "cleanup_required": false
+  },
+  {
+    "t": 166.463,
+    "event": "s2_mutex_check",
+    "held": false
+  },
+  {
+    "t": 166.476,
+    "event": "s2_reconcile_result",
+    "status": "COMPLETED",
+    "cleanup_required": false,
+    "detail": null
+  },
+  {
+    "t": 166.511,
+    "event": "scale_out_submitted",
+    "request_id": "genrm-scale-93dfd6e4-e5e1-4f90-9714-2ae18c99073b"
+  },
+  {
+    "t": 208.064,
+    "event": "scale_out_final",
+    "status": "ACTIVE"
+  },
+  {
+    "t": 208.078,
+    "event": "s3_engines",
+    "initial": [
+      [
+        "172.17.0.6",
+        16000
+      ]
+    ],
+    "victim": [
+      "172.17.0.6",
+      16001
+    ]
+  },
+  {
+    "t": 212.107,
+    "event": "s3_scale_in_submitted",
+    "request_id": "genrm-scale-f8c6060c-cfd3-4a1c-861c-5c0469c89b06"
+  },
+  {
+    "t": 332.662,
+    "event": "functional_error",
+    "error": "FileNotFoundError: [Errno 2] No such file or directory: 'ss'"
+  },
+  {
+    "t": 342.146,
+    "event": "cleanup_result",
+    "cleanup_pass": true,
+    "cleanup_errors": [],
+    "leftover_ray_free_gpus": 3.0
+  },
+  {
+    "t": 342.146,
+    "event": "e2e_done",
+    "functional_pass": false,
+    "cleanup_pass": true
+  }
+]

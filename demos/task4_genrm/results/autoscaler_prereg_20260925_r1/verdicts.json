@@ -1,0 +1,8 @@
+{
+  "functional_pass": false,
+  "cleanup_pass": true,
+  "cleanup_errors": [],
+  "leftover_ray_free_gpus": 4.0,
+  "functional_error": "ValueError: Invalid type of object refs, <class 'ray.serve.handle.DeploymentResponse'>, is given. 'object_refs' must either be an ObjectRef or a list of ObjectRefs. ",
+  "PASS": false
+}
