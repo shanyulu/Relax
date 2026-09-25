@@ -40,6 +40,24 @@ python results/autoscaler_run_20260924_v3/plot_timeline.py
   fence after its five-second operation deadline. Its terminal operation
   status remains `FAILED`; `cleanup_required=false` after reconcile is the
   success criterion for physical completion, not a relabeling of that result.
+- Preregistered autoscaler r2 passed A1–A6, A8 and B1–B2 but **failed** A7
+  and B3: after each scale-in, Ray free GPUs and physical-memory samples were
+  back at baseline while `len(ray.util.placement_group_table())` was 2 versus
+  the pre-run baseline of 1. This is a resource-accounting blocker, not a
+  threshold-tuning failure; the frozen policy was not changed and the run is
+  not claimed as an autoscaler pass.
+- Post-run classification settles that blocker without touching product
+  code: a removed-and-confirmed `REMOVED` placement group still remains in
+  `ray.util.placement_group_table()` (Ray 2.58 keeps tombstone entries;
+  reproduced CPU-only), so the count grows by one per completed scale-in and
+  can never return to the pre-run baseline. Since scale-in `COMPLETED`
+  already requires the manager to poll Ray until the elastic PG is `REMOVED`
+  before reporting physical completion (scale-in lifecycle in
+  `relax/distributed/ray/genrm.py`), and free GPUs and memory did return to
+  baseline within the run, the two failing verdicts are an acceptance-metric
+  defect (counting `REMOVED` tombstones), not a placement-group lifecycle
+  leak. The next preregistration must assert the count of non-terminal
+  placement groups instead of the raw table length.
 - Single-Gateway adapter accounting; direct-client / cross-gateway drain is
   not claimed.
 
@@ -50,6 +68,8 @@ python results/autoscaler_run_20260924_v3/plot_timeline.py
 | `autoscaler_run_20260924` (v1)       | scale-out OK; scale-in never triggered   | cooldown / condition-window tuning; per-request data on the evidence branch                                                                                                                                                                                     |
 | `autoscaler_run_20260924_v2` (v2)    | scale-out OK; scale-in never triggered   | default `throughput_variance_threshold=0.1` never treated bursty short-request throughput as stable (measured variance 0.77 under low load); addressed with a per-service threshold of `1.0`                                                                    |
 | `failure_injection_20260925_v1`–`v3` | invalid test setup, not product verdicts | v1 had scenario sequencing flaws; v2 could not identify the container-side victim PID; v3 let long requests terminate early at EOS, so it never exercised the deadline-abort path. v4 adds `ignore_eos` and verifies victim `inflight>=1` before each scenario. |
+| `autoscaler_prereg_20260925_r1`      | invalid driver launch                    | `ray.get()` cannot consume Ray Serve's `DeploymentResponse`; no preregistered assertion was reached. Fixed by awaiting `.result()` without changing the frozen policy.                                                                                          |
+| `autoscaler_prereg_20260925_r2`      | `FAIL` (A7, B3 only)                     | Both automatic cycles and all semantic assertions passed, but the PG-count return check failed after each scale-in. The exact failing verdict and normalized event timeline are committed; full request logs/screenshots remain evidence-branch artifacts.      |
 
 ## SHA256 (first 16 hex)
 
@@ -69,3 +89,7 @@ python results/autoscaler_run_20260924_v3/plot_timeline.py
 | `reward_consistency_20260925/replies.json` (evidence branch only)      | `2d6e7ba1cd4c0d67` |
 | `failure_injection_20260925_v4/verdicts.json`                          | `f1accf18a833fc8a` |
 | `failure_injection_20260925_v4/events.json`                            | `450af5517abae13f` |
+| `autoscaler_prereg_20260925_r2/verdicts.json`                          | `c3eaaed1e1faff2e` |
+| `autoscaler_prereg_20260925_r2/events.json`                            | `518abad5074e961b` |
+| `autoscaler_prereg_20260925_r2/scale_history.json`                     | `6fd0e6db05e37a80` |
+| `autoscaler_prereg_20260925_r2/scale_history_round_b.json`             | `09c731c3b7be4db8` |
