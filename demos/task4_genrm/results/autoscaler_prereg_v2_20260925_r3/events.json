@@ -2,7 +2,7 @@
   {
     "t": 0.0,
     "event": "e2e_start",
-    "model_path": "/root/autodl-tmp/hf-cache/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+    "model_path": "<qwen3-0.6b-checkpoint>",
     "out_dir": "demos/task4_genrm/results/autoscaler_prereg_v2_20260925_r3"
   },
   {

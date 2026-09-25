@@ -6,8 +6,17 @@ failed intermediate autoscaler runs) is preserved on the
 branch. This directory carries the machine-verdict summaries of the two passing
 runs so the acceptance claims are verifiable without large artifacts; every
 file is hash-pinned below. Engine `host` fields are normalized to `node-0`
-(single-node run; engine identity is the port) — the raw data on the evidence
-branch keeps the original host values.
+and local filesystem paths to `<…>` placeholders (single-node run; engine
+identity is the port) — the raw data on the evidence branch keeps the original
+values.
+
+**Pinning policy**: each row binds a conclusion to the commit that produced
+its evidence (linked in the row). The production code (`relax/`) has not
+changed between those commits and the PR head — the post-squash lineage
+consists of driver, evidence and documentation commits only, verifiable via
+`git diff --stat <linked-commit>..HEAD -- relax/` being empty on the archive
+branch. The training-continuity row is additionally re-run from the final PR
+head (`train_continuity_20260925`, final-head verdict below).
 
 ## Passing runs
 
@@ -74,6 +83,19 @@ python results/train_continuity_20260925/plot_continuity.py
   not claimed.
 - Single-node, single-GPU elastic replicas only; multi-node TP/PP is
   rejected at elastic-op admission.
+- Idempotency records are retained for the component process lifetime — no
+  TTL/eviction window is implemented in `genrm_scale_registry.py` (the RFC
+  wording has been aligned accordingly). Long-running training with many
+  distinct idempotency keys grows the registry in memory.
+- The GenRM scale drain-fence timeout is read via
+  `getattr(args, "genrm_scale_drain_timeout_s", 600.0)` and is **not yet
+  declared as a CLI argument** in `relax/utils/arguments.py` (Ask-First
+  area); from the training entrypoint it stays at the 600 s default and can
+  only be overridden by drivers that construct args directly (the E2E
+  drivers do).
+- Autoscaler cooldowns are global per deployment (`PATCH /config`), not
+  per-service fields in `ServiceScalingPolicy`: thresholds, queue, TTFT and
+  variance are per-service, cooldown is not.
 
 ## Failed intermediate runs (evidence branch only)
 
