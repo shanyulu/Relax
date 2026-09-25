@@ -134,10 +134,36 @@ def scale_out_to_2(ev: "Evidence", num_gpus: int) -> tuple:
     return engine_ids(after)
 
 
+def victim_inflight(victim: tuple) -> int:
+    for e in engines().get("engines") or []:
+        if (e["host"], e["port"]) == victim:
+            return int(e.get("inflight") or 0)
+    return 0
+
+
+def await_victim_inflight(ev, victim: tuple, timeout_s: float = 30) -> int:
+    """Block until the victim engine reports >=1 in-flight request; every
+    drain/deadline proof below depends on this precondition (v3 of this run
+    failed because the requests had already EOS'd before the scale-in)."""
+    deadline = time.time() + timeout_s
+    last = -1
+    while time.time() < deadline:
+        last = victim_inflight(victim)
+        if last >= 1:
+            break
+        time.sleep(0.5)
+    ev.log("victim_inflight_confirmed", victim=list(victim), inflight=last)
+    if last < 1:
+        raise RuntimeError(f"victim {victim} never reported inflight>=1 (last={last})")
+    return last
+
+
 def pid_for_port(port: int, ev=None):
-    """PID of the process LISTENing on ``port``: psutil first, then a
-    /proc/net/tcp{,6} inode walk (namespace-robust). Dumps the listen table
-    on failure for diagnosis."""
+    """Find a LISTENing PID with psutil, then a namespace-robust procfs
+    fallback.
+
+    Dump the listen table on failure for diagnosis.
+    """
     import psutil
 
     for conn in psutil.net_connections(kind="tcp"):
@@ -203,7 +229,11 @@ class LongRequest:
                 "/generate",
                 {
                     "messages": [{"role": "user", "content": self.prompt}],
-                    "sampling_params": {"temperature": 0, "max_new_tokens": self.max_new_tokens},
+                    "sampling_params": {
+                        "temperature": 0,
+                        "max_new_tokens": self.max_new_tokens,
+                        "ignore_eos": True,
+                    },
                 },
                 timeout=900,
             )
@@ -317,8 +347,8 @@ def main() -> int:
         elastic = (ids_after - initial_ids).pop()
         ev.log("s1_engines", initial=sorted(map(list, initial_ids)), elastic=list(elastic))
 
-        reqs = [LongRequest(f"[s1-{i}]\n{prompt}", 1500).start() for i in range(2)]
-        time.sleep(4.0)  # both are mid-decode now, one per engine (round-robin)
+        reqs = [LongRequest(f"[s1-{i}]\n{prompt}", 4000).start() for i in range(2)]
+        await_victim_inflight(ev, elastic)
         rid = submit_scale("scale_in", cfg.genrm_num_gpus, 600.0)
         ev.log("s1_scale_in_submitted", request_id=rid)
         final = poll_status("scale_in", rid, {"COMPLETED", "FAILED"}, 600)
@@ -336,13 +366,15 @@ def main() -> int:
         #     fixed-victim reconcile completes the original operation
         # ------------------------------------------------------------------ #
         ids_after = scale_out_to_2(ev, cfg.genrm_num_gpus)
-        ev.log("s2_engines", ids=sorted(map(list, ids_after)))
+        elastic2 = (ids_after - initial_ids).pop()
+        ev.log("s2_engines", ids=sorted(map(list, ids_after)), victim=list(elastic2))
         # Two long requests so one is in flight on the victim (round-robin
-        # alternates engines). 8000 tokens decode ~17 s at ~470 tok/s --
-        # comfortably outliving the 5 s operation deadline, so the watcher
-        # provably aborts while the victim request is still running.
+        # alternates engines). With ignore_eos, 8000 tokens decode ~17 s at
+        # ~470 tok/s -- comfortably outliving the 5 s operation deadline, so
+        # the watcher provably aborts while the victim request is still
+        # running. The precondition is asserted, not assumed (v3 lesson).
         longs2 = [LongRequest(f"[s2-{i}]\n{prompt}", 8000).start() for i in range(2)]
-        time.sleep(4.0)
+        await_victim_inflight(ev, elastic2)
         rid2 = submit_scale("scale_in", cfg.genrm_num_gpus, 5.0)  # deadline << decode
         ev.log("s2_scale_in_submitted", request_id=rid2, timeout_secs=5.0)
 
@@ -363,23 +395,28 @@ def main() -> int:
         ev.log("s2_mutex_check", held=mutex_held)
 
         # The manager lifecycle is parked in its uninterruptible drain wait;
-        # it surfaces as FAILED only after the drain timeout (default 600s).
-        # Poll the manager-facing status until it reports physical completion
-        # via reconcile acceptance, then reconcile must finish the op.
+        # it surfaces as physical completion only after the drain timeout
+        # (default 600 s) because the aborted watcher no longer confirms the
+        # drain. Reconcile is rejected/keeps reporting cleanup_required until
+        # then; acceptance with cleanup_required=False proves the park ended
+        # and the original operation's cleanup finished.
         rec = None
         deadline = time.time() + 900
         while time.time() < deadline:
             try:
                 rec = http_post(f"/scale_in/{rid2}/reconcile", {})
                 ev.log("s2_reconcile_result", **{k: rec.get(k) for k in ("status", "cleanup_required", "detail")})
-                if rec.get("status") in ("COMPLETED",):
+                if rec.get("cleanup_required") is False:
                     break
             except RuntimeError as exc:
                 ev.log("s2_reconcile_retry", error=str(exc)[:120])
             time.sleep(10.0)
-        verdicts["s2_reconcile_completed_original_op"] = bool(rec) and rec.get("status") == "COMPLETED"
+        verdicts["s2_reconcile_cleared_park"] = bool(rec) and rec.get("cleanup_required") is False
+        verdicts["s2_reconcile_terminal_status"] = bool(rec) and rec.get("status") in ("COMPLETED", "FAILED")
         verdicts["s2_abort_to_reconcile_park_s"] = round(time.time() - t_abort, 1)
-        verdicts["s2_long_requests_ok"] = all(r.join().get("ok", False) for r in longs2)
+        results2 = [r.join() for r in longs2]
+        ev.log("s2_requests", requests=results2)
+        verdicts["s2_long_requests_ok"] = all(r.get("ok", False) for r in results2)
         verdicts["s2_final_capacity"] = engines()["current"]
 
         # ------------------------------------------------------------------ #
@@ -390,7 +427,7 @@ def main() -> int:
         elastic3 = (ids_after - initial_ids).pop()
         ev.log("s3_engines", initial=sorted(map(list, initial_ids)), victim=list(elastic3))
         longs3 = [LongRequest(f"[s3-{i}]\n{prompt}", 8000).start() for i in range(2)]
-        time.sleep(4.0)
+        await_victim_inflight(ev, elastic3)
         rid3 = submit_scale("scale_in", cfg.genrm_num_gpus, 600.0)
         ev.log("s3_scale_in_submitted", request_id=rid3)
 
