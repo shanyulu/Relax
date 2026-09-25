@@ -359,7 +359,7 @@ def main() -> int:
         # AutoscalerService._main_loop only runs after an explicit start()
         # (Ray Serve has no auto-start hook); without this call no scaling
         # decision is ever made. Found in review before the first run.
-        ray.get(autoscaler_handle.start.remote())
+        autoscaler_handle.start.remote().result()
         ev.log("autoscaler_started", started=True)
 
         timeline = Timeline(ev)
