@@ -892,7 +892,7 @@ class AutoscalerMonitorApp:
         self.base_url = base_url
         self.service = service
 
-    def run(self) -> None:
+    def run(self, screenshot: Union[str, None] = None) -> None:
         try:
             from rich.text import Text
             from textual.app import App, ComposeResult
@@ -1171,6 +1171,22 @@ class AutoscalerMonitorApp:
                     )
                 )
 
+        async def _shoot() -> None:
+            # Headless screenshot via Textual's pilot: drive the real app
+            # against the live autoscaler, let one refresh complete, export
+            # SVG. Used for evidence capture where no TTY is available.
+            app = _App()
+            async with app.run_test(size=(120, 42)) as pilot:
+                await pilot.pause(0.5)
+                await pilot.pause(2.5)
+                svg = app.export_screenshot()
+            with open(screenshot, "w") as f:
+                f.write(svg)
+
+        if screenshot:
+            asyncio.run(_shoot())
+            return
+
         _App().run()
 
 
@@ -1189,12 +1205,18 @@ def build_arg_parser() -> argparse.ArgumentParser:
         default="rollout",
         help="Which autoscaler-managed service to display (default: rollout)",
     )
+    parser.add_argument(
+        "--screenshot",
+        type=str,
+        default=None,
+        help="Write one headless SVG screenshot to this path and exit (evidence capture)",
+    )
     return parser
 
 
 def main(argv: Union[list[str], None] = None) -> None:
     args = build_arg_parser().parse_args(argv)
-    AutoscalerMonitorApp(base_url=str(args.url), service=str(args.service)).run()
+    AutoscalerMonitorApp(base_url=str(args.url), service=str(args.service)).run(screenshot=args.screenshot)
 
 
 if __name__ == "__main__":
