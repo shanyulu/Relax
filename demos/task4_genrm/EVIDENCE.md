@@ -20,26 +20,34 @@ branch keeps the original host values.
 | Training continuity through scaling windows (①, real recipe) | this PR head (`train_continuity_20260925`)                                                 | `E2E_PASS` (`verdicts.json`) | same real DAPO+GenRM recipe with actor TP1×DP1 leaving one GPU for the elastic engine; a sidecar monitor drives `scale_out`→ACTIVE (55 s) and `scale_in`→COMPLETED (1 s drain) against the live service and asserts from two independent sources (job-log step timestamps + `/genrm/engines` counters): train events kept landing inside both scaling windows with no stall >120 s, the elastic engine really scored rewards (`served=1` observed on the elastic replica), training ran to completion afterwards (8/8 rollouts), final capacity back to 1 with only the initial engine alive. Zero errors. Runs 1–5 are recorded driver-iteration evidence: run 1 disk-full checkpoint write, run 2 actor DP1 OOM (fixed by halving `--max-tokens-per-gpu`, engine GPU placement verified correct), runs 3–5 monitor-tail defects (unwrapped final poll, tuple JSON keys, empty fallback list) — the training itself succeeded from run 3 onward; pins below. |
 | Preregistered autoscaler r3 (v2 metric, frozen thresholds)   | this PR head (`autoscaler_prereg_v2_20260925_r3`)                                          | `E2E_PASS` (`verdicts.json`) | identical frozen configuration to r2; the only change is the preregistered v2 acceptance metric (count placement groups in a non-terminal state instead of the raw table length Ray 2.58 grows with `REMOVED` tombstones). **14/14 frozen sub-assertions pass**, including A7/B3 resources (non-terminal PG `1/1`, free GPUs `3.0/3.0`, memory within tolerance), the true-idle Round B scale-in on all three conditions with zero running requests, and the gated TUI double-screenshot; 3,214 load requests, 0 failures; cleanup green, GPUs returned. r2's recorded FAIL stands unchanged as the metric-defect evidence.                                                                                                                                                                                                                                                                                                                                   |
 | Minimal training smoke (B2, real recipe)                     | c78e613 (`b2_train_smoke_20260925`)                                                        | `PASS` (`verdicts.json`)     | native 4×4090 recipe via `ray-job.sh` + training venv runtime-env injection (zero-GPU probe first: megatron/TE/FA2/FA3/apex import on a real Ray worker); dapo-genrm protocol, step 1 trained with full metric set, checkpoints iters 0+1 saved; **GenRM judge call really happened** (`judge_response` landed on disk for a parseable answer, the other 7 samples legitimately short-circuit `answer_missing`); weight sync `update_weights_from_distributed` 200 OK ×9; zero errors, graceful shutdown, GPUs back to 4/4 free. Run 1 (512-token budget) truncated every response inside `<think>` and never reached the judge — kept as infra-only evidence; the 2048-token budget in c78e613 is what exercises the judge path. The 0.6B judge's noisy `<think>`-preamble verdicts are model capability, not pipeline defects.                                                                                                                              |
-| Failure injection: drain, deadline abort and victim kill     | this branch's head (`failure_injection_20260925_v4`)                                       | `PASS` (`verdicts.json`)     | S1 drains two in-flight long requests and completes scale-in; S2 reaches `FAILED + cleanup_required`, holds the model mutex, then clears pending cleanup only after 607.3 s and reconcile; S3 kills the draining elastic engine, retries both requests onto the initial engine, and completes scale-in. Outer cleanup passed and Ray free GPUs returned to baseline.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 
-Re-render the timeline chart from the committed summaries:
+Re-render the charts from the committed summaries:
 
 ```bash
 python results/autoscaler_run_20260924_v3/plot_timeline.py
+python results/train_continuity_20260925/plot_continuity.py
 ```
 
 ## Known limits of this evidence
 
-- `max_new_tokens=8` in the consistency probe: short-generation **prefix**
-  identity only, not full parseable judge output. Full reward-consistency
-  comparison with per-engine attribution is pending (see the RFC's remaining
-  acceptance items).
-- One autoscaler round, run with experiment-tuned thresholds (per-service
-  `throughput_variance_threshold=1.0`); frozen-threshold re-runs and an
-  idle-phase round are pending.
-- Verdicts assert Ray free GPUs returning to baseline; physical GPU memory
-  recovery was captured in raw snapshots but not yet asserted together with
-  PG `REMOVED` in the machine verdict.
+- Reward consistency was established with the 0.6B judge, thinking disabled,
+  greedy decoding, on 50 fixed inputs: greedy verdicts are identical across
+  engines, while official sampling (temperature 0.1, per-engine seeds
+  `args.seed + rank`) flips 2/50 inputs — characterized as a property of the
+  deployed sampling config, reported but not gated. Judge correctness vs
+  ground truth is 95 % / 93 % (initial / elastic): model capability at this
+  scale, not a pipeline property.
+- Autoscaler thresholds are tuned for this 0.6B / 4×4090 / short-reply
+  workload; they are frozen per preregistration, not claimed as a universal
+  policy. Per-service cooldown overrides are not yet part of
+  `ServiceScalingPolicy` (global cooldowns via `PATCH /config`).
+- The continuity verdict's `rollout_count: 16` is a log-line double count:
+  the job driver logs each rollout index twice (batch start and result), so
+  the `>= 8` assertion passed on a doubled numerator. Deduplicated by index
+  the committed `train_events.json` contains exactly `{0..7}` — 8/8, the
+  conclusion stands; the driver now counts unique indices and asserts set
+  equality. Disclosed rather than re-run: the corrected reading is
+  machine-verifiable from the committed evidence.
 - Failure-injection S2 intentionally waits for the configured 600 s drain
   fence after its five-second operation deadline. Its terminal operation
   status remains `FAILED`; `cleanup_required=false` after reconcile is the
@@ -60,10 +68,12 @@ python results/autoscaler_run_20260924_v3/plot_timeline.py
   `relax/distributed/ray/genrm.py`), and free GPUs and memory did return to
   baseline within the run, the two failing verdicts are an acceptance-metric
   defect (counting `REMOVED` tombstones), not a placement-group lifecycle
-  leak. The next preregistration must assert the count of non-terminal
-  placement groups instead of the raw table length.
+  leak. r3 re-ran the identical frozen configuration under the corrected
+  non-terminal-PG metric and passed 14/14; r2's FAIL record stands unchanged.
 - Single-Gateway adapter accounting; direct-client / cross-gateway drain is
   not claimed.
+- Single-node, single-GPU elastic replicas only; multi-node TP/PP is
+  rejected at elastic-op admission.
 
 ## Failed intermediate runs (evidence branch only)
 
@@ -102,5 +112,7 @@ python results/autoscaler_run_20260924_v3/plot_timeline.py
 | `train_continuity_20260925/verdicts.json`                              | `3f8e9d6da66d667b` |
 | `train_continuity_20260925/events.json`                                | `8bae33698da830f7` |
 | `train_continuity_20260925/train_events.json`                          | `12344b997b3c731e` |
-| \`autoscaler_prereg_v2_20260925_r3/verdicts.json                       | `41cb8b4b5b730a98` |
-| \`autoscaler_prereg_v2_20260925_r3/scale_history.json                  | `4d4eda5dbd513853` |
+| `autoscaler_prereg_v2_20260925_r3/verdicts.json`                       | `41cb8b4b5b730a98` |
+| `autoscaler_prereg_v2_20260925_r3/events.json`                         | `59490ce564ac10a9` |
+| `autoscaler_prereg_v2_20260925_r3/scale_history.json`                  | `4d4eda5dbd513853` |
+| `autoscaler_prereg_v2_20260925_r3/scale_history_round_b.json`          | `b06867137b3f345d` |

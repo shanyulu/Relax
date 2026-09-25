@@ -259,6 +259,11 @@ def main() -> int:
     with LOCK:
         events = list(TRAIN_EVENTS)
     steps = sorted(ts for ts, kind in events if kind.startswith("step"))
+    # Each rollout index logs two lines in the job driver log (batch start
+    # and result); count unique indices, not raw lines, and require the exact
+    # expected set (run-6 lesson: the raw line count double-counted and a
+    # `>=` assertion passed on a doubled numerator).
+    rollout_idx = {int(kind.split()[1]) for _, kind in events if kind.startswith("rollout ")}
     rollouts = sorted(ts for ts, kind in events if kind.startswith("rollout "))
     max_gap = max((b - a for a, b in zip(steps + rollouts, (steps + rollouts)[1:])), default=0.0)
     in_window = [ts for ts in steps + rollouts if so_active_ts <= ts <= si_done_ts]
@@ -270,9 +275,9 @@ def main() -> int:
     verdicts["no_train_stall_over_120s"] = max_gap <= 120.0
     verdicts["training_finished_after_scale_in"] = finished
     verdicts["final_capacity_is_initial"] = final["current"] == 1 and initial_ids <= final_ids
-    verdicts["rollout_count"] = len(rollouts)
+    verdicts["rollout_count"] = len(rollout_idx)
     verdicts["num_rollout_expected"] = args.num_rollout
-    verdicts["all_rollouts_landed"] = len(rollouts) >= args.num_rollout
+    verdicts["all_rollouts_landed"] = rollout_idx == set(range(args.num_rollout))
     verdicts["E2E_PASS"] = all(v for k, v in verdicts.items() if isinstance(v, bool))
     log_event("verdicts", **{k: v for k, v in verdicts.items() if isinstance(v, (bool, int))})
 
