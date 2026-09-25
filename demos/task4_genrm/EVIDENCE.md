@@ -99,8 +99,8 @@ python results/autoscaler_run_20260924_v3/plot_timeline.py
 | `autoscaler_prereg_20260925_r2/scale_history_round_b.json`             | `6559b23237f5e96f` |
 | `b2_train_smoke_20260925/verdicts.json`                                | `8d5b2944510ccf3b` |
 | `b2_train_smoke_20260925/rollout_result_run2.jsonl`                    | `1d0949b60c51a049` |
-| `train_continuity_20260925/verdicts.json`                              | `3f8e9d6da66d667b` |
-| `train_continuity_20260925/events.json`                                | `d31e3d0307a9d237` |
+| `train_continuity_20260925/verdicts.json`                              | `ece49c803f5c3197` |
+| `train_continuity_20260925/events.json`                                | `a7be83dc765db29b` |
 | `train_continuity_20260925/train_events.json`                          | `12344b997b3c731e` |
 | `autoscaler_prereg_v2_20260925_r3/verdicts.json                      | `41cb8b4b5b730a98` |
 | `autoscaler_prereg_v2_20260925_r3/events.json                          | `59490ce564ac10a9` |
