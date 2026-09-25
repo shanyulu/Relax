@@ -102,7 +102,7 @@ python results/autoscaler_run_20260924_v3/plot_timeline.py
 | `train_continuity_20260925/verdicts.json`                              | `3f8e9d6da66d667b` |
 | `train_continuity_20260925/events.json`                                | `d31e3d0307a9d237` |
 | `train_continuity_20260925/train_events.json`                          | `12344b997b3c731e` |
-| `autoscaler_prereg_v2_20260925_r3/verdicts.json`                       | `def051e9ab702505` |
-| `autoscaler_prereg_v2_20260925_r3/events.json`                         | `6fbb1f0f6e004b26` |
-| `autoscaler_prereg_v2_20260925_r3/scale_history.json`                  | `eb30730641fe2ec7` |
-| `autoscaler_prereg_v2_20260925_r3/scale_history_round_b.json`          | `476031fa35945521` |
+| `autoscaler_prereg_v2_20260925_r3/verdicts.json                      | `41cb8b4b5b730a98` |
+| `autoscaler_prereg_v2_20260925_r3/events.json                          | `59490ce564ac10a9` |
+| `autoscaler_prereg_v2_20260925_r3/scale_history.json                     | `4d4eda5dbd513853` |
+| `autoscaler_prereg_v2_20260925_r3/scale_history_round_b.json                | `b06867137b3f345d` |
