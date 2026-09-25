@@ -118,8 +118,8 @@ def engines_sampler():
             log_event(
                 "engines_snapshot",
                 current=snap["current"],
-                served={f'{e["host"]}:{e["port"]}': e.get("served", 0) for e in snap["engines"]},
-                inflight={f'{e["host"]}:{e["port"]}': e.get("inflight", 0) for e in snap["engines"]},
+                served={f"{e['host']}:{e['port']}": e.get("served", 0) for e in snap["engines"]},
+                inflight={f"{e['host']}:{e['port']}": e.get("inflight", 0) for e in snap["engines"]},
             )
         except Exception as exc:  # noqa: BLE001
             log_event("engines_snapshot_failed", error=f"{type(exc).__name__}: {exc}"[:120])
@@ -244,9 +244,7 @@ def main() -> int:
     except Exception as exc:  # noqa: BLE001
         log_event("final_engines_unavailable", error=f"{type(exc).__name__}: {exc}"[:120])
         with LOCK:
-            last = next(
-                (e for e in reversed(EVENTS) if e.get("event") == "engines_snapshot"), None
-            )
+            last = next((e for e in reversed(EVENTS) if e.get("event") == "engines_snapshot"), None)
         final = {"current": (last or {}).get("current"), "engines": []}
         verdicts["final_engines_from_last_snapshot"] = True
     final_ids = {(e["host"], e["port"]) for e in final["engines"]}
