@@ -84,11 +84,11 @@ ROLLOUT_ARGS=(
     --rm-type dapo-genrm
     --reward-key score
     --num-rollout 2
-    --rollout-batch-size 2
+    --rollout-batch-size 4
     --n-samples-per-prompt 2
-    --rollout-max-response-len 512
+    --rollout-max-response-len 2048
     --rollout-temperature 0.7
-    --global-batch-size 4
+    --global-batch-size 8
     --use-fault-tolerance
 )
 
@@ -145,7 +145,7 @@ ray job submit ${RAY_NO_WAIT:+--no-wait} --address="http://127.0.0.1:8265" \
     --genrm-model-path "${MODEL_PATH}" \
     --genrm-num-gpus 1 \
     --genrm-num-gpus-per-engine 1 \
-    --genrm-engine-config '{"max_context_len": 2048, "mem_fraction_static": 0.55}' \
+    --genrm-engine-config '{"max_context_len": 3072, "mem_fraction_static": 0.55}' \
     --genrm-sampling-config '{"temperature": 0.1, "top_p": 1.0, "top_k": -1, "max_response_len": 512}' \
     "${MODEL_ARGS[@]}" \
     "${CKPT_ARGS[@]}" \
