@@ -862,3 +862,41 @@ commit `d04e07f`, worktree `task11-diag` — never to be merged).
   `/root/autodl-tmp/megatron-stack/venv/bin/python /tmp/opencode/ray_venv_launcher.py start --head --port=6379 --dashboard-host=127.0.0.1`
   (the venv has no `bin/ray` and no `ray.__main__`; the entry-point metadata
   route via `ray.scripts.scripts:main` is required).
+
+## Appendix Y — 2026-09-26 late-night closeout addendum (final)
+
+**Public text**: the `+0.192 %, not +0.192 %` typo in the machine-recomputed
+footnote of RFC #357 / PR #378 is resolved by deleting the footnote entirely
+(the bodies already carry the correct `+0.192 %` figure in every position).
+
+**GitHub CI triage (B17)** — both failures were test-file defects, not product:
+
+| Workflow | Root cause | Class | Fix |
+| --- | --- | --- | --- |
+| CI (Python 3.10–3.12) | `test_straggler_workload_publish_runtime.py` collection error on runners that ship `transfer_queue` but no Megatron: the `transfer_queue` importorskip guard did not cover the actor import chain | CI_INFRA (missing optional-dep guard) | `d7b0050`: explicit `pytest.importorskip("megatron")` |
+| GPU Unit (H20) | `test_straggler_pickle_boundary.py` crashed with `TypeError: Path(None)`: distribution-installed Megatron is a namespace package (`__file__` is None) | CI_INFRA (namespace-package handling) | `d7b0050`: `_megatron_root` derives candidate roots from `__path__` |
+
+Verified both ways: full pass under the training venv (11 passed), clean skips
+under the CPU venv (5 passed, 2 skipped). The straggler suite on the new head:
+**350 passed / 2 skipped** — identical to the frozen baseline; product freeze
+intact.
+
+**Docs (B18)**: bilingual user guide + sidebar committed as `f3403b0`
+(docs-only; privacy scan clean; env-var table cross-checked against
+`relax/utils/env.py`).
+
+**Evidence (B21)**: immutable evidence branch established:
+`evidence/task11-straggler` @ `bd6297f` (campaign arms valid+invalid, frozen
+protocols, estimator, counter audits, latency report, environment incident,
+fingerprint snapshot, staged docs sources).
+
+**GPU re-entry gate (B4)**: executed 2026-09-26 22:58–23:02 —
+Step 1 (out-of-Ray CUDA canary, 150 s): PASS; Step 2 (m1 Ray-worker CUDA
+reproducer): FAIL twice (`WorkerCrashedError` ~3 s after `set_device`).
+The machine-level fault is still active → `GPU_ENV_READY = NO`; the campaign,
+C2 traces and C3 live measurement remain ENV_BLOCKED per protocol. No further
+GPU attempts until Step 2 passes.
+
+**Heads**: product `cac4cb6` (freeze) → `d7b0050` (test-only) → `f3403b0`
+(docs-only). PR #378 Draft, mergeable; both this PR and PR #370 await
+maintainer fork-workflow approval for their current heads' CI runs.
