@@ -1,0 +1,68 @@
+[
+  {
+    "t": 0.0,
+    "event": "e2e_start",
+    "model_path": "/root/autodl-tmp/hf-cache/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+    "dataset": "/root/autodl-tmp/hf-cache/hub/datasets--zhuzilin--dapo-math-17k/snapshots/2e65612930298bde4c5d58fd97b3f23a483aaff9/dapo-math-17k.jsonl",
+    "out_dir": "demos/task4_genrm/results/reward_consistency_20260926_final_r3"
+  },
+  {
+    "t": 6.104,
+    "event": "ray_init",
+    "gpus": 4.0
+  },
+  {
+    "t": 7.933,
+    "event": "pg_created",
+    "bundles": 1,
+    "gpu_ids": [
+      0
+    ]
+  },
+  {
+    "t": 19.328,
+    "event": "serve_run",
+    "url": "http://127.0.0.1:8000/genrm"
+  },
+  {
+    "t": 64.468,
+    "event": "phase0_engines",
+    "ids": [
+      [
+        "172.17.0.3",
+        16000
+      ]
+    ]
+  },
+  {
+    "t": 64.495,
+    "event": "scale_out_submitted",
+    "request_id": "genrm-scale-f22c25a0-f6d3-458d-bb84-2baa7315e32f",
+    "status": "PENDING"
+  },
+  {
+    "t": 64.507,
+    "event": "scale_out_status",
+    "status": "CREATING",
+    "current": null,
+    "ready": null
+  },
+  {
+    "t": 209.74,
+    "event": "functional_error",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/scale_out/genrm-scale-f22c25a0-f6d3-458d-bb84-2baa7315e32f"
+  },
+  {
+    "t": 217.778,
+    "event": "cleanup_result",
+    "cleanup_pass": true,
+    "cleanup_errors": [],
+    "leftover_ray_free_gpus": 3.0
+  },
+  {
+    "t": 217.778,
+    "event": "e2e_done",
+    "functional_pass": false,
+    "cleanup_pass": true
+  }
+]

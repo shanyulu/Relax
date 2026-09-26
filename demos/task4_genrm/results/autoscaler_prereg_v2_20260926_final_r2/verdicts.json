@@ -1,0 +1,17 @@
+{
+  "A1_no_scale_out_in_low": true,
+  "A2_scale_out_decided_in_high": true,
+  "A3_elastic_served_in_steady": false,
+  "A4_scale_in_decided_outside_high": false,
+  "A5_scale_in_completed_final_is_initial": false,
+  "A6_zero_load_failures": false,
+  "A6_load_total": 891,
+  "A8_tui_screenshots": true,
+  "A7_resources_returned": false,
+  "functional_pass": false,
+  "cleanup_pass": true,
+  "cleanup_errors": [],
+  "leftover_ray_free_gpus": 2.0,
+  "functional_error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/scale_out/None",
+  "PASS": false
+}

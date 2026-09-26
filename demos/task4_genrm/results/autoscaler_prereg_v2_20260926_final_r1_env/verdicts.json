@@ -1,0 +1,8 @@
+{
+  "functional_pass": false,
+  "cleanup_pass": true,
+  "cleanup_errors": [],
+  "leftover_ray_free_gpus": 4.0,
+  "functional_error": "RuntimeError: initial engine never came up",
+  "PASS": false
+}

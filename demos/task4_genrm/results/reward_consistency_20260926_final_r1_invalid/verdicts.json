@@ -1,0 +1,8 @@
+{
+  "functional_pass": false,
+  "cleanup_pass": true,
+  "cleanup_errors": [],
+  "leftover_ray_free_gpus": 3.0,
+  "functional_error": "RuntimeError: Deploying application genrm failed: Failed to update the deployments ['GenRM'].",
+  "PASS": false
+}

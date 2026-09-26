@@ -1,0 +1,8 @@
+{
+  "functional_pass": false,
+  "cleanup_pass": true,
+  "cleanup_errors": [],
+  "leftover_ray_free_gpus": 3.0,
+  "functional_error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/scale_out/genrm-scale-f22c25a0-f6d3-458d-bb84-2baa7315e32f",
+  "PASS": false
+}

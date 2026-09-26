@@ -1,0 +1,96 @@
+[
+  {
+    "t": 0.0,
+    "event": "e2e_start",
+    "model_path": "/root/autodl-tmp/hf-cache/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+    "out_dir": "demos/task4_genrm/results/autoscaler_prereg_v2_20260926_final_r2"
+  },
+  {
+    "t": 11.804,
+    "event": "ray_init",
+    "gpus": 4.0
+  },
+  {
+    "t": 13.633,
+    "event": "pg_created",
+    "bundles": 1,
+    "gpu_ids": [
+      0
+    ]
+  },
+  {
+    "t": 27.22,
+    "event": "deployed",
+    "genrm": "http://127.0.0.1:8000/genrm",
+    "autoscaler": "http://127.0.0.1:8000/autoscaler_genrm"
+  },
+  {
+    "t": 69.94,
+    "event": "autoscaler_started",
+    "started": true
+  },
+  {
+    "t": 70.187,
+    "event": "resource_baseline",
+    "free_gpus": 3.0,
+    "mem_mib": [
+      23314,
+      5,
+      5,
+      5
+    ],
+    "pgs": 1
+  },
+  {
+    "t": 90.432,
+    "event": "phase_low_done",
+    "current": 1
+  },
+  {
+    "t": 183.4,
+    "event": "phase_high_done",
+    "scaled_out": true
+  },
+  {
+    "t": 250.605,
+    "event": "tui_screenshot_captured",
+    "service": "genrm",
+    "file": "tui-genrm.svg"
+  },
+  {
+    "t": 257.237,
+    "event": "tui_screenshot_captured",
+    "service": "rollout",
+    "file": "tui-rollout.svg"
+  },
+  {
+    "t": 257.237,
+    "event": "phase_steady_done",
+    "elastic_served": 0,
+    "screenshots_ok": true
+  },
+  {
+    "t": 758.964,
+    "event": "phase_low_prime_done",
+    "scaled_in": false
+  },
+  {
+    "t": 1085.294,
+    "event": "round_a_history",
+    "so": true,
+    "si": false,
+    "si_status": null
+  },
+  {
+    "t": 1091.677,
+    "event": "round_a_resources",
+    "free": "2.0/3.0",
+    "pgs": "2/1",
+    "mem_ok": false
+  },
+  {
+    "t": 1091.714,
+    "event": "functional_error",
+    "error": "HTTPError: 404 Client Error: Not Found for url: http://127.0.0.1:8000/genrm/scale_out/None"
+  }
+]

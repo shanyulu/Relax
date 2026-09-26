@@ -1,0 +1,32 @@
+[
+  {
+    "t": 0.0,
+    "event": "e2e_start",
+    "model_path": "/root/autodl-tmp/hf-cache/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+    "out_dir": "demos/task4_genrm/results/autoscaler_prereg_v2_20260926_final"
+  },
+  {
+    "t": 12.383,
+    "event": "ray_init",
+    "gpus": 4.0
+  },
+  {
+    "t": 14.348,
+    "event": "pg_created",
+    "bundles": 1,
+    "gpu_ids": [
+      0
+    ]
+  },
+  {
+    "t": 29.323,
+    "event": "deployed",
+    "genrm": "http://127.0.0.1:8000/genrm",
+    "autoscaler": "http://127.0.0.1:8000/autoscaler_genrm"
+  },
+  {
+    "t": 930.308,
+    "event": "functional_error",
+    "error": "RuntimeError: initial engine never came up"
+  }
+]
