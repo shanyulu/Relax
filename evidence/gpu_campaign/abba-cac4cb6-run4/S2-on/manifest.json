@@ -1,0 +1,100 @@
+{
+  "run_id": "S2-on",
+  "session": "S2",
+  "order": "B->A",
+  "slot": "B",
+  "arm": "on",
+  "worktree": "/root/autodl-tmp/relax-work/task11-c2",
+  "recipe": "scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "wrapper": "scripts/entrypoint/ray-job.sh",
+  "command": "bash scripts/entrypoint/ray-job.sh scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "relax_env": {
+    "RELAX_STRAGGLER_ENABLE": "1",
+    "RELAX_STRAGGLER_OUTPUT_DIR": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-cac4cb6-run4/S2-on",
+    "RELAX_STRAGGLER_WINDOW_S": "5",
+    "RELAX_STRAGGLER_PERSIST_WINDOWS": "3",
+    "RELAX_STRAGGLER_REPORT_INTERVAL_S": "10",
+    "RELAX_STRAGGLER_WARMUP_WINDOWS": "2",
+    "RELAX_STRAGGLER_COLLECTOR_ADDR": "127.0.0.1:53621"
+  },
+  "collector_addr": "127.0.0.1:53621",
+  "git": {
+    "commit": "cac4cb6447154e6ae4f563eabab7fecf43dba790",
+    "branch": "feat/task11-straggler-profiler",
+    "dirty": false,
+    "status_porcelain": "",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "staged_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tree_label": "CLEAN@cac4cb644715"
+  },
+  "ray_address": "http://127.0.0.1:8265",
+  "dataset_path": "/root/autodl-tmp/relax-work/task11-c2/scripts/training/sft/data/dapo-math-17k-sft-256.jsonl",
+  "dataset_sha256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "straggler_sha256_at_start": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f",
+  "started_at": "2026-09-26T15:28:21+0800",
+  "finished_at": "2026-09-26T15:29:09+0800",
+  "wall_seconds": 48.722,
+  "exit_code": 2,
+  "gpus_before": [
+    {
+      "index": 0,
+      "memory_used_mib": 5,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 1,
+      "memory_used_mib": 5,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 2,
+      "memory_used_mib": 5,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 3,
+      "memory_used_mib": 5,
+      "utilization_gpu": 0
+    }
+  ],
+  "gpus_after": [
+    {
+      "index": 0,
+      "memory_used_mib": 1,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 1,
+      "memory_used_mib": 1,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 2,
+      "memory_used_mib": 1,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 3,
+      "memory_used_mib": 1,
+      "utilization_gpu": 0
+    }
+  ],
+  "timeout_seconds": 7200,
+  "provenance": {
+    "provenance_lines": 0,
+    "driver_relax_root": null,
+    "actor_relax_root": null,
+    "worktree_straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f",
+    "worktree_straggler_sha256_live": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f",
+    "roots": [],
+    "all_under_worktree": false,
+    "all_provenance_ok": false
+  },
+  "valid": false,
+  "invalid_reason": "INVALID-no-training-steps (exit 2)",
+  "first_step_seen": false,
+  "slow_init": false,
+  "evidence_dir": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-cac4cb6-run4/S2-on",
+  "summary_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-cac4cb6-run4/S2-on/summary.json",
+  "observer_envelopes": 0
+}

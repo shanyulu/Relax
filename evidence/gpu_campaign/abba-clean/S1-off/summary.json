@@ -1,0 +1,24 @@
+{
+  "evidence_dir": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-clean/S1-off",
+  "log": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-clean/S1-off/job.log",
+  "log_present": true,
+  "observation": {
+    "collector_status": "missing",
+    "envelope_reads": {
+      "malformed": 0,
+      "truncated_tail": 0
+    },
+    "envelopes": 0,
+    "ranks_seen": [],
+    "stages_seen": [],
+    "verdict_kinds": {},
+    "verdict_reads": {
+      "malformed": 0,
+      "truncated_tail": 0
+    },
+    "verdicts": 0
+  },
+  "perf_metrics": {},
+  "step_time": null,
+  "train_metrics": {}
+}

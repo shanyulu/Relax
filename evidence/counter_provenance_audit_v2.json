@@ -1,0 +1,434 @@
+{
+  "arms": [
+    {
+      "arm": "S1-on",
+      "campaign": "abba",
+      "conservation_detail": "1403 + 709 + 0 + 0 = 2112 vs envelopes=2112",
+      "conservation_known": true,
+      "conserved": true,
+      "dir": "gpu_campaign/abba/S1-on",
+      "drops_between_ingest_and_persist": 0,
+      "duplicate": 0,
+      "envelope_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba/S1-on/run_18000000/straggler_envelopes.jsonl",
+      "envelope_path_exists": true,
+      "envelopes": 2112,
+      "expected_envelope_lines_if_drops_not_persisted": 1403,
+      "flushed_lines": 1656,
+      "flushed_lines_match_persisted_total": true,
+      "invalid": 0,
+      "judged": 1403,
+      "late": 709,
+      "partition_sum": 2112,
+      "periodic": {
+        "all_counters_match": false,
+        "comparisons": {
+          "duplicate": {
+            "collector_status_field": "duplicate_packets",
+            "collector_status_value": 0,
+            "line_value": 0,
+            "match": true
+          },
+          "envelopes": {
+            "collector_status_field": "envelopes",
+            "collector_status_value": 2112,
+            "line_value": 2112,
+            "match": true
+          },
+          "invalid": {
+            "collector_status_field": "invalid_packets",
+            "collector_status_value": 0,
+            "line_value": 0,
+            "match": true
+          },
+          "judged": {
+            "collector_status_field": "judged_packets",
+            "collector_status_value": 1403,
+            "line_value": 1403,
+            "match": true
+          },
+          "late": {
+            "collector_status_field": "late_packets",
+            "collector_status_value": 709,
+            "line_value": 709,
+            "match": true
+          },
+          "verdicts": {
+            "collector_status_field": "verdicts",
+            "collector_status_value": 253,
+            "line_value": 224,
+            "match": false
+          },
+          "windows": {
+            "collector_status_field": "windows_closed",
+            "collector_status_value": 19,
+            "line_value": 17,
+            "match": false
+          }
+        },
+        "discrepancies": [
+          "verdicts=224 vs verdicts=253",
+          "windows=17 vs windows_closed=19"
+        ],
+        "fields": {
+          "active": "none",
+          "duplicate": 0,
+          "envelopes": 2112,
+          "invalid": 0,
+          "judged": 1403,
+          "late": 709,
+          "stragglers": 0,
+          "verdicts": 224,
+          "windows": 17
+        },
+        "identity": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+        "job_log_present": true,
+        "line_no": 3033,
+        "matches_final_status": true,
+        "other_logs": {
+          "job.log": true,
+          "off-smoke-submit.log": false,
+          "submit.log": false
+        },
+        "present": true,
+        "provenance_counters_match": true,
+        "raw": "\u001b[36m(MegatronTrainRayActor pid=87428)\u001b[0m 2026-09-26 00:54:08 | INFO | relax.utils.straggler.collector:297 straggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=2112 judged=1403 invalid=0 duplicate=0 late=709 windows=17 verdicts=224 stragglers=0 active=none"
+      },
+      "persisted_envelope_lines": 1403,
+      "persisted_envelope_lines_match_expected": true,
+      "persisted_envelope_lines_match_judged": true,
+      "persisted_verdict_lines": 253,
+      "persisted_verdict_lines_match_verdicts": true,
+      "relative_dir": "abba/S1-on",
+      "verdict_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba/S1-on/run_18000000/straggler_verdicts.jsonl",
+      "verdict_path_exists": true,
+      "verdicts": 253,
+      "windows_closed": 19
+    },
+    {
+      "arm": "S1-on",
+      "campaign": "abba-cac4cb6-run4",
+      "conservation_detail": "2112 + 0 + 0 + 0 = 2112 vs envelopes=2112",
+      "conservation_known": true,
+      "conserved": true,
+      "dir": "gpu_campaign/abba-cac4cb6-run4/S1-on",
+      "drops_between_ingest_and_persist": 0,
+      "duplicate": 0,
+      "envelope_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-cac4cb6-run4/S1-on/run_1a000000/straggler_envelopes.jsonl",
+      "envelope_path_exists": true,
+      "envelopes": 2112,
+      "expected_envelope_lines_if_drops_not_persisted": 2112,
+      "flushed_lines": 2901,
+      "flushed_lines_match_persisted_total": true,
+      "invalid": 0,
+      "judged": 2112,
+      "late": 0,
+      "partition_sum": 2112,
+      "periodic": {
+        "all_counters_match": true,
+        "comparisons": {
+          "duplicate": {
+            "collector_status_field": "duplicate_packets",
+            "collector_status_value": 0,
+            "line_value": 0,
+            "match": true
+          },
+          "envelopes": {
+            "collector_status_field": "envelopes",
+            "collector_status_value": 2112,
+            "line_value": 2112,
+            "match": true
+          },
+          "invalid": {
+            "collector_status_field": "invalid_packets",
+            "collector_status_value": 0,
+            "line_value": 0,
+            "match": true
+          },
+          "judged": {
+            "collector_status_field": "judged_packets",
+            "collector_status_value": 2112,
+            "line_value": 2112,
+            "match": true
+          },
+          "late": {
+            "collector_status_field": "late_packets",
+            "collector_status_value": 0,
+            "line_value": 0,
+            "match": true
+          },
+          "verdicts": {
+            "collector_status_field": "verdicts",
+            "collector_status_value": 789,
+            "line_value": 789,
+            "match": true
+          },
+          "windows": {
+            "collector_status_field": "windows_closed",
+            "collector_status_value": 143,
+            "line_value": 143,
+            "match": true
+          }
+        },
+        "discrepancies": [],
+        "fields": {
+          "active": "none",
+          "duplicate": 0,
+          "envelopes": 2112,
+          "invalid": 0,
+          "judged": 2112,
+          "late": 0,
+          "stragglers": 20,
+          "verdicts": 789,
+          "windows": 143
+        },
+        "identity": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+        "job_log_present": true,
+        "line_no": 4286,
+        "matches_final_status": true,
+        "other_logs": {
+          "job.log": true,
+          "off-smoke-submit.log": false,
+          "submit.log": false
+        },
+        "present": true,
+        "provenance_counters_match": true,
+        "raw": "\u001b[36m(MegatronTrainRayActor pid=536111)\u001b[0m 2026-09-26 14:48:28 | INFO | relax.utils.straggler.collector:297 straggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=2112 judged=2112 invalid=0 duplicate=0 late=0 windows=143 verdicts=789 stragglers=20 active=none"
+      },
+      "persisted_envelope_lines": 2112,
+      "persisted_envelope_lines_match_expected": true,
+      "persisted_envelope_lines_match_judged": true,
+      "persisted_verdict_lines": 789,
+      "persisted_verdict_lines_match_verdicts": true,
+      "relative_dir": "abba-cac4cb6-run4/S1-on",
+      "verdict_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-cac4cb6-run4/S1-on/run_1a000000/straggler_verdicts.jsonl",
+      "verdict_path_exists": true,
+      "verdicts": 789,
+      "windows_closed": 143
+    },
+    {
+      "arm": "S1-on",
+      "campaign": "abba-ce9b637",
+      "conservation_detail": "1481 + 631 + 0 + 0 = 2112 vs envelopes=2112",
+      "conservation_known": true,
+      "conserved": true,
+      "dir": "gpu_campaign/abba-ce9b637/S1-on",
+      "drops_between_ingest_and_persist": 0,
+      "duplicate": 0,
+      "envelope_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-ce9b637/S1-on/run_10000000/straggler_envelopes.jsonl",
+      "envelope_path_exists": true,
+      "envelopes": 2112,
+      "expected_envelope_lines_if_drops_not_persisted": 1481,
+      "flushed_lines": 2021,
+      "flushed_lines_match_persisted_total": true,
+      "invalid": 0,
+      "judged": 1481,
+      "late": 631,
+      "partition_sum": 2112,
+      "periodic": {
+        "all_counters_match": true,
+        "comparisons": {
+          "duplicate": {
+            "collector_status_field": "duplicate_packets",
+            "collector_status_value": 0,
+            "line_value": 0,
+            "match": true
+          },
+          "envelopes": {
+            "collector_status_field": "envelopes",
+            "collector_status_value": 2112,
+            "line_value": 2112,
+            "match": true
+          },
+          "invalid": {
+            "collector_status_field": "invalid_packets",
+            "collector_status_value": 0,
+            "line_value": 0,
+            "match": true
+          },
+          "judged": {
+            "collector_status_field": "judged_packets",
+            "collector_status_value": 1481,
+            "line_value": 1481,
+            "match": true
+          },
+          "late": {
+            "collector_status_field": "late_packets",
+            "collector_status_value": 631,
+            "line_value": 631,
+            "match": true
+          },
+          "verdicts": {
+            "collector_status_field": "verdicts",
+            "collector_status_value": 540,
+            "line_value": 540,
+            "match": true
+          },
+          "windows": {
+            "collector_status_field": "windows_closed",
+            "collector_status_value": 150,
+            "line_value": 150,
+            "match": true
+          }
+        },
+        "discrepancies": [],
+        "fields": {
+          "active": "none",
+          "duplicate": 0,
+          "envelopes": 2112,
+          "invalid": 0,
+          "judged": 1481,
+          "late": 631,
+          "stragglers": 8,
+          "verdicts": 540,
+          "windows": 150
+        },
+        "identity": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+        "job_log_present": true,
+        "line_no": 3995,
+        "matches_final_status": true,
+        "other_logs": {
+          "job.log": true,
+          "off-smoke-submit.log": false,
+          "submit.log": false
+        },
+        "present": true,
+        "provenance_counters_match": true,
+        "raw": "\u001b[36m(MegatronTrainRayActor pid=302854)\u001b[0m 2026-09-26 11:42:28 | INFO | relax.utils.straggler.collector:297 straggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=2112 judged=1481 invalid=0 duplicate=0 late=631 windows=150 verdicts=540 stragglers=8 active=none"
+      },
+      "persisted_envelope_lines": 1481,
+      "persisted_envelope_lines_match_expected": true,
+      "persisted_envelope_lines_match_judged": true,
+      "persisted_verdict_lines": 540,
+      "persisted_verdict_lines_match_verdicts": true,
+      "relative_dir": "abba-ce9b637/S1-on",
+      "verdict_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-ce9b637/S1-on/run_10000000/straggler_verdicts.jsonl",
+      "verdict_path_exists": true,
+      "verdicts": 540,
+      "windows_closed": 150
+    },
+    {
+      "arm": "on-smoke-valid",
+      "campaign": "gpu_campaign",
+      "conservation_detail": "1155 + 605 + 0 + 0 = 1760 vs envelopes=1760",
+      "conservation_known": true,
+      "conserved": true,
+      "dir": "gpu_campaign/on-smoke-valid",
+      "drops_between_ingest_and_persist": 0,
+      "duplicate": 0,
+      "envelope_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/on-smoke-valid/straggler/run_1d000000/straggler_envelopes.jsonl",
+      "envelope_path_exists": true,
+      "envelopes": 1760,
+      "expected_envelope_lines_if_drops_not_persisted": 1155,
+      "flushed_lines": 1198,
+      "flushed_lines_match_persisted_total": true,
+      "invalid": 0,
+      "judged": 1155,
+      "late": 605,
+      "partition_sum": 1760,
+      "periodic": {
+        "job_log_present": false,
+        "other_logs": {
+          "job.log": false,
+          "off-smoke-submit.log": false,
+          "submit.log": true
+        },
+        "present": false
+      },
+      "persisted_envelope_lines": 1155,
+      "persisted_envelope_lines_match_expected": true,
+      "persisted_envelope_lines_match_judged": true,
+      "persisted_verdict_lines": 43,
+      "persisted_verdict_lines_match_verdicts": true,
+      "relative_dir": "on-smoke-valid",
+      "verdict_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/on-smoke-valid/straggler/run_1d000000/straggler_verdicts.jsonl",
+      "verdict_path_exists": true,
+      "verdicts": 43,
+      "windows_closed": 16
+    }
+  ],
+  "skipped": [
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "abba/S1-off"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "abba/S1-on.attempt1-killed-by-operator"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "abba-cac4cb6/S1-off"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "abba-cac4cb6/S1-on"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "abba-cac4cb6-run2/S1-off"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "abba-cac4cb6-run2/S1-on"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "abba-cac4cb6-run3/S1-off"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "abba-cac4cb6-run3/S1-on"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "abba-cac4cb6-run4/S1-off"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "abba-cac4cb6-run4/S2-on"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "abba-ce9b637/S1-off"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "abba-final/S1-off"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "abba-final2/S1-off"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "off-smoke"
+    },
+    {
+      "collector_status_kind": "str",
+      "relative_dir": "on-smoke"
+    }
+  ],
+  "summary": {
+    "all_conserved": true,
+    "conservation_violations": [],
+    "n_arms_scanned": 19,
+    "n_arms_skipped_non_dict_status": 15,
+    "n_arms_with_dict_collector_status": 4,
+    "n_conservation_evaluable": 4,
+    "n_conservation_violations": 0,
+    "n_conserved": 4,
+    "n_periodic_all_counters_match": 2,
+    "n_periodic_aux_counters_mismatch": 1,
+    "n_periodic_line_present": 3,
+    "n_periodic_provenance_counters_match": 3,
+    "n_periodic_provenance_counters_mismatch": 0,
+    "n_persisted_env_matches_judged": 4,
+    "n_persisted_verdict_matches_verdicts": 4,
+    "periodic_aux_mismatch_arms": [
+      "abba/S1-on"
+    ],
+    "periodic_mismatch_arms": [],
+    "root": "gpu_campaign"
+  },
+  "tool": "audit_counters_v2.py"
+}

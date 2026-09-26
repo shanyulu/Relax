@@ -1,0 +1,152 @@
+{
+  "closed": false,
+  "enabled": true,
+  "errors": 0,
+  "identity": {
+    "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+    "data_parallel_world_size": 4,
+    "label": "rank1/tp0/pp0/vpp-1/cp0/ep0/dp1/chunk-1",
+    "rank": 1,
+    "run_id": "10000000",
+    "stage_schema": "dense",
+    "topology": {
+      "chunk": -1,
+      "cp": 0,
+      "dp": 1,
+      "edp": 1,
+      "ep": 0,
+      "etp": 0,
+      "pp": 0,
+      "tp": 0,
+      "vpp": -1
+    },
+    "topology_epoch": "",
+    "world_size": 4
+  },
+  "observer": {
+    "consumer_errors": 0,
+    "delivered": 0,
+    "device_intervals": 528,
+    "device_timing_enabled": true,
+    "disable_reason": null,
+    "disabled_skips": 0,
+    "dropped_output_full": 0,
+    "dropped_pending_full": 0,
+    "host_only_intervals": 0,
+    "identity": "rank1/tp0/pp0/vpp-1/cp0/ep0/dp1/chunk-1",
+    "intervals": 528,
+    "name_evictions": 0,
+    "name_failures": {},
+    "observer_errors": 0,
+    "pending": 0,
+    "pool": {
+      "created": 12,
+      "exhausted": 0,
+      "free": 12,
+      "size": 512
+    },
+    "readout_thread_alive": true,
+    "readout_timeouts": 0,
+    "state": "active",
+    "state_history": [
+      {
+        "counters": {
+          "consumer_errors": 0,
+          "device_intervals": 0,
+          "disabled_skips": 0,
+          "dropped_output_full": 0,
+          "dropped_pending_full": 0,
+          "host_only_intervals": 0,
+          "intervals": 0,
+          "name_evictions": 0,
+          "observer_errors": 0,
+          "readout_timeouts": 0
+        },
+        "failures": 0,
+        "reason": "init",
+        "state": "active",
+        "time": 9073186.82207934
+      }
+    ]
+  },
+  "role": "sender",
+  "sender": {
+    "address": "127.0.0.1:59835",
+    "connected": true,
+    "dropped_queue_full": 0,
+    "pending": 0,
+    "queue_max": 4096,
+    "queued": 528,
+    "send_errors": 0,
+    "sent": 528
+  },
+  "started": true,
+  "timers": {
+    "call_errors": 0,
+    "ignored_barriers": 432,
+    "intervals": 528,
+    "level_mismatch": 0,
+    "log_level": 2,
+    "name_evictions": 0,
+    "sink": {
+      "consumer_errors": 0,
+      "delivered": 0,
+      "device_intervals": 528,
+      "device_timing_enabled": true,
+      "disable_reason": null,
+      "disabled_skips": 0,
+      "dropped_output_full": 0,
+      "dropped_pending_full": 0,
+      "host_only_intervals": 0,
+      "identity": "rank1/tp0/pp0/vpp-1/cp0/ep0/dp1/chunk-1",
+      "intervals": 528,
+      "name_evictions": 0,
+      "name_failures": {},
+      "observer_errors": 0,
+      "pending": 0,
+      "pool": {
+        "created": 12,
+        "exhausted": 0,
+        "free": 12,
+        "size": 512
+      },
+      "readout_thread_alive": true,
+      "readout_timeouts": 0,
+      "state": "active",
+      "state_history": [
+        {
+          "counters": {
+            "consumer_errors": 0,
+            "device_intervals": 0,
+            "disabled_skips": 0,
+            "dropped_output_full": 0,
+            "dropped_pending_full": 0,
+            "host_only_intervals": 0,
+            "intervals": 0,
+            "name_evictions": 0,
+            "observer_errors": 0,
+            "readout_timeouts": 0
+          },
+          "failures": 0,
+          "reason": "init",
+          "state": "active",
+          "time": 9073186.82207934
+        }
+      ]
+    },
+    "sink_errors": 0,
+    "timer_names": 11,
+    "unbalanced_start": 0,
+    "unbalanced_stop": 0
+  },
+  "training_context": {
+    "failures": 0,
+    "step_ordinal": 48,
+    "stored": 1,
+    "updates": 48,
+    "workload_evictions": 40,
+    "workload_publish_errors": 0,
+    "workload_publish_skipped": 0,
+    "workload_rollouts": 8
+  }
+}

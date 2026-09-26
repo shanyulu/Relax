@@ -1,0 +1,7 @@
+transferqueue 0.1.10.dev0 requires hydra-core, which is not installed.
+librosa 1.0.0 has requirement numpy>=2.1.0, but you have numpy 1.26.4.
+mdformat 0.7.9 has requirement markdown-it-py<2.0.0,>=1.0.0b2, but you have markdown-it-py 4.2.0.
+sglang 0.5.5.post3 has requirement torch_memory_saver==0.0.9, but you have torch-memory-saver 0.0.9.post1.
+sglang 0.5.5.post3 has requirement transformers==4.57.1, but you have transformers 5.17.0.
+mdformat-openmmlab 0.0.4 has requirement mdit-py-plugins<0.4.0,>=0.2.0, but you have mdit-py-plugins 0.6.1.
+transformer_engine_cu12 2.14.1 is not supported on this platform

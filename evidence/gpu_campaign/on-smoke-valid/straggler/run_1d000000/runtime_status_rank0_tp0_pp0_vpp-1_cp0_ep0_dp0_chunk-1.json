@@ -1,0 +1,308 @@
+{
+  "closed": false,
+  "collector": {
+    "active_evictions": 0,
+    "active_stragglers": [
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+        "name": "embedding-grads-all-reduce",
+        "rank": 0
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1",
+        "name": "embedding-grads-all-reduce",
+        "rank": 2
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1",
+        "name": "forward-compute",
+        "rank": 2
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank1/tp0/pp0/vpp-1/cp0/ep0/dp1/chunk-1",
+        "name": "non-tensor-parallel-grads-all-reduce",
+        "rank": 1
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1",
+        "name": "non-tensor-parallel-grads-all-reduce",
+        "rank": 2
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+        "name": "optimizer-copy-main-to-model-params",
+        "rank": 0
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank1/tp0/pp0/vpp-1/cp0/ep0/dp1/chunk-1",
+        "name": "optimizer-copy-main-to-model-params",
+        "rank": 1
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1",
+        "name": "optimizer-copy-main-to-model-params",
+        "rank": 2
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+        "name": "optimizer-copy-to-main-grad",
+        "rank": 0
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank1/tp0/pp0/vpp-1/cp0/ep0/dp1/chunk-1",
+        "name": "optimizer-copy-to-main-grad",
+        "rank": 1
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1",
+        "name": "optimizer-copy-to-main-grad",
+        "rank": 2
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+        "name": "optimizer-inner-step",
+        "rank": 0
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank1/tp0/pp0/vpp-1/cp0/ep0/dp1/chunk-1",
+        "name": "optimizer-inner-step",
+        "rank": 1
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1",
+        "name": "optimizer-inner-step",
+        "rank": 2
+      },
+      {
+        "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+        "label": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+        "name": "params-all-gather",
+        "rank": 0
+      }
+    ],
+    "aligned_cohorts": 1,
+    "aligned_ranks": 4,
+    "caps": {
+      "MAX_ACTIVE_ENTRIES": 512,
+      "MAX_ALIGNED_RANKS": 4096,
+      "MAX_COHORT_ANCHORS": 1024,
+      "MAX_LABEL_ENTRIES": 4096,
+      "MAX_PAIRS_PER_WINDOW": 256,
+      "MAX_PENDING_WINDOWS": 8,
+      "MAX_RANKS_PER_WINDOW": 1024,
+      "MAX_SAMPLES_PER_RANK": 32,
+      "MAX_STREAK_ENTRIES": 4096,
+      "MAX_VERDICTS": 512
+    },
+    "cohort_epoch_evictions": 0,
+    "cohort_stage_pairs": 116,
+    "dedup": {
+      "duplicate": 0,
+      "entries": 1760,
+      "evicted": 0,
+      "expired": 0,
+      "late": 605,
+      "max_entries": 8192,
+      "new": 1155,
+      "newest_ranks": 4,
+      "ttl_s": 120.0
+    },
+    "duplicate_packets": 0,
+    "envelope_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/on-smoke-valid/straggler/run_1d000000/straggler_envelopes.jsonl",
+    "envelopes": 1760,
+    "epoch_evictions": 0,
+    "flushed_lines": 1198,
+    "identity": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+    "incomplete_windows": 12,
+    "ingest_errors": 0,
+    "invalid_device_samples": 0,
+    "invalid_packets": 0,
+    "invalid_samples": 0,
+    "judged_packets": 1155,
+    "label_entries": 40,
+    "label_evictions": 0,
+    "late_packets": 605,
+    "open_windows": 0,
+    "pair_evictions": 0,
+    "pending_line_drops": 0,
+    "pending_lines": {
+      "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/on-smoke-valid/straggler/run_1d000000/straggler_envelopes.jsonl": 0,
+      "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/on-smoke-valid/straggler/run_1d000000/straggler_verdicts.jsonl": 0
+    },
+    "persist_windows": 3,
+    "rank_evictions": 0,
+    "recoveries_reported": 14,
+    "reports": 4,
+    "retained_verdicts": 43,
+    "sample_evictions": 0,
+    "single_rank_windows": 0,
+    "stragglers_reported": 29,
+    "streak_entries": 26,
+    "streak_evictions": 0,
+    "uncertain_judgements": 0,
+    "uptime_s": 126.52037781476974,
+    "verdict_callback_errors": 0,
+    "verdict_evictions": 0,
+    "verdict_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/on-smoke-valid/straggler/run_1d000000/straggler_verdicts.jsonl",
+    "verdicts": 43,
+    "warmup_samples_skipped": 4,
+    "warmup_windows_skipped": 4,
+    "windows_closed": 16,
+    "windows_forced": 0,
+    "work_tolerance": 0.05,
+    "write_errors": 0
+  },
+  "enabled": true,
+  "errors": 0,
+  "identity": {
+    "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+    "data_parallel_world_size": 4,
+    "label": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+    "rank": 0,
+    "run_id": "1d000000",
+    "stage_schema": "dense",
+    "topology": {
+      "chunk": -1,
+      "cp": 0,
+      "dp": 0,
+      "edp": 0,
+      "ep": 0,
+      "etp": 0,
+      "pp": 0,
+      "tp": 0,
+      "vpp": -1
+    },
+    "topology_epoch": "",
+    "world_size": 4
+  },
+  "observer": {
+    "consumer_errors": 0,
+    "delivered": 0,
+    "device_intervals": 440,
+    "device_timing_enabled": true,
+    "disable_reason": null,
+    "disabled_skips": 0,
+    "dropped_output_full": 0,
+    "dropped_pending_full": 0,
+    "host_only_intervals": 0,
+    "identity": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+    "intervals": 440,
+    "name_evictions": 0,
+    "name_failures": {},
+    "observer_errors": 0,
+    "pending": 0,
+    "pool": {
+      "created": 12,
+      "exhausted": 0,
+      "free": 8,
+      "size": 512
+    },
+    "readout_thread_alive": true,
+    "readout_timeouts": 0,
+    "state": "active",
+    "state_history": [
+      {
+        "counters": {
+          "consumer_errors": 0,
+          "device_intervals": 0,
+          "disabled_skips": 0,
+          "dropped_output_full": 0,
+          "dropped_pending_full": 0,
+          "host_only_intervals": 0,
+          "intervals": 0,
+          "name_evictions": 0,
+          "observer_errors": 0,
+          "readout_timeouts": 0
+        },
+        "failures": 0,
+        "reason": "init",
+        "state": "active",
+        "time": 9026864.923428828
+      }
+    ]
+  },
+  "receiver": {
+    "accept_errors": 0,
+    "address": "127.0.0.1:29751",
+    "callback_errors": 0,
+    "connections": 3,
+    "invalid_packets": 0,
+    "lines": 1320,
+    "listening": true,
+    "parse_errors": 0
+  },
+  "role": "collector",
+  "started": true,
+  "timers": {
+    "call_errors": 0,
+    "ignored_barriers": 361,
+    "intervals": 440,
+    "level_mismatch": 0,
+    "log_level": 2,
+    "name_evictions": 0,
+    "sink": {
+      "consumer_errors": 0,
+      "delivered": 0,
+      "device_intervals": 440,
+      "device_timing_enabled": true,
+      "disable_reason": null,
+      "disabled_skips": 0,
+      "dropped_output_full": 0,
+      "dropped_pending_full": 0,
+      "host_only_intervals": 0,
+      "identity": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+      "intervals": 440,
+      "name_evictions": 0,
+      "name_failures": {},
+      "observer_errors": 0,
+      "pending": 0,
+      "pool": {
+        "created": 12,
+        "exhausted": 0,
+        "free": 8,
+        "size": 512
+      },
+      "readout_thread_alive": true,
+      "readout_timeouts": 0,
+      "state": "active",
+      "state_history": [
+        {
+          "counters": {
+            "consumer_errors": 0,
+            "device_intervals": 0,
+            "disabled_skips": 0,
+            "dropped_output_full": 0,
+            "dropped_pending_full": 0,
+            "host_only_intervals": 0,
+            "intervals": 0,
+            "name_evictions": 0,
+            "observer_errors": 0,
+            "readout_timeouts": 0
+          },
+          "failures": 0,
+          "reason": "init",
+          "state": "active",
+          "time": 9026864.923428828
+        }
+      ]
+    },
+    "sink_errors": 0,
+    "timer_names": 11,
+    "unbalanced_start": 0,
+    "unbalanced_stop": 0
+  }
+}

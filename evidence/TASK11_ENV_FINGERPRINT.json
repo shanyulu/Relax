@@ -1,0 +1,23 @@
+{
+  "captured_at": "2026-09-26T15:07:42Z",
+  "hostname": "autodl-container-a678428463-fbf3d4bf",
+  "gpu_model": "NVIDIA GeForce RTX 4090",
+  "gpu_count_visible": "4",
+  "driver": "595.71.05",
+  "cuda_version": "n/a",
+  "python": "Python 3.12.3",
+  "torch": "2.8.0+cu128",
+  "ray": "2.58.0",
+  "megatron_lm_head": "",
+  "train_venv": "/root/autodl-tmp/megatron-stack/venv",
+  "pip_freeze_sha256": "8c8566b76e492965415d79a5851c1f5c0a9ea2107a4dc8f8531133a7b3380a77",
+  "product_code_sha": "cac4cb6447154e6ae4f563eabab7fecf43dba790",
+  "pr_head": "f3403b0",
+  "recipe": "scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "recipe_sha256": "d901709840f678b435b8153d9da3a398fd53fd39d6f2e4b59c618631e7ec4d6a",
+  "dataset": "scripts/training/sft/data/dapo-math-17k-sft-256.jsonl",
+  "dataset_sha256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "seed": "recipe default",
+  "num_rollout_per_arm": 48,
+  "note": "Baseline snapshot taken while GPU acceptance is ENV_BLOCKED (machine-level CUDA-in-Ray failure); MUST be re-captured at campaign start per TASK11_FINAL_ACCEPTANCE_PROTOCOL.md."
+}

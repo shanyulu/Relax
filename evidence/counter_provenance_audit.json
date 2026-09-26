@@ -1,0 +1,104 @@
+{
+ "arms": [
+  {
+   "arm": "abba-cac4cb6-run2/S1-off",
+   "collector_status": "missing"
+  },
+  {
+   "arm": "abba-cac4cb6-run2/S1-on",
+   "collector_status": "missing"
+  },
+  {
+   "arm": "abba-cac4cb6-run3/S1-off",
+   "collector_status": "missing"
+  },
+  {
+   "arm": "abba-cac4cb6-run3/S1-on",
+   "collector_status": "missing"
+  },
+  {
+   "arm": "abba-cac4cb6-run4/S1-off",
+   "collector_status": "missing"
+  },
+  {
+   "arm": "abba-cac4cb6-run4/S1-on",
+   "envelopes": 2112,
+   "judged": 2112,
+   "late": 0,
+   "duplicate": 0,
+   "invalid": 0,
+   "conserved": true,
+   "dedup_new": 2112,
+   "reports": 48,
+   "verdicts": 789,
+   "incomparable": 93
+  },
+  {
+   "arm": "abba-cac4cb6-run4/S2-on",
+   "collector_status": "missing"
+  },
+  {
+   "arm": "abba-cac4cb6/S1-off",
+   "collector_status": "missing"
+  },
+  {
+   "arm": "abba-cac4cb6/S1-on",
+   "collector_status": "missing"
+  },
+  {
+   "arm": "abba-ce9b637/S1-off",
+   "collector_status": "missing"
+  },
+  {
+   "arm": "abba-ce9b637/S1-on",
+   "envelopes": 2112,
+   "judged": 1481,
+   "late": 631,
+   "duplicate": 0,
+   "invalid": 0,
+   "conserved": true,
+   "dedup_new": 1481,
+   "reports": 48,
+   "verdicts": 540,
+   "incomparable": 71
+  },
+  {
+   "arm": "abba/S1-off",
+   "collector_status": "missing"
+  },
+  {
+   "arm": "abba/S1-on.attempt1-killed-by-operator",
+   "collector_status": "missing"
+  },
+  {
+   "arm": "abba/S1-on",
+   "envelopes": 2112,
+   "judged": 1403,
+   "late": 709,
+   "duplicate": 0,
+   "invalid": 0,
+   "conserved": true,
+   "dedup_new": 1403,
+   "reports": 5,
+   "verdicts": 253,
+   "incomparable": 57
+  }
+ ],
+ "last_periodic": [
+  [
+   "abba-cac4cb6-run4/S1-on",
+   "envelopes=2112 judged=2112 invalid=0 duplicate=0 late=0",
+   96
+  ],
+  [
+   "abba-ce9b637/S1-on",
+   "envelopes=2112 judged=1481 invalid=0 duplicate=0 late=631",
+   96
+  ],
+  [
+   "abba/S1-on",
+   "envelopes=2112 judged=1403 invalid=0 duplicate=0 late=709",
+   53
+  ]
+ ]
+}

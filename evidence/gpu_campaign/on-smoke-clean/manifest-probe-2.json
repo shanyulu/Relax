@@ -1,0 +1,57 @@
+{
+  "actor_code_matches_worktree": false,
+  "actor_resolved_under_task11_c2": false,
+  "actors": [],
+  "any_probe_resolved_to_task4pr": false,
+  "arm": "on-smoke-clean",
+  "captured_at": "2026-09-25T22:03:20",
+  "driver": [
+    {
+      "code_matches_worktree": true,
+      "cwd": "/tmp/ray/session_2026-09-25_21-38-01_058590_281469/runtime_resources/working_dir_files/_ray_pkg_058a0b1437202a86",
+      "pid": 377248,
+      "pyspy_available": false,
+      "pyspy_frames": [],
+      "pythonpath": "/tmp/ray/session_2026-09-25_21-38-01_058590_281469/runtime_resources/working_dir_files/_ray_pkg_058a0b1437202a86:/root/autodl-tmp/megatron-stack/venv/lib/python3.12/site-packages:/root/autodl-tmp/relax-work/task11-c2:/root/autodl-tmp/megatron-stack/Megatron-LM:/root/autodl-tmp/relax-work/task11-c2:",
+      "resolved_is_task4pr": false,
+      "resolved_is_working_dir_copy": true,
+      "resolved_relax": "/tmp/ray/session_2026-09-25_21-38-01_058590_281469/runtime_resources/working_dir_files/_ray_pkg_058a0b1437202a86/relax",
+      "resolved_under_task11_c2": true,
+      "straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+    },
+    {
+      "code_matches_worktree": true,
+      "cwd": "/tmp/ray/session_2026-09-25_21-38-01_058590_281469/runtime_resources/working_dir_files/_ray_pkg_058a0b1437202a86",
+      "pid": 377250,
+      "pyspy_available": false,
+      "pyspy_frames": [],
+      "pythonpath": "/tmp/ray/session_2026-09-25_21-38-01_058590_281469/runtime_resources/working_dir_files/_ray_pkg_058a0b1437202a86:/root/autodl-tmp/megatron-stack/venv/lib/python3.12/site-packages:/root/autodl-tmp/relax-work/task11-c2:/root/autodl-tmp/megatron-stack/Megatron-LM:/root/autodl-tmp/relax-work/task11-c2:",
+      "resolved_is_task4pr": false,
+      "resolved_is_working_dir_copy": true,
+      "resolved_relax": "/tmp/ray/session_2026-09-25_21-38-01_058590_281469/runtime_resources/working_dir_files/_ray_pkg_058a0b1437202a86/relax",
+      "resolved_under_task11_c2": true,
+      "straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+    }
+  ],
+  "driver_code_matches_worktree": true,
+  "driver_resolved_under_task11_c2": true,
+  "evidence_dir": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign",
+  "git_head": "9d3729ae400dbedf91e3dbc4fcee796ec8a84532",
+  "gpu": {
+    "at": "2026-09-25T22:03:23",
+    "raw": "0, NVIDIA GeForce RTX 4090, 588 MiB, 24564 MiB, 0 %\n1, NVIDIA GeForce RTX 4090, 4 MiB, 24564 MiB, 0 %\n2, NVIDIA GeForce RTX 4090, 4 MiB, 24564 MiB, 0 %\n3, NVIDIA GeForce RTX 4090, 4 MiB, 24564 MiB, 0 %"
+  },
+  "job": {
+    "error_type": null,
+    "message": "Job is currently running.",
+    "status": "RUNNING"
+  },
+  "job_submission_id": "raysubmit_pUjysBz9MeYsNVKh",
+  "log": "/root/autodl-tmp/relax-work/task11-c2/log/qwen3-0.6b-sft-dp4-on-smoke-clean-2026-09-25-22:03:11.log",
+  "other_running_jobs": [],
+  "phase": "started",
+  "ran_alone": true,
+  "valid_arm": false,
+  "worktree": "/root/autodl-tmp/relax-work/task11-c2",
+  "worktree_straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+}

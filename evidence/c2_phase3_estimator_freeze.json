@@ -1,0 +1,10 @@
+{
+  "frozen_utc": "2026-09-25T11:12:06Z",
+  "estimator": "/root/autodl-tmp/relax-work/task11_evidence/analyze_overhead.py",
+  "sha256": "2d93332c9c59f68c8f4be7ac3add0386499fc8a8d26e45d48261d46dfa6102d5",
+  "protocol": "/root/autodl-tmp/relax-work/TASK11_ACCEPTANCE_PROTOCOL.md",
+  "frozen_before_any_arm": true,
+  "runs_observed_at_freeze": 0,
+  "selftest": "passed (synthetic ON=+0.1%: median/mean point > 0, interval contains point)",
+  "decision_rule": "overhead < 0.5% only if median AND mean 95% upper bounds < +0.005, AND whole-run wall median delta < +0.005, AND steady-state p50 median delta < +0.005"
+}

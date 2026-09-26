@@ -1,0 +1,298 @@
+diff --git a/relax/utils/straggler/detector.py b/relax/utils/straggler/detector.py
+index 0ce1725..1c3867a 100644
+--- a/relax/utils/straggler/detector.py
++++ b/relax/utils/straggler/detector.py
+@@ -104,6 +104,10 @@ MAX_LABEL_ENTRIES = 4096
+ #: otherwise invent a new rank on every observation.
+ MAX_ALIGNED_RANKS = 4096
+ 
++#: Bound on per-cohort window anchors; malformed envelopes could otherwise
++#: invent a new cohort string (and therefore a new anchor) on every observation.
++MAX_COHORT_ANCHORS = 1024
++
+ #: Bound on concurrently flagged ``(cohort, stage, rank)`` triples.
+ MAX_ACTIVE_ENTRIES = 512
+ 
+@@ -392,7 +396,7 @@ class _Window:
+     detector counters instead of being silently dropped.
+     """
+ 
+-    __slots__ = ("index", "samples", "labels", "world_size", "cohort_expected", "_counters")
++    __slots__ = ("index", "samples", "labels", "world_size", "cohort_expected", "warmup_samples", "_counters")
+ 
+     def __init__(self, index: int, counters: Dict[str, int]) -> None:
+         self.index = index
+@@ -402,6 +406,9 @@ class _Window:
+         self.labels: Dict[int, str] = {}
+         self.world_size = 1
+         self.cohort_expected: Optional[int] = None
++        #: Samples excluded by per-rank warmup. Kept so a window that ends up
++        #: with no judged sample is still reported as a warmup window.
++        self.warmup_samples = 0
+         self._counters = counters
+ 
+     def add(self, envelope: Any) -> None:
+@@ -475,6 +482,7 @@ class StragglerDetector:
+         self._verdicts: Deque[Verdict] = deque()
+         self._streak: Dict[Tuple[str, str, int], int] = {}
+         self._epoch: Dict[int, float] = {}
++        self._cohort_epoch: Dict[str, float] = {}
+         self._active: Set[Tuple[str, str, int]] = set()
+         self._labels: Dict[Tuple[str, str, int], str] = {}
+         self._counters: Dict[str, int] = {
+@@ -482,6 +490,7 @@ class StragglerDetector:
+             "windows_closed": 0,
+             "windows_forced": 0,
+             "warmup_windows_skipped": 0,
++            "warmup_samples_skipped": 0,
+             "incomplete_windows": 0,
+             "cohort_stage_pairs": 0,
+             "uncertain_judgements": 0,
+@@ -493,6 +502,7 @@ class StragglerDetector:
+             "streak_evictions": 0,
+             "label_evictions": 0,
+             "epoch_evictions": 0,
++            "cohort_epoch_evictions": 0,
+             "active_evictions": 0,
+             "pair_evictions": 0,
+             "rank_evictions": 0,
+@@ -512,24 +522,49 @@ class StragglerDetector:
+         self._counters["envelopes"] += 1
+         try:
+             host_start = float(envelope.host_start)
++            if not math.isfinite(host_start):
++                # A non-finite clock would poison both the cohort anchor and the
++                # warmup baseline; it is a malformed packet, not a fast rank.
++                self._counters["invalid_samples"] += 1
++                return []
+             rank = int(envelope.rank)
+-            epoch = self._epoch.get(rank)
+-            if epoch is None:
+-                # Evicting an alignment epoch re-bases that rank's windows on its
+-                # next observation; the eviction is counted so the reset is
++            cohort = str(envelope.cohort)
++            first = self._epoch.get(rank)
++            if first is None:
++                # Evicting an alignment epoch re-bases that rank's *warmup* on
++                # its next observation; the eviction is counted so the reset is
+                 # visible instead of silently changing window membership.
+                 _evict_to_cap(self._epoch, MAX_ALIGNED_RANKS, self._counters, "epoch_evictions")
+-                epoch = host_start
+-                self._epoch[rank] = epoch
++                first = host_start
++                self._epoch[rank] = first
++            anchor = self._cohort_epoch.get(cohort)
++            if anchor is None:
++                # Windows are anchored to the cohort's first observation, not to
++                # each rank's own: a rank that starts later then lands in the
++                # same wall-clock window as its peers instead of falling a fixed
++                # number of windows behind them and never being compared. The
++                # per-rank ``_epoch`` stays as the warmup baseline.
++                _evict_to_cap(self._cohort_epoch, MAX_COHORT_ANCHORS, self._counters, "cohort_epoch_evictions")
++                anchor = host_start
++                self._cohort_epoch[cohort] = anchor
+             # Integer microseconds: `(4.1 - 0.1) / 1.0` floors to 3 in binary
+             # floating point, which would silently merge two windows.
+             window_us = max(1, int(round(self._config.window_seconds * 1e6)))
+-            index = int(round(max(0.0, host_start - epoch) * 1e6)) // window_us
++            index = int(round(max(0.0, host_start - anchor) * 1e6)) // window_us
+             window = self._windows.get(index)
+             if window is None:
+                 window = _Window(index, self._counters)
+                 self._windows[index] = window
+-            window.add(envelope)
++            warmup_span = self._config.warmup_windows * self._config.window_seconds
++            if warmup_span > 0.0 and (host_start - first) < warmup_span:
++                # Startup is not a straggler, and it is per rank: lazy CUDA
++                # allocation and the first data batch make a late-starting rank
++                # look momentarily slow. The window is created (so the skip
++                # stays visible in the stats) but no sample is recorded.
++                window.warmup_samples += 1
++                self._counters["warmup_samples_skipped"] += 1
++            else:
++                window.add(envelope)
+         except Exception:
+             self._counters["uncertain_judgements"] += 1
+             return []
+@@ -563,10 +598,11 @@ class StragglerDetector:
+         if window is None:
+             return []
+         self._counters["windows_closed"] += 1
+-        if index < self._config.warmup_windows:
+-            # Startup is not a straggler: lazy CUDA allocation and the first data
+-            # batch make every rank look momentarily slow. Counted, not hidden.
+-            self._counters["warmup_windows_skipped"] += 1
++        if not window.samples:
++            # Warmup samples (and malformed ones) never reached a rank bucket, so
++            # there is nothing to judge. Counted, not hidden.
++            if window.warmup_samples:
++                self._counters["warmup_windows_skipped"] += 1
+             return []
+         verdicts: List[Verdict] = []
+         for (cohort, name), per_rank in window.samples.items():
+@@ -798,6 +834,7 @@ class StragglerDetector:
+         stats["retained_verdicts"] = len(self._verdicts)
+         stats["active_stragglers"] = len(self._active)
+         stats["aligned_ranks"] = len(self._epoch)
++        stats["aligned_cohorts"] = len(self._cohort_epoch)
+         stats["streak_entries"] = len(self._streak)
+         stats["label_entries"] = len(self._labels)
+         stats["work_tolerance"] = self._config.work_tolerance
+@@ -808,6 +845,7 @@ class StragglerDetector:
+             "MAX_STREAK_ENTRIES": MAX_STREAK_ENTRIES,
+             "MAX_LABEL_ENTRIES": MAX_LABEL_ENTRIES,
+             "MAX_ALIGNED_RANKS": MAX_ALIGNED_RANKS,
++            "MAX_COHORT_ANCHORS": MAX_COHORT_ANCHORS,
+             "MAX_ACTIVE_ENTRIES": MAX_ACTIVE_ENTRIES,
+             "MAX_PAIRS_PER_WINDOW": MAX_PAIRS_PER_WINDOW,
+             "MAX_RANKS_PER_WINDOW": MAX_RANKS_PER_WINDOW,
+@@ -822,6 +860,7 @@ __all__ = [
+     "CANDIDATE_UNDETERMINED",
+     "MAX_ACTIVE_ENTRIES",
+     "MAX_ALIGNED_RANKS",
++    "MAX_COHORT_ANCHORS",
+     "MAX_LABEL_ENTRIES",
+     "MAX_PAIRS_PER_WINDOW",
+     "MAX_PENDING_WINDOWS",
+diff --git a/tests/utils/straggler/test_straggler_detector.py b/tests/utils/straggler/test_straggler_detector.py
+index 8dd3ed5..8d39f1a 100644
+--- a/tests/utils/straggler/test_straggler_detector.py
++++ b/tests/utils/straggler/test_straggler_detector.py
+@@ -344,31 +344,41 @@ def test_malformed_envelope_does_not_raise() -> None:
+ def test_staggered_rank_starts_are_aligned_by_relative_time() -> None:
+     """A rank that began profiling seconds later must still be comparable.
+ 
+-    Process startup is staggered in practice (imports, actor placement), so
+-    absolute-clock windows can leave every rank alone in its own window and
+-    turn every judgement into ``uncertain``.
++    Process startup is staggered in practice (imports, actor placement), but the
++    training loop is collective-synchronised afterwards, so every live rank
++    reports the *same wall-clock* window. Windows are anchored to the cohort's
++    first observation, not to each rank's own, so a rank joining three windows
++    in still shares a window with its peers. (The previous form of this test fed
++    each rank's own relative window at a different wall time, which is exactly
++    the non-contemporaneous comparison the cohort anchor removes.)
+     """
+     detector = make_detector(persist_windows=1)
+ 
+-    verdicts: List[Any] = []
+-    for window in range(4):
++    starts = {0: 0.0, 1: 0.5, 2: 3.0}  # rank 2 is three windows "late"
++    flat: List[Any] = []
++    for tick in range(12):
++        wall = tick + 0.1
+         for rank, host_ms in ((0, 100.0), (1, 100.0), (2, 400.0)):
+-            offset = (window + rank * 7) * 1.0  # rank 2 is 14s "late"
+-            envelope = FakeEnvelope(
+-                cohort=COHORT,
+-                name=STAGE,
+-                rank=rank,
+-                label=f"rank{rank}/tp0/pp0",
+-                host_ms=host_ms,
+-                device_ms=None,
+-                host_start=offset + 0.1,
+-                world_size=4,
++            if wall < starts[rank]:
++                continue
++            flat.extend(
++                detector.observe(
++                    FakeEnvelope(
++                        cohort=COHORT,
++                        name=STAGE,
++                        rank=rank,
++                        label=f"rank{rank}/tp0/pp0",
++                        host_ms=host_ms,
++                        device_ms=None,
++                        host_start=wall,
++                        world_size=4,
++                    )
++                )
+             )
+-            verdicts.extend(detector.observe(envelope))
+ 
+-    stragglers = [verdict for verdict in verdicts if verdict.kind == VERDICT_STRAGGLER]
++    stragglers = [verdict for verdict in flat if verdict.kind == VERDICT_STRAGGLER]
+     assert stragglers and {verdict.rank for verdict in stragglers} == {2}
+-    assert not [verdict for verdict in verdicts if verdict.kind == VERDICT_UNCERTAIN]
++    assert not [verdict for verdict in flat if verdict.kind == VERDICT_UNCERTAIN]
+     assert detector.stats()["aligned_ranks"] == 3
+ 
+ 
+diff --git a/tests/utils/straggler/test_straggler_redteam_regressions.py b/tests/utils/straggler/test_straggler_redteam_regressions.py
+index c618d03..c2bbfe9 100644
+--- a/tests/utils/straggler/test_straggler_redteam_regressions.py
++++ b/tests/utils/straggler/test_straggler_redteam_regressions.py
+@@ -20,8 +20,8 @@ unambiguous:
+ * RT-06 -- the shim's timer-name table must be bounded;
+ * RT-07 -- ranks with different expert-parallel roles must not share a cohort;
+ * RT-08 -- workload counters must survive the wire and reach the detector;
+-* RT-09 -- (open, xfail) a rank starting three windows late must still be
+-  compared; the current per-rank window anchoring never compares it.
++* RT-09 -- a rank starting three windows late must still be compared (fixed by
++  the shared cohort anchor), while its own cold-start windows stay warmup.
+ """
+ 
+ import socket
+@@ -370,19 +370,17 @@ def test_workload_delta_is_reported_over_the_wire_envelope() -> None:
+     assert straggler.facts["workload_delta_beyond_tolerance"] is True
+ 
+ 
+-# --- RT-09 (open): a rank that starts >= 3 windows late is never compared --------
++# --- RT-09: a rank that starts >= 3 windows late is still compared --------------
+ 
+ 
+-@pytest.mark.xfail(
+-    strict=True,
+-    reason=(
+-        "RT-09: window indices are anchored to each rank's own first observation and "
+-        "windows close once the fastest rank advances two ahead, so a rank joining "
+-        "three or more windows late is closed out before its first sample and is never "
+-        "compared. Needs a shared cohort anchor plus per-rank warmup."
+-    ),
+-)
+ def test_rank_starting_three_windows_late_is_still_compared() -> None:
++    """The straight-line form of the original defect.
++
++    rank 1 starts 15 s (three 5 s windows) after rank 0 and is 3x slow. Windows
++    are anchored to the cohort, so both ranks land in the same wall-clock window
++    once rank 1 is up; before the fix rank 0 closed every shared window before
++    rank 1's first sample and the straggler was never named.
++    """
+     detector = StragglerDetector(
+         StragglerConfig(enabled=True, window_seconds=5.0, warmup_windows=0, persist_windows=1, work_tolerance=0.05)
+     )
+@@ -398,3 +396,34 @@ def test_rank_starting_three_windows_late_is_still_compared() -> None:
+         t += 0.5
+     verdicts += detector.flush()
+     assert [v.rank for v in verdicts if v.kind == VERDICT_STRAGGLER] == [1]
++
++
++def test_late_rank_cold_start_is_warmup_not_a_straggler() -> None:
++    """Per-rank warmup: a late rank's own first windows must not be a finding.
++
++    A shared anchor alone would judge rank 1 from its very first window. rank 1
++    starts 20 s in and is 4x slow only for its own first two windows, then
++    matches rank 0 exactly: nothing may be reported, and the excluded samples
++    must be visible in the counters.
++    """
++    detector = StragglerDetector(
++        StragglerConfig(enabled=True, window_seconds=5.0, warmup_windows=2, persist_windows=1, work_tolerance=0.05)
++    )
++    verdicts: List[Any] = []
++    seq = {0: 0, 1: 0}
++    t = 0.0
++    while t < 55.0:
++        seq[0] += 1
++        verdicts += detector.observe(envelope(0, seq[0], host_ms=100.0, start_s=t))
++        if t >= 20.0:
++            seq[1] += 1
++            # Slow for its own first two windows (t in [20, 30)), then normal.
++            host_ms = 400.0 if t < 30.0 else 100.0
++            verdicts += detector.observe(envelope(1, seq[1], host_ms=host_ms, start_s=t))
++        t += 0.5
++    verdicts += detector.flush()
++
++    assert [v.rank for v in verdicts if v.kind == VERDICT_STRAGGLER] == []
++    stats = detector.stats()
++    assert stats["warmup_samples_skipped"] > 0
++    assert stats["warmup_windows_skipped"] >= 1

@@ -1,0 +1,1068 @@
+{
+  "arms": [
+    {
+      "arm": "S1-on",
+      "campaign": "abba",
+      "dir": "gpu_campaign/abba/S1-on",
+      "envelope_keys": {
+        "barrier": 1403,
+        "cohort": 1403,
+        "device_ms": 1403,
+        "host_end": 1403,
+        "host_ms": 1403,
+        "host_start": 1403,
+        "label": 1403,
+        "log_level": 1403,
+        "measurement_kind": 1403,
+        "name": 1403,
+        "rank": 1403,
+        "reason": 1403,
+        "run_id": 1403,
+        "seq": 1403,
+        "workload": 1403,
+        "world_size": 1403
+      },
+      "envelope_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba/S1-on/run_18000000/straggler_envelopes.jsonl",
+      "envelope_time_fields_present": [
+        "host_start",
+        "host_end",
+        "host_ms",
+        "device_ms"
+      ],
+      "latency_chain": {
+        "clock": "host_start/host_end are host monotonic seconds (same clock per host)",
+        "context_measured_interval_ms": {
+          "max": 45649.62953142822,
+          "mean": 154.01786308090388,
+          "min": 0.016439706087112427,
+          "n": 1403,
+          "p50": 2.1608062088489532,
+          "p95": 141.02189615368843,
+          "p99": 171.8473844230175
+        },
+        "derived_wait_from_trigger_to_window_close": {
+          "cohort_anchors": {
+            "topo0:dense:0:0:-1:-1:0:0:0": 9035523.525580518
+          },
+          "definition": "gap = derived_window_close(verdict.window_index) - host_end(triggering envelope); positive means the verdict's window closed after the triggering sample arrived",
+          "derivable": true,
+          "gap_s": {
+            "max": 4.984792133793235,
+            "mean": 1.712708721342294,
+            "min": 0.06992249004542828,
+            "n": 253,
+            "p50": 0.779118936508894,
+            "p95": 4.571614107117057,
+            "p99": 4.862530753016472
+          },
+          "gap_s_by_kind": {
+            "uncertain": {
+              "max": 4.984792133793235,
+              "mean": 1.712708721342294,
+              "min": 0.06992249004542828,
+              "n": 253,
+              "p50": 0.779118936508894,
+              "p95": 4.571614107117057,
+              "p99": 4.862530753016472
+            }
+          },
+          "n_gap_outside_[0,window_s]": 0,
+          "n_matched": 253,
+          "n_trigger_host_ms_agrees_with_verdict": 124,
+          "n_unique_envelope_match": 34,
+          "n_unmatched": 0,
+          "n_verdicts": 253,
+          "out_of_range": [],
+          "schedule_delay_assumption_dependent": false,
+          "unmatched": [],
+          "window_s": 5.0,
+          "window_s_declared": 5.0,
+          "window_s_source": "manifest.relax_env.RELAX_STRAGGLER_WINDOW_S"
+        },
+        "hop_collector_ingest": {
+          "available": false,
+          "needed_field_examples": [
+            "ingest_host_s",
+            "ingest_host",
+            "collector_recv_host_s",
+            "recv_host_s",
+            "received_at"
+          ],
+          "recorded_fields_matching_candidates": [],
+          "why_absent": "no ingest timestamp is recorded on the envelope: the JSONL is written after the collector has already consumed the packet, so ingest time is not observable"
+        },
+        "hop_interval_complete": {
+          "available": true,
+          "field": "straggler_envelopes.jsonl host_end",
+          "host_end_distribution": {
+            "max": 9035613.67824808,
+            "mean": 9035591.9560109,
+            "min": 9035564.468423529,
+            "n": 1403,
+            "p50": 9035592.110753426,
+            "p95": 9035611.892140312,
+            "p99": 9035613.362297393
+          },
+          "host_start_distribution": {
+            "max": 9035613.669005124,
+            "mean": 9035591.801993039,
+            "min": 9035523.525580518,
+            "n": 1403,
+            "p50": 9035592.087584408,
+            "p95": 9035611.891133849,
+            "p99": 9035613.361629136
+          },
+          "meaning": "the measured interval has ended; this is the start of the reporting chain"
+        },
+        "hop_persisted_line": {
+          "available": false,
+          "needed_field_examples": [
+            "persist_host_s",
+            "written_host_s",
+            "flush_host_s",
+            "persisted_at"
+          ],
+          "recorded_fields_matching_candidates": [],
+          "why_absent": "JSONL lines carry no per-line write timestamp; only whole-file mtime exists, which is not per record"
+        },
+        "hop_verdict_creation": {
+          "available": false,
+          "needed_field_examples": [
+            "verdict_host_s",
+            "created_host_s",
+            "verdict_created_host_s",
+            "created_at",
+            "emit_host_s"
+          ],
+          "recorded_fields_matching_candidates": [],
+          "why_absent": "verdict records carry duration fields (rank_host_ms, reference_host_ms) but no creation timestamp"
+        },
+        "overall_interval_to_persisted": {
+          "available": false,
+          "needed_fields": [
+            "collector_recv_host_s",
+            "created_at",
+            "created_host_s",
+            "emit_host_s",
+            "flush_host_s",
+            "ingest_host",
+            "ingest_host_s",
+            "persist_host_s",
+            "persisted_at",
+            "received_at",
+            "recv_host_s",
+            "verdict_created_host_s",
+            "verdict_host_s",
+            "written_host_s"
+          ],
+          "why_absent": "composite of the three absent hops; at least one end timestamp per record is missing"
+        }
+      },
+      "n_envelopes": 1403,
+      "n_verdicts": 253,
+      "relative_dir": "abba/S1-on",
+      "schedule_delay": {
+        "cohort_anchors": {
+          "topo0:dense:0:0:-1:-1:0:0:0": 9035523.525580518
+        },
+        "definition": "gap = derived_window_close(verdict.window_index) - host_end(triggering envelope); positive means the verdict's window closed after the triggering sample arrived",
+        "derivable": true,
+        "gap_s": {
+          "max": 4.984792133793235,
+          "mean": 1.712708721342294,
+          "min": 0.06992249004542828,
+          "n": 253,
+          "p50": 0.779118936508894,
+          "p95": 4.571614107117057,
+          "p99": 4.862530753016472
+        },
+        "gap_s_by_kind": {
+          "uncertain": {
+            "max": 4.984792133793235,
+            "mean": 1.712708721342294,
+            "min": 0.06992249004542828,
+            "n": 253,
+            "p50": 0.779118936508894,
+            "p95": 4.571614107117057,
+            "p99": 4.862530753016472
+          }
+        },
+        "n_gap_outside_[0,window_s]": 0,
+        "n_matched": 253,
+        "n_trigger_host_ms_agrees_with_verdict": 124,
+        "n_unique_envelope_match": 34,
+        "n_unmatched": 0,
+        "n_verdicts": 253,
+        "out_of_range": [],
+        "schedule_delay_assumption_dependent": false,
+        "unmatched": [],
+        "window_s": 5.0,
+        "window_s_declared": 5.0,
+        "window_s_source": "manifest.relax_env.RELAX_STRAGGLER_WINDOW_S"
+      },
+      "verdict_keys": {
+        "candidate_causes": 253,
+        "cohort": 253,
+        "cohort_size": 253,
+        "consecutive_windows": 253,
+        "deviation": 253,
+        "facts": 253,
+        "host_only": 253,
+        "kind": 253,
+        "label": 253,
+        "measurement_kind": 253,
+        "name": 253,
+        "rank": 253,
+        "rank_device_ms": 253,
+        "rank_host_ms": 253,
+        "reason": 253,
+        "reference_device_ms": 253,
+        "reference_host_ms": 253,
+        "window_index": 253
+      },
+      "verdict_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba/S1-on/run_18000000/straggler_verdicts.jsonl",
+      "verdict_time_fields_present": [
+        "rank_host_ms",
+        "reference_host_ms",
+        "rank_device_ms",
+        "reference_device_ms"
+      ]
+    },
+    {
+      "arm": "S1-on",
+      "campaign": "abba-cac4cb6-run4",
+      "dir": "gpu_campaign/abba-cac4cb6-run4/S1-on",
+      "envelope_keys": {
+        "barrier": 2112,
+        "cohort": 2112,
+        "device_ms": 2112,
+        "host_end": 2112,
+        "host_ms": 2112,
+        "host_start": 2112,
+        "label": 2112,
+        "log_level": 2112,
+        "measurement_kind": 2112,
+        "name": 2112,
+        "rank": 2112,
+        "reason": 2112,
+        "run_id": 2112,
+        "seq": 2112,
+        "workload": 2112,
+        "world_size": 2112
+      },
+      "envelope_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-cac4cb6-run4/S1-on/run_1a000000/straggler_envelopes.jsonl",
+      "envelope_time_fields_present": [
+        "host_start",
+        "host_end",
+        "host_ms",
+        "device_ms"
+      ],
+      "latency_chain": {
+        "clock": "host_start/host_end are host monotonic seconds (same clock per host)",
+        "context_measured_interval_ms": {
+          "max": 57423.677353188396,
+          "mean": 258.93859637223864,
+          "min": 0.015560537576675415,
+          "n": 2112,
+          "p50": 1.9868798553943634,
+          "p95": 229.82986085116863,
+          "p99": 285.0484475493431
+        },
+        "derived_wait_from_trigger_to_window_close": {
+          "cohort_anchors": {
+            "topo0:dense:0:0:-1:-1:0:0:0": 9084370.58479416
+          },
+          "definition": "gap = derived_window_close(verdict.window_index) - host_end(triggering envelope); positive means the verdict's window closed after the triggering sample arrived",
+          "derivable": true,
+          "gap_s": {
+            "max": 4.963067771866918,
+            "mean": 2.4020210460439,
+            "min": 0.004057036712765694,
+            "n": 787,
+            "p50": 2.387789675965905,
+            "p95": 4.697008391842246,
+            "p99": 4.943884076550603
+          },
+          "gap_s_by_kind": {
+            "recovered": {
+              "max": 4.542473452165723,
+              "mean": 2.1362884087782157,
+              "min": 0.1444917768239975,
+              "n": 19,
+              "p50": 1.936545267701149,
+              "p95": 4.45186698064208,
+              "p99": 4.542473452165723
+            },
+            "straggler": {
+              "max": 4.405594129115343,
+              "mean": 2.2302201750688253,
+              "min": 0.49452197924256325,
+              "n": 20,
+              "p50": 1.6837431844323874,
+              "p95": 3.9809764716774225,
+              "p99": 4.405594129115343
+            },
+            "uncertain": {
+              "max": 4.963067771866918,
+              "mean": 2.413364545412282,
+              "min": 0.004057036712765694,
+              "n": 748,
+              "p50": 2.3970815781503916,
+              "p95": 4.7037842739373446,
+              "p99": 4.9443121533840895
+            }
+          },
+          "n_gap_outside_[0,window_s]": 0,
+          "n_matched": 787,
+          "n_trigger_host_ms_agrees_with_verdict": 787,
+          "n_unique_envelope_match": 787,
+          "n_unmatched": 2,
+          "n_verdicts": 789,
+          "out_of_range": [],
+          "schedule_delay_assumption_dependent": false,
+          "unmatched": [
+            {
+              "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+              "name": "forward-compute",
+              "rank": 3,
+              "reason": "no envelope of this (rank, stage) falls in this window bucket",
+              "window_index": 21
+            },
+            {
+              "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+              "name": "forward-compute",
+              "rank": 2,
+              "reason": "no envelope of this (rank, stage) falls in this window bucket",
+              "window_index": 189
+            }
+          ],
+          "window_s": 5.0,
+          "window_s_declared": 5.0,
+          "window_s_source": "manifest.relax_env.RELAX_STRAGGLER_WINDOW_S"
+        },
+        "hop_collector_ingest": {
+          "available": false,
+          "needed_field_examples": [
+            "ingest_host_s",
+            "ingest_host",
+            "collector_recv_host_s",
+            "recv_host_s",
+            "received_at"
+          ],
+          "recorded_fields_matching_candidates": [],
+          "why_absent": "no ingest timestamp is recorded on the envelope: the JSONL is written after the collector has already consumed the packet, so ingest time is not observable"
+        },
+        "hop_interval_complete": {
+          "available": true,
+          "field": "straggler_envelopes.jsonl host_end",
+          "host_end_distribution": {
+            "max": 9085665.526507204,
+            "mean": 9085047.564227827,
+            "min": 9084426.68612076,
+            "n": 2112,
+            "p50": 9085059.509058436,
+            "p95": 9085612.887082795,
+            "p99": 9085660.186959606
+          },
+          "host_start_distribution": {
+            "max": 9085665.525417272,
+            "mean": 9085047.305289231,
+            "min": 9084370.58479416,
+            "n": 2112,
+            "p50": 9085059.378821287,
+            "p95": 9085612.678863268,
+            "p99": 9085660.184971176
+          },
+          "meaning": "the measured interval has ended; this is the start of the reporting chain"
+        },
+        "hop_persisted_line": {
+          "available": false,
+          "needed_field_examples": [
+            "persist_host_s",
+            "written_host_s",
+            "flush_host_s",
+            "persisted_at"
+          ],
+          "recorded_fields_matching_candidates": [],
+          "why_absent": "JSONL lines carry no per-line write timestamp; only whole-file mtime exists, which is not per record"
+        },
+        "hop_verdict_creation": {
+          "available": false,
+          "needed_field_examples": [
+            "verdict_host_s",
+            "created_host_s",
+            "verdict_created_host_s",
+            "created_at",
+            "emit_host_s"
+          ],
+          "recorded_fields_matching_candidates": [],
+          "why_absent": "verdict records carry duration fields (rank_host_ms, reference_host_ms) but no creation timestamp"
+        },
+        "overall_interval_to_persisted": {
+          "available": false,
+          "needed_fields": [
+            "collector_recv_host_s",
+            "created_at",
+            "created_host_s",
+            "emit_host_s",
+            "flush_host_s",
+            "ingest_host",
+            "ingest_host_s",
+            "persist_host_s",
+            "persisted_at",
+            "received_at",
+            "recv_host_s",
+            "verdict_created_host_s",
+            "verdict_host_s",
+            "written_host_s"
+          ],
+          "why_absent": "composite of the three absent hops; at least one end timestamp per record is missing"
+        }
+      },
+      "n_envelopes": 2112,
+      "n_verdicts": 789,
+      "relative_dir": "abba-cac4cb6-run4/S1-on",
+      "schedule_delay": {
+        "cohort_anchors": {
+          "topo0:dense:0:0:-1:-1:0:0:0": 9084370.58479416
+        },
+        "definition": "gap = derived_window_close(verdict.window_index) - host_end(triggering envelope); positive means the verdict's window closed after the triggering sample arrived",
+        "derivable": true,
+        "gap_s": {
+          "max": 4.963067771866918,
+          "mean": 2.4020210460439,
+          "min": 0.004057036712765694,
+          "n": 787,
+          "p50": 2.387789675965905,
+          "p95": 4.697008391842246,
+          "p99": 4.943884076550603
+        },
+        "gap_s_by_kind": {
+          "recovered": {
+            "max": 4.542473452165723,
+            "mean": 2.1362884087782157,
+            "min": 0.1444917768239975,
+            "n": 19,
+            "p50": 1.936545267701149,
+            "p95": 4.45186698064208,
+            "p99": 4.542473452165723
+          },
+          "straggler": {
+            "max": 4.405594129115343,
+            "mean": 2.2302201750688253,
+            "min": 0.49452197924256325,
+            "n": 20,
+            "p50": 1.6837431844323874,
+            "p95": 3.9809764716774225,
+            "p99": 4.405594129115343
+          },
+          "uncertain": {
+            "max": 4.963067771866918,
+            "mean": 2.413364545412282,
+            "min": 0.004057036712765694,
+            "n": 748,
+            "p50": 2.3970815781503916,
+            "p95": 4.7037842739373446,
+            "p99": 4.9443121533840895
+          }
+        },
+        "n_gap_outside_[0,window_s]": 0,
+        "n_matched": 787,
+        "n_trigger_host_ms_agrees_with_verdict": 787,
+        "n_unique_envelope_match": 787,
+        "n_unmatched": 2,
+        "n_verdicts": 789,
+        "out_of_range": [],
+        "schedule_delay_assumption_dependent": false,
+        "unmatched": [
+          {
+            "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+            "name": "forward-compute",
+            "rank": 3,
+            "reason": "no envelope of this (rank, stage) falls in this window bucket",
+            "window_index": 21
+          },
+          {
+            "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+            "name": "forward-compute",
+            "rank": 2,
+            "reason": "no envelope of this (rank, stage) falls in this window bucket",
+            "window_index": 189
+          }
+        ],
+        "window_s": 5.0,
+        "window_s_declared": 5.0,
+        "window_s_source": "manifest.relax_env.RELAX_STRAGGLER_WINDOW_S"
+      },
+      "verdict_keys": {
+        "candidate_causes": 789,
+        "cohort": 789,
+        "cohort_size": 789,
+        "consecutive_windows": 789,
+        "deviation": 789,
+        "facts": 789,
+        "host_only": 789,
+        "kind": 789,
+        "label": 789,
+        "measurement_kind": 789,
+        "name": 789,
+        "rank": 789,
+        "rank_device_ms": 789,
+        "rank_host_ms": 789,
+        "reason": 789,
+        "reference_device_ms": 789,
+        "reference_host_ms": 789,
+        "window_index": 789
+      },
+      "verdict_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-cac4cb6-run4/S1-on/run_1a000000/straggler_verdicts.jsonl",
+      "verdict_time_fields_present": [
+        "rank_host_ms",
+        "reference_host_ms",
+        "rank_device_ms",
+        "reference_device_ms"
+      ]
+    },
+    {
+      "arm": "S1-on",
+      "campaign": "abba-ce9b637",
+      "dir": "gpu_campaign/abba-ce9b637/S1-on",
+      "envelope_keys": {
+        "barrier": 1481,
+        "cohort": 1481,
+        "device_ms": 1481,
+        "host_end": 1481,
+        "host_ms": 1481,
+        "host_start": 1481,
+        "label": 1481,
+        "log_level": 1481,
+        "measurement_kind": 1481,
+        "name": 1481,
+        "rank": 1481,
+        "reason": 1481,
+        "run_id": 1481,
+        "seq": 1481,
+        "workload": 1481,
+        "world_size": 1481
+      },
+      "envelope_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-ce9b637/S1-on/run_10000000/straggler_envelopes.jsonl",
+      "envelope_time_fields_present": [
+        "host_start",
+        "host_end",
+        "host_ms",
+        "device_ms"
+      ],
+      "latency_chain": {
+        "clock": "host_start/host_end are host monotonic seconds (same clock per host)",
+        "context_measured_interval_ms": {
+          "max": 46773.8488689065,
+          "mean": 263.30461739930325,
+          "min": 0.0157821923494339,
+          "n": 1481,
+          "p50": 2.4007949978113174,
+          "p95": 226.64856724441051,
+          "p99": 266.8306827545166
+        },
+        "derived_wait_from_trigger_to_window_close": {
+          "cohort_anchors": {
+            "topo0:dense:0:0:-1:-1:0:0:0": 9073224.422683986
+          },
+          "definition": "gap = derived_window_close(verdict.window_index) - host_end(triggering envelope); positive means the verdict's window closed after the triggering sample arrived",
+          "derivable": true,
+          "gap_s": {
+            "max": 4.996184878051281,
+            "mean": 2.4712529278059097,
+            "min": 0.01200515404343605,
+            "n": 538,
+            "p50": 2.495345512405038,
+            "p95": 4.720136817544699,
+            "p99": 4.953980538994074
+          },
+          "gap_s_by_kind": {
+            "recovered": {
+              "max": 4.294188249856234,
+              "mean": 1.6402040887624025,
+              "min": 0.37913805805146694,
+              "n": 7,
+              "p50": 1.230544501915574,
+              "p95": 4.294188249856234,
+              "p99": 4.294188249856234
+            },
+            "straggler": {
+              "max": 4.7846107464283705,
+              "mean": 2.2101298542693257,
+              "min": 0.32602384872734547,
+              "n": 8,
+              "p50": 1.9955917540937662,
+              "p95": 4.7846107464283705,
+              "p99": 4.7846107464283705
+            },
+            "uncertain": {
+              "max": 4.996184878051281,
+              "mean": 2.4863701868147,
+              "min": 0.01200515404343605,
+              "n": 523,
+              "p50": 2.498076230287552,
+              "p95": 4.720136817544699,
+              "p99": 4.953980538994074
+            }
+          },
+          "n_gap_outside_[0,window_s]": 0,
+          "n_matched": 538,
+          "n_trigger_host_ms_agrees_with_verdict": 538,
+          "n_unique_envelope_match": 538,
+          "n_unmatched": 2,
+          "n_verdicts": 540,
+          "out_of_range": [],
+          "schedule_delay_assumption_dependent": false,
+          "unmatched": [
+            {
+              "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+              "name": "forward-compute",
+              "rank": 1,
+              "reason": "no envelope of this (rank, stage) falls in this window bucket",
+              "window_index": 71
+            },
+            {
+              "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+              "name": "backward-compute",
+              "rank": 3,
+              "reason": "no envelope of this (rank, stage) falls in this window bucket",
+              "window_index": 139
+            }
+          ],
+          "window_s": 5.0,
+          "window_s_declared": 5.0,
+          "window_s_source": "manifest.relax_env.RELAX_STRAGGLER_WINDOW_S"
+        },
+        "hop_collector_ingest": {
+          "available": false,
+          "needed_field_examples": [
+            "ingest_host_s",
+            "ingest_host",
+            "collector_recv_host_s",
+            "recv_host_s",
+            "received_at"
+          ],
+          "recorded_fields_matching_candidates": [],
+          "why_absent": "no ingest timestamp is recorded on the envelope: the JSONL is written after the collector has already consumed the packet, so ingest time is not observable"
+        },
+        "hop_interval_complete": {
+          "available": true,
+          "field": "straggler_envelopes.jsonl host_end",
+          "host_end_distribution": {
+            "max": 9074504.710348587,
+            "mean": 9073881.699624484,
+            "min": 9073267.642452288,
+            "n": 1481,
+            "p50": 9073877.506720068,
+            "p95": 9074447.290352063,
+            "p99": 9074499.410678832
+          },
+          "host_start_distribution": {
+            "max": 9074504.706025038,
+            "mean": 9073881.436319867,
+            "min": 9073224.422683986,
+            "n": 1481,
+            "p50": 9073877.502818624,
+            "p95": 9074447.27703096,
+            "p99": 9074499.408538915
+          },
+          "meaning": "the measured interval has ended; this is the start of the reporting chain"
+        },
+        "hop_persisted_line": {
+          "available": false,
+          "needed_field_examples": [
+            "persist_host_s",
+            "written_host_s",
+            "flush_host_s",
+            "persisted_at"
+          ],
+          "recorded_fields_matching_candidates": [],
+          "why_absent": "JSONL lines carry no per-line write timestamp; only whole-file mtime exists, which is not per record"
+        },
+        "hop_verdict_creation": {
+          "available": false,
+          "needed_field_examples": [
+            "verdict_host_s",
+            "created_host_s",
+            "verdict_created_host_s",
+            "created_at",
+            "emit_host_s"
+          ],
+          "recorded_fields_matching_candidates": [],
+          "why_absent": "verdict records carry duration fields (rank_host_ms, reference_host_ms) but no creation timestamp"
+        },
+        "overall_interval_to_persisted": {
+          "available": false,
+          "needed_fields": [
+            "collector_recv_host_s",
+            "created_at",
+            "created_host_s",
+            "emit_host_s",
+            "flush_host_s",
+            "ingest_host",
+            "ingest_host_s",
+            "persist_host_s",
+            "persisted_at",
+            "received_at",
+            "recv_host_s",
+            "verdict_created_host_s",
+            "verdict_host_s",
+            "written_host_s"
+          ],
+          "why_absent": "composite of the three absent hops; at least one end timestamp per record is missing"
+        }
+      },
+      "n_envelopes": 1481,
+      "n_verdicts": 540,
+      "relative_dir": "abba-ce9b637/S1-on",
+      "schedule_delay": {
+        "cohort_anchors": {
+          "topo0:dense:0:0:-1:-1:0:0:0": 9073224.422683986
+        },
+        "definition": "gap = derived_window_close(verdict.window_index) - host_end(triggering envelope); positive means the verdict's window closed after the triggering sample arrived",
+        "derivable": true,
+        "gap_s": {
+          "max": 4.996184878051281,
+          "mean": 2.4712529278059097,
+          "min": 0.01200515404343605,
+          "n": 538,
+          "p50": 2.495345512405038,
+          "p95": 4.720136817544699,
+          "p99": 4.953980538994074
+        },
+        "gap_s_by_kind": {
+          "recovered": {
+            "max": 4.294188249856234,
+            "mean": 1.6402040887624025,
+            "min": 0.37913805805146694,
+            "n": 7,
+            "p50": 1.230544501915574,
+            "p95": 4.294188249856234,
+            "p99": 4.294188249856234
+          },
+          "straggler": {
+            "max": 4.7846107464283705,
+            "mean": 2.2101298542693257,
+            "min": 0.32602384872734547,
+            "n": 8,
+            "p50": 1.9955917540937662,
+            "p95": 4.7846107464283705,
+            "p99": 4.7846107464283705
+          },
+          "uncertain": {
+            "max": 4.996184878051281,
+            "mean": 2.4863701868147,
+            "min": 0.01200515404343605,
+            "n": 523,
+            "p50": 2.498076230287552,
+            "p95": 4.720136817544699,
+            "p99": 4.953980538994074
+          }
+        },
+        "n_gap_outside_[0,window_s]": 0,
+        "n_matched": 538,
+        "n_trigger_host_ms_agrees_with_verdict": 538,
+        "n_unique_envelope_match": 538,
+        "n_unmatched": 2,
+        "n_verdicts": 540,
+        "out_of_range": [],
+        "schedule_delay_assumption_dependent": false,
+        "unmatched": [
+          {
+            "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+            "name": "forward-compute",
+            "rank": 1,
+            "reason": "no envelope of this (rank, stage) falls in this window bucket",
+            "window_index": 71
+          },
+          {
+            "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+            "name": "backward-compute",
+            "rank": 3,
+            "reason": "no envelope of this (rank, stage) falls in this window bucket",
+            "window_index": 139
+          }
+        ],
+        "window_s": 5.0,
+        "window_s_declared": 5.0,
+        "window_s_source": "manifest.relax_env.RELAX_STRAGGLER_WINDOW_S"
+      },
+      "verdict_keys": {
+        "candidate_causes": 540,
+        "cohort": 540,
+        "cohort_size": 540,
+        "consecutive_windows": 540,
+        "deviation": 540,
+        "facts": 540,
+        "host_only": 540,
+        "kind": 540,
+        "label": 540,
+        "measurement_kind": 540,
+        "name": 540,
+        "rank": 540,
+        "rank_device_ms": 540,
+        "rank_host_ms": 540,
+        "reason": 540,
+        "reference_device_ms": 540,
+        "reference_host_ms": 540,
+        "window_index": 540
+      },
+      "verdict_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-ce9b637/S1-on/run_10000000/straggler_verdicts.jsonl",
+      "verdict_time_fields_present": [
+        "rank_host_ms",
+        "reference_host_ms",
+        "rank_device_ms",
+        "reference_device_ms"
+      ]
+    },
+    {
+      "arm": "on-smoke-valid",
+      "campaign": "gpu_campaign",
+      "dir": "gpu_campaign/on-smoke-valid",
+      "envelope_keys": {
+        "barrier": 1155,
+        "cohort": 1155,
+        "device_ms": 1155,
+        "host_end": 1155,
+        "host_ms": 1155,
+        "host_start": 1155,
+        "label": 1155,
+        "log_level": 1155,
+        "name": 1155,
+        "rank": 1155,
+        "reason": 1155,
+        "run_id": 1155,
+        "seq": 1155,
+        "workload": 1155,
+        "world_size": 1155
+      },
+      "envelope_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/on-smoke-valid/straggler/run_1d000000/straggler_envelopes.jsonl",
+      "envelope_time_fields_present": [
+        "host_start",
+        "host_end",
+        "host_ms",
+        "device_ms"
+      ],
+      "latency_chain": {
+        "clock": "host_start/host_end are host monotonic seconds (same clock per host)",
+        "context_measured_interval_ms": {
+          "max": 45594.27011758089,
+          "mean": 185.44497364301444,
+          "min": 0.01642853021621704,
+          "n": 1155,
+          "p50": 2.21225805580616,
+          "p95": 146.43867127597332,
+          "p99": 168.3491002768278
+        },
+        "derived_wait_from_trigger_to_window_close": {
+          "cohort_anchors": {
+            "topo0:dense:0:0:-1:-1:0:0:0": 9026908.137069909
+          },
+          "definition": "gap = derived_window_close(verdict.window_index) - host_end(triggering envelope); positive means the verdict's window closed after the triggering sample arrived",
+          "derivable": true,
+          "gap_s": {
+            "max": 4.880300775170326,
+            "mean": 1.5552750945437785,
+            "min": 0.09405291639268398,
+            "n": 43,
+            "p50": 0.4225309304893017,
+            "p95": 4.396112581714988,
+            "p99": 4.880300775170326
+          },
+          "gap_s_by_kind": {
+            "recovered": {
+              "max": 4.557335712015629,
+              "mean": 1.889886142153825,
+              "min": 0.18961773999035358,
+              "n": 14,
+              "p50": 0.8003511969000101,
+              "p95": 4.362175051122904,
+              "p99": 4.557335712015629
+            },
+            "straggler": {
+              "max": 4.880300775170326,
+              "mean": 1.393738726732032,
+              "min": 0.09405291639268398,
+              "n": 29,
+              "p50": 0.389179864898324,
+              "p95": 4.396112581714988,
+              "p99": 4.880300775170326
+            }
+          },
+          "n_gap_outside_[0,window_s]": 0,
+          "n_matched": 43,
+          "n_trigger_host_ms_agrees_with_verdict": 23,
+          "n_unique_envelope_match": 6,
+          "n_unmatched": 0,
+          "n_verdicts": 43,
+          "out_of_range": [],
+          "schedule_delay_assumption_dependent": true,
+          "unmatched": [],
+          "window_s": 5.0,
+          "window_s_declared": null,
+          "window_s_source": "not recorded in arm manifest"
+        },
+        "hop_collector_ingest": {
+          "available": false,
+          "needed_field_examples": [
+            "ingest_host_s",
+            "ingest_host",
+            "collector_recv_host_s",
+            "recv_host_s",
+            "received_at"
+          ],
+          "recorded_fields_matching_candidates": [],
+          "why_absent": "no ingest timestamp is recorded on the envelope: the JSONL is written after the collector has already consumed the packet, so ingest time is not observable"
+        },
+        "hop_interval_complete": {
+          "available": true,
+          "field": "straggler_envelopes.jsonl host_end",
+          "host_end_distribution": {
+            "max": 9026991.005990949,
+            "mean": 9026972.456722692,
+            "min": 9026950.709108274,
+            "n": 1155,
+            "p50": 9026972.831226744,
+            "p95": 9026989.139740916,
+            "p99": 9026990.699333409
+          },
+          "host_start_distribution": {
+            "max": 9026991.004444225,
+            "mean": 9026972.271277718,
+            "min": 9026908.137069909,
+            "n": 1155,
+            "p50": 9026972.685724337,
+            "p95": 9026989.137250928,
+            "p99": 9026990.698584229
+          },
+          "meaning": "the measured interval has ended; this is the start of the reporting chain"
+        },
+        "hop_persisted_line": {
+          "available": false,
+          "needed_field_examples": [
+            "persist_host_s",
+            "written_host_s",
+            "flush_host_s",
+            "persisted_at"
+          ],
+          "recorded_fields_matching_candidates": [],
+          "why_absent": "JSONL lines carry no per-line write timestamp; only whole-file mtime exists, which is not per record"
+        },
+        "hop_verdict_creation": {
+          "available": false,
+          "needed_field_examples": [
+            "verdict_host_s",
+            "created_host_s",
+            "verdict_created_host_s",
+            "created_at",
+            "emit_host_s"
+          ],
+          "recorded_fields_matching_candidates": [],
+          "why_absent": "verdict records carry duration fields (rank_host_ms, reference_host_ms) but no creation timestamp"
+        },
+        "overall_interval_to_persisted": {
+          "available": false,
+          "needed_fields": [
+            "collector_recv_host_s",
+            "created_at",
+            "created_host_s",
+            "emit_host_s",
+            "flush_host_s",
+            "ingest_host",
+            "ingest_host_s",
+            "persist_host_s",
+            "persisted_at",
+            "received_at",
+            "recv_host_s",
+            "verdict_created_host_s",
+            "verdict_host_s",
+            "written_host_s"
+          ],
+          "why_absent": "composite of the three absent hops; at least one end timestamp per record is missing"
+        }
+      },
+      "n_envelopes": 1155,
+      "n_verdicts": 43,
+      "relative_dir": "on-smoke-valid",
+      "schedule_delay": {
+        "cohort_anchors": {
+          "topo0:dense:0:0:-1:-1:0:0:0": 9026908.137069909
+        },
+        "definition": "gap = derived_window_close(verdict.window_index) - host_end(triggering envelope); positive means the verdict's window closed after the triggering sample arrived",
+        "derivable": true,
+        "gap_s": {
+          "max": 4.880300775170326,
+          "mean": 1.5552750945437785,
+          "min": 0.09405291639268398,
+          "n": 43,
+          "p50": 0.4225309304893017,
+          "p95": 4.396112581714988,
+          "p99": 4.880300775170326
+        },
+        "gap_s_by_kind": {
+          "recovered": {
+            "max": 4.557335712015629,
+            "mean": 1.889886142153825,
+            "min": 0.18961773999035358,
+            "n": 14,
+            "p50": 0.8003511969000101,
+            "p95": 4.362175051122904,
+            "p99": 4.557335712015629
+          },
+          "straggler": {
+            "max": 4.880300775170326,
+            "mean": 1.393738726732032,
+            "min": 0.09405291639268398,
+            "n": 29,
+            "p50": 0.389179864898324,
+            "p95": 4.396112581714988,
+            "p99": 4.880300775170326
+          }
+        },
+        "n_gap_outside_[0,window_s]": 0,
+        "n_matched": 43,
+        "n_trigger_host_ms_agrees_with_verdict": 23,
+        "n_unique_envelope_match": 6,
+        "n_unmatched": 0,
+        "n_verdicts": 43,
+        "out_of_range": [],
+        "schedule_delay_assumption_dependent": true,
+        "unmatched": [],
+        "window_s": 5.0,
+        "window_s_declared": null,
+        "window_s_source": "not recorded in arm manifest"
+      },
+      "verdict_keys": {
+        "candidate_causes": 43,
+        "cohort": 43,
+        "cohort_size": 43,
+        "consecutive_windows": 43,
+        "deviation": 43,
+        "facts": 43,
+        "host_only": 43,
+        "kind": 43,
+        "label": 43,
+        "measurement_kind": 43,
+        "name": 43,
+        "rank": 43,
+        "rank_device_ms": 43,
+        "rank_host_ms": 43,
+        "reason": 43,
+        "reference_device_ms": 43,
+        "reference_host_ms": 43,
+        "window_index": 43
+      },
+      "verdict_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/on-smoke-valid/straggler/run_1d000000/straggler_verdicts.jsonl",
+      "verdict_time_fields_present": [
+        "rank_host_ms",
+        "reference_host_ms",
+        "rank_device_ms",
+        "reference_device_ms"
+      ]
+    }
+  ],
+  "default_window_s": 5.0,
+  "root": "gpu_campaign",
+  "tool": "report_latency.py"
+}

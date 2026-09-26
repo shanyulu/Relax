@@ -1,0 +1,4 @@
+2026-09-26 17:25:16 | WARNING | relax.models:24 Failed to import relax.models.qwen_omni (Omni path disabled): No module named 'megatron.bridge'
+2026-09-26 17:25:16 | WARNING | relax.models:33 Failed to import relax.models.glm_moe_dsa: No module named 'megatron.bridge'
+2026-09-26 17:25:16 | WARNING | relax.models:42 Failed to import relax.models.dots_ocr.megatron: No module named 'megatron.bridge'
+2026-09-26 17:25:16 | WARNING | relax.models:52 Failed to import relax.models.gemma4: No module named 'megatron.bridge'

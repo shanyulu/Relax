@@ -1,0 +1,43 @@
+{
+  "status": "NOT REPRODUCIBLE ENOUGH FOR A SINGLE-RUN DIFF",
+  "procedure": "authoritative = strictly sequential, absolute output paths, identical command",
+  "command": "pytest tests -q --tb=no -rfE --continue-on-collection-errors -p no:cacheprovider",
+  "baseline_6d78410": {
+    "failed": 27,
+    "passed": 2078,
+    "skipped": 398,
+    "errors": 8,
+    "file": "repo_wide_baseline_6d78410.txt"
+  },
+  "branch_47581e0": {
+    "attempts": [
+      {
+        "outcome": "SIGKILLed (exit 137) early",
+        "file": "repo_wide_branch_47581e0.txt"
+      },
+      {
+        "outcome": "SIGKILLed (exit 137) early",
+        "file": "repo_wide_branch_47581e0.txt"
+      },
+      {
+        "outcome": "completed",
+        "failed": 65,
+        "passed": 2335,
+        "skipped": 398,
+        "errors": 8,
+        "file": "repo_wide_branch_47581e0_verbose.txt"
+      }
+    ]
+  },
+  "why_unstable": "the observed branch failure count varies (28 / 65) and the baseline varies (27 / 28) across runs; the Ray-backed suite is worker/order dependent, so a single-run difference is not attributable to the code change",
+  "stable_reproducible_subset": {
+    "tests/utils/straggler (branch)": "291 passed, 1 skipped",
+    "tests/utils/straggler + tests/backends/fsdp (branch)": "424 passed, 4 skipped",
+    "tests/backends/fsdp alone (branch)": "129 passed, 4 skipped"
+  },
+  "discarded_attempts": [
+    "both arms run concurrently (confounded)",
+    "sequential run whose branch output path was relative and got removed"
+  ],
+  "common_collection_errors": "environmental: ModuleNotFoundError transfer_queue, audioread (both arms)"
+}

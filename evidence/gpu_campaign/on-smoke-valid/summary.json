@@ -1,0 +1,326 @@
+{
+  "evidence_dir": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/on-smoke-valid/straggler/run_1d000000",
+  "log": "/root/autodl-tmp/relax-work/task11-c2/log/qwen3-0.6b-sft-dp4-on-smoke-valid-2026-09-25-22:25:39.log",
+  "log_present": true,
+  "observation": {
+    "collector_status": {
+      "active_evictions": 0,
+      "active_stragglers": [
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+          "name": "embedding-grads-all-reduce",
+          "rank": 0
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1",
+          "name": "embedding-grads-all-reduce",
+          "rank": 2
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1",
+          "name": "forward-compute",
+          "rank": 2
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank1/tp0/pp0/vpp-1/cp0/ep0/dp1/chunk-1",
+          "name": "non-tensor-parallel-grads-all-reduce",
+          "rank": 1
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1",
+          "name": "non-tensor-parallel-grads-all-reduce",
+          "rank": 2
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+          "name": "optimizer-copy-main-to-model-params",
+          "rank": 0
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank1/tp0/pp0/vpp-1/cp0/ep0/dp1/chunk-1",
+          "name": "optimizer-copy-main-to-model-params",
+          "rank": 1
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1",
+          "name": "optimizer-copy-main-to-model-params",
+          "rank": 2
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+          "name": "optimizer-copy-to-main-grad",
+          "rank": 0
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank1/tp0/pp0/vpp-1/cp0/ep0/dp1/chunk-1",
+          "name": "optimizer-copy-to-main-grad",
+          "rank": 1
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1",
+          "name": "optimizer-copy-to-main-grad",
+          "rank": 2
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+          "name": "optimizer-inner-step",
+          "rank": 0
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank1/tp0/pp0/vpp-1/cp0/ep0/dp1/chunk-1",
+          "name": "optimizer-inner-step",
+          "rank": 1
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1",
+          "name": "optimizer-inner-step",
+          "rank": 2
+        },
+        {
+          "cohort": "topo0:dense:0:0:-1:-1:0:0:0",
+          "label": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+          "name": "params-all-gather",
+          "rank": 0
+        }
+      ],
+      "aligned_cohorts": 1,
+      "aligned_ranks": 4,
+      "caps": {
+        "MAX_ACTIVE_ENTRIES": 512,
+        "MAX_ALIGNED_RANKS": 4096,
+        "MAX_COHORT_ANCHORS": 1024,
+        "MAX_LABEL_ENTRIES": 4096,
+        "MAX_PAIRS_PER_WINDOW": 256,
+        "MAX_PENDING_WINDOWS": 8,
+        "MAX_RANKS_PER_WINDOW": 1024,
+        "MAX_SAMPLES_PER_RANK": 32,
+        "MAX_STREAK_ENTRIES": 4096,
+        "MAX_VERDICTS": 512
+      },
+      "cohort_epoch_evictions": 0,
+      "cohort_stage_pairs": 116,
+      "dedup": {
+        "duplicate": 0,
+        "entries": 1760,
+        "evicted": 0,
+        "expired": 0,
+        "late": 605,
+        "max_entries": 8192,
+        "new": 1155,
+        "newest_ranks": 4,
+        "ttl_s": 120.0
+      },
+      "duplicate_packets": 0,
+      "envelope_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/on-smoke-valid/straggler/run_1d000000/straggler_envelopes.jsonl",
+      "envelopes": 1760,
+      "epoch_evictions": 0,
+      "flushed_lines": 1198,
+      "identity": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+      "incomplete_windows": 12,
+      "ingest_errors": 0,
+      "invalid_device_samples": 0,
+      "invalid_packets": 0,
+      "invalid_samples": 0,
+      "judged_packets": 1155,
+      "label_entries": 40,
+      "label_evictions": 0,
+      "late_packets": 605,
+      "open_windows": 0,
+      "pair_evictions": 0,
+      "pending_line_drops": 0,
+      "pending_lines": {
+        "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/on-smoke-valid/straggler/run_1d000000/straggler_envelopes.jsonl": 0,
+        "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/on-smoke-valid/straggler/run_1d000000/straggler_verdicts.jsonl": 0
+      },
+      "persist_windows": 3,
+      "rank_evictions": 0,
+      "recoveries_reported": 14,
+      "reports": 4,
+      "retained_verdicts": 43,
+      "sample_evictions": 0,
+      "single_rank_windows": 0,
+      "stragglers_reported": 29,
+      "streak_entries": 26,
+      "streak_evictions": 0,
+      "uncertain_judgements": 0,
+      "uptime_s": 126.52037781476974,
+      "verdict_callback_errors": 0,
+      "verdict_evictions": 0,
+      "verdict_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/on-smoke-valid/straggler/run_1d000000/straggler_verdicts.jsonl",
+      "verdicts": 43,
+      "warmup_samples_skipped": 4,
+      "warmup_windows_skipped": 4,
+      "windows_closed": 16,
+      "windows_forced": 0,
+      "work_tolerance": 0.05,
+      "write_errors": 0
+    },
+    "envelopes": 1155,
+    "ranks_seen": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "stages_seen": [
+      "all-grads-sync",
+      "backward-compute",
+      "conditional-embedder-grads-all-reduce",
+      "embedding-grads-all-reduce",
+      "forward-compute",
+      "non-tensor-parallel-grads-all-reduce",
+      "optimizer-copy-main-to-model-params",
+      "optimizer-copy-to-main-grad",
+      "optimizer-inner-step",
+      "params-all-gather"
+    ],
+    "verdict_kinds": {
+      "recovered": 14,
+      "straggler": 29
+    },
+    "verdicts": 43
+  },
+  "perf_metrics": {
+    "perf/actor_train_tflops": {
+      "max": 9.035164061543146,
+      "mean": 8.016060323645581,
+      "min": 0.12090924662622705,
+      "n": 48,
+      "p50": 8.265859399113511,
+      "p95": 8.963425644501923,
+      "p99": 9.035164061543146
+    },
+    "perf/actor_train_time": {
+      "max": 46.39965200424194,
+      "mean": 1.6851020256678264,
+      "min": 0.699810266494751,
+      "n": 48,
+      "p50": 0.7260355949401855,
+      "p95": 0.7713708877563477,
+      "p99": 46.39965200424194
+    },
+    "perf/actor_train_tok_per_s": {
+      "max": 7866.701600933425,
+      "mean": 7008.021856634629,
+      "min": 105.8844148130862,
+      "n": 48,
+      "p50": 7224.481125625864,
+      "p95": 7800.3621620880895,
+      "p99": 7866.701600933425
+    },
+    "perf/actor_train_tokens": {
+      "max": 6413.0,
+      "mean": 5235.5,
+      "min": 4591.0,
+      "n": 48,
+      "p50": 5227.5,
+      "p95": 5748.0,
+      "p99": 6413.0
+    },
+    "perf/init_actor_time": {
+      "max": 60.53486657142639,
+      "mean": 60.53486657142639,
+      "min": 60.53486657142639,
+      "n": 1,
+      "p50": 60.53486657142639,
+      "p95": 60.53486657142639,
+      "p99": 60.53486657142639
+    },
+    "perf/per_rank_fetch_time": {
+      "max": 0.09994196891784668,
+      "mean": 0.049086844667475274,
+      "min": 0.03560161590576172,
+      "n": 47,
+      "p50": 0.0471348762512207,
+      "p95": 0.0677347183227539,
+      "p99": 0.09994196891784668
+    },
+    "perf/sft_prefetch_wait_time": {
+      "max": 0.06767964363098145,
+      "mean": 0.0019582112630208335,
+      "min": 0.0002701282501220703,
+      "n": 48,
+      "p50": 0.0005633831024169922,
+      "p95": 0.0007116794586181641,
+      "p99": 0.06767964363098145
+    },
+    "perf/step_resp_token_per_s": {
+      "max": 282.2851704823251,
+      "mean": 250.1294141002895,
+      "min": 4.761422918601434,
+      "n": 48,
+      "p50": 253.2935600309287,
+      "p95": 274.7309215571898,
+      "p99": 282.2851704823251
+    },
+    "perf/step_time": {
+      "max": 50.40510034561157,
+      "mean": 1.9681891252597172,
+      "min": 0.8904674053192139,
+      "n": 48,
+      "p50": 0.9318451881408691,
+      "p95": 0.9705789089202881,
+      "p99": 50.40510034561157
+    },
+    "perf/step_token_per_s": {
+      "max": 6169.979315668975,
+      "mean": 5480.0248302690115,
+      "min": 97.47029499620352,
+      "n": 48,
+      "p50": 5645.327222818145,
+      "p95": 6104.494711843734,
+      "p99": 6169.979315668975
+    },
+    "perf/train_time": {
+      "max": 46.56233263015747,
+      "mean": 1.711852843562762,
+      "min": 0.7200303077697754,
+      "n": 48,
+      "p50": 0.7505842447280884,
+      "p95": 0.7926466464996338,
+      "p99": 46.56233263015747
+    },
+    "perf/train_wait_time": {
+      "max": 3.8427677154541016,
+      "mean": 0.2563362816969554,
+      "min": 0.17043709754943848,
+      "n": 48,
+      "p50": 0.17892634868621826,
+      "p95": 0.1904010772705078,
+      "p99": 3.8427677154541016
+    },
+    "perf/wait_time_ratio": {
+      "max": 0.20607017894937035,
+      "mean": 0.18997981134929523,
+      "min": 0.07623767613010347,
+      "n": 48,
+      "p50": 0.1923454064962122,
+      "p95": 0.20334748325997623,
+      "p99": 0.20607017894937035
+    }
+  },
+  "step_time": {
+    "max": 50.40510034561157,
+    "mean": 1.9681891252597172,
+    "min": 0.8904674053192139,
+    "n": 48,
+    "p50": 0.9318451881408691,
+    "p95": 0.9705789089202881,
+    "p99": 50.40510034561157
+  },
+  "train_metrics": {}
+}

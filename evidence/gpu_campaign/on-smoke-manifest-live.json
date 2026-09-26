@@ -1,0 +1,30 @@
+{
+  "actor_code_matches_worktree": false,
+  "actor_resolved_under_task11_c2": false,
+  "actors": [],
+  "any_probe_resolved_to_task4pr": false,
+  "arm": "on-smoke",
+  "captured_at": "2026-09-25T21:44:08",
+  "driver": [],
+  "driver_code_matches_worktree": false,
+  "driver_resolved_under_task11_c2": false,
+  "evidence_dir": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign",
+  "git_head": "d3b42e0b161be406f2e40c5218cb67e4e15ef6d1",
+  "gpu": {
+    "at": "2026-09-25T21:44:12",
+    "raw": "0, NVIDIA GeForce RTX 4090, 1 MiB, 24564 MiB, 0 %\n1, NVIDIA GeForce RTX 4090, 1 MiB, 24564 MiB, 0 %\n2, NVIDIA GeForce RTX 4090, 1 MiB, 24564 MiB, 0 %\n3, NVIDIA GeForce RTX 4090, 1 MiB, 24564 MiB, 0 %"
+  },
+  "job": {
+    "error_type": null,
+    "message": "Job finished successfully.",
+    "status": "SUCCEEDED"
+  },
+  "job_submission_id": "raysubmit_6WPA4CUy5EYWtKGY",
+  "log": "/root/autodl-tmp/relax-work/task11-c2/log/qwen3-0.6b-sft-dp4-on-smoke-2026-09-25-21:39:04.log",
+  "other_running_jobs": [],
+  "phase": "started",
+  "ran_alone": true,
+  "valid_arm": false,
+  "worktree": "/root/autodl-tmp/relax-work/task11-c2",
+  "worktree_straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+}

@@ -1,0 +1,110 @@
+{
+  "actor_code_matches_worktree": true,
+  "actor_resolved_under_task11_c2": true,
+  "actors": [
+    {
+      "code_matches_worktree": true,
+      "cwd": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b",
+      "pid": 274455,
+      "pyspy_available": false,
+      "pyspy_frames": [],
+      "pythonpath": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b:/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b:/root/autodl-tmp/megatron-stack/venv/lib/python3.12/site-packages:/root/autodl-tmp/relax-work/task11-c2:/root/autodl-tmp/megatron-stack/Megatron-LM::/root/Megatron-LM/:/root/Relax",
+      "resolved_is_task4pr": false,
+      "resolved_is_working_dir_copy": true,
+      "resolved_relax": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b/relax",
+      "resolved_under_task11_c2": true,
+      "straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+    },
+    {
+      "code_matches_worktree": true,
+      "cwd": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b",
+      "pid": 274944,
+      "pyspy_available": false,
+      "pyspy_frames": [],
+      "pythonpath": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b:/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b:/root/autodl-tmp/megatron-stack/venv/lib/python3.12/site-packages:/root/autodl-tmp/relax-work/task11-c2:/root/autodl-tmp/megatron-stack/Megatron-LM::/root/Megatron-LM/:/root/Relax",
+      "resolved_is_task4pr": false,
+      "resolved_is_working_dir_copy": true,
+      "resolved_relax": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b/relax",
+      "resolved_under_task11_c2": true,
+      "straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+    },
+    {
+      "code_matches_worktree": true,
+      "cwd": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b",
+      "pid": 274945,
+      "pyspy_available": false,
+      "pyspy_frames": [],
+      "pythonpath": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b:/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b:/root/autodl-tmp/megatron-stack/venv/lib/python3.12/site-packages:/root/autodl-tmp/relax-work/task11-c2:/root/autodl-tmp/megatron-stack/Megatron-LM::/root/Megatron-LM/:/root/Relax",
+      "resolved_is_task4pr": false,
+      "resolved_is_working_dir_copy": true,
+      "resolved_relax": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b/relax",
+      "resolved_under_task11_c2": true,
+      "straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+    },
+    {
+      "code_matches_worktree": true,
+      "cwd": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b",
+      "pid": 274951,
+      "pyspy_available": false,
+      "pyspy_frames": [],
+      "pythonpath": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b:/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b:/root/autodl-tmp/megatron-stack/venv/lib/python3.12/site-packages:/root/autodl-tmp/relax-work/task11-c2:/root/autodl-tmp/megatron-stack/Megatron-LM::/root/Megatron-LM/:/root/Relax",
+      "resolved_is_task4pr": false,
+      "resolved_is_working_dir_copy": true,
+      "resolved_relax": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b/relax",
+      "resolved_under_task11_c2": true,
+      "straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+    }
+  ],
+  "any_probe_resolved_to_task4pr": false,
+  "arm": "off-smoke",
+  "captured_at": "2026-09-25T21:36:48",
+  "driver": [
+    {
+      "code_matches_worktree": true,
+      "cwd": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b",
+      "pid": 269576,
+      "pyspy_available": false,
+      "pyspy_frames": [],
+      "pythonpath": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b:/root/autodl-tmp/megatron-stack/venv/lib/python3.12/site-packages:/root/autodl-tmp/relax-work/task11-c2:/root/autodl-tmp/megatron-stack/Megatron-LM:/root/autodl-tmp/relax-work/task11-c2:",
+      "resolved_is_task4pr": false,
+      "resolved_is_working_dir_copy": true,
+      "resolved_relax": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b/relax",
+      "resolved_under_task11_c2": true,
+      "straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+    },
+    {
+      "code_matches_worktree": true,
+      "cwd": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b",
+      "pid": 269578,
+      "pyspy_available": false,
+      "pyspy_frames": [],
+      "pythonpath": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b:/root/autodl-tmp/megatron-stack/venv/lib/python3.12/site-packages:/root/autodl-tmp/relax-work/task11-c2:/root/autodl-tmp/megatron-stack/Megatron-LM:/root/autodl-tmp/relax-work/task11-c2:",
+      "resolved_is_task4pr": false,
+      "resolved_is_working_dir_copy": true,
+      "resolved_relax": "/tmp/ray/session_2026-09-25_21-27-27_861888_256778/runtime_resources/working_dir_files/_ray_pkg_62d38a7c88a4a95b/relax",
+      "resolved_under_task11_c2": true,
+      "straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+    }
+  ],
+  "driver_code_matches_worktree": true,
+  "driver_resolved_under_task11_c2": true,
+  "evidence_dir": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign",
+  "git_head": "c6d425f4adac590679f3ce783bb1c956be62133f",
+  "gpu": {
+    "at": "2026-09-25T21:36:51",
+    "raw": "0, NVIDIA GeForce RTX 4090, 13797 MiB, 24564 MiB, 0 %\n1, NVIDIA GeForce RTX 4090, 13695 MiB, 24564 MiB, 0 %\n2, NVIDIA GeForce RTX 4090, 13691 MiB, 24564 MiB, 0 %\n3, NVIDIA GeForce RTX 4090, 14051 MiB, 24564 MiB, 0 %"
+  },
+  "job": {
+    "error_type": null,
+    "message": "Job is currently running.",
+    "status": "RUNNING"
+  },
+  "job_submission_id": "raysubmit_tfFwK2rZkTZ4c3AE",
+  "log": "/root/autodl-tmp/relax-work/task11-c2/log/qwen3-0.6b-sft-dp4-off-smoke-2026-09-25-21:31:23.log",
+  "other_running_jobs": [],
+  "phase": "started",
+  "ran_alone": true,
+  "valid_arm": true,
+  "worktree": "/root/autodl-tmp/relax-work/task11-c2",
+  "worktree_straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+}

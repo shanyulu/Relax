@@ -1,0 +1,101 @@
+{
+  "run_id": "S1-on",
+  "session": "S1",
+  "order": "A->B",
+  "slot": "B",
+  "arm": "on",
+  "worktree": "/root/autodl-tmp/relax-work/task11-c2",
+  "recipe": "scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "wrapper": "scripts/entrypoint/ray-job.sh",
+  "command": "bash scripts/entrypoint/ray-job.sh scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "relax_env": {
+    "RELAX_STRAGGLER_ENABLE": "1",
+    "RELAX_STRAGGLER_OUTPUT_DIR": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba/S1-on",
+    "RELAX_STRAGGLER_WINDOW_S": "5",
+    "RELAX_STRAGGLER_PERSIST_WINDOWS": "3",
+    "RELAX_STRAGGLER_REPORT_INTERVAL_S": "10",
+    "RELAX_STRAGGLER_WARMUP_WINDOWS": "2",
+    "RELAX_STRAGGLER_COLLECTOR_ADDR": "127.0.0.1:49645"
+  },
+  "collector_addr": "127.0.0.1:49645",
+  "git": {
+    "commit": "47581e06a1a0166251d4148204ffaf4cb529fd6a",
+    "branch": "feat/task11-straggler-profiler",
+    "dirty": false,
+    "status_porcelain": "",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "staged_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tree_label": "CLEAN@47581e06a1a0"
+  },
+  "dataset_path": "/root/autodl-tmp/relax-work/task11-c2/scripts/training/sft/data/dapo-math-17k-sft-256.jsonl",
+  "dataset_sha256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "straggler_sha256_at_start": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f",
+  "started_at": "2026-09-26T00:37:57+0800",
+  "finished_at": "2026-09-26T00:40:06+0800",
+  "wall_seconds": 129.187,
+  "exit_code": 143,
+  "gpus_before": [
+    {
+      "index": 0,
+      "memory_used_mib": 1,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 1,
+      "memory_used_mib": 1,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 2,
+      "memory_used_mib": 1,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 3,
+      "memory_used_mib": 1,
+      "utilization_gpu": 0
+    }
+  ],
+  "gpus_after": [
+    {
+      "index": 0,
+      "memory_used_mib": 5,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 1,
+      "memory_used_mib": 5,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 2,
+      "memory_used_mib": 5,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 3,
+      "memory_used_mib": 5,
+      "utilization_gpu": 0
+    }
+  ],
+  "timeout_seconds": 7200,
+  "provenance": {
+    "provenance_lines": 0,
+    "driver_relax_root": null,
+    "actor_relax_root": null,
+    "worktree_straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f",
+    "worktree_straggler_sha256_live": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f",
+    "roots": [],
+    "all_under_worktree": false,
+    "all_provenance_ok": false
+  },
+  "valid": false,
+  "invalid_reason": "INVALID-killed-by-operator",
+  "first_step_seen": false,
+  "slow_init": false,
+  "evidence_dir": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba/S1-on",
+  "summary_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba/S1-on/summary.json",
+  "observer_envelopes": 0,
+  "invalid_reason_note": "Operator SIGTERM (exit 143) during initialisation; the buffered log was truncated, so the earlier INVALID-observer-silent label was wrong. The run-scoped artifacts show the arm DID train: this directory is retained as raw evidence and is NOT used for pairing.",
+  "observed_envelopes_on_disk": 1380
+}

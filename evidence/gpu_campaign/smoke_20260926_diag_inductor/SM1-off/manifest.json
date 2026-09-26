@@ -1,0 +1,128 @@
+{
+  "run_id": "SM1-off",
+  "session": "SM1",
+  "order": "off",
+  "slot": "A",
+  "arm": "off",
+  "worktree": "/root/autodl-tmp/relax-work/task11-diag",
+  "recipe": "scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "wrapper": "scripts/entrypoint/ray-job.sh",
+  "command": "bash scripts/entrypoint/ray-job.sh scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "relax_env": {},
+  "collector_addr": null,
+  "git": {
+    "commit": "802b3c1e083b8189ed9078898ec8b13ceb12793e",
+    "branch": "diag/task11-stacktrace",
+    "dirty": false,
+    "status_porcelain": "",
+    "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "staged_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tree_label": "CLEAN@802b3c1e083b"
+  },
+  "ray_address": "http://127.0.0.1:8265",
+  "dataset_path": "/root/autodl-tmp/relax-work/task11-diag/scripts/training/sft/data/dapo-math-17k-sft-256.jsonl",
+  "dataset_sha256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "straggler_sha256_at_start": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f",
+  "started_at": "2026-09-26T20:01:06+0800",
+  "finished_at": "2026-09-26T20:05:36+0800",
+  "wall_seconds": 269.796,
+  "exit_code": 1,
+  "gpus_before": [
+    {
+      "index": 0,
+      "memory_used_mib": 1,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 1,
+      "memory_used_mib": 1,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 2,
+      "memory_used_mib": 1,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 3,
+      "memory_used_mib": 1,
+      "utilization_gpu": 0
+    }
+  ],
+  "gpus_after": [
+    {
+      "index": 0,
+      "memory_used_mib": 588,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 1,
+      "memory_used_mib": 5,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 2,
+      "memory_used_mib": 5,
+      "utilization_gpu": 0
+    },
+    {
+      "index": 3,
+      "memory_used_mib": 5,
+      "utilization_gpu": 0
+    }
+  ],
+  "timeout_seconds": 7200,
+  "provenance": {
+    "provenance_lines": 6,
+    "driver_relax_root": "/tmp/ray/session_2026-09-26_19-37-58_742317_61941/runtime_resources/working_dir_files/_ray_pkg_58f9b1e8b2d5f709/relax",
+    "actor_relax_root": "/tmp/ray/session_2026-09-26_19-37-58_742317_61941/runtime_resources/working_dir_files/_ray_pkg_58f9b1e8b2d5f709/relax",
+    "worktree_straggler_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f",
+    "worktree_straggler_sha256_live": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f",
+    "roots": [
+      {
+        "root": "/tmp/ray/session_2026-09-26_19-37-58_742317_61941/runtime_resources/working_dir_files/_ray_pkg_58f9b1e8b2d5f709/relax",
+        "accepted": true,
+        "reason": "working-dir-copy-sha256-match",
+        "root_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+      },
+      {
+        "root": "/tmp/ray/session_2026-09-26_19-37-58_742317_61941/runtime_resources/working_dir_files/_ray_pkg_58f9b1e8b2d5f709/relax",
+        "accepted": true,
+        "reason": "working-dir-copy-sha256-match",
+        "root_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+      },
+      {
+        "root": "/tmp/ray/session_2026-09-26_19-37-58_742317_61941/runtime_resources/working_dir_files/_ray_pkg_58f9b1e8b2d5f709/relax",
+        "accepted": true,
+        "reason": "working-dir-copy-sha256-match",
+        "root_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+      },
+      {
+        "root": "/tmp/ray/session_2026-09-26_19-37-58_742317_61941/runtime_resources/working_dir_files/_ray_pkg_58f9b1e8b2d5f709/relax",
+        "accepted": true,
+        "reason": "working-dir-copy-sha256-match",
+        "root_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+      },
+      {
+        "root": "/tmp/ray/session_2026-09-26_19-37-58_742317_61941/runtime_resources/working_dir_files/_ray_pkg_58f9b1e8b2d5f709/relax",
+        "accepted": true,
+        "reason": "working-dir-copy-sha256-match",
+        "root_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+      },
+      {
+        "root": "/tmp/ray/session_2026-09-26_19-37-58_742317_61941/runtime_resources/working_dir_files/_ray_pkg_58f9b1e8b2d5f709/relax",
+        "accepted": true,
+        "reason": "working-dir-copy-sha256-match",
+        "root_sha256": "bdc691059efcb717c8ec0ff5fe9569469924b69a67caec960e764bc1144f915f"
+      }
+    ],
+    "all_under_worktree": false,
+    "all_provenance_ok": true
+  },
+  "valid": false,
+  "invalid_reason": "exit code 1",
+  "first_step_seen": false,
+  "slow_init": false,
+  "evidence_dir": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/smoke_20260926_diag_inductor/SM1-off",
+  "summary_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/smoke_20260926_diag_inductor/SM1-off/summary.json"
+}
