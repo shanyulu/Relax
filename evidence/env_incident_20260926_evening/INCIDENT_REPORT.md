@@ -140,3 +140,9 @@ burn a GPU window without them passing.
 The fault is still active. GPU acceptance work on both tasks remains
 ENV_BLOCKED; per protocol, no further GPU attempts until the Step-2 reproducer
 passes.
+
+- 2026-09-27 00:00-00:06 — Re-entry gate re-run after ~1 h idle (G1 audit PASS,
+  G2 out-of-Ray canary 160.3 s PASS, G3 m1 reproducer FAIL x3: alive 13/17/17 s,
+  same `graceful=false, disconnect_type=0` signature, no readable OOM/Xid):
+  **GPU_REENTRY = FAIL**; both GPU tracks remain ENV_BLOCKED
+  (`reentry_20260927_0005/RESULT.md`).
