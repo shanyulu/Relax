@@ -1,0 +1,21 @@
+{
+  "ARM_ORDER": [
+    "C2C1-off",
+    "C2C2-off",
+    "C2C3-off",
+    "C2C4-off",
+    "C2C5-off",
+    "C2C6-off"
+  ],
+  "DATASET_PATH": "/root/autodl-tmp/relax-work/task11-c2/scripts/training/sft/data/dapo-math-17k-sft-256.jsonl",
+  "DATASET_SHA256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "ENV_FINGERPRINT_SHA256": "e03c770f18fc9f95986575d6a9db88a8738e24ed4d73e013cb0e004598525539",
+  "EXPECTED_STEPS": 48,
+  "PRODUCT_SHA": "a48a23ba5a39b3410a19e91d5f362154d97c9977",
+  "PROTOCOL_SHA256": "36d85f797a944ff67987cc96a794c20c87e7b58dd20e5f761d805f0a6a3dba34",
+  "PURPOSE": "OFF/OFF calibration only; no ON arm may reference this lock",
+  "RECIPE_PATH": "/tmp/relax-task11-fix.x2AJOQ/scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "RECIPE_SHA256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "SAVE": 1,
+  "_self_sha256": "16a2f8efddb5c778fd1588ce326794da5cd85634f597fd729bcb1d61cb38f306"
+}

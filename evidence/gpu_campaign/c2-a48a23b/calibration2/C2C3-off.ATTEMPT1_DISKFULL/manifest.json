@@ -1,0 +1,36 @@
+{
+  "run_id": "C2C3-off",
+  "session": "C2C3",
+  "arm": "off",
+  "order": "A->B",
+  "job_id": "codex-t11-c2-a48a23ba-calibration2-C2C3-off",
+  "pr_head": "a48a23ba5a39b3410a19e91d5f362154d97c9977",
+  "head": "a48a23ba5a39b3410a19e91d5f362154d97c9977",
+  "git": {
+    "commit": "a48a23ba5a39b3410a19e91d5f362154d97c9977",
+    "dirty": false,
+    "tree_label": "CLEAN@a48a23ba"
+  },
+  "command": [
+    "bash",
+    "scripts/entrypoint/ray-job.sh",
+    "scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh"
+  ],
+  "recipe": "/tmp/relax-task11-fix.x2AJOQ/scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "recipe_sha256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "dataset_sha256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "env_fingerprint_sha256": "e03c770f18fc9f95986575d6a9db88a8738e24ed4d73e013cb0e004598525539",
+  "expected_steps": 48,
+  "analyzer_sha256": null,
+  "runner_sha256": "fb9b62ecdecfd4622da5207a0c617c463a0aed0a87376a77a3fc13459d402941",
+  "protocol_sha256": "36d85f797a944ff67987cc96a794c20c87e7b58dd20e5f761d805f0a6a3dba34",
+  "lock_sha256": "16a2f8efddb5c778fd1588ce326794da5cd85634f597fd729bcb1d61cb38f306",
+  "source_sha256_before": "ad21350a7775e16a403d02328227f50dde2872a0d38149b998eca9f304fffbf4",
+  "started_at": 1790502554.9727864,
+  "relax_env": {},
+  "valid": false,
+  "error": "Command '['bash', 'scripts/entrypoint/ray-job.sh', 'scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh']' returned non-zero exit status 1.",
+  "final_status_error": "Request failed with status code 404: Job codex-t11-c2-a48a23ba-calibration2-C2C3-off does not exist.",
+  "resources_returned": true,
+  "finished_at": 1790502563.8341827
+}

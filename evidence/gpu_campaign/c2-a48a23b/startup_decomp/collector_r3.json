@@ -1,0 +1,70 @@
+{
+  "variant": "collector",
+  "repo": "/tmp/relax-task11-fix.x2AJOQ",
+  "commit": "a48a23ba5a39b3410a19e91d5f362154d97c9977",
+  "collector_addr": "127.0.0.1:41533",
+  "phases": [
+    {
+      "phase": "1_cuda_context_ready",
+      "seconds": 1.793722
+    },
+    {
+      "phase": "2_import_straggler_modules",
+      "seconds": 0.015927
+    },
+    {
+      "phase": "3_config_from_env",
+      "seconds": 0.000155
+    },
+    {
+      "phase": "4_runtime_start",
+      "seconds": 0.001719
+    },
+    {
+      "phase": "5_first_100_timer_pairs",
+      "seconds": 0.022099
+    },
+    {
+      "phase": "6_summary_report_once_path",
+      "seconds": 0.000208
+    },
+    {
+      "phase": "7_close_flush",
+      "seconds": 2.01887
+    }
+  ],
+  "summary_keys": [
+    "active_evictions",
+    "active_stragglers",
+    "aligned_cohorts",
+    "aligned_ranks",
+    "caps",
+    "close_errors",
+    "cohort_epoch_evictions",
+    "cohort_stage_pairs",
+    "dedup",
+    "duplicate_packets",
+    "envelope_path",
+    "envelopes",
+    "epoch_evictions",
+    "event_time_late_samples",
+    "flushed_lines",
+    "identity",
+    "incomplete_windows",
+    "ingest_errors",
+    "invalid_device_samples",
+    "invalid_packets",
+    "invalid_samples",
+    "judged_packets",
+    "label_entries",
+    "label_evictions",
+    "late_packets",
+    "min_stage_ms",
+    "observe_errors",
+    "open_windows",
+    "pair_evictions",
+    "pending_line_drops",
+    "pending_lines",
+    "persist_windows"
+  ]
+}

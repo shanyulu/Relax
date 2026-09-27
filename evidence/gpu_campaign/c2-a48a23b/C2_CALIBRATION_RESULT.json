@@ -1,0 +1,321 @@
+{
+  "DATASET_SHA256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "ENV_FINGERPRINT_SHA256": "e03c770f18fc9f95986575d6a9db88a8738e24ed4d73e013cb0e004598525539",
+  "EXPECTED_STEPS": 48,
+  "PRODUCT_SHA": "a48a23ba5a39b3410a19e91d5f362154d97c9977",
+  "RECIPE_PATH": "/tmp/relax-task11-fix.x2AJOQ/scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "RECIPE_SHA256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "calibration_population": {
+    "arms": 6,
+    "delta_samples_per_series": 720,
+    "pairwise_contrasts": 15,
+    "steps_per_series": 48
+  },
+  "checkpoints": {
+    "C2C1-off": "4831464a620e922c50478d8489dec533a2b039561c10d1d7bc21a0b08f1851d3",
+    "C2C2-off": "c67dae9a71d4fc500b77c08ff4ae4ec2385947077dd20cb019d8a418fae40477",
+    "C2C3-off": "a6b050efbc05f4741dbf3704da28a1e8239df400115beebe0ca8a6dabcb024d0",
+    "C2C4-off": "bc980ed67fdf0f6f8d0bc02a8f24478d734cca27900ac9c79d20bca371f309cc",
+    "C2C5-off": "6a3226a1a72832bef5632936902445e232a296b558eff87ad773c0b3f438be61",
+    "C2C6-off": "dfa9add16a8c9196b443005780d79d0abb493aac25612e394cbcf94e523dacbe"
+  },
+  "contrasts": [
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 10.774063110351562
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.06543898582458496
+      },
+      "pair": "C2C1-off/C2C2-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 9.26519775390625
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.05891835689544678
+      },
+      "pair": "C2C1-off/C2C3-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 5.9940948486328125
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.03764533996582031
+      },
+      "pair": "C2C1-off/C2C4-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 5.0496826171875
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.027090787887573242
+      },
+      "pair": "C2C1-off/C2C5-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 12.585502624511719
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.06963646411895752
+      },
+      "pair": "C2C1-off/C2C6-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 1.9881820678710938
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.016422390937805176
+      },
+      "pair": "C2C2-off/C2C3-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 6.331713676452637
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.02779364585876465
+      },
+      "pair": "C2C2-off/C2C4-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 5.961856842041016
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.03834819793701172
+      },
+      "pair": "C2C2-off/C2C5-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 4.241947174072266
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.028964310884475708
+      },
+      "pair": "C2C2-off/C2C6-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 4.8416852951049805
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.025784969329833984
+      },
+      "pair": "C2C3-off/C2C4-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 4.21551513671875
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.031827569007873535
+      },
+      "pair": "C2C3-off/C2C5-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 5.213756561279297
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.031797200441360474
+      },
+      "pair": "C2C3-off/C2C6-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 1.9691762924194336
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.024025917053222656
+      },
+      "pair": "C2C4-off/C2C5-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 10.055441856384277
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.04969131946563721
+      },
+      "pair": "C2C4-off/C2C6-off",
+      "token_series": {
+        "identical": true
+      }
+    },
+    {
+      "checkpoint_identical": false,
+      "grad_norm_series": {
+        "identical": false,
+        "max_abs_delta": 8.842523574829102
+      },
+      "learning_rate_series": {
+        "identical": true
+      },
+      "loss_series": {
+        "identical": false,
+        "max_abs_delta": 0.05072656273841858
+      },
+      "pair": "C2C5-off/C2C6-off",
+      "token_series": {
+        "identical": true
+      }
+    }
+  ],
+  "deterministic": false,
+  "envelope": {
+    "grad_norm_series": 12.585502624511719,
+    "learning_rate_series": null,
+    "loss_series": 0.06963646411895752,
+    "token_series": null
+  },
+  "envelope_factor": 2.0,
+  "envelope_semantics": "ON/OFF max |delta| must stay within 2x the worst OFF/OFF pairwise max |delta| over the whole calibration population (envelope test, not a confidence interval; deliberately conservative vs quantiles)",
+  "lock_sha256_reference": "022b58f4e80babcc86be2d9ea2510cfcdfa54341b59b3c31de6ad3eefdfafa79",
+  "mode": "OFF_OFF_ENVELOPE",
+  "status": "FROZEN_OFF_ONLY",
+  "tolerances": {
+    "grad_norm_series": 25.171005249023438,
+    "learning_rate_series": null,
+    "loss_series": 0.13927292823791504,
+    "mode": "OFF_OFF_ENVELOPE_x2",
+    "token_series": null
+  },
+  "update_counts": {
+    "C2C1-off": 48,
+    "C2C2-off": 48,
+    "C2C3-off": 48,
+    "C2C4-off": 48,
+    "C2C5-off": 48,
+    "C2C6-off": 48
+  }
+}
