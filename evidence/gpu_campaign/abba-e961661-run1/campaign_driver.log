@@ -1,0 +1,27 @@
+[campaign] head e961661bbdf6 clean=True
+[campaign] 12 arms: S1-off(A->B), S1-on(A->B), S2-on(B->A), S2-off(B->A), S3-off(A->B), S3-on(A->B), S4-on(B->A), S4-off(B->A), S5-off(A->B), S5-on(A->B), S6-on(B->A), S6-off(B->A)
+[S1-off] exit=0 wall=307.925s valid=True envelopes=None
+[campaign] S1-off: exit=0 valid=True reason=None wall=307.925 envelopes=None
+[S1-on] exit=0 wall=309.575s valid=True envelopes=2036
+[campaign] S1-on: exit=0 valid=True reason=None wall=309.575 envelopes=2036
+[S2-on] exit=0 wall=310.346s valid=True envelopes=2016
+[campaign] S2-on: exit=0 valid=True reason=None wall=310.346 envelopes=2016
+[S2-off] exit=0 wall=308.122s valid=True envelopes=None
+[campaign] S2-off: exit=0 valid=True reason=None wall=308.122 envelopes=None
+[S3-off] exit=0 wall=307.618s valid=True envelopes=None
+[campaign] S3-off: exit=0 valid=True reason=None wall=307.618 envelopes=None
+[S3-on] exit=0 wall=306.531s valid=True envelopes=2024
+[campaign] S3-on: exit=0 valid=True reason=None wall=306.531 envelopes=2024
+[S4-on] exit=0 wall=308.86s valid=True envelopes=2112
+[campaign] S4-on: exit=0 valid=True reason=None wall=308.86 envelopes=2112
+[S4-off] exit=0 wall=307.807s valid=True envelopes=None
+[campaign] S4-off: exit=0 valid=True reason=None wall=307.807 envelopes=None
+[S5-off] exit=0 wall=307.894s valid=True envelopes=None
+[campaign] S5-off: exit=0 valid=True reason=None wall=307.894 envelopes=None
+[S5-on] exit=0 wall=310.557s valid=True envelopes=2029
+[campaign] S5-on: exit=0 valid=True reason=None wall=310.557 envelopes=2029
+[S6-on] exit=0 wall=308.119s valid=True envelopes=2024
+[campaign] S6-on: exit=0 valid=True reason=None wall=308.119 envelopes=2024
+[S6-off] exit=0 wall=313.504s valid=True envelopes=None
+[campaign] S6-off: exit=0 valid=True reason=None wall=313.504 envelopes=None
+CAMPAIGN-ARMS-DONE

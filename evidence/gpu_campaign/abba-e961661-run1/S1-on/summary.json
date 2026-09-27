@@ -1,0 +1,262 @@
+{
+  "evidence_dir": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-e961661-run1/S1-on/run_10000000",
+  "log": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-e961661-run1/S1-on/job.log",
+  "log_present": true,
+  "observation": {
+    "collector_status": {
+      "active_evictions": 0,
+      "active_stragglers": [],
+      "aligned_cohorts": 1,
+      "aligned_ranks": 4,
+      "caps": {
+        "MAX_ACTIVE_ENTRIES": 512,
+        "MAX_ALIGNED_RANKS": 4096,
+        "MAX_COHORT_ANCHORS": 1024,
+        "MAX_LABEL_ENTRIES": 4096,
+        "MAX_PAIRS_PER_WINDOW": 256,
+        "MAX_PENDING_WINDOWS": 8,
+        "MAX_RANKS_PER_WINDOW": 1024,
+        "MAX_SAMPLES_PER_RANK": 32,
+        "MAX_STREAK_ENTRIES": 4096,
+        "MAX_VERDICTS": 512
+      },
+      "close_errors": 0,
+      "cohort_epoch_evictions": 0,
+      "cohort_stage_pairs": 99,
+      "dedup": {
+        "duplicate": 0,
+        "entries": 1888,
+        "evicted": 0,
+        "expired": 0,
+        "late": 0,
+        "max_entries": 8192,
+        "new": 1888,
+        "newest_ranks": 4,
+        "ttl_s": 120.0
+      },
+      "duplicate_packets": 0,
+      "envelope_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-e961661-run1/S1-on/run_10000000/straggler_envelopes.jsonl",
+      "envelopes": 1888,
+      "epoch_evictions": 0,
+      "flushed_lines": 2036,
+      "identity": "rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1",
+      "incomplete_windows": 0,
+      "ingest_errors": 0,
+      "invalid_device_samples": 0,
+      "invalid_packets": 0,
+      "invalid_samples": 0,
+      "judged_packets": 1888,
+      "label_entries": 44,
+      "label_evictions": 0,
+      "late_packets": 0,
+      "min_stage_ms": 5.0,
+      "observe_errors": 0,
+      "open_windows": 0,
+      "pair_evictions": 0,
+      "pending_line_drops": 0,
+      "pending_lines": {
+        "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-e961661-run1/S1-on/run_10000000/straggler_envelopes.jsonl": 0,
+        "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-e961661-run1/S1-on/run_10000000/straggler_verdicts.jsonl": 0
+      },
+      "persist_windows": 3,
+      "rank_evictions": 0,
+      "recoveries_reported": 1,
+      "recovery_evidence_withheld": 0,
+      "reports": 4,
+      "retained_verdicts": 148,
+      "sample_evictions": 0,
+      "single_rank_windows": 0,
+      "stragglers_reported": 1,
+      "streak_entries": 0,
+      "streak_evictions": 0,
+      "sub_floor_judgements": 117,
+      "training_context": {
+        "failures": 0,
+        "step_ordinal": 43,
+        "stored": 1,
+        "updates": 43,
+        "workload_evictions": 35,
+        "workload_publish_errors": 0,
+        "workload_publish_skipped": 0,
+        "workload_rollouts": 8
+      },
+      "uncertain_judgements": 146,
+      "uptime_s": 122.78293545171618,
+      "verdict_callback_errors": 0,
+      "verdict_evictions": 0,
+      "verdict_path": "/root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/abba-e961661-run1/S1-on/run_10000000/straggler_verdicts.jsonl",
+      "verdicts": 148,
+      "warmup_samples_skipped": 8,
+      "warmup_windows_skipped": 8,
+      "windows_closed": 20,
+      "windows_forced": 0,
+      "work_tolerance": 0.05,
+      "workload_incomparable_windows": 45,
+      "workload_missing_windows": 0,
+      "write_errors": 0
+    },
+    "envelope_reads": {
+      "malformed": 0,
+      "truncated_tail": 0
+    },
+    "envelopes": 1888,
+    "ranks_seen": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "stages_seen": [
+      "all-grads-sync",
+      "backward-compute",
+      "conditional-embedder-grads-all-reduce",
+      "embedding-grads-all-reduce",
+      "forward-backward",
+      "forward-compute",
+      "non-tensor-parallel-grads-all-reduce",
+      "optimizer-copy-main-to-model-params",
+      "optimizer-copy-to-main-grad",
+      "optimizer-inner-step",
+      "params-all-gather"
+    ],
+    "verdict_kinds": {
+      "recovered": 1,
+      "straggler": 1,
+      "uncertain": 146
+    },
+    "verdict_reads": {
+      "malformed": 0,
+      "truncated_tail": 0
+    },
+    "verdicts": 148
+  },
+  "perf_metrics": {
+    "perf/actor_train_tflops": {
+      "max": 9.14125158151136,
+      "mean": 8.04960953316397,
+      "min": 0.12106783138734946,
+      "n": 48,
+      "p50": 8.223839653196194,
+      "p95": 9.031105988335629,
+      "p99": 9.14125158151136
+    },
+    "perf/actor_train_time": {
+      "max": 46.338873863220215,
+      "mean": 1.6806417008241017,
+      "min": 0.6952176094055176,
+      "n": 48,
+      "p50": 0.7234121561050415,
+      "p95": 0.7591345310211182,
+      "p99": 46.338873863220215
+    },
+    "perf/actor_train_tok_per_s": {
+      "max": 7959.069471343791,
+      "mean": 7037.277856357768,
+      "min": 106.02329298078851,
+      "n": 48,
+      "p50": 7190.153216939161,
+      "p95": 7873.3611215620285,
+      "p99": 7959.069471343791
+    },
+    "perf/actor_train_tokens": {
+      "max": 6413.0,
+      "mean": 5235.5,
+      "min": 4591.0,
+      "n": 48,
+      "p50": 5227.5,
+      "p95": 5748.0,
+      "p99": 6413.0
+    },
+    "perf/init_actor_time": {
+      "max": 54.32275080680847,
+      "mean": 54.32275080680847,
+      "min": 54.32275080680847,
+      "n": 1,
+      "p50": 54.32275080680847,
+      "p95": 54.32275080680847,
+      "p99": 54.32275080680847
+    },
+    "perf/per_rank_fetch_time": {
+      "max": 0.10447192192077637,
+      "mean": 0.04906073022396006,
+      "min": 0.04098820686340332,
+      "n": 47,
+      "p50": 0.0467076301574707,
+      "p95": 0.06070733070373535,
+      "p99": 0.10447192192077637
+    },
+    "perf/sft_prefetch_wait_time": {
+      "max": 0.06562495231628418,
+      "mean": 0.0019153108199437459,
+      "min": 0.000217437744140625,
+      "n": 48,
+      "p50": 0.0005617141723632812,
+      "p95": 0.0006439685821533203,
+      "p99": 0.06562495231628418
+    },
+    "perf/step_resp_token_per_s": {
+      "max": 279.24337865133,
+      "mean": 252.5448232850283,
+      "min": 4.772575790452607,
+      "n": 48,
+      "p50": 257.138230929405,
+      "p95": 276.1900729496316,
+      "p99": 279.24337865133
+    },
+    "perf/step_time": {
+      "max": 50.28731036186218,
+      "mean": 1.9565459340810776,
+      "min": 0.8871803283691406,
+      "n": 48,
+      "p50": 0.9229488372802734,
+      "p95": 0.9529211521148682,
+      "p99": 50.28731036186218
+    },
+    "perf/step_token_per_s": {
+      "max": 6261.1130564183095,
+      "mean": 5534.551972099643,
+      "min": 97.69860357705691,
+      "n": 48,
+      "p50": 5628.209581058954,
+      "p95": 6137.1100846536565,
+      "p99": 6261.1130564183095
+    },
+    "perf/train_time": {
+      "max": 46.51143264770508,
+      "mean": 1.7071542491515477,
+      "min": 0.7138340473175049,
+      "n": 48,
+      "p50": 0.747096061706543,
+      "p95": 0.7833828926086426,
+      "p99": 46.51143264770508
+    },
+    "perf/train_wait_time": {
+      "max": 3.7758777141571045,
+      "mean": 0.24939168492952982,
+      "min": 0.161391019821167,
+      "n": 48,
+      "p50": 0.1750117540359497,
+      "p95": 0.18408966064453125,
+      "p99": 3.7758777141571045
+    },
+    "perf/wait_time_ratio": {
+      "max": 0.20266437879125113,
+      "mean": 0.18577302644952146,
+      "min": 0.0750860940262322,
+      "n": 48,
+      "p50": 0.1890472442688504,
+      "p95": 0.19539013153085752,
+      "p99": 0.20266437879125113
+    }
+  },
+  "step_time": {
+    "max": 50.28731036186218,
+    "mean": 1.9565459340810776,
+    "min": 0.8871803283691406,
+    "n": 48,
+    "p50": 0.9229488372802734,
+    "p95": 0.9529211521148682,
+    "p99": 50.28731036186218
+  },
+  "train_metrics": {}
+}

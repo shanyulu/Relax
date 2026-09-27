@@ -47,6 +47,10 @@ C1_BOUND_PCT = 0.5  # official requirement: overall overhead < 0.5 %
 DEFAULT_MIN_PAIRS = 6
 
 ARM_DIR_RE = re.compile(r"^S(\d+)-(off|on)$")
+# ANSI SGR escapes (e.g. "\x1b[1;37m") end in a word character ('m'), which defeats
+# a leading \b in PERF_STEP_RE when the escape directly precedes "perf". Strip them
+# from every log line before any matching so colored and uncolored logs parse alike.
+ANSI_RE = re.compile(r"\x1b\[[0-9;]*m")
 # A per-step perf log line: "perf <int>: {'perf/x': 1.0, ...}".
 PERF_STEP_RE = re.compile(r"\bperf\s+(\d+)\s*:\s*\{")
 # "'<metric>': <number>" inside that dict; ints and floats, optional sign/exponent.
@@ -86,6 +90,7 @@ def parse_metric_series(log_path: pathlib.Path) -> Dict[str, List[float]]:
         return {}
     with log_path.open("r", errors="replace") as handle:
         for line in handle:
+            line = ANSI_RE.sub("", line)
             if not PERF_STEP_RE.search(line):
                 continue
             for key, raw in KV_NUM_RE.findall(line):
@@ -106,7 +111,7 @@ def parse_step_labels(log_path: pathlib.Path) -> List[int]:
         return labels
     with log_path.open("r", errors="replace") as handle:
         for line in handle:
-            match = PERF_STEP_RE.search(line)
+            match = PERF_STEP_RE.search(ANSI_RE.sub("", line))
             if match:
                 labels.append(int(match.group(1)))
     return labels

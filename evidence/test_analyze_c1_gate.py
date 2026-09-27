@@ -310,3 +310,26 @@ def test_single_version_campaign_unaffected():
 
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-q"]))
+
+
+# --- ANSI-colored logs parse identically to plain logs ----------------------------------
+# Real campaign job.logs carry SGR escapes; "\x1b[1;37m" ends in 'm', so the
+# leading \b in PERF_STEP_RE found no boundary and EVERY line was dropped,
+# invalidating all arms ("missing step IDs"). The real abba-e961661-run1
+# campaign reproduced exactly this before the fix. Old fail -> new pass.
+
+def test_ansi_colored_perf_lines_are_parsed():
+    root = build("ansi_color", lambda r: sc.write_pair(r, 1))
+    on_log = root / "S1-on" / "job.log"
+    on_log.write_text(
+        "".join(
+            f"\x1b[36m(MegatronTrainRayActor pid=1)\x1b[0m INFO \x1b[1;37m{line}\x1b[0m\n"
+            for line in on_log.read_text().splitlines()
+        )
+    )
+    result = analyse(root)
+    pair = one_pair(result)
+    assert pair["stats_eligible"], pair.get("exclusion_reason")
+    on_arm = next(a for a in result["arms"] if a["name"] == "S1-on")
+    assert on_arm["classification"]["n_step_lines"] == 48
+    assert on_arm["classification"]["status"] == "VALID"
