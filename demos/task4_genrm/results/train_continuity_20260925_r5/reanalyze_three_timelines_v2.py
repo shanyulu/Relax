@@ -103,7 +103,21 @@ def window_report(name: str, start: float, end: float, timelines: Dict[str, List
         key: sorted(n for n, t in events if start <= t <= end)
         for key, events in timelines.items()
     }
-    traffic = [t for t in judge_traffic if start <= t["t"] <= end]
+    # Per-timeline longest no-progress interval STRICTLY INSIDE the window,
+    # measured between consecutive events that fall inside it. An empty list
+    # means the timeline produced no event inside the window; the window's own
+    # duration is then the honest bound for that timeline.
+    no_progress = {}
+    for key, events in timelines.items():
+        ts = sorted(t for _, t in events if start <= t <= end)
+        gaps = [round(b - a, 1) for a, b in zip(ts, ts[1:])]
+        no_progress[key] = {
+            "events_inside": len(ts),
+            "max_internal_gap_s": max(gaps) if gaps else None,
+            "note": "between consecutive in-window events; an empty timeline's bound is the window duration itself"
+            if not ts else None,
+        }
+    traffic = [item for item in judge_traffic if start <= item["t"] <= end]
     per_engine: Dict[str, int] = {}
     for item in traffic:
         per_engine[item["pid"]] = per_engine.get(item["pid"], 0) + 1
@@ -114,6 +128,7 @@ def window_report(name: str, start: float, end: float, timelines: Dict[str, List
         "end_epoch": round(end, 3),
         "duration_s": round(end - start, 1),
         "events_inside": inside,
+        "no_progress_inside": no_progress,
         "judge_prefill_batches_per_engine": per_engine,
         "error_lines": len(window_errors),
     }
@@ -229,13 +244,22 @@ def main() -> int:
         "inputs": {"log": args.log, "events": args.events, "date_basis": args.date, "tz_hours": args.tz_hours},
         "step_timelines": {
             "step_start": {"ids": [n for n, _ in step_start], "count": len(step_start),
-                           "max_gap_s": round(max_gap(step_start), 1)},
+                           "max_gap_s": round(max_gap(step_start), 1),
+                           "epochs": {str(n): round(t, 1) for n, t in step_start},
+                           "gap_semantics": "max interval between CONSECUTIVE events of this timeline; it does not bound the interval before the first event or after the last"},
             "step_execution_end": {"ids": [n for n, _ in step_end], "count": len(step_end),
-                                   "max_gap_s": round(max_gap(step_end), 1)},
-            "optimizer_weight_updates": {"count": len(weights_updates),
-                                          "max_gap_s": round(max_gap([(0, t) for t in weights_updates]), 1)},
+                                   "max_gap_s": round(max_gap(step_end), 1),
+                                   "epochs": {str(n): round(t, 1) for n, t in step_end},
+                                   "gap_semantics": "max interval between CONSECUTIVE events of this timeline; it does not bound the interval before the first event or after the last"},
+            "serving_weight_sync_events": {
+                "count": len(weights_updates),
+                "max_gap_s": round(max_gap([(0, t) for t in weights_updates]), 1),
+                "epochs": [round(t, 1) for t in weights_updates],
+                "semantics": "Slim 'Update weights' / 'Weights updated for actor_fwd_ref' events: the serving-side actor->rollout weight-sync chain. These are NOT optimizer updates; the optimizer iteration count is carried by the step-execution-end timeline and the checkpoint iteration lines.",
+            },
             "rollout_completed": {"ids": [n for n, _ in rollout_done], "count": len(rollout_done),
-                                   "max_gap_s": round(max_gap(rollout_done), 1)},
+                                   "max_gap_s": round(max_gap(rollout_done), 1),
+                                   "epochs": {str(n): round(t, 1) for n, t in rollout_done}},
         },
         "windows": windows,
         "reward_evidence": {

@@ -19,7 +19,18 @@
     7
    ],
    "count": 8,
-   "max_gap_s": 75.0
+   "max_gap_s": 75.0,
+   "epochs": {
+    "0": 1790352750.0,
+    "1": 1790352825.0,
+    "2": 1790352848.0,
+    "3": 1790352877.0,
+    "4": 1790352899.0,
+    "5": 1790352926.0,
+    "6": 1790352954.0,
+    "7": 1790352981.0
+   },
+   "gap_semantics": "max interval between CONSECUTIVE events of this timeline; it does not bound the interval before the first event or after the last"
   },
   "step_execution_end": {
    "ids": [
@@ -33,11 +44,40 @@
     7
    ],
    "count": 8,
-   "max_gap_s": 29.0
+   "max_gap_s": 29.0,
+   "epochs": {
+    "0": 1790352825.0,
+    "1": 1790352848.0,
+    "2": 1790352877.0,
+    "3": 1790352899.0,
+    "4": 1790352926.0,
+    "5": 1790352954.0,
+    "6": 1790352981.0,
+    "7": 1790353009.0
+   },
+   "gap_semantics": "max interval between CONSECUTIVE events of this timeline; it does not bound the interval before the first event or after the last"
   },
-  "optimizer_weight_updates": {
+  "serving_weight_sync_events": {
    "count": 15,
-   "max_gap_s": 58.0
+   "max_gap_s": 58.0,
+   "epochs": [
+    1790352731.0,
+    1790352750.0,
+    1790352750.0,
+    1790352808.0,
+    1790352808.0,
+    1790352839.0,
+    1790352867.0,
+    1790352867.0,
+    1790352889.0,
+    1790352889.0,
+    1790352917.0,
+    1790352944.0,
+    1790352944.0,
+    1790352972.0,
+    1790352999.0
+   ],
+   "semantics": "Slim 'Update weights' / 'Weights updated for actor_fwd_ref' events: the serving-side actor->rollout weight-sync chain. These are NOT optimizer updates; the optimizer iteration count is carried by the step-execution-end timeline and the checkpoint iteration lines."
   },
   "rollout_completed": {
    "ids": [
@@ -51,7 +91,17 @@
     7
    ],
    "count": 8,
-   "max_gap_s": 76.0
+   "max_gap_s": 76.0,
+   "epochs": {
+    "0": 1790352759.0,
+    "1": 1790352835.0,
+    "2": 1790352862.0,
+    "3": 1790352885.0,
+    "4": 1790352913.0,
+    "5": 1790352940.0,
+    "6": 1790352968.0,
+    "7": 1790352995.0
+   }
   }
  },
  "windows": [
@@ -66,6 +116,23 @@
     "rollout_completed": [
      0
     ]
+   },
+   "no_progress_inside": {
+    "step_start": {
+     "events_inside": 0,
+     "max_internal_gap_s": null,
+     "note": "between consecutive in-window events; an empty timeline's bound is the window duration itself"
+    },
+    "step_execution_end": {
+     "events_inside": 0,
+     "max_internal_gap_s": null,
+     "note": "between consecutive in-window events; an empty timeline's bound is the window duration itself"
+    },
+    "rollout_completed": {
+     "events_inside": 1,
+     "max_internal_gap_s": null,
+     "note": null
+    }
    },
    "judge_prefill_batches_per_engine": {
     "978326": 1
@@ -90,6 +157,23 @@
      1
     ]
    },
+   "no_progress_inside": {
+    "step_start": {
+     "events_inside": 2,
+     "max_internal_gap_s": 23.0,
+     "note": null
+    },
+    "step_execution_end": {
+     "events_inside": 2,
+     "max_internal_gap_s": 23.0,
+     "note": null
+    },
+    "rollout_completed": {
+     "events_inside": 1,
+     "max_internal_gap_s": null,
+     "note": null
+    }
+   },
    "judge_prefill_batches_per_engine": {
     "966260": 1,
     "978326": 1
@@ -105,6 +189,23 @@
     "step_start": [],
     "step_execution_end": [],
     "rollout_completed": []
+   },
+   "no_progress_inside": {
+    "step_start": {
+     "events_inside": 0,
+     "max_internal_gap_s": null,
+     "note": "between consecutive in-window events; an empty timeline's bound is the window duration itself"
+    },
+    "step_execution_end": {
+     "events_inside": 0,
+     "max_internal_gap_s": null,
+     "note": "between consecutive in-window events; an empty timeline's bound is the window duration itself"
+    },
+    "rollout_completed": {
+     "events_inside": 0,
+     "max_internal_gap_s": null,
+     "note": "between consecutive in-window events; an empty timeline's bound is the window duration itself"
+    }
    },
    "judge_prefill_batches_per_engine": {},
    "error_lines": 1
