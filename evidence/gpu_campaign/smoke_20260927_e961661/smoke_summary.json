@@ -1,0 +1,38 @@
+[
+  {
+    "run_id": "SM1-off",
+    "arm": "off",
+    "exit_code": 0,
+    "valid": true,
+    "invalid_reason": null,
+    "wall_seconds": 274.582,
+    "first_step_seen": true,
+    "observer_envelopes": null,
+    "provenance_ok": true,
+    "git_commit": "e961661bbdf662016a658d0fc2283d200a899a96"
+  },
+  {
+    "run_id": "SM2-on",
+    "arm": "on",
+    "exit_code": 0,
+    "valid": true,
+    "invalid_reason": null,
+    "wall_seconds": 269.79,
+    "first_step_seen": true,
+    "observer_envelopes": 239,
+    "provenance_ok": true,
+    "git_commit": "e961661bbdf662016a658d0fc2283d200a899a96"
+  },
+  {
+    "run_id": "SM3-off",
+    "arm": "off",
+    "exit_code": 0,
+    "valid": true,
+    "invalid_reason": null,
+    "wall_seconds": 267.476,
+    "first_step_seen": true,
+    "observer_envelopes": null,
+    "provenance_ok": true,
+    "git_commit": "e961661bbdf662016a658d0fc2283d200a899a96"
+  }
+]
