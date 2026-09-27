@@ -4,18 +4,18 @@
 
 ## 结论
 
-| 项目 | 复核结果 |
-| --- | --- |
-| C1 | 旧产品六对 pilot 仍为 INCONCLUSIVE；不迁移为新产品开销证明 |
-| C2 日志指标 | 两对测量臂 loss、grad、lr、token、更新数通过原检查 |
-| C2 参数 | NOT_MEASURED。两对 checkpoint 树哈希不同，旧非确定分支漏掉参数比较；不得以 loss 包络替代 |
-| C2 综合分析器 | 修复后 `C2_COMPARE_REVIEWED.json` 为 INCOMPLETE，0 指标违规、2 项参数证据缺失 |
-| overlap | 原冻结 NOT_PASS 保留；不能已知 ON 结果后放宽原包络 |
-| 同步 | 原计数只覆盖 cudaDeviceSynchronize，不支持“没有任何新增同步” |
-| C3 定位 | 六条 straggler：rank 3 五条、rank 2 一条；不是六条均定位注入目标 |
-| C3 延迟 | UNMEASURED。旧分位数是无事件关联的日志到文件增长间隔 |
-| C3 末窗 | UNVERIFIED。最后一条 verdict 的类别不证明最后一个已接受窗口被正确关闭 |
-| 平台 | worst_rank 混合 uncertain 与已确认告警；需要独立确认告警指标及平台回归 |
+| 项目          | 复核结果                                                                                 |
+| ------------- | ---------------------------------------------------------------------------------------- |
+| C1            | 旧产品六对 pilot 仍为 INCONCLUSIVE；不迁移为新产品开销证明                               |
+| C2 日志指标   | 两对测量臂 loss、grad、lr、token、更新数通过原检查                                       |
+| C2 参数       | NOT_MEASURED。两对 checkpoint 树哈希不同，旧非确定分支漏掉参数比较；不得以 loss 包络替代 |
+| C2 综合分析器 | 修复后 `C2_COMPARE_REVIEWED.json` 为 INCOMPLETE，0 指标违规、2 项参数证据缺失            |
+| overlap       | 原冻结 NOT_PASS 保留；不能已知 ON 结果后放宽原包络                                       |
+| 同步          | 原计数只覆盖 cudaDeviceSynchronize，不支持“没有任何新增同步”                             |
+| C3 定位       | 六条 straggler：rank 3 五条、rank 2 一条；不是六条均定位注入目标                         |
+| C3 延迟       | UNMEASURED。旧分位数是无事件关联的日志到文件增长间隔                                     |
+| C3 末窗       | UNVERIFIED。最后一条 verdict 的类别不证明最后一个已接受窗口被正确关闭                    |
+| 平台          | worst_rank 混合 uncertain 与已确认告警；需要独立确认告警指标及平台回归                   |
 
 原始 checkpoint 已由旧 runner 删除，哈希无法恢复参数距离。新 runner 停止自动删除 checkpoint，但这不补全旧实验。OFF/OFF 的 15×48 个差值并非 720 个独立样本。
 

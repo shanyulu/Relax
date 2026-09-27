@@ -6,6 +6,7 @@ Producing product SHA: `cac4cb6447154e6ae4f563eabab7fecf43dba790`
 (product freeze; PR heads above it are test/docs-only).
 
 Contents:
+
 - `TASK11_FINAL_ACCEPTANCE_PROTOCOL.md` / `TASK11_C2C3_PROTOCOL.md` — preregistered
   acceptance protocols (frozen estimators, tolerances, seeds).
 - `TASK11_C1_LONGRUN_PROTOCOL.md` — preregistered long-run confirmatory protocol
@@ -83,3 +84,31 @@ in this tree at the producing commit recorded with it.
 - `CLEAN_ENV_RECOMPUTATION_CHECKLIST.md` restructured: CURRENT STATE /
   HISTORICAL PILOT RECOMPUTATION / CURRENT CORRECTNESS GATE / FUTURE
   CONFIRMATORY PROCEDURE.
+
+### Post-review addendum (2026-09-28, product `927c5de`)
+
+- `REVIEW_CORRECTIONS_20260927.md` recorded: C2 → INCOMPLETE (0 metric
+  violations, 2 missing parameter evidence), C3 latency → UNMEASURED,
+  localization 5×rank3 + 1×rank2, sync scope (cudaDeviceSynchronize only),
+  720-sample phrasing withdrawn. `C2_COMPARE_REVIEWED.json` /
+  `c3_summary_slow_reviewed.json` are the reviewed verdicts; the earlier
+  addendum's "6 arms = 720 samples" wording is superseded (pairwise
+  contrasts share arms — envelope semantics only, no sample counting).
+- Strict acceptance gates published (`VERIFICATION_GATES.md`,
+  `tools/execution_contract.py`, hardened `c2_lock.py` / trace tools /
+  CLI tests): non-zero exits for failed/invalid acceptance; empty, tampered
+  or unbound contracts rejected.
+- Measurement raw `job.log` (4 arms) archived byte-unmodified + RFC1918
+  redacted public copies + `TRANSFORM.json` dual-hash ledgers + gitleaks
+  scan reports (raws BLOCKED = archive-grade, publics PASS).
+- All 16 raw chrome traces (260MB) archived at canonical `train_trace/`
+  paths; gitleaks scan 16/16 PASS (zero findings, no redaction needed);
+  `PUBLIC_TRACE_LEDGER_20260928.json` dual-hash ledger. Clean-clone
+  recompute verified: c2_lock compare exit 1 INCOMPLETE byte-identical;
+  trace_verdict exit 1 NOT_PASS 13/13 fields matching.
+- Preregistered follow-up protocols for the new product head `927c5de`
+  (confirmed-alert metrics + quiet reads + state-lock isolation, pushed to
+  PR #378): `C2_PARAMETER_PROTOCOL_927C5DE.md`,
+  `C3_EVENT_CHAIN_PROTOCOL_927C5DE.md`,
+  `OVERLAP_CALIBRATION_PROTOCOL_927C5DE.md` — GPU execution deferred;
+  affected acceptance re-declared in PR #378.
