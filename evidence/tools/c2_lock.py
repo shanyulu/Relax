@@ -25,7 +25,7 @@ Tolerance priority (frozen policy, from C2_PROTOCOL_A48A23B.md §2):
      pairwise contrasts x all steps). Statistical meaning (declared, not
      implied): the ON/OFF effect must stay within twice the worst-case
      same-build OFF/OFF noise; with 6 OFF arms this envelope uses 15 x 48 =
-     720 delta samples. This is an envelope test, not a confidence
+     720 dependent deltas (not 720 independent samples). This is an envelope test, not a confidence
      interval, and is deliberately conservative vs any quantile.
 
 No tolerance may be widened after ON data is seen; a wrong tolerance is a new
@@ -36,6 +36,8 @@ import argparse
 import hashlib
 import itertools
 import json
+import math
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -55,9 +57,73 @@ def git(root: Path, *args: str) -> str:
     return subprocess.check_output(["git", "-C", str(root), *args], text=True).strip()
 
 
+def validate_lock(lock: dict) -> None:
+    """Reject incomplete, tampered or empty execution contracts."""
+    unsigned = {**lock, "_self_sha256": None}
+    digest = hashlib.sha256(json.dumps(unsigned, sort_keys=True).encode()).hexdigest()
+    if lock.get("_self_sha256") != digest:
+        raise ValueError("lock self hash mismatch")
+    for key, size in (
+        ("PRODUCT_SHA", 40),
+        ("DATASET_SHA256", 64),
+        ("RECIPE_SHA256", 64),
+        ("ENV_FINGERPRINT_SHA256", 64),
+    ):
+        if not re.fullmatch(r"[0-9a-f]{%d}" % size, str(lock.get(key, ""))):
+            raise ValueError(f"missing or invalid {key}")
+    if type(lock.get("EXPECTED_STEPS")) is not int or lock["EXPECTED_STEPS"] <= 0:
+        raise ValueError("EXPECTED_STEPS must be a positive integer")
+    names = lock.get("ARM_ORDER")
+    if not isinstance(names, list) or not names or len(set(names)) != len(names):
+        raise ValueError("ARM_ORDER must be nonempty and unique")
+    if any(not isinstance(n, str) or not re.fullmatch(r"[A-Za-z0-9_-]+", n) for n in names):
+        raise ValueError("invalid arm name")
+    if "MEASUREMENT_N_PAIRS" in lock:
+        n = lock["MEASUREMENT_N_PAIRS"]
+        if type(n) is not int or n <= 0:
+            raise ValueError("MEASUREMENT_N_PAIRS must be a positive integer")
+        expected = [f"C2M{i}-{a}" for i in range(1, n + 1) for a in (("off", "on") if i % 2 else ("on", "off"))]
+        if names != expected:
+            raise ValueError("measurement arm order differs from the fixed protocol")
+
+
+def validate_calibration_binding(lock: dict, calib: dict) -> None:
+    if calib.get("status") != "FROZEN_OFF_ONLY":
+        raise ValueError("calibration not frozen")
+    for key in ("PRODUCT_SHA", "DATASET_SHA256", "RECIPE_SHA256", "ENV_FINGERPRINT_SHA256"):
+        if lock[key] != calib.get(key):
+            raise ValueError(f"calibration {key} mismatch")
+    if lock["EXPECTED_STEPS"] != calib.get("EXPECTED_STEPS", calib.get("steps_per_series")):
+        raise ValueError("calibration step count mismatch")
+    if lock["TOLERANCES"] != calib.get("tolerances"):
+        raise ValueError("measurement tolerances differ from calibration")
+    if lock["TOLERANCES"].get("mode") not in ("EXACT_EQUALITY", "OFF_OFF_ENVELOPE_x2"):
+        raise ValueError("unknown tolerance mode")
+    for key, value in lock["TOLERANCES"].items():
+        if key != "mode" and value is not None:
+            if type(value) not in (int, float) or not math.isfinite(value) or value < 0:
+                raise ValueError("invalid numerical tolerance")
+
+
 def read_arm(arm_dir: Path, lock: dict) -> dict:
     manifest = json.loads((arm_dir / "manifest.json").read_text())
     problems = []
+    if (
+        manifest.get("valid") is not True
+        or manifest.get("job_status") != "SUCCEEDED"
+        or manifest.get("resources_returned") is not True
+    ):
+        problems.append("unsuccessful or unclean arm")
+    source = manifest.get("source_sha256_before")
+    workers = manifest.get("worker_source_hashes")
+    if (
+        not source
+        or source != manifest.get("source_sha256_after")
+        or not isinstance(workers, dict)
+        or not workers
+        or any(value != source for value in workers.values())
+    ):
+        problems.append("missing or mismatched worker provenance")
     git_info = manifest.get("git", {})
     if git_info.get("commit") != lock["PRODUCT_SHA"] or git_info.get("dirty"):
         problems.append("product drift/dirty")
@@ -76,10 +142,8 @@ def read_arm(arm_dir: Path, lock: dict) -> dict:
     parsed = parse_arm(arm_dir, expected_steps=lock["EXPECTED_STEPS"])
     if not parsed.get("native_valid"):
         raise ValueError(f"{arm_dir.name}: native extraction invalid: {parsed.get('extraction_errors')}")
-    # Checkpoints are hash-and-pruned by the runner (7.8G/arm does not fit the
-    # disk): the durable record is the manifest's checkpoint_tree_sha256,
-    # computed over the full tree before pruning. Recompute only if the
-    # directory still exists AND the manifest does not carry a hash.
+    # Legacy runs pruned checkpoints after hashing. A differing tree hash
+    # cannot establish or refute tensor equivalence. New runs retain inputs.
     ckpt = arm_dir / "checkpoints"
     manifest_hash = manifest.get("checkpoint_tree_sha256")
     if manifest_hash:
@@ -127,6 +191,7 @@ def cmd_calibration_lock(args: argparse.Namespace) -> int:
     if out.exists():
         raise SystemExit("refusing to overwrite an existing calibration lock")
     lock["_self_sha256"] = hashlib.sha256(json.dumps(lock, sort_keys=True).encode()).hexdigest()
+    validate_lock(lock)
     out.write_text(json.dumps(lock, indent=2, sort_keys=True) + "\n")
     print(f"wrote {out} (self-sha {lock['_self_sha256'][:12]})")
     return 0
@@ -134,6 +199,9 @@ def cmd_calibration_lock(args: argparse.Namespace) -> int:
 
 def cmd_calibration_result(args: argparse.Namespace) -> int:
     lock = json.loads(Path(args.lock).read_text())
+    validate_lock(lock)
+    if lock["ARM_ORDER"] != [f"C2C{i}-off" for i in range(1, CALIBRATION_ARMS + 1)]:
+        raise ValueError("calibration requires all six OFF arms")
     root = Path(args.campaign)
     arms = [read_arm(root / name, lock) for name in lock["ARM_ORDER"]]
     names = lock["ARM_ORDER"]
@@ -219,6 +287,8 @@ def cmd_calibration_result(args: argparse.Namespace) -> int:
 
 
 def cmd_measurement_lock(args: argparse.Namespace) -> int:
+    if type(args.n_pairs) is not int or args.n_pairs <= 0:
+        raise ValueError("n-pairs must be a positive integer")
     calib = json.loads(Path(args.calibration_result).read_text())
     if calib.get("status") != "FROZEN_OFF_ONLY":
         raise SystemExit("calibration result not frozen")
@@ -238,7 +308,6 @@ def cmd_measurement_lock(args: argparse.Namespace) -> int:
             for i in range(1, int(args.n_pairs) + 1)
             for a in (("off", "on") if i % 2 == 1 else ("on", "off"))
         ],
-        "PRODUCT_SHA": calib.get("PRODUCT_SHA"),
         "GLOBAL_SYNC_RULE": "new_global_sync_count(ON vs OFF) == 0",
         "OVERLAP_DELTA_TOLERANCE": "frozen separately in TRACE_PROTOCOL per topology",
         "TOLERANCES": calib["tolerances"],
@@ -249,6 +318,7 @@ def cmd_measurement_lock(args: argparse.Namespace) -> int:
     if out.exists():
         raise SystemExit("refusing to overwrite an existing measurement lock")
     lock["_self_sha256"] = hashlib.sha256(json.dumps(lock, sort_keys=True).encode()).hexdigest()
+    validate_lock(lock)
     out.write_text(json.dumps(lock, indent=2, sort_keys=True) + "\n")
     print(f"wrote {out}; tolerances frozen from calibration {lock['CALIBRATION_RESULT_SHA256'][:12]}")
     return 0
@@ -259,12 +329,15 @@ def cmd_compare(args: argparse.Namespace) -> int:
     if out.exists():
         raise SystemExit("refusing to overwrite an existing comparison")
     lock = json.loads(Path(args.lock).read_text())
+    validate_lock(lock)
     calib = json.loads(Path(args.calibration_result).read_text())
     if lock["CALIBRATION_RESULT_SHA256"] != sha256_file(Path(args.calibration_result)):
-        raise SystemExit("measurement lock does not reference this calibration result")
+        raise ValueError("measurement lock does not reference this calibration result")
+    validate_calibration_binding(lock, calib)
     root = Path(args.campaign)
     pairs = {}
     violations = []
+    missing_evidence = []
     exact = lock["TOLERANCES"].get("mode") == "EXACT_EQUALITY"
     for i in range(1, lock["MEASUREMENT_N_PAIRS"] + 1):
         off = read_arm(
@@ -275,7 +348,7 @@ def cmd_compare(args: argparse.Namespace) -> int:
                 "DATASET_SHA256": calib.get("DATASET_SHA256", ""),
                 "RECIPE_SHA256": calib.get("RECIPE_SHA256", ""),
                 "ENV_FINGERPRINT_SHA256": calib.get("ENV_FINGERPRINT_SHA256", ""),
-                "EXPECTED_STEPS": calib.get("steps_per_series", 48),
+                "EXPECTED_STEPS": lock["EXPECTED_STEPS"],
                 "PRODUCT_SHA": lock["PRODUCT_SHA"],
             },
         )
@@ -287,7 +360,7 @@ def cmd_compare(args: argparse.Namespace) -> int:
                 "DATASET_SHA256": calib.get("DATASET_SHA256", ""),
                 "RECIPE_SHA256": calib.get("RECIPE_SHA256", ""),
                 "ENV_FINGERPRINT_SHA256": calib.get("ENV_FINGERPRINT_SHA256", ""),
-                "EXPECTED_STEPS": calib.get("steps_per_series", 48),
+                "EXPECTED_STEPS": lock["EXPECTED_STEPS"],
                 "PRODUCT_SHA": lock["PRODUCT_SHA"],
             },
         )
@@ -315,15 +388,21 @@ def cmd_compare(args: argparse.Namespace) -> int:
         entry["checkpoint_exact_equal"] = (
             off["checkpoint_tree_sha256"] is not None and off["checkpoint_tree_sha256"] == on["checkpoint_tree_sha256"]
         )
+        checkpoint_state = checkpoint_gate(off["checkpoint_tree_sha256"], on["checkpoint_tree_sha256"], exact)
+        entry["parameter_equivalence"] = checkpoint_state
+        if checkpoint_state == "NOT_MEASURED":
+            missing_evidence.append(f"C2M{i}:parameter_equivalence")
         if exact and not entry["checkpoint_exact_equal"]:
             violations.append(f"C2M{i}:checkpoint")
         pairs[f"C2M{i}"] = entry
-    verdict = "PASS" if not violations else "NOT_PASS"
+    verdict = "NOT_PASS" if violations else ("INCOMPLETE" if missing_evidence else "PASS")
     out.write_text(
         json.dumps(
             {
                 "verdict": verdict,
                 "violations": violations,
+                "missing_evidence": missing_evidence,
+                "scope": "logged training metrics and checkpoint equality; overlap assessed separately",
                 "mode": lock["TOLERANCES"].get("mode"),
                 "pairs": pairs,
                 "measurement_lock_sha256": sha256_file(Path(args.lock)),
@@ -334,6 +413,15 @@ def cmd_compare(args: argparse.Namespace) -> int:
     )
     print(f"C2 measurement verdict: {verdict} ({len(violations)} violations)")
     return 0 if verdict == "PASS" else 1
+
+
+def checkpoint_gate(off_hash, on_hash, exact):
+    """A loss envelope does not establish parameter equivalence."""
+    if not off_hash or not on_hash:
+        return "NOT_MEASURED"
+    if off_hash == on_hash:
+        return "PASS"
+    return "NOT_PASS" if exact else "NOT_MEASURED"
 
 
 def main() -> int:
@@ -358,7 +446,13 @@ def main() -> int:
         cm.add_argument(f"--{name}", required=True)
     cm.set_defaults(func=cmd_compare)
     args = ap.parse_args()
-    return args.func(args)
+    try:
+        return args.func(args)
+    except (ValueError, KeyError, TypeError, OSError) as exc:
+        if args.cmd == "compare" and not Path(args.out).exists():
+            Path(args.out).write_text(json.dumps({"verdict": "INVALID", "reason": str(exc)}) + "\n")
+        print(f"INVALID: {exc}", file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":

@@ -18,15 +18,16 @@ import hashlib
 import json
 import os
 import re
-import shutil
 import signal
 import socket
 import subprocess
 import time
 from pathlib import Path
 
-from extract_c2_native import parse_arm
 from c2_lock import tree_hash
+from execution_contract import execution_snapshot, validate_execution
+from extract_c2_native import parse_arm
+
 
 DATASET_SHA = "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428"
 ON_PROFILE = {
@@ -84,8 +85,15 @@ def submit(command, cwd: Path, env: dict, log) -> None:
 def run_arm(args, lock: dict, name: str) -> None:
     from ray.job_submission import JobSubmissionClient
 
-    if git(args.product, "rev-parse", "HEAD") != args.head or git(args.product, "status", "--porcelain"):
-        raise RuntimeError("product must stay at the frozen clean revision")
+    execution = validate_execution(
+        args,
+        lock,
+        head=git(args.product, "rev-parse", "HEAD"),
+        dirty=bool(git(args.product, "status", "--porcelain")),
+        overrides=validated_overrides(args.extra_env or []),
+        runner=Path(__file__),
+        profile=ON_PROFILE,
+    )
     preflight(args.product, args.dashboard)
     out = args.out / name
     out.mkdir()
@@ -123,7 +131,7 @@ def run_arm(args, lock: dict, name: str) -> None:
             "PROMPT_SET": str(args.dataset),
             "RELAX_RAY_JOB_SAFE_SUBMIT": "1",
             "RELAX_GPU_LOCK_HELD": str(os.getpid()),
-            "RELAX_GPU_LOCK_FILE": args.lock,
+            "RELAX_GPU_LOCK_FILE": args.gpulock,
             "RAY_NO_WAIT": "1",
             "RAY_JOB_SUBMISSION_ID": job_id,
             "SAVE": "1",
@@ -135,9 +143,7 @@ def run_arm(args, lock: dict, name: str) -> None:
             "TENSORBOARD_DIR": str(out / "tensorboard"),
         }
     )
-    for kv in (args.extra_env or []):
-        key, _, value = kv.partition("=")
-        env[key] = value
+    env.update(validated_overrides(args.extra_env or []))
     for key in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"):
         env[key] = ""
     env["NO_PROXY"] = env["no_proxy"] = "*"
@@ -147,6 +153,7 @@ def run_arm(args, lock: dict, name: str) -> None:
         "scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
     ] + [a for a in (args.recipe_args or "").split(",") if a]
     record = {
+        "execution_verified": execution,
         "run_id": name,
         "recipe_args": [a for a in (args.recipe_args or "").split(",") if a],
         "session": name.rsplit("-", 1)[0],
@@ -201,12 +208,12 @@ def run_arm(args, lock: dict, name: str) -> None:
         ckpt_dir = out / "checkpoints"
         if record["native"].get("native_valid", False) and ckpt_dir.exists():
             record["checkpoint_tree_sha256"] = tree_hash(ckpt_dir)
-            record["checkpoint_pruned_after_hash"] = True
-            shutil.rmtree(ckpt_dir)
+            record["checkpoint_pruned_after_hash"] = False
         record["valid"] = (
             status == "SUCCEEDED"
             and record["native"].get("native_valid", False)
             and record["source_sha256_before"] == record["source_sha256_after"]
+            and bool(record["worker_source_hashes"])
             and all(v == record["source_sha256_before"] for v in record["worker_source_hashes"].values())
             and (not enabled or record["envelope_lines"] > 0)
         )
@@ -240,6 +247,18 @@ def run_arm(args, lock: dict, name: str) -> None:
             raise RuntimeError("resources remain; refusing further arms, no global cleanup performed")
 
 
+def validated_overrides(items):
+    """Allow recipe knobs without overriding ownership or source identity."""
+    allowed = {"SAVE", "NUM_ROLLOUT", "GLOBAL_BATCH_SIZE", "PROFILE", "PROFILE_STEP_START", "PROFILE_STEP_END"}
+    result = {}
+    for item in items:
+        key, sep, value = item.partition("=")
+        if not sep or key not in allowed or key in result:
+            raise ValueError(f"unsupported or duplicate recipe override: {key}")
+        result[key] = value
+    return result
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("product", "dataset", "out"):
@@ -248,10 +267,22 @@ def main() -> None:
         parser.add_argument(f"--{name}", required=True)
     parser.add_argument("--lock", type=Path, required=True, help="C2 calibration/measurement lock JSON")
     parser.add_argument("--arms", required=True, help="comma-separated arm names")
-    parser.add_argument("--recipe-args", default="", help="comma-separated args appended to the recipe (argparse nargs='*' cannot consume values that start with '-')")
-    parser.add_argument("--job-tag", default="", help="appended to the job submission id namespace (Ray IDs are immutable)")
-    parser.add_argument("--extra-env", nargs="*", default=None, help="KEY=VALUE env overrides applied last (e.g. C3 debug injection)")
+    parser.add_argument(
+        "--freeze-execution", type=Path, help="write a NEW execution lock and exit without Ray submission"
+    )
+    parser.add_argument(
+        "--recipe-args",
+        default="",
+        help="comma-separated args appended to the recipe (argparse nargs='*' cannot consume values that start with '-')",
+    )
+    parser.add_argument(
+        "--job-tag", default="", help="appended to the job submission id namespace (Ray IDs are immutable)"
+    )
+    parser.add_argument(
+        "--extra-env", nargs="*", default=None, help="KEY=VALUE env overrides applied last (e.g. C3 debug injection)"
+    )
     args = parser.parse_args()
+    validated_overrides(args.extra_env or [])
 
     def interrupted(signum: int, frame: object) -> None:
         raise KeyboardInterrupt(f"signal {signum}: stop only the owned job")
@@ -260,6 +291,30 @@ def main() -> None:
     if sha256_file(args.dataset) != DATASET_SHA:
         parser.error("dataset does not match the frozen C2 input")
     lock = json.loads(args.lock.read_text())
+    if args.freeze_execution:
+        if args.freeze_execution.exists():
+            parser.error("refusing to overwrite a frozen lock")
+        from c2_lock import validate_lock
+
+        validate_lock(lock)
+        lock["EXECUTION"] = execution_snapshot(
+            args, validated_overrides(args.extra_env or []), Path(__file__), ON_PROFILE
+        )
+        lock["_self_sha256"] = None
+        lock["_self_sha256"] = hashlib.sha256(json.dumps(lock, sort_keys=True).encode()).hexdigest()
+    validate_execution(
+        args,
+        lock,
+        head=git(args.product, "rev-parse", "HEAD"),
+        dirty=bool(git(args.product, "status", "--porcelain")),
+        overrides=validated_overrides(args.extra_env or []),
+        runner=Path(__file__),
+        profile=ON_PROFILE,
+    )
+    if args.freeze_execution:
+        args.freeze_execution.write_text(json.dumps(lock, indent=2, sort_keys=True) + "\n")
+        print("execution lock created; commit it with the protocol before any measurement arm")
+        return
     if args.out.exists():
         for name in [a.strip() for a in args.arms.split(",") if a.strip()]:
             if (args.out / name).exists():

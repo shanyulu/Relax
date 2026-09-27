@@ -38,6 +38,26 @@ def arm(name, *, loss=None, grad=None, tokens=None, update_count=48, ckpt="a"):
 
 
 def write_json(path, payload):
+    if payload.get("status") == "FROZEN_OFF_ONLY":
+        payload = {
+            "PRODUCT_SHA": "a" * 40,
+            "DATASET_SHA256": "f" * 64,
+            "RECIPE_SHA256": "e" * 64,
+            "ENV_FINGERPRINT_SHA256": "9" * 64,
+            "EXPECTED_STEPS": 48,
+            **payload,
+        }
+    if "_self_sha256" in payload:
+        payload = {
+            "DATASET_SHA256": "f" * 64,
+            "RECIPE_SHA256": "e" * 64,
+            "ENV_FINGERPRINT_SHA256": "9" * 64,
+            "EXPECTED_STEPS": 48,
+            "ARM_ORDER": ["C2M1-off", "C2M1-on"],
+            **payload,
+        }
+        payload["_self_sha256"] = None
+        payload["_self_sha256"] = hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2) + "\n")
 
@@ -84,36 +104,28 @@ def patch_read(monkeypatch):
     return install
 
 
-def test_envelope_is_two_times_worst_off_off_delta(patch_read, monkeypatch):
+def test_envelope_is_two_times_worst_off_off_delta(patch_read, tmp_path):
     base = [1.0] * 48
     noisy = [1.0] * 47 + [1.5]
     store = {f"C2C{i}-off": arm(f"C2C{i}", loss=base, ckpt=f"c{i}") for i in range(1, 7)}
     store["C2C2-off"] = arm("C2C2", loss=noisy, ckpt="c2")
     patch_read(store)
-    root = TMP / "envelope_run"
-    if root.exists():
-        shutil.rmtree(root)
-    lock = {"PRODUCT_SHA": "a" * 40, "ARM_ORDER": list(store), "EXPECTED_STEPS": 48}
+    root = tmp_path
+    lock = {
+        "PRODUCT_SHA": "a" * 40,
+        "ARM_ORDER": list(store),
+        "EXPECTED_STEPS": 48,
+        "RECIPE_PATH": "recipe.sh",
+        "_self_sha256": None,
+    }
     write_json(root / "lock.json", lock)
     out = root / "result.json"
-    monkeypatch.setattr(
-        lk,
-        "cmd_calibration_result",
-        lambda args: lk_orig_calibration_result(args) if False else _run_calibration(root, lock, out, store),
-    )
-    # Direct logic test instead of CLI: reproduce cmd_calibration_result core
-    arms = [store[n] for n in lock["ARM_ORDER"]]
-    import itertools
+    from argparse import Namespace
 
-    worst = 0.0
-    for a, b in itertools.combinations(arms, 2):
-        worst = max(worst, max(abs(y - x) for x, y in zip(a["loss_series"], b["loss_series"])))
-    assert worst == 0.5
-    assert lk.ENVELOPE_FACTOR * worst == 1.0
-
-
-def _run_calibration(root, lock, out, store):
-    raise NotImplementedError
+    assert lk.cmd_calibration_result(Namespace(lock=root / "lock.json", campaign=root, out=out)) == 0
+    result = json.loads(out.read_text())
+    assert result["envelope"]["loss_series"] == 0.5
+    assert result["tolerances"]["loss_series"] == 1.0
 
 
 def test_measurement_lock_references_calibration_sha(tmp_path, monkeypatch):
@@ -212,7 +224,7 @@ def test_compare_exact_mode_flags_any_drift(tmp_path, monkeypatch):
     assert any("loss_series" in v for v in result["violations"])
 
 
-def test_compare_envelope_mode_within_tolerance_passes(tmp_path, monkeypatch):
+def test_compare_envelope_cannot_replace_parameter_comparison(tmp_path, monkeypatch):
     calib = {
         "status": "FROZEN_OFF_ONLY",
         "mode": "OFF_OFF_ENVELOPE",
@@ -257,10 +269,25 @@ def test_compare_envelope_mode_within_tolerance_passes(tmp_path, monkeypatch):
             str(out),
         ],
     )
-    assert lk.main() == 0
+    assert lk.main() == 1
     result = json.loads(out.read_text())
-    assert result["verdict"] == "PASS"
+    assert result["verdict"] == "INCOMPLETE"
+    assert result["missing_evidence"] == ["C2M1:parameter_equivalence"]
     assert result["pairs"]["C2M1"]["loss_series"]["max_abs_delta"] == pytest.approx(0.6)
+
+
+@pytest.mark.parametrize(
+    "off,on,exact,expected",
+    [
+        (None, None, False, "NOT_MEASURED"),
+        ("a", "b", False, "NOT_MEASURED"),
+        ("a", "b", True, "NOT_PASS"),
+        ("a", "a", True, "PASS"),
+        ("a", "a", False, "PASS"),
+    ],
+)
+def test_checkpoint_gate_fails_closed(off, on, exact, expected):
+    assert lk.checkpoint_gate(off, on, exact) == expected
 
 
 def test_compare_rejects_wrong_calibration_reference(tmp_path, monkeypatch):
@@ -292,8 +319,8 @@ def test_compare_rejects_wrong_calibration_reference(tmp_path, monkeypatch):
             str(tmp_path / "c.json"),
         ],
     )
-    with pytest.raises(SystemExit):
-        lk.main()
+    assert lk.main() == 2
+    assert json.loads((tmp_path / "c.json").read_text())["verdict"] == "INVALID"
 
 
 def test_no_overwrite_of_frozen_artifacts(tmp_path, monkeypatch):
