@@ -1,0 +1,410 @@
+{
+  "verdict": "BLOCKED",
+  "config_sha256": "af3ff7937d25f5bd547a5fa203425afbd17c23805d44b87af3dd721c26cd42c1",
+  "records": [
+    {
+      "file": "evidence/gpu_campaign/c2-a48a23b/measurement/C2M1-off/job.log",
+      "raw_sha256": "287e7a1f4804bb341696af7240b599c35baa4f1a98b052153272ca60988e14df",
+      "scanned_sha256": "287e7a1f4804bb341696af7240b599c35baa4f1a98b052153272ca60988e14df",
+      "scanned_bytes": 358639,
+      "status": "BLOCKED",
+      "findings": [
+        {
+          "rule": "private-ip-172-range",
+          "line": 1656
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1657
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1658
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1661
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1663
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1666
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1675
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1676
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1678
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1680
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1683
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1688
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1701
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1706
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1707
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1708
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1709
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1714
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1754
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1755
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1818
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 2711
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 2712
+        }
+      ]
+    },
+    {
+      "file": "evidence/gpu_campaign/c2-a48a23b/measurement/C2M1-on/job.log",
+      "raw_sha256": "1d10b9432edbf3388f04f9bd83a44d7902844cc7137d072abdd8aa84cf0ad768",
+      "scanned_sha256": "1d10b9432edbf3388f04f9bd83a44d7902844cc7137d072abdd8aa84cf0ad768",
+      "scanned_bytes": 395922,
+      "status": "BLOCKED",
+      "findings": [
+        {
+          "rule": "private-ip-172-range",
+          "line": 1656
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1657
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1658
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1661
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1663
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1672
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1675
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1676
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1678
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1680
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1683
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1693
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1701
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1706
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1707
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1708
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1709
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1714
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1754
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1755
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1826
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 2873
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 2874
+        }
+      ]
+    },
+    {
+      "file": "evidence/gpu_campaign/c2-a48a23b/measurement/C2M2-off/job.log",
+      "raw_sha256": "1f58b7570c76512f1d22500db0aeb5aa7c4d7a03eb49af0d9f3f7344f89e28eb",
+      "scanned_sha256": "1f58b7570c76512f1d22500db0aeb5aa7c4d7a03eb49af0d9f3f7344f89e28eb",
+      "scanned_bytes": 358855,
+      "status": "BLOCKED",
+      "findings": [
+        {
+          "rule": "private-ip-172-range",
+          "line": 1656
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1657
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1658
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1661
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1663
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1672
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1675
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1676
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1678
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1680
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1684
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1688
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1701
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1706
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1707
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1708
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1709
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1714
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1756
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1757
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1818
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 2713
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 2714
+        }
+      ]
+    },
+    {
+      "file": "evidence/gpu_campaign/c2-a48a23b/measurement/C2M2-on/job.log",
+      "raw_sha256": "f6564cf3255991762d3699210aece8870abfea32231f8aaf5240d22bfafd4089",
+      "scanned_sha256": "f6564cf3255991762d3699210aece8870abfea32231f8aaf5240d22bfafd4089",
+      "scanned_bytes": 405995,
+      "status": "BLOCKED",
+      "findings": [
+        {
+          "rule": "private-ip-172-range",
+          "line": 1656
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1657
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1658
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1661
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1663
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1666
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1675
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1676
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1678
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1680
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1683
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1688
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1701
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1706
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1707
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1708
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1709
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1714
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1753
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1755
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 1826
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 2893
+        },
+        {
+          "rule": "private-ip-172-range",
+          "line": 2894
+        }
+      ]
+    }
+  ]
+}

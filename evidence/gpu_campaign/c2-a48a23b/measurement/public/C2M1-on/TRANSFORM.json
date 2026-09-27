@@ -1,0 +1,7 @@
+{
+  "policy": "RFC1918-address-only-v1",
+  "original_sha256": "1d10b9432edbf3388f04f9bd83a44d7902844cc7137d072abdd8aa84cf0ad768",
+  "public_sha256": "c98f1bb05b981accd6d200fab70fe821e323e8ce5976e7ea38bb2ce79aef1240",
+  "native_metrics_equal": true,
+  "status": "SCAN_REQUIRED"
+}
