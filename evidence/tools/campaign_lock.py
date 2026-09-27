@@ -117,35 +117,89 @@ def generate(args: argparse.Namespace) -> int:
 
 
 def validate(args: argparse.Namespace) -> int:
-    lock = json.loads(Path(args.lock).read_text())
+    """Full enforcement: every lock field must be present and match the arm.
+
+    Anything missing or drifted is INVALID — there are no warning-only paths.
+    The manifest contract (produced by the campaign runner at arm time):
+      git.commit / git.dirty / dataset_sha256 / recipe (path) / recipe_sha256 /
+      env_fingerprint_sha256 / expected_steps / run_id / arm / order /
+      analyzer_sha256 / runner_sha256 / protocol_sha256 / pr_head /
+      lock_sha256 / relax_env
+    """
+    lock_path = Path(args.lock)
+    lock = json.loads(lock_path.read_text())
+    lock_sha = sha256_file(lock_path)
     manifest = json.loads(Path(args.arm, "manifest.json").read_text())
     problems = []
+
+    missing = [k for k in REQUIRED_KEYS if k not in lock or lock[k] in (None, "")]
+    if missing:
+        problems.append(f"lock itself incomplete: {missing}")
+
     git_info = manifest.get("git", {})
-    if git_info.get("commit") != lock["PRODUCT_SHA"]:
+    if git_info.get("commit") != lock.get("PRODUCT_SHA"):
+        problems.append(f"product sha {git_info.get('commit')!r} != locked {lock.get('PRODUCT_SHA')!r}")
+    if manifest.get("pr_head") != lock.get("PR_HEAD"):
         problems.append(
-            f"product sha {git_info.get('commit')} != locked {lock['PRODUCT_SHA']}"
+            f"producing head {manifest.get('pr_head')!r} != locked PR_HEAD {lock.get('PR_HEAD')!r}"
         )
     if git_info.get("dirty"):
         problems.append("arm ran on a dirty tree")
-    if manifest.get("dataset_sha256") != lock["DATASET_SHA256"]:
+    if manifest.get("dataset_sha256") != lock.get("DATASET_SHA256"):
         problems.append("dataset sha drift")
-    recipe = manifest.get("recipe")
-    if recipe != manifest.get("recipe") or not recipe:
-        problems.append("recipe missing")
+    if manifest.get("recipe_sha256") != lock.get("RECIPE_SHA256"):
+        problems.append(
+            f"recipe sha drift: manifest {manifest.get('recipe_sha256')!r} != locked"
+        )
+    elif manifest.get("recipe") != lock.get("RECIPE_PATH"):
+        problems.append(f"recipe path drift: {manifest.get('recipe')!r} != {lock.get('RECIPE_PATH')!r}")
+    if manifest.get("env_fingerprint_sha256") != lock.get("ENV_FINGERPRINT_SHA256"):
+        problems.append("env fingerprint drift")
+    if manifest.get("expected_steps") != lock.get("EXPECTED_STEPS"):
+        problems.append(
+            f"expected steps {manifest.get('expected_steps')!r} != locked {lock.get('EXPECTED_STEPS')!r}"
+        )
+    for key, lock_key in (
+        ("analyzer_sha256", "ANALYZER_SHA"),
+        ("runner_sha256", "RUNNER_SHA"),
+        ("protocol_sha256", "PROTOCOL_SHA"),
+    ):
+        if manifest.get(key) != lock.get(lock_key):
+            problems.append(f"{key} drift: {manifest.get(key)!r} != locked {lock.get(lock_key)!r}")
+
+    run_id = manifest.get("run_id") or manifest.get("name")
+    arm = manifest.get("arm")
+    if arm not in ("off", "on"):
+        problems.append(f"arm must be 'off' or 'on', got {arm!r}")
+    else:
+        order = manifest.get("order")
+        expected_pair = f"{manifest.get('session', run_id and run_id.rsplit('-', 1)[0])}-{arm}"
+        if expected_pair not in lock.get("PAIR_ORDER", []):
+            problems.append(f"arm {expected_pair!r} not in locked PAIR_ORDER")
+        if order not in ("A->B", "B->A"):
+            problems.append(f"order {order!r} missing/invalid")
+
+    if manifest.get("lock_sha256") != lock_sha:
+        problems.append("manifest does not reference this lock (lock_sha256 mismatch)")
+
     relax_env = manifest.get("relax_env", {})
-    is_on = manifest.get("arm") == "on" or str(manifest.get("run_id", "")).endswith("-on")
+    is_on = arm == "on" or str(run_id or "").endswith("-on")
     if is_on:
-        for key, value in lock["ON_ARM_PROFILE"].items():
+        for key, value in lock.get("ON_ARM_PROFILE", {}).items():
             if str(relax_env.get(key)) != value:
                 problems.append(f"ON-arm env drift: {key}={relax_env.get(key)!r} != {value!r}")
-    if manifest.get("lock_sha256") != sha256_file(Path(args.lock)):
-        problems.append("manifest does not reference this lock (lock_sha256 mismatch)")
+    else:
+        straggler_keys = [k for k in relax_env if k.startswith("RELAX_STRAGGLER_")]
+        enabled = str(relax_env.get("RELAX_STRAGGLER_ENABLE", "")).strip()
+        if straggler_keys and enabled not in ("", "0", "false", "False"):
+            problems.append(f"OFF arm has straggler env set: {straggler_keys}")
+
     if problems:
         print("INVALID:")
         for p in problems:
             print(f"  - {p}")
         return 1
-    print(f"VALID {manifest.get('run_id') or manifest.get('name')}")
+    print(f"VALID {run_id}")
     return 0
 
 

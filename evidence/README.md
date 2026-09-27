@@ -57,3 +57,29 @@ in this tree at the producing commit recorded with it.
   subtraction; real-verdict/tail-window/silent-tail/platform-record evidence set.
 - Superseded-for-current-build history retained: the `cac4cb6` long-run and C2/C3
   protocols remain in place unchanged.
+
+### Hardening addendum (same day, pre-GPU)
+
+- `tools/campaign_lock.py` validate() rewritten for FULL enforcement (the earlier
+  draft had a self-comparing recipe check that could never detect drift) —
+  16 corruption classes now INVALID, plus a golden-manifest must-validate test
+  (17 tests; old validator: 11 of 16 corruptions wrongly VALID).
+- `tools/c2_lock.py` — two-stage C2 locking (calibration-lock → frozen
+  calibration-result → measurement-lock referencing the result's sha →
+  compare), tolerance priority EXACT_EQUALITY / established-precision /
+  OFF_OFF_ENVELOPE_x2 (2× worst pairwise delta over 6 arms = 720 samples,
+  envelope semantics declared; the "p99×10 from 2 pairs" draft default is
+  withdrawn); 24 tests.
+- Protocol corrections: C1 planning counts renamed to normal-approximation
+  estimates with an explicit "metric selection must follow semantics, not
+  ease of passing" clause; LONGRUN_STEPS corrected 531→**544** (full
+  17,398-row dapo-math-17k ÷ GBS 32; the withdrawn claim wrongly cited the
+  parent recipe, which targets a different dataset); C2 input fingerprint
+  honestly scoped to dataset/seed/token-volume (dynamic batching ≠ exact
+  sample order); TRACE requires genuinely overlap-enabled topologies
+  (DP4+`--overlap-grad-reduce` primary; TP2×DP2+`--tp-comm-overlap`
+  conditional on TransformerEngine); C3 metric renamed EXTERNAL-OBSERVER
+  VISIBILITY LATENCY (raw primary, no constant subtraction).
+- `CLEAN_ENV_RECOMPUTATION_CHECKLIST.md` restructured: CURRENT STATE /
+  HISTORICAL PILOT RECOMPUTATION / CURRENT CORRECTNESS GATE / FUTURE
+  CONFIRMATORY PROCEDURE.

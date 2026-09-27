@@ -16,7 +16,7 @@ the path to an attributable answer.
 | NaN/Inf | numeric-context scan of loss/grad/lr series (bare tokens in numeric context only) |
 | learning rate | per-step `train/lr-*` |
 | grad norm | per-step `grad_norm` |
-| input/microbatch fingerprint | per-step `perf/actor_train_tokens` series + dataset sha256 |
+| input fingerprint | per-step `perf/actor_train_tokens` series + dataset sha256 + pinned seed. HONEST SCOPE: the recipe uses dynamic batching, per-rank fetch, async prepack and prefetch workers, so this proves "same dataset / seed / token-volume fingerprint", NOT exact per-step sample identity or order |
 | checkpoint equivalence | final-checkpoint parameter comparison (below) |
 
 ## 2. Checkpoint comparison (the pilot could not do this: SAVE=0)
@@ -26,13 +26,29 @@ the path to an attributable answer.
 - After each arm: collect the final Megatron checkpoint; compare OFF vs ON
   parameter-by-parameter.
 - If the training path is bit-deterministic under fixed seed (established by
-  an OFF/OFF pair FIRST — §3), the comparison is **exact**: per-tensor
-  sha256, all tensors, plus optimizer-state and RNG-state hashes.
-- If OFF/OFF shows the path is NOT bit-deterministic, the comparison falls
-  back to the frozen numerical tolerances of §3 — declared now, before any
-  ON data is seen: per-tensor `max_abs_diff` and relative-to-norm bound with
-  δ = 10× the OFF/OFF 99th percentile of the same statistic (measured on the
-  calibration pairs, frozen into the CAMPAIGN_LOCK before ON runs).
+  the OFF/OFF calibration population FIRST — §3), the comparison is
+  **exact**: checkpoint tree hashes (sorted relpath + file sha), loss/grad/lr
+  series equality, and equal update counts.
+- If OFF/OFF shows the path is NOT bit-deterministic (the historical
+  `e961661` evidence says it is not: held-out OFF/OFF exceeded the frozen
+  band 5/48 and 6/48), exact hashing is FORBIDDEN as the ON/OFF gate, and the
+  comparison falls back to the frozen OFF/OFF envelope of §3. The tolerance
+  policy priority is fixed NOW:
+  1. exact deterministic equality (only if calibration is bit-identical);
+  2. an established numerical precision tolerance (requires an independently
+     justified bound recorded in the lock — not invoked by default);
+  3. OFF/OFF distribution envelope — tolerance = 2× the maximum absolute
+     pairwise delta over the ENTIRE calibration population (6 OFF arms → 15
+     pairwise contrasts × 48 steps = 720 delta samples per series).
+     Declared statistical meaning: the ON/OFF effect must stay within twice
+     the worst-case same-build OFF/OFF noise. This is an envelope test, not
+     a confidence interval, and is deliberately conservative versus any
+     quantile. The earlier draft's "p99 × 10 from 2 pairs" default is
+     withdrawn (a p99 from ~96–144 samples is pseudo-precise).
+- All tolerances are computed and frozen by `tools/c2_lock.py`
+  (calibration-lock → calibration-result → measurement-lock) BEFORE any ON
+  arm is run or read; the measurement lock references the calibration
+  result's sha256 and no tolerance may be widened afterwards.
 
 ## 3. Order of execution (freeze-before-see, enforced)
 

@@ -5,9 +5,22 @@ claims from public artifacts only. Every item lists the exact inputs, command,
 and expected output. Anything not recomputable this way is labeled as such in
 EVIDENCE.md rather than claimed.
 
-All commands below were executed and verified on 2026-09-27.
+Structure (so history stays recomputable while the build moves):
+CURRENT STATE → HISTORICAL PILOT RECOMPUTATION → CURRENT CORRECTNESS GATE →
+FUTURE CONFIRMATORY PROCEDURE.
 
 ## 0. Pins and checkouts
+
+### CURRENT STATE (2026-09-27)
+
+- Task 11 product / PR head: `a48a23ba5a39b3410a19e91d5f362154d97c9977`
+  (four correctness/launcher commits on top of the pilot build `e961661`).
+- Task 4 product: `0481701`; PR #370 head is docs-only on top.
+- Evidence branch: current head of `evidence/task11-straggler`.
+- The `e961661` 6-pair campaign below is the PILOT (INCONCLUSIVE); it is NOT
+  the final-code performance result and is not relabelled as such.
+- Mentor decisions pending: C1 primary-metric reading (A/B), realtime
+  definition (Decision A), attention/MoE scope (Decision B) — see RFC #357.
 
 - Product (Task 11): `e961661bbdf662016a658d0fc2283d200a899a96`
 - Product (Task 4): `0481701` (PR #370 head `5b512d0` is docs-only on top)
@@ -22,6 +35,8 @@ git clone https://github.com/shanyulu/Relax.git product && cd product
 git checkout e961661bbdf662016a658d0fc2283d200a899a96
 git clone -b evidence/task11-straggler https://github.com/shanyulu/Relax.git evidence
 ```
+
+## HISTORICAL PILOT RECOMPUTATION (build `e961661`; stays valid as frozen history)
 
 ## 1. Task 4 artifact integrity (no GPU, ~1 min)
 
@@ -76,7 +91,22 @@ Expected: verdict `INCONCLUSIVE-wide-interval`; session-level whole-run mean
 +2.022764799538646%]` (10,000 pair-level resamples, seed `20260926` —
 deterministic, so agreement is exact).
 
-## 5. Full campaign recompute (4x RTX 4090, ~1.2 h, optional)
+## CURRENT CORRECTNESS GATE (build `a48a23b`, no GPU)
+
+```
+git checkout a48a23ba5a39b3410a19e91d5f362154d97c9977
+PYTHONPATH=<evidence>/evidence/tools python3 -m pytest \
+    tests/utils/straggler/ tests/tools/test_ray_job_preflight.py \
+    tests/tools/test_task11_recipe_overrides.py -p ci_block_megatron -q
+```
+Expected: **411 passed, 2 skipped** (verified 2026-09-27). The D1/D2
+old-fail record (6 failed on `e961661`) is in `D1_D2_CORRECTNESS_GATE.md`.
+Campaign-lock and two-stage-C2 tooling tests:
+`python3 -m pytest evidence/tools/test_campaign_lock.py evidence/tools/test_c2_lock.py -q`
+(expected 17 + 24 passed; the validator's own old-fail record is 11 of 16
+corruption tests wrongly VALID on the pre-hardening validator).
+
+## 5. Pilot campaign recompute (4x RTX 4090, ~1.2 h, optional, build `e961661` only)
 
 Inputs are public: HF model snapshot `Qwen/Qwen3-0.6B` + the dataset JSONL
 committed at `scripts/training/sft/data/dapo-math-17k-sft-256.jsonl`
@@ -92,6 +122,17 @@ S1..S6, and the output layout; it refuses to start on a dirty tree.)
 Expected: verdict CATEGORY unchanged (INCONCLUSIVE family); the point
 estimate lands within the archived bootstrap CI. This is the only item that
 needs GPUs.
+
+## FUTURE CONFIRMATORY PROCEDURE (not yet run; preregistered)
+
+- C1 confirmatory: `C1_CONFIRMATORY_PROTOCOL_A48A23B.md` — launches only
+  after the mentor picks the primary metric (A/B); fixed N, no stopping rule;
+  long-run = 544 steps (one epoch of the full 17,398-row dapo-math-17k at
+  GBS 32).
+- C2: `C2_PROTOCOL_A48A23B.md` + `tools/c2_lock.py` — calibration lock →
+  6 OFF arms → frozen result → measurement lock → ON/OFF pairs.
+- Traces: `TRACE_PROTOCOL_A48A23B.md` — overlap-ENABLED topologies only.
+- C3: `C3_HARNESS_DESIGN_A48A23B.md` — external-observer visibility latency.
 
 ## Items NOT recomputable from public artifacts (labeled as such)
 

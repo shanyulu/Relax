@@ -30,13 +30,22 @@ defensible and the choice changes feasibility by two orders of magnitude
 (sample size for a one-sided 95% CI upper bound < 0.5%, i.e.
 N = ceil((1.645·SD/0.5−mean)²) with pilot SD/mean):
 
-| Option | Primary metric | Supporting | Required pairs (one-sided / two-sided) | Feasible? |
+| Option | Primary metric | Supporting | Approximate planning pair count (one-sided / two-sided) | Feasible? |
 | --- | --- | --- | --- | --- |
 | A | `perf/train_time` whole-run mean Δ% | wall, throughput, startup, steady-state | ≈2,292 / ≈3,253 | **No** (≈4,000–5,400 GPU-hours at ~13 min/arm) |
 | B | end-to-end whole-job wall-clock Δ% (throughput as the dual) | `perf/train_time` as component metric | ≈14 / ≈20 | **Yes** (≈7–9 GPU-hours) |
 
-Under option A the 0.5% bound is statistically indistinguishable from the
-pilot's noise at any feasible N; under option B it is confirmable. A merged
+These pair counts are **normal-approximation planning estimates** computed as
+N ≈ ceil((z·SD/(0.5−μ))²) from the pilot μ/SD (z=1.645 one-sided, 1.96
+two-sided), valid only for μ<0.5. They are NOT exact required sample sizes,
+NOT guaranteed power results, and NOT bootstrap-exact — they exist solely to
+compare resource cost between options. **Feasibility estimates are shown only
+for resource planning; metric selection must follow the intended meaning of
+"overall overhead", not which metric is easier to pass.** The mentor selects
+the metric on semantics. Under option A the 0.5% bound is statistically
+indistinguishable from the pilot's noise at any feasible N; under option B it
+is confirmable. Both facts are reported to the mentor without a
+recommendation. A merged
 decision request (metric A/B, realtime reading, attention/MoE scope) is posted
 once on RFC #357. **No confirmatory campaign launches before the metric
 choice is answered.** If the mentor changes the metric after a campaign ran,
@@ -52,7 +61,7 @@ is never relabelled.
 | Dataset | `dapo-math-17k-sft-256.jsonl`, sha256 `44f9ddac…a59428` |
 | Arm length | 48 optimizer steps (short arms, identical to pilot) — **plus** one long-run arm pair (§4) |
 | Pair order | AB/BA balanced, sessions numbered from the next unused integer (S7…), exact order committed in CAMPAIGN_LOCK.json |
-| N (pairs) | **Option A:** N = 2,304 (grid of 2× the one-sided estimate, rounded) — explicitly recorded as infeasible; do not launch without mentor sign-off on cost. **Option B:** N = 24 (20 two-sided + 4 margin), fixed in the lock before launch |
+| N (pairs) | Fixed in CAMPAIGN_LOCK before launch from the chosen option's planning estimate: **Option A:** 2,304 (explicitly recorded as infeasible; do not launch without mentor sign-off on cost). **Option B:** 24 (20 two-sided + 4 margin). Both are normal-approximation planning counts, not exact requirements |
 | Stopping rule | NONE. Fixed N, one shot. No interim looks, no "add pairs until the CI shrinks". A failed/inconclusive confirmatory run triggers the preregistered optimization phase (new PRODUCT_SHA, new lock, full affected rerun), not more sampling |
 | Analyzer | `evidence/analyze_c1.py` @ its committed sha (in CAMPAIGN_LOCK) |
 | Bootstrap | pair-level, 10,000 resamples, seed 20260926 |
@@ -63,10 +72,13 @@ is never relabelled.
 
 | Parameter | Value |
 | --- | --- |
-| REFERENCE_RECIPE | `scripts/training/sft/run-qwen3-0.6B-math-8xgpu.sh` (the observer recipe's parent) |
-| NATURAL_HORIZON | one epoch over the full `dapo-math-17k` set at global-batch-size 32 ≈ **531 optimizer steps** |
-| WHY_REPRESENTATIVE | the parent recipe trains whole epochs of this dataset; 531 steps is the dataset's natural training horizon, not a multiple chosen to amortise startup past the bound |
-| LONGRUN_STEPS | 531 (one OFF/ON pair, AB/BA order randomised by coin flip recorded in the lock) |
+| REFERENCE_RECIPE | `scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh` itself, pointed at the FULL dataset (its own 256-row default is the short-arm subset) |
+| REFERENCE_DATASET | `zhuzilin/dapo-math-17k` (HF snapshot `2e656129…`), the dataset family the recipe's short-arm JSONL was derived from via `tools/straggler/make_sft_dataset.py` |
+| REFERENCE_DATASET_SIZE | **17,398 rows** (counted 2026-09-27 from the snapshot's `dapo-math-17k.jsonl`) |
+| GLOBAL_BATCH_SIZE | 32 |
+| NATURAL_HORIZON | ⌈17,398/32⌉ = **544 optimizer steps** for one epoch (543 full batches + one 22-sample partial final batch; the loader's actual drop/partial behaviour is recorded from the arm's own step count at run time and the manifest is authoritative) |
+| WHY_REPRESENTATIVE | one epoch over the recipe's own full dataset is the dataset's natural training horizon; the earlier "parent recipe natural epoch" claim was wrong (the parent script targets OpenMathReasoning-mini, a different dataset) and is withdrawn. 544 is derived only from dataset size ÷ batch size — independent of any observed threshold, and NOT chosen to amortise startup |
+| LONGRUN_STEPS | 544 (one OFF/ON pair, AB/BA order randomised by coin flip recorded in the lock) |
 | Reporting | long-run and short-run results are reported side by side; the long-run NEVER overwrites a short-run failure or inconclusive verdict |
 
 ## 5. Startup decomposition (before any confirmatory arm)

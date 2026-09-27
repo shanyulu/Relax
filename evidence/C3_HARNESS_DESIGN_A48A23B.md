@@ -26,9 +26,11 @@ External observer process that:
 2. Independently tails the training log to timestamp window/step markers —
    giving interval-end (training-side) anchors without touching the training
    process.
-3. Writes a JSONL of (event, harness_monotonic_ts) — the harness's own
-   overhead is measured (empty-dir control run) and subtracted ONLY as a
-   declared constant recorded in the run manifest, never fitted post hoc.
+3. Writes a JSONL of (event, harness_monotonic_ts). The harness's own
+   overhead is CHARACTERISED by a separate empty-directory control run and
+   reported as measurement context; it is never subtracted from the primary
+   latency numbers (an adjusted series, if shown, is secondary with its
+   model declared).
 
 Training thread guarantees (unchanged product): 0 HTTP, 0 socket wait, 0
 blocking queue, 0 new collective on the training path — the harness is a
@@ -38,7 +40,7 @@ separate process and cannot add any.
 
 | Evidence | Definition | Rule |
 | --- | --- | --- |
-| E2E latency | interval-end (log anchor) → verdict file append → perf-write line, per window | report p50/p95/p99/max; NO queueing subtraction; a "30 ms" style figure only after subtracting declared harness overhead is forbidden — report raw and overhead-adjusted side by side |
+| EXTERNAL-OBSERVER VISIBILITY LATENCY | interval-end (log anchor) → verdict file append → perf-write line, per window, as observed by the external harness | The PRIMARY metric is the RAW observed latency, reported as p50/p95/p99/max. Its name deliberately avoids "internal E2E": it includes filesystem visibility, log buffering, watcher scheduling and harness latency. NO queueing subtraction; NO constant harness-overhead deduction from the primary numbers. A separate harness-only control run (empty directory) CHARACTERISES the measurement overhead and is reported alongside; an adjusted series may appear only as SECONDARY with its model and limitations stated |
 | Real localized verdict | a real run with a genuinely slowed rank (single-rank delay injection via the recipe's existing delay knob, OFF-arm-verified benign) produces a `straggler` verdict naming that rank | verdict must cite comparable-class evidence |
 | Tail window | a verdict whose window closes at end-of-run | must be flushed (explicit final flush) — the silent-tail case below covers the alternative |
 | Silent tail | windows with no subsequent envelope before process exit | harness records whether the final flush emitted them; the current implementation's limitation is REPORTED, not hidden |

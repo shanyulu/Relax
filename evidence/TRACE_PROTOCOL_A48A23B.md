@@ -31,12 +31,29 @@ downgrade after unsatisfactory Nsight results (no Nsight results exist).
   qualitative cross-checking, but the quantitative verdict stays on the
   declared backend unless a new protocol is preregistered.
 
-## 2. Trace experiment specification
+## 2. Trace experiment specification — on a GENUINELY overlap-enabled config
+
+The default TP1/DP4 observer recipe does NOT enable any communication
+overlap, so an ON/OFF `overlap_ratio` equality on it would say nothing about
+the official criterion "不影响已有通算 overlap 等加速收益". The trace arms
+therefore run on a configuration that actually enables the project's
+existing acceleration features, selected from the installed Megatron-LM's
+supported flags (verified in `megatron/training/arguments.py`):
+
+| Topology | Feature flags (appended via the recipe's trailing-args passthrough) | Constraint |
+| --- | --- | --- |
+| Primary: TP1/DP4 | `--overlap-grad-reduce` (Megatron DDP grad-reduction/communication overlap) | none beyond DP>1; this is the project's standard DP comm overlap |
+| Secondary (conditional): TP2/DP2 | `--overlap-grad-reduce --sequence-parallel --tp-comm-overlap` (+ `--num-data-storage-units 2`) | `tp_comm_overlap` asserts sequence parallelism; requires TransformerEngine in the training venv — verify BEFORE the arm; if the stack cannot launch it, record the failure and the overlap verdict rests on the DP topology with an explicit coverage note, never a silent substitution |
+
+Per-topology TRACE_LOCK (frozen before each trace pair): OVERLAP_FEATURE_FLAGS,
+TOPOLOGY, COMPUTE_KERNEL_CLASSIFIER, COMM_KERNEL_CLASSIFIER,
+SYNC_API_CLASSIFIER, OVERLAP_DELTA_TOLERANCE. Each topology gets its own
+OFF trace and ON trace — same code / recipe / dataset / step count / GPU
+topology, differing ONLY in `RELAX_STRAGGLER_ENABLE`.
 
 | Parameter | Value |
 | --- | --- |
 | Build | `a48a23b` clean tree, CAMPAIGN_LOCK-referenced |
-| Arms | OFF and ON, same code / recipe / dataset / step count / GPU topology (TP1/DP4, 4×RTX4090); the ONLY difference is `RELAX_STRAGGLER_ENABLE` |
 | Steps traced | a fixed window: warm-up 8 steps, then trace 16 steps (committed in the run manifest; identical for OFF and ON) |
 | Trace overhead | traces run in a SEPARATE pair of arms; trace-ON data is NEVER used for C1 overhead estimation |
 
