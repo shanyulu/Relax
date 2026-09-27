@@ -23,6 +23,10 @@ downgrade after unsatisfactory Nsight results (no Nsight results exist).
 - Record: NSYS_PATH=none, NSYS_VERSION=none,
   INSTALL_METHOD=attempted (pip-standalone-venv + direct-download), blocked;
   no pollution of the training venv occurred (the venv used is disposable).
+- Backend dry-run verification (2026-09-27, training venv, CPU + CUDA probe,
+  no acceptance state touched): torch 2.8.0+cu128, `torch.profiler` CPU
+  profile OK, CUDA/CUPTI profile OK (28 event groups on a 64×64 matmul).
+  The declared primary backend is functional in this environment.
 - If Nsight becomes installable later, traces may be UPGRADED to Nsight for
   qualitative cross-checking, but the quantitative verdict stays on the
   declared backend unless a new protocol is preregistered.
