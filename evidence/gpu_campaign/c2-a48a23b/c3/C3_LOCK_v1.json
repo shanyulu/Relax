@@ -1,0 +1,38 @@
+{
+  "ACCEPTANCE_RULE": "evidence-set completeness per C3_HARNESS_DESIGN section 3/4; verdict category additionally requires mentor Decision A",
+  "ANALYZER_SHA": "48df51c9124c8d60afda3e95f03878f6e415c97a23a35e6bf0bbd72629ff38b5",
+  "BOOTSTRAP_SEED": 20260926,
+  "C2_TOLERANCES": "n/a",
+  "C3_PARAMS": {
+    "HARNESS_CONTROL": "separate empty-dir control run characterises loop cost; never subtracted from primary",
+    "HARNESS_POLL_S": 0.2,
+    "INJECTION": {
+      "RELAX_STRAGGLER_DEBUG_HOST_DELAY_MS": "500",
+      "RELAX_STRAGGLER_DEBUG_RANK": "3",
+      "RELAX_STRAGGLER_DEBUG_STAGE": "forward-compute"
+    },
+    "SAVE": 0
+  },
+  "DATASET_PATH": "/root/autodl-tmp/relax-work/task11-c2/scripts/training/sft/data/dapo-math-17k-sft-256.jsonl",
+  "DATASET_SHA256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "ENV_FINGERPRINT_SHA256": "e03c770f18fc9f95986575d6a9db88a8738e24ed4d73e013cb0e004598525539",
+  "EXPECTED_STEPS": 48,
+  "ON_ARM_PROFILE": {
+    "RELAX_STRAGGLER_ENABLE": "1",
+    "RELAX_STRAGGLER_REPORT_INTERVAL_S": "10",
+    "RELAX_STRAGGLER_WARMUP_WINDOWS": "2",
+    "RELAX_STRAGGLER_WINDOW_S": "5"
+  },
+  "PAIR_ORDER": [
+    "C3-on"
+  ],
+  "PRIMARY_METRIC": "EXTERNAL-OBSERVER VISIBILITY LATENCY (raw; p50/p95/p99/max; no subtraction)",
+  "PRODUCT_SHA": "a48a23ba5a39b3410a19e91d5f362154d97c9977",
+  "PROTOCOL_SHA": "cd9e01c3d5f95f3b32f034cb7e43caf42ed4dfa4f7901eb455a17d79f7ec885a",
+  "PR_HEAD": "a48a23ba5a39b3410a19e91d5f362154d97c9977",
+  "RECIPE_PATH": "/tmp/relax-task11-fix.x2AJOQ/scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "RECIPE_SHA256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "RUNNER_SHA": "aa30ff5808f5479efd8eb2fb782ff9cc94ecf91985b704422e2c17ea2b7af2d0",
+  "TRACE_BACKEND": "n/a",
+  "_self_sha256": "bc65fc6e7ed711fa7caa1f8da5d90c5b596a97c0dfa7666dc76705a474acebef"
+}

@@ -2,8 +2,9 @@
 # Copyright (c) 2026 Relax Authors. All Rights Reserved.
 """Programmatic overlap metrics from Megatron's exported chrome traces.
 
-Reads every ``torch_profile/rank-*.json.gz`` in a trace arm's tensorboard
-parent directory and computes, per rank and aggregated (per TRACE_PROTOCOL):
+Reads every ``*.pt.trace.json.gz`` the relax TrainProfiler wrote under a trace
+arm (``train_trace/`` via tensorboard_trace_handler) and computes, per rank
+and aggregated (per TRACE_PROTOCOL):
 
   compute_busy    union of non-NCCL GPU kernel intervals (µs)
   comm_busy       union of NCCL kernel intervals (µs)
@@ -125,7 +126,7 @@ def main() -> int:
     ap.add_argument("--arm", type=Path, required=True, help="arm dir containing tensorboard/../torch_profile")
     ap.add_argument("--out", type=Path, default=None)
     args = ap.parse_args()
-    profiles = sorted(args.arm.rglob("torch_profile/rank-*.json.gz"))
+    profiles = sorted(args.arm.rglob("train_trace/*.pt.trace.json.gz"))
     if not profiles:
         print(json.dumps({"error": "no torch_profile exports found", "arm": str(args.arm)}))
         return 1
