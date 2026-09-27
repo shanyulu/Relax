@@ -30,3 +30,30 @@ Contents:
 
 Every acceptance number cited in RFC #357 / PR #378 is reproducible from a file
 in this tree at the producing commit recorded with it.
+
+## Current-build closeout addenda (build `a48a23b`, 2026-09-27)
+
+- `D1_D2_CORRECTNESS_GATE.md` — the two detector state-machine holes (below-floor
+  UNCERTAIN+RECOVERED; pre-onset streak across unusable windows) closed with
+  old-fail (`e961661`: 6 failed) / new-pass (`a48a23b`: 411 passed, 2 skipped)
+  evidence and the exact pinned tests.
+- `C1_CONFIRMATORY_PROTOCOL_A48A23B.md` — the `e961661` 6-pair campaign frozen as
+  PILOT; exact pair-level statistics; metric-option A/B feasibility table
+  (train_time ≈2,292–3,253 pairs vs wall-clock ≈14–20 pairs); fixed-N one-shot
+  confirmatory design; LONGRUN_STEPS=531 (natural epoch); S1/S2-off renamed
+  cross-session OFF/OFF diagnostic contrast.
+- `tools/campaign_lock.py` — CAMPAIGN_LOCK generator/validator: exact-SHA clean-tree
+  product pin, recipe/dataset/env hashes, ON-arm env profile enforcement,
+  lock_sha256 referenced by every arm manifest.
+- `TRACE_PROTOCOL_A48A23B.md` — trace backend declared BEFORE any trace (Nsight
+  install attempts recorded and blocked; torch.profiler/Kineto primary);
+  programmatic metrics (overlap_ratio, new_global_sync, …); screenshot evidence
+  forbidden.
+- `C2_PROTOCOL_A48A23B.md` — freeze-before-see order (OFF/OFF calibration pairs →
+  ON/OFF pairs), SAVE=1 checkpoint equivalence (exact hashes if deterministic,
+  10×-calibration-99th-percentile tolerances if not), ≥2+2 pairs minimum.
+- `C3_HARNESS_DESIGN_A48A23B.md` — external non-invasive harness (schema has no
+  timestamps; no product change for C3 this phase); E2E latency without queueing
+  subtraction; real-verdict/tail-window/silent-tail/platform-record evidence set.
+- Superseded-for-current-build history retained: the `cac4cb6` long-run and C2/C3
+  protocols remain in place unchanged.
