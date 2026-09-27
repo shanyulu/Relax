@@ -73,10 +73,25 @@ def compare(root: Path, frozen: dict) -> dict:
             "learning_rates_equal": off["learning_rate_series"] == on["learning_rate_series"],
             "token_series_equal": off["token_series"] == on["token_series"],
         }
+    controls = {}
+    for left, right in [(3, 4), (5, 6)]:
+        delta = [
+            b - a
+            for a, b in zip(
+                frozen["arms"][f"S{left}-off"]["loss_series"], frozen["arms"][f"S{right}-off"]["loss_series"]
+            )
+        ]
+        controls[f"S{left}-off/S{right}-off"] = {
+            "outside_band_steps": [i for i, value in enumerate(delta) if not low <= value <= high],
+            "max_abs_loss_delta": max(map(abs, delta)),
+        }
     return {
-        "status": "PARTIAL_HISTORICAL_ONLY",
+        "status": "NOT_PASS_LOSS_RULE_HISTORICAL"
+        if any(p["outside_band_steps"] for p in pairs.values())
+        else "PARTIAL_HISTORICAL_ONLY",
         "band": frozen["band"],
         "pairs": pairs,
+        "held_out_off_off": controls,
         "checkpoint_equivalence": "NOT_MEASURED",
         "overlap": "NOT_MEASURED",
     }
