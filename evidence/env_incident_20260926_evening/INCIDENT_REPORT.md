@@ -146,3 +146,38 @@ passes.
   same `graceful=false, disconnect_type=0` signature, no readable OOM/Xid):
   **GPU_REENTRY = FAIL**; both GPU tracks remain ENV_BLOCKED
   (`reentry_20260927_0005/RESULT.md`).
+
+## 8. Third root cause found 2026-09-27 morning: platform proxy hijacks intra-container HTTP
+
+The 2026-09-27 ~10:41 Task 4 reconfirmation attempt (`reward_consistency_…_r5`) failed
+with `engines did not reach 1 within 900s` although the SGLang server had fully
+initialised (weights, KV cache, CUDA graphs) and was up. Forensics:
+
+- The server's own warmup traceback showed `ReadTimeoutError:
+  HTTPConnectionPool(host='127.0.0.1', port=17892) ... (read timeout=5)` — port 17892 is
+  **the platform HTTP proxy** (`http_proxy=http://127.0.0.1:17892` in the environment),
+  not the engine. `requests` routes through the proxy and urllib3 reports the PROXY's
+  host:port, which is why the port did not match the engine's 16000.
+- `no_proxy` covered only `127.0.0.1,localhost`. The container was rescheduled overnight
+  to a new IP (172.17.0.3 -> 172.17.0.5), and the engine binds the Ray node IP, so every
+  internal warmup/health HTTP call to `172.17.0.5:16000` was hijacked into the proxy,
+  which cannot loop back to the container IP: curl through the proxy returns 502 after
+  ~5 s; curl with `--noproxy '*'` returns 200 in 3.7 ms.
+- SGLang's warmup loop retried for ~12 minutes (120 x (1 s + 5 s timeout)), then
+  declared `Initialization failed. warmup error` and killed the server process
+  (`kill_process_tree`), which surfaced as `Server process terminated unexpectedly`.
+- The Ray cluster used for the re-entry gate had been started from a shell carrying the
+  proxy env, so every worker (and the engine's multiprocessing child) inherited it.
+
+Discriminator: an out-of-Ray probe with the identical server args (fa3 +
+deterministic inference, Qwen3-0.6B, mem_fraction 0.85) hung the same way through the
+proxy and answered instantly without it — the config and the machine were healthy; the
+proxy was the sole cause of the r5 failure.
+
+Mitigation adopted for all subsequent runs (documented here so it is never re-debugged):
+start the Ray head from a shell with `http_proxy`/`https_proxy` unset and
+`no_proxy=127.0.0.1,localhost,<container IP>`. The re-run on a proxy-free fresh cluster
+completed both engine boots and the full protocol in 208 s (`r6`, PASS). The earlier
+2026-09-26 CUDA-in-Ray kills (§1-§7) were a separate, real machine fault; this proxy
+issue is the reason the FIRST 2026-09-27 reconfirmation attempt failed after that fault
+had cleared.
