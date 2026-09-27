@@ -1,0 +1,12 @@
+{
+  "harness": "c3_external_observer_v2",
+  "mode": "control",
+  "watch": "/root/autodl-tmp/c2_campaign_a48/c3/control_empty",
+  "driver_log": null,
+  "poll_s_target": 0.2,
+  "poll_s_max_observed": 0.0,
+  "loop_count": 150,
+  "duration_mono_s": 30.012968719005585,
+  "event_count": 0,
+  "events": []
+}

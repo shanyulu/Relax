@@ -1,0 +1,45 @@
+{
+  "metric_name": "EXTERNAL-OBSERVER VISIBILITY LATENCY (raw)",
+  "interval_anchor_to_verdict_persist": {
+    "n": 5,
+    "p50_s": 0.0,
+    "p95_s": 2.201,
+    "p99_s": 2.201,
+    "max_s": 2.201,
+    "mean_s": 0.56
+  },
+  "verdict_persist_to_platform_perf_write": {
+    "n": 0
+  },
+  "harness_context": {
+    "poll_s_target": 0.2,
+    "poll_s_max_observed": 0.0078,
+    "control_loop_cost_ms": 0,
+    "note": "control run characterises measurement overhead; NEVER subtracted from the primary numbers"
+  },
+  "real_localized_verdict": {
+    "count": 0,
+    "ranks": [],
+    "labels": [],
+    "reasons": [],
+    "max_consecutive_windows": 0,
+    "max_deviation": 0
+  },
+  "verdict_kind_counts": {
+    "uncertain": 125
+  },
+  "platform_record": {
+    "perf_write_events_seen": 0
+  },
+  "tail_window": {
+    "note": "final-window verdicts present iff the last windows were judged before exit",
+    "last_verdict_is_straggler_or_recovered": false,
+    "total_verdicts": 125
+  },
+  "event_counts": {
+    "persist_grow": 15,
+    "verdict_visible": 5,
+    "perf_write": 0,
+    "log_line": 299
+  }
+}

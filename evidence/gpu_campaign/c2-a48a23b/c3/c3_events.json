@@ -1,0 +1,2565 @@
+{
+  "harness": "c3_external_observer_v2",
+  "mode": "observing",
+  "watch": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on",
+  "driver_log": "/tmp/ray/session_latest/logs/job-driver-codex-t11-c2-a48a23ba-c3-C3-on.log",
+  "poll_s_target": 0.2,
+  "poll_s_max_observed": 0.0078,
+  "loop_count": 11995,
+  "duration_mono_s": 2400.1311316005886,
+  "event_count": 319,
+  "events": [
+    {
+      "event": "log_line",
+      "wall": 1790508674.528877,
+      "mono": 9189042.720958166,
+      "embedded_wall": null,
+      "line": "disable_straggler_on_startup .................... False",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508674.528877,
+      "mono": 9189042.720958166,
+      "embedded_wall": null,
+      "line": "fault_injector_delay_start_iteration ............ None",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508674.528877,
+      "mono": 9189042.720958166,
+      "embedded_wall": null,
+      "line": "grpo_iterations ................................. 2",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508674.528877,
+      "mono": 9189042.720958166,
+      "embedded_wall": null,
+      "line": "inprocess_max_iterations ........................ None",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508674.528877,
+      "mono": 9189042.720958166,
+      "embedded_wall": null,
+      "line": "iterations_to_skip .............................. []",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508674.528877,
+      "mono": 9189042.720958166,
+      "embedded_wall": null,
+      "line": "log_straggler ................................... False",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508674.528877,
+      "mono": 9189042.720958166,
+      "embedded_wall": null,
+      "line": "mhc_sinkhorn_iterations ......................... 20",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508674.528877,
+      "mono": 9189042.720958166,
+      "embedded_wall": null,
+      "line": "phase_transition_iterations ..................... None",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508674.528877,
+      "mono": 9189042.720958166,
+      "embedded_wall": null,
+      "line": "sglang_eplb_rebalance_num_iterations ............ 1000",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508674.528877,
+      "mono": 9189042.720958166,
+      "embedded_wall": null,
+      "line": "straggler_ctrlr_port ............................ 65535",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508674.528877,
+      "mono": 9189042.720958166,
+      "embedded_wall": null,
+      "line": "straggler_minmax_count .......................... 1",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508764.2017958,
+      "mono": 9189132.393877363,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:32:44\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler:35\u001b[0m \u001b[1;37mstraggler provenance: relax_root=/tmp/ray/session_2026-09-27_11-12-22_910775_170827/runtime_resources/working_dir_files/_ray_pkg_af12e8c1c52a912b/relax module=/tmp/",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508782.6086745,
+      "mono": 9189150.800755508,
+      "embedded_wall": null,
+      "line": "\u001b[36m(pid=51881)\u001b[0m \u001b[32m2026-09-27 19:33:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler:35\u001b[0m \u001b[1;37mstraggler provenance: relax_root=/tmp/ray/session_2026-09-27_11-12-22_910775_170827/runtime_resources/working_dir_files/_ray_pkg_af12e8c1c52a912b/relax module=/tmp/ray/session_2026-09-27_11",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508801.2159111,
+      "mono": 9189169.407991787,
+      "embedded_wall": null,
+      "line": "\u001b[36m(pid=52651)\u001b[0m \u001b[32m2026-09-27 19:33:21\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler:35\u001b[0m \u001b[1;37mstraggler provenance: relax_root=/tmp/ray/session_2026-09-27_11-12-22_910775_170827/runtime_resources/working_dir_files/_ray_pkg_af12e8c1c52a912b/relax module=/tmp/ray/session_2026-09-27_11",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508804.8174605,
+      "mono": 9189173.009541033,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:33:24\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.runtime:129\u001b[0m \u001b[1;37mstraggler profiler started: role=collector identity=rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1 collector=127.0.0.1:51809\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508804.8174605,
+      "mono": 9189173.009541033,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:33:24\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler:60\u001b[0m \u001b[1;37mstraggler profiler enabled: role=collector, log_level=2, event_pool=512, window=5.0s, collector=127.0.0.1:51809\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508804.8174605,
+      "mono": 9189173.009541033,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=52650)\u001b[0m \u001b[32m2026-09-27 19:33:24\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.runtime:129\u001b[0m \u001b[1;37mstraggler profiler started: role=sender identity=rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1 collector=127.0.0.1:51809\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508804.8174605,
+      "mono": 9189173.009541033,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=52650)\u001b[0m \u001b[32m2026-09-27 19:33:24\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler:60\u001b[0m \u001b[1;37mstraggler profiler enabled: role=sender, log_level=2, event_pool=512, window=5.0s, collector=127.0.0.1:51809\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508815.0225203,
+      "mono": 9189183.214601599,
+      "embedded_wall": null,
+      "line": "\u001b[36m(pid=52650)\u001b[0m \u001b[32m2026-09-27 19:33:21\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler:35\u001b[0m \u001b[1;37mstraggler provenance: relax_root=/tmp/ray/session_2026-09-27_11-12-22_910775_170827/runtime_resources/working_dir_files/_ray_pkg_af12e8c1c52a912b/relax module=/tmp/ray/session_2026-09-27_11",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508815.0225203,
+      "mono": 9189183.214601599,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:33:34\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:297\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=0 judged=0 invalid=0 duplicate=0 late=0 windows=0 verdicts=0 stragglers=0 active=none\u001b[0m\u001b[32m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508815.0225203,
+      "mono": 9189183.214601599,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=52649)\u001b[0m \u001b[32m2026-09-27 19:33:24\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.runtime:129\u001b[0m \u001b[1;37mstraggler profiler started: role=sender identity=rank1/tp0/pp0/vpp-1/cp0/ep0/dp1/chunk-1 collector=127.0.0.1:51809\u001b[0m\u001b[32m [repeated 2x across cluster]\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508815.0225203,
+      "mono": 9189183.214601599,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=52649)\u001b[0m \u001b[32m2026-09-27 19:33:24\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler:60\u001b[0m \u001b[1;37mstraggler profiler enabled: role=sender, log_level=2, event_pool=512, window=5.0s, collector=127.0.0.1:51809\u001b[0m\u001b[32m [repeated 2x across cluster]\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508825.0287044,
+      "mono": 9189193.22078597,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:33:44\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:297\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=0 judged=0 invalid=0 duplicate=0 late=0 windows=0 verdicts=0 stragglers=0 active=none\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508835.0376294,
+      "mono": 9189203.229709916,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:33:54\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:297\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=0 judged=0 invalid=0 duplicate=0 late=0 windows=0 verdicts=0 stragglers=0 active=none\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508841.6414623,
+      "mono": 9189209.83354344,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:01\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 0/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508882.8587906,
+      "mono": 9189251.050873237,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:42\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:297\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=1 judged=1 invalid=0 duplicate=0 late=0 windows=0 verdicts=0 stragglers=0 active=none\u001b[0m\u001b[32m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508887.0608227,
+      "mono": 9189255.252904069,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:46\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 0/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508887.0608227,
+      "mono": 9189255.252904069,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:46\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 0: {'perf/init_actor_time': 54.55273246765137, 'perf/per_rank_fetch_time': 0.11069440841674805, 'perf/sft_prefetch_wait_time': 0.075232028961181",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508887.0608227,
+      "mono": 9189255.252904069,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:46\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 1/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508888.0612805,
+      "mono": 9189256.253361508,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:47\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 1/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508888.0612805,
+      "mono": 9189256.253361508,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:47\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 2/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508888.0612805,
+      "mono": 9189256.253361508,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:47\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 1: {'perf/sft_prefetch_wait_time': 0.0005924701690673828, 'perf/train_wait_time': 0.17737865447998047, 'perf/per_rank_fetch_time': 0.05075383186",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508889.061748,
+      "mono": 9189257.253828915,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:48\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 2: {'perf/sft_prefetch_wait_time': 0.0005710124969482422, 'perf/train_wait_time': 0.17610883712768555, 'perf/per_rank_fetch_time': 0.04496860504",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508889.2618353,
+      "mono": 9189257.453916367,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:49\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 2/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508889.2618353,
+      "mono": 9189257.453916367,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:49\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 3/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508890.0622168,
+      "mono": 9189258.254297452,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:49\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 3/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508890.0622168,
+      "mono": 9189258.254297452,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:49\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 3: {'perf/sft_prefetch_wait_time': 0.00043201446533203125, 'perf/train_wait_time': 0.1764538288116455, 'perf/per_rank_fetch_time': 0.04347968101",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508890.0622168,
+      "mono": 9189258.254297452,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:49\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 4/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508891.0626576,
+      "mono": 9189259.25473832,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:50\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 4: {'perf/sft_prefetch_wait_time': 0.0005886554718017578, 'perf/train_wait_time': 0.17469167709350586, 'perf/per_rank_fetch_time': 0.04408550262",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508891.0626576,
+      "mono": 9189259.25473832,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:50\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 4/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508891.0626576,
+      "mono": 9189259.25473832,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:50\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 5/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508891.6629324,
+      "mono": 9189259.855013836,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_envelopes.jsonl",
+      "delta_bytes": 110344,
+      "file": "straggler_envelopes.jsonl"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508891.8630195,
+      "mono": 9189260.055100532,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:51\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 5: {'perf/sft_prefetch_wait_time': 0.0005538463592529297, 'perf/train_wait_time': 0.17258596420288086, 'perf/per_rank_fetch_time': 0.04848051071",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.063106,
+      "mono": 9189260.255187253,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:51\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 5/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.063106,
+      "mono": 9189260.255187253,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:51\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 6/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_verdicts.jsonl",
+      "delta_bytes": 30255,
+      "file": "straggler_verdicts.jsonl"
+    },
+    {
+      "event": "verdict_visible",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_verdicts.jsonl",
+      "delta_bytes": 30255,
+      "file": "straggler_verdicts.jsonl"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_envelopes.jsonl",
+      "delta_bytes": 22426,
+      "file": "straggler_envelopes.jsonl"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 6/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 7/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 6: {'perf/sft_prefetch_wait_time': 0.0005409717559814453, 'perf/train_wait_time': 0.17093515396118164, 'perf/per_rank_fetch_time': 0.04298734664",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=all-grads-sync coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=non-tensor-parallel-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=non-tensor-parallel-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=non-tensor-parallel-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=embedding-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=embedding-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=embedding-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508892.8634572,
+      "mono": 9189261.055538308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508893.063543,
+      "mono": 9189261.255624823,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:52\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:297\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=308 judged=308 invalid=0 duplicate=0 late=0 windows=9 verdicts=19 stragglers=0 active=none\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508893.6638072,
+      "mono": 9189261.855888225,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:53\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 7/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508893.6638072,
+      "mono": 9189261.855888225,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:53\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 8/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508893.6638072,
+      "mono": 9189261.855888225,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:53\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 7: {'perf/sft_prefetch_wait_time': 0.0005292892456054688, 'perf/train_wait_time': 0.17723894119262695, 'perf/per_rank_fetch_time': 0.07421779632",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508894.6642468,
+      "mono": 9189262.856327955,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:54\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 8/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508894.6642468,
+      "mono": 9189262.856327955,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:54\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 8: {'perf/sft_prefetch_wait_time': 0.0005719661712646484, 'perf/train_wait_time': 0.17780303955078125, 'perf/per_rank_fetch_time': 0.04501676559",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508894.6642468,
+      "mono": 9189262.856327955,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:54\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 9/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508895.464603,
+      "mono": 9189263.656684112,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:55\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 9: {'perf/sft_prefetch_wait_time': 0.0005347728729248047, 'perf/train_wait_time': 0.17392802238464355, 'perf/per_rank_fetch_time': 0.04776358604",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508895.6646888,
+      "mono": 9189263.856770389,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:55\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 9/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508895.6646888,
+      "mono": 9189263.856770389,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:55\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 10/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508896.4650497,
+      "mono": 9189264.657131316,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:56\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 10/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508896.4650497,
+      "mono": 9189264.657131316,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:56\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 11/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508896.4650497,
+      "mono": 9189264.657131316,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:56\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 10: {'perf/sft_prefetch_wait_time': 0.0005404949188232422, 'perf/train_wait_time': 0.17345905303955078, 'perf/per_rank_fetch_time': 0.0463037490",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 11/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 11: {'perf/sft_prefetch_wait_time': 0.0005402565002441406, 'perf/train_wait_time': 0.17228078842163086, 'perf/per_rank_fetch_time': 0.0432379245",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=all-grads-sync coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=embedding-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508897.4654963,
+      "mono": 9189265.657576872,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:57\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 12/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508897.865671,
+      "mono": 9189266.057752036,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_envelopes.jsonl",
+      "delta_bytes": 110611,
+      "file": "straggler_envelopes.jsonl"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508898.2658498,
+      "mono": 9189266.457931554,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:58\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 12: {'perf/sft_prefetch_wait_time': 0.0005421638488769531, 'perf/train_wait_time': 0.169633150100708, 'perf/per_rank_fetch_time': 0.051055669784",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508898.2658498,
+      "mono": 9189266.457931554,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:58\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 12/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508898.2658498,
+      "mono": 9189266.457931554,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:58\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 13/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508899.2663155,
+      "mono": 9189267.458396848,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:59\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 13/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508899.2663155,
+      "mono": 9189267.458396848,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:34:59\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 14/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508899.2663155,
+      "mono": 9189267.458396848,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:59\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 13: {'perf/sft_prefetch_wait_time': 0.0005941390991210938, 'perf/train_wait_time': 0.1750016212463379, 'perf/per_rank_fetch_time': 0.04576802253",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508900.0666225,
+      "mono": 9189268.258703202,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:00\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 14/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508900.0666225,
+      "mono": 9189268.258703202,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:34:59\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 14: {'perf/sft_prefetch_wait_time': 0.0005702972412109375, 'perf/train_wait_time': 0.17703866958618164, 'perf/per_rank_fetch_time': 0.0464179515",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508900.2667081,
+      "mono": 9189268.458789531,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:00\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 15/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508901.0670743,
+      "mono": 9189269.259155992,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:00\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 15: {'perf/sft_prefetch_wait_time': 0.0007491111755371094, 'perf/train_wait_time': 0.17226862907409668, 'perf/per_rank_fetch_time': 0.0487892627",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508901.0670743,
+      "mono": 9189269.259155992,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:00\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 15/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508901.0670743,
+      "mono": 9189269.259155992,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:00\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 16/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.0675106,
+      "mono": 9189270.259591851,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:01\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 16/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.0675106,
+      "mono": 9189270.259591851,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:01\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 17/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.0675106,
+      "mono": 9189270.259591851,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:01\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 16: {'perf/sft_prefetch_wait_time': 0.0005464553833007812, 'perf/train_wait_time': 0.17834162712097168, 'perf/per_rank_fetch_time': 0.0428321361",
+      "kind": "step"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_verdicts.jsonl",
+      "delta_bytes": 46068,
+      "file": "straggler_verdicts.jsonl"
+    },
+    {
+      "event": "verdict_visible",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_verdicts.jsonl",
+      "delta_bytes": 46068,
+      "file": "straggler_verdicts.jsonl"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_envelopes.jsonl",
+      "delta_bytes": 98570,
+      "file": "straggler_envelopes.jsonl"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 17/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 17: {'perf/sft_prefetch_wait_time': 0.0005602836608886719, 'perf/train_wait_time': 0.17169594764709473, 'perf/per_rank_fetch_time': 0.0437314510",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=embedding-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=embedding-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508902.867856,
+      "mono": 9189271.059937503,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508903.067943,
+      "mono": 9189271.260024758,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 18/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508903.2680352,
+      "mono": 9189271.460117053,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:02\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:297\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=793 judged=793 invalid=0 duplicate=0 late=0 windows=11 verdicts=48 stragglers=0 active=none\u001b[0",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508903.668209,
+      "mono": 9189271.860290512,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:03\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 18: {'perf/sft_prefetch_wait_time': 0.0006392002105712891, 'perf/train_wait_time': 0.1754016876220703, 'perf/per_rank_fetch_time': 0.08404493331",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508903.8682835,
+      "mono": 9189272.060365612,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:03\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 18/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508903.8682835,
+      "mono": 9189272.060365612,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:03\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 19/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508904.6686335,
+      "mono": 9189272.860714735,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:04\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 19/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508904.868721,
+      "mono": 9189273.060802525,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:04\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 20/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508904.868721,
+      "mono": 9189273.060802525,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:04\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 19: {'perf/sft_prefetch_wait_time': 0.0005588531494140625, 'perf/train_wait_time': 0.1789703369140625, 'perf/per_rank_fetch_time': 0.04964041709",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508905.6691072,
+      "mono": 9189273.861188233,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:05\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 20: {'perf/sft_prefetch_wait_time': 0.0005338191986083984, 'perf/train_wait_time': 0.18058156967163086, 'perf/per_rank_fetch_time': 0.0467224121",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508905.6691072,
+      "mono": 9189273.861188233,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:05\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 20/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508905.6691072,
+      "mono": 9189273.861188233,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:05\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 21/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508906.6695561,
+      "mono": 9189274.861637946,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:06\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 21/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508906.6695561,
+      "mono": 9189274.861637946,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:06\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 22/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508906.6695561,
+      "mono": 9189274.861637946,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:06\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 21: {'perf/sft_prefetch_wait_time': 0.0005595684051513672, 'perf/train_wait_time': 0.17448997497558594, 'perf/per_rank_fetch_time': 0.0532629489",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 22/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 22: {'perf/sft_prefetch_wait_time': 0.0006833076477050781, 'perf/train_wait_time': 0.17683839797973633, 'perf/per_rank_fetch_time': 0.0451841354",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=non-tensor-parallel-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=non-tensor-parallel-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508907.4699318,
+      "mono": 9189275.662012983,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:07\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 23/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508908.0702102,
+      "mono": 9189276.262291696,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_envelopes.jsonl",
+      "delta_bytes": 110701,
+      "file": "straggler_envelopes.jsonl"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508908.4703813,
+      "mono": 9189276.662462609,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:08\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 23: {'perf/sft_prefetch_wait_time': 0.0005311965942382812, 'perf/train_wait_time': 0.17998719215393066, 'perf/per_rank_fetch_time': 0.0498816967",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508908.4703813,
+      "mono": 9189276.662462609,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:08\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 23/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508908.4703813,
+      "mono": 9189276.662462609,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:08\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 24/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508909.4708464,
+      "mono": 9189277.66292792,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:09\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 24/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508909.4708464,
+      "mono": 9189277.66292792,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:09\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 25/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508909.4708464,
+      "mono": 9189277.66292792,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:09\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 24: {'perf/sft_prefetch_wait_time': 0.0005283355712890625, 'perf/train_wait_time': 0.17705440521240234, 'perf/per_rank_fetch_time': 0.0454254150",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508910.2712133,
+      "mono": 9189278.463294234,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:10\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 25/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508910.2712133,
+      "mono": 9189278.463294234,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:10\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 26/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508910.2712133,
+      "mono": 9189278.463294234,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:10\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 25: {'perf/sft_prefetch_wait_time': 0.0005745887756347656, 'perf/train_wait_time': 0.17250847816467285, 'perf/per_rank_fetch_time': 0.0480110645",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508911.0715728,
+      "mono": 9189279.263653748,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:11\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 26/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508911.0715728,
+      "mono": 9189279.263653748,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:11\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 26: {'perf/sft_prefetch_wait_time': 0.0005466938018798828, 'perf/train_wait_time': 0.17530298233032227, 'perf/per_rank_fetch_time': 0.0481884479",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508911.2716582,
+      "mono": 9189279.463739589,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:11\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 27/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.0720294,
+      "mono": 9189280.26411055,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:11\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 27: {'perf/sft_prefetch_wait_time': 0.00054168701171875, 'perf/train_wait_time': 0.1722402572631836, 'perf/per_rank_fetch_time': 0.0479648113250",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.0720294,
+      "mono": 9189280.26411055,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:11\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 27/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.0720294,
+      "mono": 9189280.26411055,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:11\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 28/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_verdicts.jsonl",
+      "delta_bytes": 47467,
+      "file": "straggler_verdicts.jsonl"
+    },
+    {
+      "event": "verdict_visible",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_verdicts.jsonl",
+      "delta_bytes": 47467,
+      "file": "straggler_verdicts.jsonl"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_envelopes.jsonl",
+      "delta_bytes": 98539,
+      "file": "straggler_envelopes.jsonl"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 28: {'perf/sft_prefetch_wait_time': 0.0005326271057128906, 'perf/train_wait_time': 0.1724848747253418, 'perf/per_rank_fetch_time': 0.04416894912",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=forward-compute coarse_stage=forward\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=non-tensor-parallel-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508912.8723807,
+      "mono": 9189281.064461324,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508913.0725026,
+      "mono": 9189281.264582735,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 28/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508913.0725026,
+      "mono": 9189281.264582735,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:12\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 29/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508913.8728654,
+      "mono": 9189282.064945364,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:13\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 29/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508913.8728654,
+      "mono": 9189282.064945364,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:13\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 30/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508913.8728654,
+      "mono": 9189282.064945364,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:13\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 29: {'perf/sft_prefetch_wait_time': 0.0005638599395751953, 'perf/train_wait_time': 0.1750938892364502, 'perf/per_rank_fetch_time': 0.04832458496",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508914.8732984,
+      "mono": 9189283.065379348,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:14\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 30/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508914.8732984,
+      "mono": 9189283.065379348,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:14\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 30: {'perf/sft_prefetch_wait_time': 0.0005474090576171875, 'perf/train_wait_time': 0.1720597743988037, 'perf/per_rank_fetch_time': 0.04519796371",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508914.8732984,
+      "mono": 9189283.065379348,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:14\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 31/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508915.6736572,
+      "mono": 9189283.86573784,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:15\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 31: {'perf/sft_prefetch_wait_time': 0.0008585453033447266, 'perf/train_wait_time': 0.17432498931884766, 'perf/per_rank_fetch_time': 0.0444149971",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508915.6736572,
+      "mono": 9189283.86573784,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:15\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 31/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508915.8737466,
+      "mono": 9189284.065829044,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:15\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 32/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508916.6741016,
+      "mono": 9189284.866181046,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:16\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 32: {'perf/sft_prefetch_wait_time': 0.0005691051483154297, 'perf/train_wait_time': 0.17678451538085938, 'perf/per_rank_fetch_time': 0.0435960292",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508916.6741016,
+      "mono": 9189284.866181046,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:16\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 32/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508916.6741016,
+      "mono": 9189284.866181046,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:16\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 33/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 33/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 34/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 33: {'perf/sft_prefetch_wait_time': 0.0004029273986816406, 'perf/train_wait_time': 0.17364215850830078, 'perf/per_rank_fetch_time': 0.0471127033",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=embedding-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508917.6745617,
+      "mono": 9189285.866643747,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:17\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508918.07474,
+      "mono": 9189286.266821355,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_envelopes.jsonl",
+      "delta_bytes": 110645,
+      "file": "straggler_envelopes.jsonl"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508918.474935,
+      "mono": 9189286.667015629,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:18\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 34/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508918.474935,
+      "mono": 9189286.667015629,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:18\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 34: {'perf/sft_prefetch_wait_time': 0.0005714893341064453, 'perf/train_wait_time': 0.173997163772583, 'perf/per_rank_fetch_time': 0.044495820999",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508918.474935,
+      "mono": 9189286.667015629,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:18\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:297\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=1540 judged=1540 invalid=0 duplicate=0 late=0 windows=14 verdicts=89 stragglers=0 active=none\u001b",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508918.474935,
+      "mono": 9189286.667015629,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:18\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 35/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508919.475454,
+      "mono": 9189287.667534972,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:19\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 35/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508919.475454,
+      "mono": 9189287.667534972,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:19\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 36/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508919.475454,
+      "mono": 9189287.667534972,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:19\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 35: {'perf/sft_prefetch_wait_time': 0.0006129741668701172, 'perf/train_wait_time': 0.17126083374023438, 'perf/per_rank_fetch_time': 0.0462982654",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508920.2758732,
+      "mono": 9189288.467954217,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:20\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 36/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508920.2758732,
+      "mono": 9189288.467954217,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:20\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 36: {'perf/sft_prefetch_wait_time': 0.0005404949188232422, 'perf/train_wait_time': 0.17776703834533691, 'perf/per_rank_fetch_time': 0.0459268093",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508920.4759712,
+      "mono": 9189288.6680522,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:20\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 37/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508921.2763684,
+      "mono": 9189289.468448944,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:21\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 37: {'perf/sft_prefetch_wait_time': 0.0005633831024169922, 'perf/train_wait_time': 0.17481231689453125, 'perf/per_rank_fetch_time': 0.0443582534",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508921.2763684,
+      "mono": 9189289.468448944,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:21\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 37/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508921.2763684,
+      "mono": 9189289.468448944,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:21\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 38/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508922.276901,
+      "mono": 9189290.46898178,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 38/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508922.276901,
+      "mono": 9189290.46898178,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 38: {'perf/sft_prefetch_wait_time': 0.0007724761962890625, 'perf/train_wait_time': 0.18569159507751465, 'perf/per_rank_fetch_time': 0.0460667610",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508922.276901,
+      "mono": 9189290.46898178,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 39/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508922.8772147,
+      "mono": 9189291.069295412,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_verdicts.jsonl",
+      "delta_bytes": 37986,
+      "file": "straggler_verdicts.jsonl"
+    },
+    {
+      "event": "verdict_visible",
+      "wall": 1790508922.8772147,
+      "mono": 9189291.069295412,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_verdicts.jsonl",
+      "delta_bytes": 37986,
+      "file": "straggler_verdicts.jsonl"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508922.8772147,
+      "mono": 9189291.069295412,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_envelopes.jsonl",
+      "delta_bytes": 98569,
+      "file": "straggler_envelopes.jsonl"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 39: {'perf/sft_prefetch_wait_time': 0.0005640983581542969, 'perf/train_wait_time': 0.16845250129699707, 'perf/per_rank_fetch_time': 0.0461061000",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=all-grads-sync coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=all-grads-sync coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.077308,
+      "mono": 9189291.269388588,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:22\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.2773986,
+      "mono": 9189291.469480144,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:23\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 39/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508923.2773986,
+      "mono": 9189291.469480144,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:23\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 40/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508924.0777705,
+      "mono": 9189292.269851122,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:23\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 40/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508924.0777705,
+      "mono": 9189292.269851122,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:23\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 41/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508924.0777705,
+      "mono": 9189292.269851122,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:23\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 40: {'perf/sft_prefetch_wait_time': 0.0005397796630859375, 'perf/train_wait_time': 0.17949485778808594, 'perf/per_rank_fetch_time': 0.0451855659",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508924.878124,
+      "mono": 9189293.070205595,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:24\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 41/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508924.878124,
+      "mono": 9189293.070205595,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:24\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 41: {'perf/sft_prefetch_wait_time': 0.0005505084991455078, 'perf/train_wait_time': 0.1753232479095459, 'perf/per_rank_fetch_time': 0.05239772796",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508925.0782118,
+      "mono": 9189293.270292578,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:24\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 42/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508925.878564,
+      "mono": 9189294.070645204,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:25\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 42/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508925.878564,
+      "mono": 9189294.070645204,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:25\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 43/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508925.878564,
+      "mono": 9189294.070645204,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:25\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 42: {'perf/sft_prefetch_wait_time': 0.0005338191986083984, 'perf/train_wait_time': 0.1791682243347168, 'perf/per_rank_fetch_time': 0.05995655059",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508926.8790243,
+      "mono": 9189295.071105208,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:26\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 43/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508926.8790243,
+      "mono": 9189295.071105208,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:26\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 44/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508926.8790243,
+      "mono": 9189295.071105208,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:26\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 43: {'perf/sft_prefetch_wait_time': 0.0005385875701904297, 'perf/train_wait_time': 0.1727452278137207, 'perf/per_rank_fetch_time': 0.04560780525",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 44: {'perf/sft_prefetch_wait_time': 0.0005986690521240234, 'perf/train_wait_time': 0.1781175136566162, 'perf/per_rank_fetch_time': 0.04535126686",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-inner-step coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-main-to-model-params coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=params-all-gather coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=backward-compute coarse_stage=backward\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=all-grads-sync coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=all-grads-sync coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=conditional-embedder-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=non-tensor-parallel-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=non-tensor-parallel-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=non-tensor-parallel-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=embedding-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=embedding-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=embedding-grads-all-reduce coarse_stage=communication\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.6794086,
+      "mono": 9189295.871489914,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.reporter:302\u001b[0m \u001b[1;37mstraggler stage: name=optimizer-copy-to-main-grad coarse_stage=optimizer\u001b[0m",
+      "kind": "straggler"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.879495,
+      "mono": 9189296.07157644,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 44/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508927.879495,
+      "mono": 9189296.07157644,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:27\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 45/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508928.2796886,
+      "mono": 9189296.471769499,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_envelopes.jsonl",
+      "delta_bytes": 110662,
+      "file": "straggler_envelopes.jsonl"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508928.6798806,
+      "mono": 9189296.871961797,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:28\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 45/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508928.6798806,
+      "mono": 9189296.871961797,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:28\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 46/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508928.6798806,
+      "mono": 9189296.871961797,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:28\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 45: {'perf/sft_prefetch_wait_time': 0.000545501708984375, 'perf/train_wait_time': 0.17607617378234863, 'perf/per_rank_fetch_time': 0.04563593864",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508929.6803317,
+      "mono": 9189297.872412764,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:29\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 46/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508929.6803317,
+      "mono": 9189297.872412764,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:29\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 46: {'perf/sft_prefetch_wait_time': 0.0005598068237304688, 'perf/train_wait_time': 0.18003368377685547, 'perf/per_rank_fetch_time': 0.0436797142",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508929.6803317,
+      "mono": 9189297.872412764,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:29\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:218\u001b[0m \u001b[1;37mActor training step 47/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508930.4806633,
+      "mono": 9189298.672744308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:30\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.training.train_metric_utils:89\u001b[0m \u001b[1;37mperf 47: {'perf/sft_prefetch_wait_time': 0.0004980564117431641, 'perf/train_wait_time': 0.1676626205444336, 'perf/actor_train_time': 0.69924974441528",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508930.4806633,
+      "mono": 9189298.672744308,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:30\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:221\u001b[0m \u001b[1;37mActor training completed step 47/48\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508930.6807475,
+      "mono": 9189298.872828964,
+      "embedded_wall": null,
+      "line": "\u001b[36m(ServeReplica:actor:Actor pid=51152)\u001b[0m \u001b[32m2026-09-27 19:35:30\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.components.actor:211\u001b[0m \u001b[1;37mAll training steps finished\u001b[0m",
+      "kind": "step"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508932.881713,
+      "mono": 9189301.073793905,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_verdicts.jsonl",
+      "delta_bytes": 36165,
+      "file": "straggler_verdicts.jsonl"
+    },
+    {
+      "event": "verdict_visible",
+      "wall": 1790508932.881713,
+      "mono": 9189301.073793905,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_verdicts.jsonl",
+      "delta_bytes": 36165,
+      "file": "straggler_verdicts.jsonl"
+    },
+    {
+      "event": "persist_grow",
+      "wall": 1790508932.881713,
+      "mono": 9189301.073793905,
+      "path": "/root/autodl-tmp/c2_campaign_a48/c3/C3-on/straggler/run_31000000/straggler_envelopes.jsonl",
+      "delta_bytes": 41495,
+      "file": "straggler_envelopes.jsonl"
+    },
+    {
+      "event": "log_line",
+      "wall": 1790508933.6820388,
+      "mono": 9189301.874120845,
+      "embedded_wall": null,
+      "line": "\u001b[36m(MegatronTrainRayActor pid=51881)\u001b[0m \u001b[32m2026-09-27 19:35:32\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:297\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=2112 judged=2112 invalid=0 duplicate=0 late=0 windows=16 verdicts=125 stragglers=0 active=none",
+      "kind": "straggler"
+    }
+  ]
+}

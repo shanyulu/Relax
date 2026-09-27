@@ -1,0 +1,3 @@
+[c3slow] spinner pid=68119
+[c3slow] spinner started pid=81789 at 19:53:38
+[c3slow] spinner 81789 stopped at 19:58:38 (job SUCCEEDED)

@@ -1,0 +1,56 @@
+{
+  "metric_name": "EXTERNAL-OBSERVER VISIBILITY LATENCY (raw)",
+  "interval_anchor_to_verdict_persist": {
+    "n": 6,
+    "p50_s": 0.6,
+    "p95_s": 1.201,
+    "p99_s": 1.201,
+    "max_s": 1.201,
+    "mean_s": 0.601
+  },
+  "verdict_persist_to_platform_perf_write": {
+    "n": 0
+  },
+  "harness_context": {
+    "poll_s_target": 0.2,
+    "poll_s_max_observed": 0.0096,
+    "control_loop_cost_ms": 0,
+    "note": "control run characterises measurement overhead; NEVER subtracted from the primary numbers"
+  },
+  "real_localized_verdict": {
+    "count": 6,
+    "ranks": [
+      2,
+      3
+    ],
+    "labels": [
+      "rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1",
+      "rank3/tp0/pp0/vpp-1/cp0/ep0/dp3/chunk-1"
+    ],
+    "reasons": [
+      "gpu_stream_stall",
+      "host_only_stall"
+    ],
+    "max_consecutive_windows": 3,
+    "max_deviation": 12.779095078458717
+  },
+  "verdict_kind_counts": {
+    "uncertain": 218,
+    "straggler": 6,
+    "recovered": 2
+  },
+  "platform_record": {
+    "perf_write_events_seen": 0
+  },
+  "tail_window": {
+    "note": "final-window verdicts present iff the last windows were judged before exit",
+    "last_verdict_is_straggler_or_recovered": false,
+    "total_verdicts": 226
+  },
+  "event_counts": {
+    "persist_grow": 18,
+    "verdict_visible": 6,
+    "perf_write": 0,
+    "log_line": 639
+  }
+}
