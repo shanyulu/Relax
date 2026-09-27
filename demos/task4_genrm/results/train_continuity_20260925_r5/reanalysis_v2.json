@@ -1,0 +1,208 @@
+{
+ "tool": "reanalyze_three_timelines_v2.py",
+ "inputs": {
+  "log": "raw_job_driver.log",
+  "events": "events.json",
+  "date_basis": "2026-09-26",
+  "tz_hours": 8.0
+ },
+ "step_timelines": {
+  "step_start": {
+   "ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "count": 8,
+   "max_gap_s": 75.0
+  },
+  "step_execution_end": {
+   "ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "count": 8,
+   "max_gap_s": 29.0
+  },
+  "optimizer_weight_updates": {
+   "count": 15,
+   "max_gap_s": 58.0
+  },
+  "rollout_completed": {
+   "ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "count": 8,
+   "max_gap_s": 76.0
+  }
+ },
+ "windows": [
+  {
+   "window": "scale_out_execution",
+   "start_epoch": 1790352753.635,
+   "end_epoch": 1790352812.411,
+   "duration_s": 58.8,
+   "events_inside": {
+    "step_start": [],
+    "step_execution_end": [],
+    "rollout_completed": [
+     0
+    ]
+   },
+   "judge_prefill_batches_per_engine": {
+    "978326": 1
+   },
+   "error_lines": 1
+  },
+  {
+   "window": "dual_replica_stable",
+   "start_epoch": 1790352812.411,
+   "end_epoch": 1790352857.574,
+   "duration_s": 45.2,
+   "events_inside": {
+    "step_start": [
+     1,
+     2
+    ],
+    "step_execution_end": [
+     0,
+     1
+    ],
+    "rollout_completed": [
+     1
+    ]
+   },
+   "judge_prefill_batches_per_engine": {
+    "966260": 1,
+    "978326": 1
+   },
+   "error_lines": 0
+  },
+  {
+   "window": "scale_in_execution",
+   "start_epoch": 1790352857.574,
+   "end_epoch": 1790352858.6,
+   "duration_s": 1.0,
+   "events_inside": {
+    "step_start": [],
+    "step_execution_end": [],
+    "rollout_completed": []
+   },
+   "judge_prefill_batches_per_engine": {},
+   "error_lines": 1
+  }
+ ],
+ "reward_evidence": {
+  "per_rollout_raw_reward": {
+   "0": 0.0,
+   "1": 0.0,
+   "2": 0.125,
+   "3": 0.0,
+   "4": 0.25,
+   "5": 0.0,
+   "6": 0.0,
+   "7": 0.0
+  },
+  "rollouts_with_reward_metric": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "judge_traffic_total": 24,
+  "judge_traffic_by_engine_pid": {
+   "966260": 22,
+   "978326": 2
+  },
+  "judge_error_lines": 0,
+  "attribution_note": "per-request judge success is not individually logged; the bounded claim is the conjunction of observed judge inference traffic, per-rollout reward metrics computed, and zero judge error lines \u2014 replica-level correctness is proven separately by the engine-attribution consistency runs"
+ },
+ "sample_integrity": {
+  "expected_rollout_ids": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "saved_rollout_ids": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "missing_rollout_ids": [],
+  "duplicate_rollout_ids": [],
+  "saved_counts": [
+   8,
+   8,
+   8,
+   8,
+   8,
+   8,
+   8,
+   8
+  ],
+  "total_samples": 64,
+  "expected_total": 64,
+  "note": "the per-sample JSONL files were rotated away on the runner; the archived log (SHA256 recorded alongside) and these log lines are the durable record"
+ },
+ "carry_over": {
+  "windows": 8,
+  "all_aborted_zero": true,
+  "all_no_deficit_or_surplus": true
+ },
+ "perf_step_ids_seen": [
+  0,
+  0,
+  1,
+  1,
+  2,
+  2,
+  3,
+  3,
+  4,
+  4,
+  5,
+  5,
+  6,
+  6,
+  7,
+  7
+ ],
+ "non_benign_error_lines": 3,
+ "non_benign_error_samples": [
+  "(MegatronTrainRayActor pid=964982) 2026-09-26 00:12:16 | WARNING | relax.distributed.checkpoint_service.backends.device_direct:370 Healthcheck failed for engine",
+  "(ServeReplica:genrm:GenRM pid=962122) 2026-09-26 00:13:31 | INFO | relax.utils.genrm_scale_registry:445 GenRM scale op genrm-scale-1f5fdead-23a1-47bb-8e36-d9e8f",
+  "(ServeReplica:genrm:GenRM pid=962122) 2026-09-26 00:14:18 | INFO | relax.utils.genrm_scale_registry:445 GenRM scale op genrm-scale-07eac41b-cf3c-4c2c-8ee2-77e30"
+ ]
+}
