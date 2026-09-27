@@ -15,12 +15,21 @@ Explicitly superseded clauses:
   now the gated version, and the long-run verdict is reported ALONGSIDE the
   short campaign, never instead of it.
 
-## 1. Pinned versions (a run is only valid against these)
+## 1. Pinned versions (EXACT; a run is only valid against these)
+
+A formal experiment is valid only against the exact versions below. If the product,
+analyzer, protocol, recipe, data or environment changes mid-campaign, the already-run
+arms are retained with an explicit note on why they stopped being valid; pass
+conditions are never redefined after seeing data. Every arm manifest must carry the
+preregistered identity fields (product commit, dataset sha256, recipe, expected steps,
+environment fingerprint, seed-bearing config) — the analyzer checks arms against THIS
+checklist, not merely OFF-vs-ON equality (both arms missing a field, or six pairs from
+six builds, are rejected).
 
 | Component | Version |
 | --- | --- |
-| Product code | `ef6516e` or later on `feat/task11-straggler-profiler` (WHY_UNFREEZE recorded in the commit: three measurement-correctness fixes) |
-| Analyzer | `evidence/analyze_c1.py` at evidence-branch `601c27b` or later (full eligibility gate; `test_analyze_c1_gate.py` green) |
+| Product code | `e961661bbdf662016a658d0fc2283d200a899a96` on `feat/task11-straggler-profiler` (EXACT; a code change starts a new experiment version — the old data is retained with a note on why it stopped being valid, and pass conditions are never silently redefined) |
+| Analyzer | `evidence/analyze_c1.py` at evidence-branch commit `0ef6badf1b6112b14f47d76d140b1fc55de56016` (EXACT; full eligibility gate incl. fingerprint presence and campaign single-version; `test_analyze_c1_gate.py` 27 tests green) |
 | Recipe | `scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh`, `NUM_ROLLOUT=48` (short) / `480` (long), `SAVE=0` both arms |
 | Dataset | `dapo-math-17k-sft-256.jsonl`, sha256 `44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428` |
 | Environment | 4x RTX 4090, driver 595.71.05, ray 2.58.0, torch 2.8.0+cu128, python 3.12.3 (venv `/root/autodl-tmp/megatron-stack/venv`); re-captured per campaign start |
