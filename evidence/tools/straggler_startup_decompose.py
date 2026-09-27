@@ -70,13 +70,15 @@ def main():
     runtime = get_straggler_runtime()
     t0 = _mark("4_runtime_start", t0)
 
-    timers = get_straggler_timers = runtime.timers if runtime else None
+    timers = runtime.timers if runtime else None
     if timers is not None:
         for i in range(100):
-            timers.start("forward-backward")
-            timers.start("forward-compute")
-            timers.stop("forward-compute")
-            timers.stop("forward-backward")
+            outer = timers("forward-backward")
+            inner = timers("forward-compute")
+            outer.start()
+            inner.start()
+            inner.stop()
+            outer.stop()
         t0 = _mark("5_first_100_timer_pairs", t0)
     else:
         PHASES.append({"phase": "5_first_100_timer_pairs", "seconds": None, "error": "no timers"})

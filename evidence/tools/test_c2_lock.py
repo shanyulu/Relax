@@ -15,10 +15,12 @@ import sys
 
 import pytest
 
+
 HERE = pathlib.Path(__file__).parent
 sys.path.insert(0, str(HERE))
 
 import c2_lock as lk  # noqa: E402
+
 
 TMP = pathlib.Path("/tmp/opencode/c2_lock_tests")
 
@@ -115,21 +117,35 @@ def _run_calibration(root, lock, out, store):
 
 
 def test_measurement_lock_references_calibration_sha(tmp_path, monkeypatch):
-    calib = {"status": "FROZEN_OFF_ONLY", "mode": "OFF_OFF_ENVELOPE",
-             "tolerances": {"mode": "OFF_OFF_ENVELOPE_x2", "loss_series": 1.0},
-             "envelope_semantics": "declared"}
+    calib = {
+        "status": "FROZEN_OFF_ONLY",
+        "mode": "OFF_OFF_ENVELOPE",
+        "tolerances": {"mode": "OFF_OFF_ENVELOPE_x2", "loss_series": 1.0},
+        "envelope_semantics": "declared",
+    }
     calib_path = tmp_path / "calibration_result.json"
     write_json(calib_path, calib)
     out_dir = tmp_path / "out"
     out_dir.mkdir()
-    monkeypatch.setattr(sys, "argv", ["c2_lock.py", "measurement-lock",
-                                      "--calibration-result", str(calib_path),
-                                      "--out", str(out_dir), "--n-pairs", "2"])
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "c2_lock.py",
+            "measurement-lock",
+            "--calibration-result",
+            str(calib_path),
+            "--out",
+            str(out_dir),
+            "--n-pairs",
+            "2",
+        ],
+    )
     assert lk.main() == 0
     lock = json.loads((out_dir / "C2_MEASUREMENT_LOCK.json").read_text())
     assert lock["CALIBRATION_RESULT_SHA256"] == hashlib.sha256(calib_path.read_bytes()).hexdigest()
     assert lock["TOLERANCES"]["loss_series"] == 1.0
-    assert lock["ARM_ORDER"] == ["C2M1-off", "C2M1-on", "C2M2-off", "C2M2-on"]
+    assert lock["ARM_ORDER"] == ["C2M1-off", "C2M1-on", "C2M2-on", "C2M2-off"]
 
 
 def test_measurement_lock_rejects_unfrozen_calibration(tmp_path, monkeypatch):
@@ -138,18 +154,25 @@ def test_measurement_lock_rejects_unfrozen_calibration(tmp_path, monkeypatch):
     write_json(calib_path, calib)
     out_dir = tmp_path / "out2"
     out_dir.mkdir()
-    monkeypatch.setattr(sys, "argv", ["c2_lock.py", "measurement-lock",
-                                      "--calibration-result", str(calib_path),
-                                      "--out", str(out_dir)])
+    monkeypatch.setattr(
+        sys, "argv", ["c2_lock.py", "measurement-lock", "--calibration-result", str(calib_path), "--out", str(out_dir)]
+    )
     with pytest.raises(SystemExit):
         lk.main()
 
 
 def test_compare_exact_mode_flags_any_drift(tmp_path, monkeypatch):
-    calib = {"status": "FROZEN_OFF_ONLY", "mode": "EXACT_EQUALITY", "steps_per_series": 48,
-             "DATASET_SHA256": "f" * 64, "RECIPE_SHA256": "e" * 64,
-             "ENV_FINGERPRINT_SHA256": "9" * 64, "PRODUCT_SHA": "a" * 40,
-             "tolerances": {"mode": "EXACT_EQUALITY"}, "envelope_semantics": None}
+    calib = {
+        "status": "FROZEN_OFF_ONLY",
+        "mode": "EXACT_EQUALITY",
+        "steps_per_series": 48,
+        "DATASET_SHA256": "f" * 64,
+        "RECIPE_SHA256": "e" * 64,
+        "ENV_FINGERPRINT_SHA256": "9" * 64,
+        "PRODUCT_SHA": "a" * 40,
+        "tolerances": {"mode": "EXACT_EQUALITY"},
+        "envelope_semantics": None,
+    }
     calib_path = tmp_path / "calibration_result.json"
     write_json(calib_path, calib)
     lock = {
@@ -167,9 +190,22 @@ def test_compare_exact_mode_flags_any_drift(tmp_path, monkeypatch):
     }
     monkeypatch.setattr(lk, "read_arm", lambda arm_dir, lck: store[arm_dir.name])
     out = tmp_path / "compare.json"
-    monkeypatch.setattr(sys, "argv", ["c2_lock.py", "compare", "--lock", str(lock_path),
-                                      "--calibration-result", str(calib_path),
-                                      "--campaign", str(tmp_path), "--out", str(out)])
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "c2_lock.py",
+            "compare",
+            "--lock",
+            str(lock_path),
+            "--calibration-result",
+            str(calib_path),
+            "--campaign",
+            str(tmp_path),
+            "--out",
+            str(out),
+        ],
+    )
     assert lk.main() == 1
     result = json.loads(out.read_text())
     assert result["verdict"] == "NOT_PASS"
@@ -177,12 +213,17 @@ def test_compare_exact_mode_flags_any_drift(tmp_path, monkeypatch):
 
 
 def test_compare_envelope_mode_within_tolerance_passes(tmp_path, monkeypatch):
-    calib = {"status": "FROZEN_OFF_ONLY", "mode": "OFF_OFF_ENVELOPE", "steps_per_series": 48,
-             "DATASET_SHA256": "f" * 64, "RECIPE_SHA256": "e" * 64,
-             "ENV_FINGERPRINT_SHA256": "9" * 64, "PRODUCT_SHA": "a" * 40,
-             "tolerances": {"mode": "OFF_OFF_ENVELOPE_x2", "loss_series": 1.0, "grad_norm_series": 2.0,
-                            "token_series": 0},
-             "envelope_semantics": "declared"}
+    calib = {
+        "status": "FROZEN_OFF_ONLY",
+        "mode": "OFF_OFF_ENVELOPE",
+        "steps_per_series": 48,
+        "DATASET_SHA256": "f" * 64,
+        "RECIPE_SHA256": "e" * 64,
+        "ENV_FINGERPRINT_SHA256": "9" * 64,
+        "PRODUCT_SHA": "a" * 40,
+        "tolerances": {"mode": "OFF_OFF_ENVELOPE_x2", "loss_series": 1.0, "grad_norm_series": 2.0, "token_series": 0},
+        "envelope_semantics": "declared",
+    }
     calib_path = tmp_path / "calibration_result.json"
     write_json(calib_path, calib)
     lock = {
@@ -200,9 +241,22 @@ def test_compare_envelope_mode_within_tolerance_passes(tmp_path, monkeypatch):
     }
     monkeypatch.setattr(lk, "read_arm", lambda arm_dir, lck: store[arm_dir.name])
     out = tmp_path / "compare.json"
-    monkeypatch.setattr(sys, "argv", ["c2_lock.py", "compare", "--lock", str(lock_path),
-                                      "--calibration-result", str(calib_path),
-                                      "--campaign", str(tmp_path), "--out", str(out)])
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "c2_lock.py",
+            "compare",
+            "--lock",
+            str(lock_path),
+            "--calibration-result",
+            str(calib_path),
+            "--campaign",
+            str(tmp_path),
+            "--out",
+            str(out),
+        ],
+    )
     assert lk.main() == 0
     result = json.loads(out.read_text())
     assert result["verdict"] == "PASS"
@@ -210,17 +264,34 @@ def test_compare_envelope_mode_within_tolerance_passes(tmp_path, monkeypatch):
 
 
 def test_compare_rejects_wrong_calibration_reference(tmp_path, monkeypatch):
-    calib = {"status": "FROZEN_OFF_ONLY", "mode": "EXACT_EQUALITY",
-             "tolerances": {"mode": "EXACT_EQUALITY"}}
+    calib = {"status": "FROZEN_OFF_ONLY", "mode": "EXACT_EQUALITY", "tolerances": {"mode": "EXACT_EQUALITY"}}
     calib_path = tmp_path / "calibration_result.json"
     write_json(calib_path, calib)
-    lock = {"CALIBRATION_RESULT_SHA256": "0" * 64, "MEASUREMENT_N_PAIRS": 1,
-            "PRODUCT_SHA": "a" * 40, "TOLERANCES": {"mode": "EXACT_EQUALITY"}, "_self_sha256": "s"}
+    lock = {
+        "CALIBRATION_RESULT_SHA256": "0" * 64,
+        "MEASUREMENT_N_PAIRS": 1,
+        "PRODUCT_SHA": "a" * 40,
+        "TOLERANCES": {"mode": "EXACT_EQUALITY"},
+        "_self_sha256": "s",
+    }
     lock_path = tmp_path / "measurement_lock.json"
     write_json(lock_path, lock)
-    monkeypatch.setattr(sys, "argv", ["c2_lock.py", "compare", "--lock", str(lock_path),
-                                      "--calibration-result", str(calib_path),
-                                      "--campaign", str(tmp_path), "--out", str(tmp_path / "c.json")])
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "c2_lock.py",
+            "compare",
+            "--lock",
+            str(lock_path),
+            "--calibration-result",
+            str(calib_path),
+            "--campaign",
+            str(tmp_path),
+            "--out",
+            str(tmp_path / "c.json"),
+        ],
+    )
     with pytest.raises(SystemExit):
         lk.main()
 
@@ -228,17 +299,38 @@ def test_compare_rejects_wrong_calibration_reference(tmp_path, monkeypatch):
 def test_no_overwrite_of_frozen_artifacts(tmp_path, monkeypatch):
     out = tmp_path / "existing.json"
     out.write_text("{}")
-    calib = {"status": "FROZEN_OFF_ONLY", "mode": "EXACT_EQUALITY", "steps_per_series": 48,
-             "tolerances": {"mode": "EXACT_EQUALITY"}}
+    calib = {
+        "status": "FROZEN_OFF_ONLY",
+        "mode": "EXACT_EQUALITY",
+        "steps_per_series": 48,
+        "tolerances": {"mode": "EXACT_EQUALITY"},
+    }
     calib_path = tmp_path / "calibration_result.json"
     write_json(calib_path, calib)
-    lock = {"CALIBRATION_RESULT_SHA256": hashlib.sha256(calib_path.read_bytes()).hexdigest(),
-            "MEASUREMENT_N_PAIRS": 1, "PRODUCT_SHA": "a" * 40,
-            "TOLERANCES": {"mode": "EXACT_EQUALITY"}, "_self_sha256": "s"}
+    lock = {
+        "CALIBRATION_RESULT_SHA256": hashlib.sha256(calib_path.read_bytes()).hexdigest(),
+        "MEASUREMENT_N_PAIRS": 1,
+        "PRODUCT_SHA": "a" * 40,
+        "TOLERANCES": {"mode": "EXACT_EQUALITY"},
+        "_self_sha256": "s",
+    }
     lock_path = tmp_path / "measurement_lock.json"
     write_json(lock_path, lock)
-    monkeypatch.setattr(sys, "argv", ["c2_lock.py", "compare", "--lock", str(lock_path),
-                                      "--calibration-result", str(calib_path),
-                                      "--campaign", str(tmp_path), "--out", str(out)])
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "c2_lock.py",
+            "compare",
+            "--lock",
+            str(lock_path),
+            "--calibration-result",
+            str(calib_path),
+            "--campaign",
+            str(tmp_path),
+            "--out",
+            str(out),
+        ],
+    )
     with pytest.raises(SystemExit):
         lk.main()

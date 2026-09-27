@@ -36,12 +36,12 @@ import argparse
 import hashlib
 import itertools
 import json
-import statistics
 import subprocess
 import sys
 from pathlib import Path
 
 from extract_c2_native import parse_arm
+
 
 ENVELOPE_FACTOR = 2.0
 CALIBRATION_ARMS = 6  # 3 OFF/OFF pairs; 15 pairwise contrasts x 48 steps
@@ -107,6 +107,7 @@ def cmd_calibration_lock(args: argparse.Namespace) -> int:
         "ENV_FINGERPRINT_SHA256": sha256_file(Path(args.env)),
         "EXPECTED_STEPS": int(args.expected_steps),
         "ARM_ORDER": arms,
+        "PROTOCOL_SHA256": sha256_file(Path(args.protocol)),
         "SAVE": 1,
         "PURPOSE": "OFF/OFF calibration only; no ON arm may reference this lock",
         "_self_sha256": None,
@@ -144,9 +145,11 @@ def cmd_calibration_result(args: argparse.Namespace) -> int:
         if not entry["checkpoint_identical"]:
             deterministic = False
         contrasts.append(entry)
+
     def envelope(key):
         vals = [c[key]["max_abs_delta"] for c in contrasts if c[key]["max_abs_delta"] is not None]
         return max(vals) if vals else None
+
     result = {
         "status": "FROZEN_OFF_ONLY",
         "lock_sha256_reference": sha256_file(Path(args.lock)),
@@ -200,7 +203,11 @@ def cmd_measurement_lock(args: argparse.Namespace) -> int:
     lock = {
         "CALIBRATION_RESULT_SHA256": sha256_file(Path(args.calibration_result)),
         "MEASUREMENT_N_PAIRS": int(args.n_pairs),
-        "ARM_ORDER": [f"C2M{i}-{a}" for i in range(1, int(args.n_pairs) + 1) for a in ("off", "on")],
+        "ARM_ORDER": [
+            f"C2M{i}-{a}"
+            for i in range(1, int(args.n_pairs) + 1)
+            for a in (("off", "on") if i % 2 == 1 else ("on", "off"))
+        ],
         "PRODUCT_SHA": calib.get("PRODUCT_SHA"),
         "GLOBAL_SYNC_RULE": "new_global_sync_count(ON vs OFF) == 0",
         "OVERLAP_DELTA_TOLERANCE": "frozen separately in TRACE_PROTOCOL per topology",
@@ -230,8 +237,30 @@ def cmd_compare(args: argparse.Namespace) -> int:
     violations = []
     exact = lock["TOLERANCES"].get("mode") == "EXACT_EQUALITY"
     for i in range(1, lock["MEASUREMENT_N_PAIRS"] + 1):
-        off = read_arm(root / f"C2M{i}-off", {**lock, "_self_sha256": lock["_self_sha256"], "DATASET_SHA256": calib.get("DATASET_SHA256", ""), "RECIPE_SHA256": calib.get("RECIPE_SHA256", ""), "ENV_FINGERPRINT_SHA256": calib.get("ENV_FINGERPRINT_SHA256", ""), "EXPECTED_STEPS": calib.get("steps_per_series", 48), "PRODUCT_SHA": lock["PRODUCT_SHA"]})
-        on = read_arm(root / f"C2M{i}-on", {**lock, "_self_sha256": lock["_self_sha256"], "DATASET_SHA256": calib.get("DATASET_SHA256", ""), "RECIPE_SHA256": calib.get("RECIPE_SHA256", ""), "ENV_FINGERPRINT_SHA256": calib.get("ENV_FINGERPRINT_SHA256", ""), "EXPECTED_STEPS": calib.get("steps_per_series", 48), "PRODUCT_SHA": lock["PRODUCT_SHA"]})
+        off = read_arm(
+            root / f"C2M{i}-off",
+            {
+                **lock,
+                "_self_sha256": lock["_self_sha256"],
+                "DATASET_SHA256": calib.get("DATASET_SHA256", ""),
+                "RECIPE_SHA256": calib.get("RECIPE_SHA256", ""),
+                "ENV_FINGERPRINT_SHA256": calib.get("ENV_FINGERPRINT_SHA256", ""),
+                "EXPECTED_STEPS": calib.get("steps_per_series", 48),
+                "PRODUCT_SHA": lock["PRODUCT_SHA"],
+            },
+        )
+        on = read_arm(
+            root / f"C2M{i}-on",
+            {
+                **lock,
+                "_self_sha256": lock["_self_sha256"],
+                "DATASET_SHA256": calib.get("DATASET_SHA256", ""),
+                "RECIPE_SHA256": calib.get("RECIPE_SHA256", ""),
+                "ENV_FINGERPRINT_SHA256": calib.get("ENV_FINGERPRINT_SHA256", ""),
+                "EXPECTED_STEPS": calib.get("steps_per_series", 48),
+                "PRODUCT_SHA": lock["PRODUCT_SHA"],
+            },
+        )
         entry = {}
         for key in ("loss_series", "grad_norm_series", "token_series"):
             if exact:
@@ -248,20 +277,25 @@ def cmd_compare(args: argparse.Namespace) -> int:
         if off["update_count"] != on["update_count"]:
             violations.append(f"C2M{i}:update_count")
         entry["checkpoint_exact_equal"] = (
-            off["checkpoint_tree_sha256"] is not None
-            and off["checkpoint_tree_sha256"] == on["checkpoint_tree_sha256"]
+            off["checkpoint_tree_sha256"] is not None and off["checkpoint_tree_sha256"] == on["checkpoint_tree_sha256"]
         )
         if exact and not entry["checkpoint_exact_equal"]:
             violations.append(f"C2M{i}:checkpoint")
         pairs[f"C2M{i}"] = entry
     verdict = "PASS" if not violations else "NOT_PASS"
-    out.write_text(json.dumps({
-        "verdict": verdict,
-        "violations": violations,
-        "mode": lock["TOLERANCES"].get("mode"),
-        "pairs": pairs,
-        "measurement_lock_sha256": sha256_file(Path(args.lock)),
-    }, indent=2) + "\n")
+    out.write_text(
+        json.dumps(
+            {
+                "verdict": verdict,
+                "violations": violations,
+                "mode": lock["TOLERANCES"].get("mode"),
+                "pairs": pairs,
+                "measurement_lock_sha256": sha256_file(Path(args.lock)),
+            },
+            indent=2,
+        )
+        + "\n"
+    )
     print(f"C2 measurement verdict: {verdict} ({len(violations)} violations)")
     return 0 if verdict == "PASS" else 1
 
@@ -270,7 +304,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     sub = ap.add_subparsers(dest="cmd", required=True)
     cl = sub.add_parser("calibration-lock")
-    for name in ("product", "recipe", "dataset", "env", "out"):
+    for name in ("product", "recipe", "dataset", "env", "out", "protocol"):
         cl.add_argument(f"--{name}", required=True)
     cl.add_argument("--expected-steps", type=int, required=True)
     cl.set_defaults(func=cmd_calibration_lock)

@@ -5,8 +5,8 @@
 Twelve synthetic corruptions, one per hardening requirement: recipe hash drift,
 product SHA drift, dirty tree, wrong env fingerprint, wrong expected steps,
 wrong pair order, wrong analyzer, wrong runner, wrong protocol, wrong lock
-hash, ON env drift, and a missing required field. Plus one golden manifest
-that must validate. Run: python -m pytest test_campaign_lock.py -q
+hash, ON env drift, and a missing required field. Plus one golden manifest that
+must validate. Run: python -m pytest test_campaign_lock.py -q
 """
 
 import copy
@@ -17,12 +17,10 @@ import shutil
 import subprocess
 import sys
 
-import pytest
 
 HERE = pathlib.Path(__file__).parent
 sys.path.insert(0, str(HERE))
 
-import campaign_lock as cl  # noqa: E402
 
 TMP = pathlib.Path("/tmp/opencode/campaign_lock_tests")
 

@@ -33,6 +33,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+
 REQUIRED_KEYS = (
     "PRODUCT_SHA",
     "PR_HEAD",
@@ -121,10 +122,10 @@ def validate(args: argparse.Namespace) -> int:
 
     Anything missing or drifted is INVALID — there are no warning-only paths.
     The manifest contract (produced by the campaign runner at arm time):
-      git.commit / git.dirty / dataset_sha256 / recipe (path) / recipe_sha256 /
-      env_fingerprint_sha256 / expected_steps / run_id / arm / order /
-      analyzer_sha256 / runner_sha256 / protocol_sha256 / pr_head /
-      lock_sha256 / relax_env
+    git.commit / git.dirty / dataset_sha256 / recipe (path) / recipe_sha256 /
+    env_fingerprint_sha256 / expected_steps / run_id / arm / order /
+    analyzer_sha256 / runner_sha256 / protocol_sha256 / pr_head /   lock_sha256
+    / relax_env
     """
     lock_path = Path(args.lock)
     lock = json.loads(lock_path.read_text())
@@ -140,25 +141,19 @@ def validate(args: argparse.Namespace) -> int:
     if git_info.get("commit") != lock.get("PRODUCT_SHA"):
         problems.append(f"product sha {git_info.get('commit')!r} != locked {lock.get('PRODUCT_SHA')!r}")
     if manifest.get("pr_head") != lock.get("PR_HEAD"):
-        problems.append(
-            f"producing head {manifest.get('pr_head')!r} != locked PR_HEAD {lock.get('PR_HEAD')!r}"
-        )
+        problems.append(f"producing head {manifest.get('pr_head')!r} != locked PR_HEAD {lock.get('PR_HEAD')!r}")
     if git_info.get("dirty"):
         problems.append("arm ran on a dirty tree")
     if manifest.get("dataset_sha256") != lock.get("DATASET_SHA256"):
         problems.append("dataset sha drift")
     if manifest.get("recipe_sha256") != lock.get("RECIPE_SHA256"):
-        problems.append(
-            f"recipe sha drift: manifest {manifest.get('recipe_sha256')!r} != locked"
-        )
+        problems.append(f"recipe sha drift: manifest {manifest.get('recipe_sha256')!r} != locked")
     elif manifest.get("recipe") != lock.get("RECIPE_PATH"):
         problems.append(f"recipe path drift: {manifest.get('recipe')!r} != {lock.get('RECIPE_PATH')!r}")
     if manifest.get("env_fingerprint_sha256") != lock.get("ENV_FINGERPRINT_SHA256"):
         problems.append("env fingerprint drift")
     if manifest.get("expected_steps") != lock.get("EXPECTED_STEPS"):
-        problems.append(
-            f"expected steps {manifest.get('expected_steps')!r} != locked {lock.get('EXPECTED_STEPS')!r}"
-        )
+        problems.append(f"expected steps {manifest.get('expected_steps')!r} != locked {lock.get('EXPECTED_STEPS')!r}")
     for key, lock_key in (
         ("analyzer_sha256", "ANALYZER_SHA"),
         ("runner_sha256", "RUNNER_SHA"),
