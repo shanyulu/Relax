@@ -1,0 +1,13 @@
+{
+  "case": "metric_missing_off",
+  "expected_steps_resolved": 48,
+  "expected_steps_source": "manifest[S1-off].expected_steps",
+  "arm_status": {
+    "S1-off": "INVALID-no-training-steps",
+    "S1-on": "VALID"
+  },
+  "pair_eligible": false,
+  "exclusion_reason": "at least one arm did not reach a training step; pair excluded from session statistics",
+  "verdict": "PARTIAL",
+  "primary_estimate_pct": null
+}

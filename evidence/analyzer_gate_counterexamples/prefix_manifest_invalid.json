@@ -1,0 +1,13 @@
+{
+  "case": "manifest_invalid",
+  "expected_steps_resolved": 48,
+  "expected_steps_source": "manifest[S1-off].expected_steps",
+  "arm_status": {
+    "S1-off": "INVALID",
+    "S1-on": "INVALID"
+  },
+  "pair_eligible": true,
+  "exclusion_reason": null,
+  "verdict": "PASS",
+  "primary_estimate_pct": 0.1000000000000038
+}

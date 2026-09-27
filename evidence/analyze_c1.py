@@ -41,6 +41,10 @@ DEFAULT_METRIC = "perf/train_time"
 DEFAULT_BOOTSTRAP_REPLICATES = 10000
 DEFAULT_BOOTSTRAP_SEED = 20260926
 C1_BOUND_PCT = 0.5  # official requirement: overall overhead < 0.5 %
+#: PASS requires at least this many eligible pairs. The preregistered short
+#: campaign is 6 AB/BA pairs; a single pair (N=1) has a degenerate bootstrap
+#: interval (every resample is the same value) and can NEVER yield PASS.
+DEFAULT_MIN_PAIRS = 6
 
 ARM_DIR_RE = re.compile(r"^S(\d+)-(off|on)$")
 # A per-step perf log line: "perf <int>: {'perf/x': 1.0, ...}".
@@ -280,7 +284,15 @@ def discover_arms(campaign: pathlib.Path) -> List[Dict[str, Any]]:
 
 
 def expected_step_count(arms: List[Dict[str, Any]], override: Optional[int]) -> Tuple[Optional[int], str]:
-    """Resolve the pre-registered step count. Resolution order is explicit."""
+    """Resolve the PRE-REGISTERED step count. Resolution order is explicit.
+
+    There is deliberately NO fallback to the observed sample count: treating
+    the largest observed series as "expected" would bless a run that completed
+    only 2 of 48 steps (demonstrated on the pre-fix analyzer, see
+    analyzer_gate_counterexamples/prefix_two_of_48_steps_no_manifest.json).
+    Without a preregistered count the campaign cannot prove step completeness
+    and every arm is classified INVALID-unregistered-step-count.
+    """
     if override is not None:
         return override, "cli --expected-steps"
     for arm in arms:
@@ -289,15 +301,28 @@ def expected_step_count(arms: List[Dict[str, Any]], override: Optional[int]) -> 
             value = manifest.get(key)
             if isinstance(value, int) and value > 0:
                 return value, f"manifest[{arm['name']}].{key}"
-    observed = [len(arm["series"].get(DEFAULT_METRIC, [])) for arm in arms]
-    observed = [value for value in observed if value > 0]
-    if observed:
-        return max(observed), "max observed perf/train_time samples across arms in this campaign"
-    return None, "unresolved (no arm produced a training step)"
+    return None, "unresolved (no preregistered step count in any manifest and no --expected-steps override)"
 
 
 def classify_arm(arm: Dict[str, Any], expected_steps: Optional[int]) -> Dict[str, Any]:
-    """VALID / INVALID classification. An arm with no training step is always INVALID."""
+    """VALID / INVALID classification with the full eligibility gate.
+
+    An arm is VALID only when ALL of the following hold:
+    - the manifest is not marked invalid (``manifest.valid is not False``);
+    - the run exited successfully (``exit_code == 0``);
+    - a PRE-REGISTERED step count is resolved (manifest key or CLI override —
+      never the observed count);
+    - the observed step-ID sequence is EXACTLY ``range(expected_steps)``:
+      no duplicate, no missing, no extra/misaligned ID;
+    - the analysis metric has exactly ``expected_steps`` samples (one per step,
+      no step line missing the metric);
+    - for an ON arm, the observation evidence exists: a collector status dict
+      with at least one ingested envelope (a profiler that observed nothing
+      cannot support an overhead claim about the enabled build).
+
+    Pair eligibility requires BOTH arms VALID (never merely "n_steps > 0"),
+    plus the pair fingerprint checks in :func:`pair_fingerprint`.
+    """
     metric = DEFAULT_METRIC
     n_train = len(arm["series"].get(metric, []))
     manifest = arm["manifest"]
@@ -306,37 +331,100 @@ def classify_arm(arm: Dict[str, Any], expected_steps: Optional[int]) -> Dict[str
     collector_status = observation.get("collector_status")
     manifest_valid = manifest.get("valid")
     manifest_reason = manifest.get("invalid_reason")
+    exit_code = manifest.get("exit_code")
+    labels = arm["step_labels"]
 
     status = "VALID"
     reasons: List[str] = []
 
-    if n_train == 0:
-        status = "INVALID-no-training-steps"
-        if manifest_reason:
-            reasons.append(str(manifest_reason))
-        else:
-            reasons.append("0 perf/train_time samples in job.log")
-    elif expected_steps is not None and n_train < expected_steps:
-        status = "INVALID-under-stepped"
-        reasons.append(f"{n_train} perf/train_time samples < expected {expected_steps}")
-    elif manifest_valid is False:
+    if manifest_valid is False:
         status = "INVALID"
         reasons.append(f"manifest.valid=false ({manifest_reason or 'no reason recorded'})")
-
-    if status == "VALID" and arm["arm"] == "on" and not isinstance(collector_status, dict):
-        status = "INVALID-collector-status-missing"
-        reasons.append(f"ON arm observation.collector_status={collector_status!r} is not a dict")
+    elif not isinstance(exit_code, int) or exit_code != 0:
+        status = "INVALID-nonzero-exit"
+        reasons.append(f"exit_code={exit_code!r} (successful exit required)")
+    elif expected_steps is None:
+        status = "INVALID-unregistered-step-count"
+        reasons.append("no preregistered step count; observed counts never substitute for one")
+    else:
+        expected_ids = list(range(expected_steps))
+        duplicates = sorted({sid for sid in labels if labels.count(sid) > 1})
+        missing = sorted(set(expected_ids) - set(labels))
+        extra = sorted(set(labels) - set(expected_ids))
+        if duplicates:
+            status = "INVALID-step-ids"
+            reasons.append(f"duplicate step IDs: {duplicates[:8]}")
+        elif missing:
+            status = "INVALID-step-ids"
+            reasons.append(f"missing step IDs: {missing[:8]}")
+        elif extra:
+            status = "INVALID-step-ids"
+            reasons.append(f"unexpected step IDs (misaligned): {extra[:8]}")
+        elif n_train != expected_steps:
+            status = "INVALID-incomplete-metric-series"
+            reasons.append(f"{n_train} {metric} samples for {len(labels)} step lines, expected {expected_steps}")
+        elif arm["arm"] == "on":
+            envelopes = collector_status.get("envelopes") if isinstance(collector_status, dict) else None
+            if not isinstance(collector_status, dict):
+                status = "INVALID-on-observation-missing"
+                reasons.append(f"ON arm observation.collector_status={collector_status!r} is not a dict")
+            elif not isinstance(envelopes, int) or envelopes < 1:
+                status = "INVALID-on-observation-missing"
+                reasons.append(f"ON arm collector observed envelopes={envelopes!r}; >=1 required")
 
     return {
         "status": status,
         "valid": status == "VALID",
         "n_train_steps": n_train,
+        "n_step_lines": len(labels),
         "expected_steps": expected_steps,
+        "exit_code": exit_code,
         "collector_status_kind": type(collector_status).__name__ if collector_status is not None else "absent",
         "collector_status_is_dict": isinstance(collector_status, dict),
+        "collector_envelopes": collector_status.get("envelopes") if isinstance(collector_status, dict) else None,
         "manifest_valid": manifest_valid,
         "manifest_invalid_reason": manifest_reason,
         "reasons": reasons,
+    }
+
+
+TRUTHY_ENABLE = {"1", "t", "true", "y", "yes", "on"}
+
+
+def _enabled(manifest: Dict[str, Any]) -> bool:
+    """Whether the arm's manifest declares the straggler profiler enabled."""
+    relax_env = manifest.get("relax_env")
+    value = relax_env.get("RELAX_STRAGGLER_ENABLE") if isinstance(relax_env, dict) else None
+    return isinstance(value, str) and value.strip().lower() in TRUTHY_ENABLE
+
+
+def pair_fingerprint(off_arm: Dict[str, Any], on_arm: Dict[str, Any]) -> Dict[str, Any]:
+    """Pair-level identity checks: same product, data and recipe; profiler on
+    exactly one arm. A pair that fails these is not a controlled experiment."""
+    problems: List[str] = []
+    off_git = (off_arm["manifest"].get("git") or {}).get("commit")
+    on_git = (on_arm["manifest"].get("git") or {}).get("commit")
+    if off_git != on_git:
+        problems.append(f"product commit differs: off={off_git} on={on_git}")
+    off_ds = off_arm["manifest"].get("dataset_sha256")
+    on_ds = on_arm["manifest"].get("dataset_sha256")
+    if off_ds != on_ds:
+        problems.append(f"dataset sha256 differs: off={off_ds} on={on_ds}")
+    if off_arm["manifest"].get("recipe") != on_arm["manifest"].get("recipe"):
+        problems.append("recipe differs between arms")
+    off_on = _enabled(off_arm["manifest"])
+    on_on = _enabled(on_arm["manifest"])
+    if not on_on:
+        problems.append("ON arm does not declare RELAX_STRAGGLER_ENABLE")
+    if off_on:
+        problems.append("OFF arm declares RELAX_STRAGGLER_ENABLE (baseline contaminated)")
+    return {
+        "ok": not problems,
+        "problems": problems,
+        "off_enabled": off_on,
+        "on_enabled": on_on,
+        "commit": off_git,
+        "dataset_sha256": off_ds,
     }
 
 
@@ -388,7 +476,14 @@ def perf_metrics_table(arm: Dict[str, Any]) -> Dict[str, Any]:
 # --------------------------------------------------------------------------------------
 # main analysis
 # --------------------------------------------------------------------------------------
-def analyse(campaign: pathlib.Path, metric: str, replicates: int, seed: int, expected_override: Optional[int]) -> Dict[str, Any]:
+def analyse(
+    campaign: pathlib.Path,
+    metric: str,
+    replicates: int,
+    seed: int,
+    expected_override: Optional[int],
+    min_pairs: int = DEFAULT_MIN_PAIRS,
+) -> Dict[str, Any]:
     arms = discover_arms(campaign)
     expected_steps, expected_source = expected_step_count(arms, expected_override)
 
@@ -397,8 +492,10 @@ def analyse(campaign: pathlib.Path, metric: str, replicates: int, seed: int, exp
         by_session[arm["session_index"]][arm["arm"]] = arm
 
     arm_reports: List[Dict[str, Any]] = []
+    classifications: Dict[str, Dict[str, Any]] = {}
     for arm in arms:
         classification = classify_arm(arm, expected_steps)
+        classifications[arm["name"]] = classification
         arm_reports.append(
             {
                 "name": arm["name"],
@@ -413,6 +510,7 @@ def analyse(campaign: pathlib.Path, metric: str, replicates: int, seed: int, exp
                 "job_log_present": arm["job_log_present"],
                 "git_commit": (arm["manifest"].get("git") or {}).get("commit"),
                 "git_tree_label": (arm["manifest"].get("git") or {}).get("tree_label"),
+                "straggler_enabled": _enabled(arm["manifest"]),
                 "classification": classification,
                 "training_metrics": sorted(arm["series"].keys()),
                 "series_lengths": {key: len(value) for key, value in sorted(arm["series"].items())},
@@ -450,13 +548,32 @@ def analyse(campaign: pathlib.Path, metric: str, replicates: int, seed: int, exp
             else:
                 first, order = "on", "on->off (BA)"
 
-        off_cls = classify_arm(off_arm, expected_steps)
-        on_cls = classify_arm(on_arm, expected_steps)
+        off_cls = classifications[off_arm["name"]]
+        on_cls = classifications[on_arm["name"]]
+        fingerprint = pair_fingerprint(off_arm, on_arm)
         off_series = off_arm["series"].get(analysis_metric, [])
         on_series = on_arm["series"].get(analysis_metric, [])
         stats = pair_delta_stats(off_series, on_series)
+        exact_alignment = stats.get("off_n") == stats.get("on_n") and not stats.get("unaligned")
 
-        pair_ok = off_cls["n_train_steps"] > 0 and on_cls["n_train_steps"] > 0
+        # Eligibility = BOTH arms fully VALID + the pair is a controlled
+        # experiment (same product/data/recipe, profiler on exactly the ON arm)
+        # + exact step alignment. "n_steps > 0" alone was NEVER a valid gate:
+        # the pre-fix analyzer passed manifest-invalid, non-zero-exit,
+        # duplicate-step and commit-mismatch pairs (counterexamples archived).
+        problems: List[str] = []
+        if not off_cls["valid"]:
+            problems.append(f"off arm {off_cls['status']}: {'; '.join(off_cls['reasons'])}")
+        if not on_cls["valid"]:
+            problems.append(f"on arm {on_cls['status']}: {'; '.join(on_cls['reasons'])}")
+        problems.extend(fingerprint["problems"])
+        if not exact_alignment:
+            problems.append(
+                f"step series not exactly aligned (off {stats.get('off_n')} vs on {stats.get('on_n')} samples); "
+                "silent truncation to the shorter arm is not permitted"
+            )
+        pair_ok = not problems
+
         pairs.append(
             {
                 "session": session_name,
@@ -469,10 +586,10 @@ def analyse(campaign: pathlib.Path, metric: str, replicates: int, seed: int, exp
                 "on_dir": on_arm["name"],
                 "off_classification": off_cls,
                 "on_classification": on_cls,
+                "fingerprint": fingerprint,
+                "exact_alignment": exact_alignment,
                 "stats_eligible": pair_ok,
-                "exclusion_reason": None
-                if pair_ok
-                else "at least one arm did not reach a training step; pair excluded from session statistics",
+                "exclusion_reason": None if pair_ok else " | ".join(problems),
                 "deltas": stats,
             }
         )
@@ -502,28 +619,59 @@ def analyse(campaign: pathlib.Path, metric: str, replicates: int, seed: int, exp
         "bootstrap_paired_median_pct": bootstrap_pairs(paired_median_pct, replicates, seed, "median"),
     }
 
-    # OFF/OFF noise floor: compare two OFF arms with the exact same estimator.
-    off_arms = [arm for arm in arms if arm["arm"] == "off" and len(arm["series"].get(analysis_metric, [])) > 0]
+    # OFF/OFF noise floor: the A/A control passes through the SAME validity and
+    # fingerprint gates as an OFF/ON pair — an invalid OFF arm cannot support a
+    # noise-floor claim any more than an invalid ON arm can support overhead.
+    off_arms = [arm for arm in arms if arm["arm"] == "off"]
     noise_floor = None
-    if len(off_arms) >= 2:
-        first_off, second_off = off_arms[0], off_arms[1]
-        noise_floor = {
-            "metric": analysis_metric,
-            "arm_a": first_off["name"],
-            "arm_b": second_off["name"],
-            "note": "second OFF arm treated as the pseudo-ON arm",
-            "deltas": pair_delta_stats(
-                first_off["series"].get(analysis_metric, []), second_off["series"].get(analysis_metric, [])
-            ),
-        }
-    else:
+    if len(off_arms) < 2:
         noise_floor = {
             "metric": analysis_metric,
             "available": False,
-            "note": f"only {len(off_arms)} OFF arm(s) with training steps in this campaign; OFF/OFF noise floor not computable",
+            "note": f"only {len(off_arms)} OFF arm(s) in this campaign; OFF/OFF noise floor not computable",
         }
+    else:
+        first_off, second_off = off_arms[0], off_arms[1]
+        cls_a = classifications[first_off["name"]]
+        cls_b = classifications[second_off["name"]]
+        aa_problems: List[str] = []
+        if not cls_a["valid"]:
+            aa_problems.append(f"{first_off['name']} {cls_a['status']}: {'; '.join(cls_a['reasons'])}")
+        if not cls_b["valid"]:
+            aa_problems.append(f"{second_off['name']} {cls_b['status']}: {'; '.join(cls_b['reasons'])}")
+        # A/A identity: same product/data/recipe as an OFF/ON pair, but the
+        # enable asymmetry is inverted — the pseudo-ON arm must NOT have the
+        # profiler on (a contaminated A/A cannot measure noise).
+        for field, label in (("git", "commit"), ("dataset_sha256", "dataset sha256"), ("recipe", "recipe")):
+            if first_off["manifest"].get(field) != second_off["manifest"].get(field):
+                if field == "git":
+                    aa_problems.append(
+                        "product commit differs: "
+                        f"{(first_off['manifest'].get('git') or {}).get('commit')} vs "
+                        f"{(second_off['manifest'].get('git') or {}).get('commit')}"
+                    )
+                else:
+                    aa_problems.append(f"{label} differs between the A/A arms")
+        if _enabled(second_off["manifest"]):
+            aa_problems.append("pseudo-ON arm of the A/A control has the profiler enabled")
+        if aa_problems:
+            noise_floor = {
+                "metric": analysis_metric,
+                "available": False,
+                "note": "A/A control failed the same validity/fingerprint gates: " + " | ".join(aa_problems),
+            }
+        else:
+            noise_floor = {
+                "metric": analysis_metric,
+                "arm_a": first_off["name"],
+                "arm_b": second_off["name"],
+                "note": "second OFF arm treated as the pseudo-ON arm; both arms passed the full validity and fingerprint gates",
+                "deltas": pair_delta_stats(
+                    first_off["series"].get(analysis_metric, []), second_off["series"].get(analysis_metric, [])
+                ),
+            }
 
-    verdict = build_verdict(session_stats, eligible, arms, pairs, unpaired)
+    verdict = build_verdict(session_stats, eligible, arms, pairs, unpaired, classifications, min_pairs)
 
     return {
         "tool": "analyze_c1.py",
@@ -532,6 +680,7 @@ def analyse(campaign: pathlib.Path, metric: str, replicates: int, seed: int, exp
         "requested_metric": metric,
         "expected_steps": expected_steps,
         "expected_steps_source": expected_source,
+        "min_pairs_for_pass": min_pairs,
         "c1_bound_pct": C1_BOUND_PCT,
         "arms": arm_reports,
         "pairs": pairs,
@@ -548,12 +697,24 @@ def build_verdict(
     arms: List[Dict[str, Any]],
     pairs: List[Dict[str, Any]],
     unpaired: List[Dict[str, Any]],
+    classifications: Dict[str, Dict[str, Any]],
+    min_pairs: int,
 ) -> Dict[str, Any]:
-    """Apply the strict C1 rule: PASS requires the whole-run session-level estimate < 0.5 %.
+    """Apply the strict C1 rule.
 
-    A median < 0.5 % alone, or a steady-state < 0.5 % alone, is explicitly never PASS.
+    PASS requires ALL of:
+    - at least ``min_pairs`` eligible pairs (the preregistered campaign size;
+      N=1 has a degenerate bootstrap interval and can never PASS);
+    - the whole-run session-level estimate < 0.5 %;
+    - the session-aware bootstrap 95% CI upper bound < 0.5 %.
+
+    A median < 0.5 % alone, or a steady-state < 0.5 % alone, is explicitly
+    never PASS. The excluded-arms list is built from the SAME classification
+    objects that decided eligibility (the pre-fix code re-classified with
+    ``expected_steps=None``, so the reported exclusions could differ from the
+    set actually applied).
     """
-    invalid_arms = [arm["name"] for arm in arms if not classify_arm(arm, None)["valid"]]
+    invalid_arms = [name for name, cls in classifications.items() if not cls["valid"]]
     estimate = session_stats["whole_run_mean_pct_across_pairs_mean"]
     bootstrap = session_stats["bootstrap_whole_run_mean_pct"]
     median_est = session_stats["paired_median_pct_across_pairs_mean"]
@@ -566,13 +727,6 @@ def build_verdict(
         "a median or steady-state estimate below 0.5 % alone must NOT yield PASS "
         f"(paired median across pairs {_fmt_pct(median_est)}, steady-state median across pairs {_fmt_pct(steady_est)})."
     )
-    single_pair_caveat = (
-        " WARNING: n_pairs=1, so the bootstrap interval is degenerate; this is a single-session point estimate, "
-        "not a population-level bound."
-        if n_pairs == 1
-        else ""
-    )
-    tail = tail + single_pair_caveat
     excluded = []
     if invalid_arms:
         excluded.append("invalid arms excluded: " + ", ".join(invalid_arms))
@@ -580,32 +734,40 @@ def build_verdict(
         excluded.append("unpaired sessions: " + ", ".join(item["session"] for item in unpaired))
     extra = (" " + "; ".join(excluded) + ".") if excluded else ""
 
-    if estimate is None:
-        verdict = "PARTIAL"
+    if estimate is None or n_pairs == 0:
+        verdict = "INCONCLUSIVE"
         reason = (
-            "C1 PARTIAL: no statistically usable OFF/ON pair in this campaign "
+            f"C1 INCONCLUSIVE: no eligible OFF/ON pair in this campaign "
             f"({n_pairs} eligible pairs); " + tail + extra
+        )
+    elif n_pairs < min_pairs:
+        verdict = "INCONCLUSIVE-insufficient-pairs"
+        reason = (
+            f"C1 INCONCLUSIVE: only {n_pairs} eligible pair(s) < {min_pairs} required for a statistical verdict; "
+            f"the whole-run point estimate {_fmt_pct(estimate)} is reported as a conditional point estimate only. "
+            f"With n_pairs={n_pairs} the bootstrap interval is degenerate (every resample draws the same value), "
+            f"so no population-level claim is made. " + tail + extra
         )
     elif estimate < C1_BOUND_PCT and upper is not None and upper < C1_BOUND_PCT:
         verdict = "PASS"
         reason = (
-            f"C1 PASS: session-level whole-run mean overhead {_fmt_pct(estimate)} (n_pairs={n_pairs}) is < {C1_BOUND_PCT}% "
-            f"and its session-aware bootstrap 95% CI upper bound {_fmt_pct(upper)} "
+            f"C1 PASS: session-level whole-run mean overhead {_fmt_pct(estimate)} (n_pairs={n_pairs} >= {min_pairs}) "
+            f"is < {C1_BOUND_PCT}% and its session-aware bootstrap 95% CI upper bound {_fmt_pct(upper)} "
             f"(seed {seed}, {session_stats['bootstrap_replicates']} replicates, pair-resampled) is < {C1_BOUND_PCT}%."
             + extra
         )
     elif estimate < C1_BOUND_PCT:
-        verdict = "PARTIAL"
+        verdict = "INCONCLUSIVE-wide-interval"
         reason = (
-            f"C1 PARTIAL: session-level whole-run mean overhead {_fmt_pct(estimate)} (n_pairs={n_pairs}) is < {C1_BOUND_PCT}% "
-            f"but the session-aware bootstrap 95% CI upper bound {_fmt_pct(upper)} "
+            f"C1 INCONCLUSIVE: session-level whole-run mean overhead {_fmt_pct(estimate)} (n_pairs={n_pairs}) is "
+            f"< {C1_BOUND_PCT}% but the session-aware bootstrap 95% CI upper bound {_fmt_pct(upper)} "
             f"(seed {seed}, pair-resampled) is not < {C1_BOUND_PCT}%; " + tail + extra
         )
     else:
         verdict = "NOT PASS"
         reason = (
-            f"C1 NOT PASS: session-level whole-run mean overhead {_fmt_pct(estimate)} (n_pairs={n_pairs}) is not < {C1_BOUND_PCT}%; "
-            + tail + extra
+            f"C1 NOT PASS: session-level whole-run mean overhead {_fmt_pct(estimate)} (n_pairs={n_pairs}) "
+            f"is not < {C1_BOUND_PCT}%; " + tail + extra
         )
 
     return {
@@ -618,7 +780,8 @@ def build_verdict(
         "steady_state_estimate_pct": steady_est,
         "median_alone_can_pass": False,
         "steady_state_alone_can_pass": False,
-        "single_pair_caveat": bool(n_pairs == 1),
+        "single_pair_caveat": bool(n_pairs < min_pairs),
+        "min_pairs_for_pass": min_pairs,
         "bound_pct": C1_BOUND_PCT,
     }
 
@@ -819,13 +982,27 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--expected-steps", type=int, default=None, help="override the expected perf/train_time sample count")
     parser.add_argument("--bootstrap-replicates", type=int, default=DEFAULT_BOOTSTRAP_REPLICATES)
     parser.add_argument("--bootstrap-seed", type=int, default=DEFAULT_BOOTSTRAP_SEED)
+    parser.add_argument(
+        "--min-pairs",
+        type=int,
+        default=DEFAULT_MIN_PAIRS,
+        help=f"minimum eligible pairs for a PASS verdict (default {DEFAULT_MIN_PAIRS}); "
+        "fewer pairs can only yield INCONCLUSIVE with a conditional point estimate",
+    )
     args = parser.parse_args(argv)
 
     campaign = args.campaign
     if not campaign.is_dir():
         parser.error(f"campaign directory not found: {campaign}")
 
-    result = analyse(campaign, args.metric, args.bootstrap_replicates, args.bootstrap_seed, args.expected_steps)
+    result = analyse(
+        campaign,
+        args.metric,
+        args.bootstrap_replicates,
+        args.bootstrap_seed,
+        args.expected_steps,
+        min_pairs=args.min_pairs,
+    )
     markdown = render_markdown(result)
 
     print(markdown)

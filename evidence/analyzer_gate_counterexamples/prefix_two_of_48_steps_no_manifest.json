@@ -1,0 +1,13 @@
+{
+  "case": "two_of_48_steps_no_manifest",
+  "expected_steps_resolved": 2,
+  "expected_steps_source": "max observed perf/train_time samples across arms in this campaign",
+  "arm_status": {
+    "S1-off": "VALID",
+    "S1-on": "VALID"
+  },
+  "pair_eligible": true,
+  "exclusion_reason": null,
+  "verdict": "PASS",
+  "primary_estimate_pct": 0.1000000000000038
+}
