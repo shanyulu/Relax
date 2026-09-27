@@ -145,10 +145,10 @@ def run_arm(args, lock: dict, name: str) -> None:
         "bash",
         "scripts/entrypoint/ray-job.sh",
         "scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
-    ] + (args.recipe_args or [])
+    ] + [a for a in (args.recipe_args or "").split(",") if a]
     record = {
         "run_id": name,
-        "recipe_args": args.recipe_args or [],
+        "recipe_args": [a for a in (args.recipe_args or "").split(",") if a],
         "session": name.rsplit("-", 1)[0],
         "arm": arm_kind,
         "order": "A->B" if int(re.sub(r"\D", "", name.rsplit("-", 1)[0])) % 2 == 1 else "B->A",
@@ -248,7 +248,7 @@ def main() -> None:
         parser.add_argument(f"--{name}", required=True)
     parser.add_argument("--lock", type=Path, required=True, help="C2 calibration/measurement lock JSON")
     parser.add_argument("--arms", required=True, help="comma-separated arm names")
-    parser.add_argument("--recipe-args", nargs="*", default=None, help="appended to the recipe (e.g. trace/overlap flags)")
+    parser.add_argument("--recipe-args", default="", help="comma-separated args appended to the recipe (argparse nargs='*' cannot consume values that start with '-')")
     parser.add_argument("--job-tag", default="", help="appended to the job submission id namespace (Ray IDs are immutable)")
     parser.add_argument("--extra-env", nargs="*", default=None, help="KEY=VALUE env overrides applied last (e.g. C3 debug injection)")
     args = parser.parse_args()

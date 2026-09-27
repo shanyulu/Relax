@@ -76,8 +76,19 @@ def read_arm(arm_dir: Path, lock: dict) -> dict:
     parsed = parse_arm(arm_dir, expected_steps=lock["EXPECTED_STEPS"])
     if not parsed.get("native_valid"):
         raise ValueError(f"{arm_dir.name}: native extraction invalid: {parsed.get('extraction_errors')}")
+    # Checkpoints are hash-and-pruned by the runner (7.8G/arm does not fit the
+    # disk): the durable record is the manifest's checkpoint_tree_sha256,
+    # computed over the full tree before pruning. Recompute only if the
+    # directory still exists AND the manifest does not carry a hash.
     ckpt = arm_dir / "checkpoints"
-    parsed["checkpoint_tree_sha256"] = tree_hash(ckpt) if ckpt.exists() else None
+    manifest_hash = manifest.get("checkpoint_tree_sha256")
+    if manifest_hash:
+        parsed["checkpoint_tree_sha256"] = manifest_hash
+    elif ckpt.exists():
+        parsed["checkpoint_tree_sha256"] = tree_hash(ckpt)
+    else:
+        parsed["checkpoint_tree_sha256"] = None
+    parsed["checkpoint_pruned_after_hash"] = bool(manifest.get("checkpoint_pruned_after_hash"))
     return parsed
 
 
@@ -132,13 +143,16 @@ def cmd_calibration_result(args: argparse.Namespace) -> int:
     for a, b in itertools.combinations(range(len(arms)), 2):
         entry = {"pair": f"{names[a]}/{names[b]}"}
         for key in series_keys:
-            if arms[a][key] != arms[b][key]:
+            identical = arms[a][key] == arms[b][key]
+            if not identical:
                 deterministic = False
-            deltas = [y - x for x, y in zip(arms[a][key], arms[b][key])]
-            entry[key] = {
-                "max_abs_delta": max(map(abs, deltas)) if deltas else None,
-                "identical": arms[a][key] == arms[b][key],
-            }
+            cell = {"identical": identical}
+            values = [v for v in (arms[a][key] + arms[b][key]) if isinstance(v, (int, float))]
+            if not identical and values and len(values) == len(arms[a][key]) + len(arms[b][key]):
+                deltas = [y - x for x, y in zip(arms[a][key], arms[b][key])]
+                cell["max_abs_delta"] = max(map(abs, deltas)) if deltas else None
+            # non-numeric series (learning-rate dicts) are equality-only
+            entry[key] = cell
         ckpt_a = arms[a]["checkpoint_tree_sha256"]
         ckpt_b = arms[b]["checkpoint_tree_sha256"]
         entry["checkpoint_identical"] = ckpt_a is not None and ckpt_a == ckpt_b
@@ -147,12 +161,22 @@ def cmd_calibration_result(args: argparse.Namespace) -> int:
         contrasts.append(entry)
 
     def envelope(key):
-        vals = [c[key]["max_abs_delta"] for c in contrasts if c[key]["max_abs_delta"] is not None]
+        vals = [
+            c[key]["max_abs_delta"]
+            for c in contrasts
+            if isinstance(c.get(key), dict) and c[key].get("max_abs_delta") is not None
+        ]
         return max(vals) if vals else None
 
     result = {
         "status": "FROZEN_OFF_ONLY",
         "lock_sha256_reference": sha256_file(Path(args.lock)),
+        "PRODUCT_SHA": lock["PRODUCT_SHA"],
+        "RECIPE_PATH": lock["RECIPE_PATH"],
+        "RECIPE_SHA256": lock["RECIPE_SHA256"],
+        "DATASET_SHA256": lock["DATASET_SHA256"],
+        "ENV_FINGERPRINT_SHA256": lock["ENV_FINGERPRINT_SHA256"],
+        "EXPECTED_STEPS": lock["EXPECTED_STEPS"],
         "deterministic": deterministic,
         "mode": "EXACT_EQUALITY" if deterministic else "OFF_OFF_ENVELOPE",
         "envelope_factor": ENVELOPE_FACTOR if not deterministic else None,
@@ -203,6 +227,12 @@ def cmd_measurement_lock(args: argparse.Namespace) -> int:
     lock = {
         "CALIBRATION_RESULT_SHA256": sha256_file(Path(args.calibration_result)),
         "MEASUREMENT_N_PAIRS": int(args.n_pairs),
+        "PRODUCT_SHA": calib.get("PRODUCT_SHA"),
+        "RECIPE_PATH": calib.get("RECIPE_PATH"),
+        "RECIPE_SHA256": calib.get("RECIPE_SHA256"),
+        "DATASET_SHA256": calib.get("DATASET_SHA256"),
+        "ENV_FINGERPRINT_SHA256": calib.get("ENV_FINGERPRINT_SHA256"),
+        "EXPECTED_STEPS": calib.get("EXPECTED_STEPS", 48),
         "ARM_ORDER": [
             f"C2M{i}-{a}"
             for i in range(1, int(args.n_pairs) + 1)
@@ -262,6 +292,10 @@ def cmd_compare(args: argparse.Namespace) -> int:
             },
         )
         entry = {}
+        lr_equal = off["learning_rate_series"] == on["learning_rate_series"]
+        entry["learning_rate_series"] = {"exact_equal": lr_equal}
+        if not lr_equal:
+            violations.append(f"C2M{i}:learning_rate_series")
         for key in ("loss_series", "grad_norm_series", "token_series"):
             if exact:
                 ok = off[key] == on[key]
@@ -270,7 +304,9 @@ def cmd_compare(args: argparse.Namespace) -> int:
                 deltas = [y - x for x, y in zip(off[key], on[key])]
                 worst = max(map(abs, deltas))
                 tol = lock["TOLERANCES"].get(key)
-                ok = tol is None or worst <= tol
+                # A None tolerance means OFF/OFF showed ZERO variability for this
+                # series: the only consistent bound is exact equality.
+                ok = (worst == 0.0) if tol is None else worst <= tol
                 entry[key] = {"max_abs_delta": worst, "tolerance": tol, "within": ok}
             if not entry[key].get("exact_equal", entry[key].get("within", True)):
                 violations.append(f"C2M{i}:{key}")
