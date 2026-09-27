@@ -34,16 +34,33 @@ pre-existing chain the criterion requires to stay healthy, not a step count.
 | scale_in_execution | 1.0 s | — | — | — | — | 1 |
 
 Longest no-progress interval strictly inside each window (between consecutive
-in-window events of a timeline; an empty timeline's bound is the window duration):
+in-window events of a timeline; an empty timeline's bound is the window duration,
+shown explicitly — never as "-"):
 
 | Window | step_start | step_execution_end | rollout_completed |
 | --- | --- | --- | --- |
-| scale_out_execution | - s | - s | - s |
-| dual_replica_stable | 23.0 s | 23.0 s | - s |
-| scale_in_execution | - s | - s | - s |
+| scale_out_execution | 58.8 s (no in-window events) | 58.8 s (no in-window events) | 58.8 s (no in-window events) |
+| dual_replica_stable | 23.0 s | 23.0 s | 45.2 s (no in-window events) |
+| scale_in_execution | 1.0 s (no in-window events) | 1.0 s (no in-window events) | 1.0 s (no in-window events) |
 
-No timeline's max consecutive gap spans a window boundary (each window boundary has
-events of every active timeline within its span or immediately adjacent).
+### 2.1 Max-gap intervals vs. window boundaries (computed, not asserted)
+
+Whether each timeline's MAXIMUM consecutive gap crosses a scale-window boundary is
+computed from the committed epochs below. The v2.0 report asserted no gap spans a
+boundary; that assertion was false for this data and is withdrawn.
+
+| Timeline | Max gap (s) | Gap interval (epoch→epoch) | Window boundaries crossed |
+| --- | --- | --- | --- |
+| Step start | 75 | 1790352750 → 1790352825 | scale-out start, scale-out end (= stable start) |
+| Step execution end | 29 | 1790352848 → 1790352877 | stable end (= scale-in start), scale-in end |
+| Rollout completion | 76 | 1790352759 → 1790352835 | scale-out end (= stable start) |
+
+A max-gap interval that crosses a boundary only means **no event of that timeline
+was logged between those two timestamps**. It does not prove the scale operation
+stalled anything, and it does not prove the opposite: during the 75 s step-start gap
+that spans the whole scale-out window, step 0 was in flight (its execution-end lands
+after the window) and rollout 0 completed inside the window. Causality is not claimed
+in either direction; the three-caliber verdict in §6 states exactly what is.
 
 ## 3. Reward evidence, split into columns (bounded claims)
 
@@ -81,14 +98,22 @@ engine-attribution consistency runs (r3 @ `945741e`, r6 @ `0481701`).
   gap, GCS kill churn on those dead workers, benign fallbacks) is in the JSON and the v1
   doc's table, which remains accurate for classification.
 
-## 6. Verdict (re-judged from the archived raw data; no GPU rerun)
+## 6. Verdict, split into three calibers (re-judged from the archived raw data; no GPU rerun)
 
-- **Criterion ⑤ (training continuity): PASS as run-continuity** — 8/8 step starts AND
-  8/8 execution-ends AND 8/8 rollout completions AND the serving weight-sync chain
-  continuing through all windows; per-window no-progress intervals bounded (max 23.0 s
-  inside the stable window); zero error lines in the dual-replica stable window; 64 saved
-  samples by unique rollout IDs. **This is a continuity claim only — no performance-
-  impact claim is made** (that would require a same-config no-scaling control run).
+- **Caliber 1 — training ultimately COMPLETED (proven from this log):** 8/8 step starts,
+  8/8 execution-ends (optimizer iteration count = 8), 8/8 rollout completions, the
+  serving weight-sync chain continuing through all windows, 64 saved samples by unique
+  rollout IDs.
+- **Caliber 2 — progress OBSERVED during the scaling windows (bounded to this log):**
+  scale-out (58.8 s): step 0 in flight across the whole window and rollout 0 completed
+  inside it; one judge prefill batch on the pre-existing engine. Stable (45.2 s): step
+  starts 1–2, execution-ends 0–1, rollout 1, one prefill batch on EACH engine, zero
+  error lines. Scale-in (1.0 s): no timeline events inside — the window is shorter than
+  one step, so no in-window progress is claimed for it.
+- **Caliber 3 — scaling had NO PERFORMANCE IMPACT (NOT claimed):** that would require a
+  same-config no-scaling control run, which does not exist. The 75 s step-start gap
+  spanning the whole scale-out window (§2.1) is compatible both with a stall and with
+  normal step-0 warmup cadence; this log cannot distinguish, and no such claim is made.
 - **Elastic contribution during continuity: one inference batch in the stable window**,
   cross-checked against the `served=1` counter tick — a bounded statement; replica
   correctness rests on the criterion-② attribution runs, not on this traffic share.
@@ -98,5 +123,10 @@ engine-attribution consistency runs (r3 @ `945741e`, r6 @ `0481701`).
 - v1 (`REANALYSIS_THREE_TIMELINES.md`): merged step/rollout bound; "raw_reward all zero"
   read from one line; serving syncs implied optimizer updates; window table hand-written
   and diverged from the JSON. Retained unchanged; superseded by this file.
-- v2 (this file): generated from `reanalysis_v2.json`; calibers corrected per review;
-  per-event epochs and per-window no-progress intervals machine-extracted.
+- v2: generated from `reanalysis_v2.json`; calibers corrected per review; per-event
+  epochs and per-window no-progress intervals machine-extracted.
+- v2.1 (this file): the hand-asserted "no max gap spans a window boundary" claim was
+  false — §2.1 now COMPUTES the crossings (three max gaps do cross); empty no-progress
+  cells show the window duration instead of "-"; the verdict is split into three
+  explicit calibers so completion, in-window progress and performance impact are never
+  conflated.
