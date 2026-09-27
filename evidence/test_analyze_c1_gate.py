@@ -250,5 +250,63 @@ def test_excluded_list_matches_eligibility_set():
     assert eligible_sessions == {"S1"}
 
 
+# --- fingerprint presence and campaign-level single-version -------------------------------
+
+def test_arms_missing_fingerprint_fields_are_invalid():
+    """Both arms missing the product SHA / dataset / recipe must NOT pass.
+
+    Equality-only checks (None == None) passed this campaign on the pre-gate
+    analyzer; the preregistered identity must EXIST before it is compared.
+    """
+    root = build("no_fingerprint", lambda r: sc.write_pair(r, 1, off_commit=None, on_commit=None,
+                                                           off_dataset=None, on_dataset=None,
+                                                           off_recipe=None, on_recipe=None))
+    result = analyse(root)
+    for arm in result["arms"]:
+        assert arm["classification"]["status"] == "INVALID-fingerprint-incomplete"
+    assert one_pair(result)["stats_eligible"] is False
+    assert result["verdict"]["c1_verdict"].startswith("INCONCLUSIVE")
+
+
+def test_campaign_mixing_six_product_commits_cannot_pass():
+    """Six internally-consistent pairs from SIX different product commits.
+
+    Every pair has off == on, so pair-level equality passes; the pooled
+    statistics would silently mix six builds. The campaign-level single-version
+    check must exclude every pair and block PASS.
+    """
+    root = build("six_commits", lambda r: [
+        sc.write_pair(r, i, on_factor=1.001, off_commit=f"{i:040x}", on_commit=f"{i:040x}")
+        for i in range(1, 7)
+    ])
+    result = analyse(root)
+    consistency = result["campaign_version_consistency"]
+    assert consistency["ok"] is False
+    assert len(consistency["commits"]) == 6
+    for pair in result["pairs"]:
+        assert pair["stats_eligible"] is False
+        assert "campaign mixes product commits" in pair["exclusion_reason"]
+    assert result["session_stats"]["n_eligible_pairs"] == 0
+    assert result["verdict"]["c1_verdict"].startswith("INCONCLUSIVE")
+
+
+def test_campaign_mixing_datasets_cannot_pass():
+    root = build("six_datasets", lambda r: [
+        sc.write_pair(r, i, on_factor=1.001, off_dataset=f"{i:064x}", on_dataset=f"{i:064x}")
+        for i in range(1, 7)
+    ])
+    result = analyse(root)
+    assert result["campaign_version_consistency"]["ok"] is False
+    assert all(not p["stats_eligible"] for p in result["pairs"])
+
+
+def test_single_version_campaign_unaffected():
+    """The positive control still passes with the campaign check in place."""
+    root = build("six_good_v2", lambda r: [sc.write_pair(r, i, on_factor=1.001) for i in range(1, 7)])
+    result = analyse(root)
+    assert result["campaign_version_consistency"]["ok"] is True
+    assert result["verdict"]["c1_verdict"] == "PASS"
+
+
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-q"]))

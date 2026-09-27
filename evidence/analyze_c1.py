@@ -343,6 +343,15 @@ def classify_arm(arm: Dict[str, Any], expected_steps: Optional[int]) -> Dict[str
     elif not isinstance(exit_code, int) or exit_code != 0:
         status = "INVALID-nonzero-exit"
         reasons.append(f"exit_code={exit_code!r} (successful exit required)")
+    elif not _fingerprint_complete(manifest):
+        # Equality checks alone cannot catch two arms that BOTH lack the
+        # fingerprint fields (None == None passes). The preregistered identity
+        # must be PRESENT before it can be compared.
+        status = "INVALID-fingerprint-incomplete"
+        reasons.append(
+            "missing preregistered fingerprint field(s): "
+            + ", ".join(_missing_fingerprint_fields(manifest))
+        )
     elif expected_steps is None:
         status = "INVALID-unregistered-step-count"
         reasons.append("no preregistered step count; observed counts never substitute for one")
@@ -389,6 +398,63 @@ def classify_arm(arm: Dict[str, Any], expected_steps: Optional[int]) -> Dict[str
 
 
 TRUTHY_ENABLE = {"1", "t", "true", "y", "yes", "on"}
+
+#: Fingerprint fields every arm manifest MUST carry for the arm to be valid at
+#: all. Equality between the two arms of a pair is checked separately; these
+#: fields must first EXIST, or "both arms missing the product SHA" would pass.
+REQUIRED_FINGERPRINT_FIELDS = ("git.commit", "dataset_sha256", "recipe")
+
+
+def _fingerprint_get(manifest: Dict[str, Any], dotted: str) -> Any:
+    value: Any = manifest
+    for part in dotted.split("."):
+        if not isinstance(value, dict):
+            return None
+        value = value.get(part)
+    return value
+
+
+def _missing_fingerprint_fields(manifest: Dict[str, Any]) -> List[str]:
+    return [
+        field
+        for field in REQUIRED_FINGERPRINT_FIELDS
+        if not isinstance(_fingerprint_get(manifest, field), str) or not _fingerprint_get(manifest, field).strip()
+    ]
+
+
+def _fingerprint_complete(manifest: Dict[str, Any]) -> bool:
+    return not _missing_fingerprint_fields(manifest)
+
+
+def campaign_version_consistency(arms: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Campaign-level single-version check.
+
+    Pair-level equality (off == on) cannot catch a campaign whose six pairs
+    each ran a DIFFERENT product commit: every pair is internally consistent,
+    yet the pooled statistics would mix six builds. A valid campaign is one
+    frozen version: every arm that produced a manifest must carry the same
+    commit, dataset and recipe.
+    """
+    commits = sorted({(a["manifest"].get("git") or {}).get("commit") for a in arms if a["manifest"]})
+    datasets = sorted({a["manifest"].get("dataset_sha256") for a in arms if a["manifest"]})
+    recipes = sorted({a["manifest"].get("recipe") for a in arms if a["manifest"]})
+    problems: List[str] = []
+    real_commits = [c for c in commits if c]
+    if len(real_commits) > 1:
+        problems.append(f"campaign mixes product commits: {real_commits}")
+    real_datasets = [d for d in datasets if d]
+    if len(real_datasets) > 1:
+        problems.append(f"campaign mixes dataset sha256s: {real_datasets}")
+    real_recipes = [r for r in recipes if r]
+    if len(real_recipes) > 1:
+        problems.append(f"campaign mixes recipes: {real_recipes}")
+    return {
+        "ok": not problems,
+        "problems": problems,
+        "commits": real_commits,
+        "datasets": real_datasets,
+        "recipes": real_recipes,
+    }
 
 
 def _enabled(manifest: Dict[str, Any]) -> bool:
@@ -521,6 +587,8 @@ def analyse(
 
     analysis_metric = metric if any(metric in arm["series"] for arm in arms) else DEFAULT_METRIC
 
+    campaign_consistency = campaign_version_consistency(arms)
+
     pairs: List[Dict[str, Any]] = []
     unpaired: List[Dict[str, Any]] = []
     for session_index in sorted(by_session):
@@ -567,6 +635,8 @@ def analyse(
         if not on_cls["valid"]:
             problems.append(f"on arm {on_cls['status']}: {'; '.join(on_cls['reasons'])}")
         problems.extend(fingerprint["problems"])
+        if not campaign_consistency["ok"]:
+            problems.extend(campaign_consistency["problems"])
         if not exact_alignment:
             problems.append(
                 f"step series not exactly aligned (off {stats.get('off_n')} vs on {stats.get('on_n')} samples); "
@@ -682,6 +752,7 @@ def analyse(
         "expected_steps_source": expected_source,
         "min_pairs_for_pass": min_pairs,
         "c1_bound_pct": C1_BOUND_PCT,
+        "campaign_version_consistency": campaign_consistency,
         "arms": arm_reports,
         "pairs": pairs,
         "unpaired": unpaired,

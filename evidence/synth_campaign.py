@@ -29,13 +29,17 @@ def write_arm(
     enable=None,
     commit: str = COMMIT,
     dataset: str = DATASET,
+    recipe: str = RECIPE,
     expected_steps=None,
     collector_envelopes=None,
     metric_present: bool = True,
     started_at: str = "2026-09-26T10:00:00",
 ):
     """Write one arm directory. ``step_ids`` overrides the ID sequence (for
-    duplicate/missing/misaligned defects); ``values`` overrides per-step values."""
+    duplicate/missing/misaligned defects); ``values`` overrides per-step values.
+
+    ``commit``/``dataset``/``recipe`` accept ``None`` to model an arm whose
+    manifest lacks the preregistered fingerprint fields entirely."""
     arm_dir = root / name
     arm_dir.mkdir(parents=True, exist_ok=True)
     role = "on" if name.endswith("-on") else "off"
@@ -49,14 +53,15 @@ def write_arm(
             lines.append(f"perf {sid}: {{'perf/train_time': {vals[i]:.6f}, 'perf/actor_train_time': {vals[i]*0.9:.6f}}}")
     (arm_dir / "job.log").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
+    git_block = {"commit": commit, "tree_label": f"CLEAN@{commit[:11]}"} if commit else {}
     manifest = {
         "arm": role,
         "exit_code": exit_code,
         "valid": valid,
         "invalid_reason": None if valid else "declared invalid by the runner",
-        "git": {"commit": commit, "tree_label": f"CLEAN@{commit[:11]}"},
+        "git": git_block,
         "dataset_sha256": dataset,
-        "recipe": RECIPE,
+        "recipe": recipe,
         "relax_env": ({"RELAX_STRAGGLER_ENABLE": enable} if enable is not None else {}),
         "started_at": started_at,
         "order": "A->B",
