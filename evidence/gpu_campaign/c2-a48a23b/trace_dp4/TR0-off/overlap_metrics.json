@@ -1,0 +1,83 @@
+{
+  "arm": "/root/autodl-tmp/c2_campaign_a48/trace_dp4/TR0-off",
+  "ranks_profiled": 4,
+  "rank_files": [
+    "train_overall_rank0_dp0_tp0_pp0.1790507339405564622.pt.trace.json.gz",
+    "train_overall_rank1_dp1_tp0_pp0.1790507339422429312.pt.trace.json.gz",
+    "train_overall_rank2_dp2_tp0_pp0.1790507339462465791.pt.trace.json.gz",
+    "train_overall_rank3_dp3_tp0_pp0.1790507339499080897.pt.trace.json.gz"
+  ],
+  "global_sync_count_total": 68,
+  "compute_busy_us_total": 8802533.348632812,
+  "comm_busy_us_total": 30621916.052734375,
+  "overlap_duration_us_total": 3774797.98046875,
+  "device_idle_us_total": 22766117.069335938,
+  "host_gap_us_total": 33146474.544921875,
+  "per_rank": [
+    {
+      "rank_file": "train_overall_rank0_dp0_tp0_pp0.1790507339405564622.pt.trace.json.gz",
+      "device_events": 69758,
+      "compute_kernels": 60716,
+      "comm_kernels": 560,
+      "transfer_events": 8482,
+      "global_sync_count": 17,
+      "window_us": 14580389.9140625,
+      "compute_busy_us": 2064855.3583984375,
+      "comm_busy_us": 8118607.845703125,
+      "transfer_busy_us": 766721.1787109375,
+      "overlap_duration_us": 734460.990234375,
+      "overlap_ratio": 0.3556960962166592,
+      "device_idle_us": 5131387.7001953125,
+      "host_gap_us": 7764627.203125
+    },
+    {
+      "rank_file": "train_overall_rank1_dp1_tp0_pp0.1790507339422429312.pt.trace.json.gz",
+      "device_events": 69601,
+      "compute_kernels": 60556,
+      "comm_kernels": 560,
+      "transfer_events": 8485,
+      "global_sync_count": 17,
+      "window_us": 14611791.361328125,
+      "compute_busy_us": 2234512.8759765625,
+      "comm_busy_us": 7582549.7666015625,
+      "transfer_busy_us": 2205078.8583984375,
+      "overlap_duration_us": 1001560.2392578125,
+      "overlap_ratio": 0.4482230780702459,
+      "device_idle_us": 5796288.9580078125,
+      "host_gap_us": 8464891.185546875
+    },
+    {
+      "rank_file": "train_overall_rank2_dp2_tp0_pp0.1790507339462465791.pt.trace.json.gz",
+      "device_events": 69539,
+      "compute_kernels": 60492,
+      "comm_kernels": 560,
+      "transfer_events": 8487,
+      "global_sync_count": 17,
+      "window_us": 14611792.811523438,
+      "compute_busy_us": 2256814.4794921875,
+      "comm_busy_us": 7462489.51171875,
+      "transfer_busy_us": 2202876.16796875,
+      "overlap_duration_us": 1024105.3662109375,
+      "overlap_ratio": 0.4537835854550944,
+      "device_idle_us": 5916594.1865234375,
+      "host_gap_us": 8443676.80078125
+    },
+    {
+      "rank_file": "train_overall_rank3_dp3_tp0_pp0.1790507339499080897.pt.trace.json.gz",
+      "device_events": 69430,
+      "compute_kernels": 60380,
+      "comm_kernels": 560,
+      "transfer_events": 8490,
+      "global_sync_count": 17,
+      "window_us": 14611794.403320312,
+      "compute_busy_us": 2246350.634765625,
+      "comm_busy_us": 7458268.9287109375,
+      "transfer_busy_us": 2204795.1767578125,
+      "overlap_duration_us": 1014671.384765625,
+      "overlap_ratio": 0.45169768648850833,
+      "device_idle_us": 5921846.224609375,
+      "host_gap_us": 8473279.35546875
+    }
+  ],
+  "overlap_ratio_total": 0.4288308639074957
+}

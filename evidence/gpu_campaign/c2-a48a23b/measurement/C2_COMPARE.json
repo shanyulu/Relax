@@ -1,0 +1,50 @@
+{
+  "verdict": "PASS",
+  "violations": [],
+  "mode": "OFF_OFF_ENVELOPE_x2",
+  "pairs": {
+    "C2M1": {
+      "learning_rate_series": {
+        "exact_equal": true
+      },
+      "loss_series": {
+        "max_abs_delta": 0.10148084163665771,
+        "tolerance": 0.13927292823791504,
+        "within": true
+      },
+      "grad_norm_series": {
+        "max_abs_delta": 17.387184143066406,
+        "tolerance": 25.171005249023438,
+        "within": true
+      },
+      "token_series": {
+        "max_abs_delta": 0,
+        "tolerance": null,
+        "within": true
+      },
+      "checkpoint_exact_equal": false
+    },
+    "C2M2": {
+      "learning_rate_series": {
+        "exact_equal": true
+      },
+      "loss_series": {
+        "max_abs_delta": 0.037885308265686035,
+        "tolerance": 0.13927292823791504,
+        "within": true
+      },
+      "grad_norm_series": {
+        "max_abs_delta": 7.244346618652344,
+        "tolerance": 25.171005249023438,
+        "within": true
+      },
+      "token_series": {
+        "max_abs_delta": 0,
+        "tolerance": null,
+        "within": true
+      },
+      "checkpoint_exact_equal": false
+    }
+  },
+  "measurement_lock_sha256": "b7de1f822b0f6e488dcec35495f8ad8d6065f0b17a3fa16a528611a57c55d542"
+}

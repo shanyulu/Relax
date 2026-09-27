@@ -1,0 +1,51 @@
+{
+  "ACCEPTANCE_RULE": "overlap_ratio(ON) >= overlap_ratio(OFF reference) - delta_frozen AND new_global_sync(ON-OFF) == 0; delta_frozen = 2x max |OFF/OFF pairwise delta| over the two calibration OFF arms (envelope, declared semantics); any dropped/overflow CUPTI event invalidates the arm",
+  "ANALYZER_SHA": "abb5454a75aec54aefe19016d03ddeab2c08dff998a3c3ef29d1267e0d909620",
+  "BOOTSTRAP_SEED": 20260926,
+  "C2_TOLERANCES": "trace envelope, see ACCEPTANCE_RULE",
+  "DATASET_PATH": "/root/autodl-tmp/relax-work/task11-c2/scripts/training/sft/data/dapo-math-17k-sft-256.jsonl",
+  "DATASET_SHA256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "ENV_FINGERPRINT_SHA256": "e03c770f18fc9f95986575d6a9db88a8738e24ed4d73e013cb0e004598525539",
+  "EXPECTED_STEPS": 48,
+  "ON_ARM_PROFILE": {
+    "RELAX_STRAGGLER_ENABLE": "1",
+    "RELAX_STRAGGLER_REPORT_INTERVAL_S": "10",
+    "RELAX_STRAGGLER_WARMUP_WINDOWS": "2",
+    "RELAX_STRAGGLER_WINDOW_S": "5"
+  },
+  "PAIR_ORDER": [
+    "TR0-off",
+    "TR0-off2",
+    "TR1-off",
+    "TR1-on"
+  ],
+  "PRIMARY_METRIC": "overlap_ratio delta (ON vs OFF) with OFF/OFF trace calibration",
+  "PRODUCT_SHA": "a48a23ba5a39b3410a19e91d5f362154d97c9977",
+  "PROTOCOL_SHA": "aa9b0e240c726e510d236e0b4110012a19b89143428d4a81ee80dddb25c111d7",
+  "PR_HEAD": "a48a23ba5a39b3410a19e91d5f362154d97c9977",
+  "RECIPE_PATH": "/tmp/relax-task11-fix.x2AJOQ/scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "RECIPE_SHA256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "RUNNER_SHA": "aa30ff5808f5479efd8eb2fb782ff9cc94ecf91985b704422e2c17ea2b7af2d0",
+  "TRACE_BACKEND": "torch.profiler(Kineto/CUPTI) via relax TrainProfiler (--use-pytorch-profiler)",
+  "TRACE_PARAMS": {
+    "COMM_KERNEL_CLASSIFIER": "chrome event cat=='kernel' and 'nccl' in name.lower()",
+    "COMPUTE_KERNEL_CLASSIFIER": "chrome event cat=='kernel' and 'nccl' not in name.lower()",
+    "OVERLAP_DELTA_TOLERANCE": "2x max pairwise OFF/OFF delta (envelope; frozen before ON trace runs)",
+    "OVERLAP_FEATURE_FLAGS": [
+      "--overlap-grad-reduce"
+    ],
+    "PROFILE_ARGS": [
+      "--use-pytorch-profiler",
+      "--profile-step-start",
+      "9",
+      "--profile-step-end",
+      "24"
+    ],
+    "SAVE": 0,
+    "SYNC_API_CLASSIFIER": "cat in (cuda_runtime,cuda_driver) and 'devicesynchronize' in name.lower()",
+    "TOPOLOGY": "TP1/DP4, 4x RTX4090",
+    "TRACE_STEPS": "16 active (schedule idx 9-24) after 8 wait + 1 warmup; end inclusive per relax _create_torch_profiler",
+    "TRANSFER_CLASSIFIER": "cat in (gpu_memcpy,memcpy,gpu_memset,memset) - excluded from busy unions"
+  },
+  "_self_sha256": "a2ff6a71aa8212b336753540f43bd420f7e4b238891562a66efa5c0b9ae4f913"
+}

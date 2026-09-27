@@ -1,0 +1,34 @@
+{
+  "verdict": "NOT_PASS",
+  "rule": "overlap_ratio(ON) >= overlap_ratio(OFF ref) - 2x max|OFF/OFF delta| AND delta_global_sync(ON-OFF) <= 0",
+  "overlap_ratio": {
+    "TR0-off": 0.4288308639074957,
+    "TR0-off2": 0.42878540803072906,
+    "TR1-off": 0.4284023666394071,
+    "TR1-on": 0.42824946003684294
+  },
+  "off_off_pairwise_deltas": [
+    4.545587676663132e-05
+  ],
+  "delta_frozen": 9.091175353326264e-05,
+  "off_reference_arm": "TR1-off",
+  "overlap_pass": false,
+  "global_sync_counts": {
+    "TR0-off": 68,
+    "TR0-off2": 68,
+    "TR1-off": 68,
+    "TR1-on": 68
+  },
+  "off_off_sync_deltas": [
+    0
+  ],
+  "on_off_sync_delta": 0,
+  "sync_pass": true,
+  "note": "global-sync counts include natural run-to-run variance (OFF/OFF delta shown); the frozen rule compares ON vs the same-design OFF reference arm",
+  "ranks_profiled": {
+    "TR0-off": 4,
+    "TR0-off2": 4,
+    "TR1-off": 4,
+    "TR1-on": 4
+  }
+}

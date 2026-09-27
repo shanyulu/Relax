@@ -1,0 +1,27 @@
+{
+  "ARM_ORDER": [
+    "C2M1-off",
+    "C2M1-on",
+    "C2M2-on",
+    "C2M2-off"
+  ],
+  "CALIBRATION_RESULT_SHA256": "365a4cd72c46063a44dc90e809170cd01689ebd124cac8dc8e16ba154d1049b0",
+  "DATASET_SHA256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "ENVELOPE_SEMANTICS": "ON/OFF max |delta| must stay within 2x the worst OFF/OFF pairwise max |delta| over the whole calibration population (envelope test, not a confidence interval; deliberately conservative vs quantiles)",
+  "ENV_FINGERPRINT_SHA256": "e03c770f18fc9f95986575d6a9db88a8738e24ed4d73e013cb0e004598525539",
+  "EXPECTED_STEPS": 48,
+  "GLOBAL_SYNC_RULE": "new_global_sync_count(ON vs OFF) == 0",
+  "MEASUREMENT_N_PAIRS": 2,
+  "OVERLAP_DELTA_TOLERANCE": "frozen separately in TRACE_PROTOCOL per topology",
+  "PRODUCT_SHA": "a48a23ba5a39b3410a19e91d5f362154d97c9977",
+  "RECIPE_PATH": "/tmp/relax-task11-fix.x2AJOQ/scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "RECIPE_SHA256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "TOLERANCES": {
+    "grad_norm_series": 25.171005249023438,
+    "learning_rate_series": null,
+    "loss_series": 0.13927292823791504,
+    "mode": "OFF_OFF_ENVELOPE_x2",
+    "token_series": null
+  },
+  "_self_sha256": "029d0363f7deb91355060bd47ef6bb72ed63408452b9b4b323ed9be71eaec885"
+}
