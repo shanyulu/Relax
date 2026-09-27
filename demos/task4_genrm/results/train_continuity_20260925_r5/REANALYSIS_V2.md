@@ -11,7 +11,7 @@ and its unscaled error count are corrected here; v1 is retained unchanged
 below it for the revision history.
 
 Inputs: `raw_job_driver.log` (archived here; sha256
-`e0fd4db7c6676974dd29815f67594702e70c74b35e679925d29cfa9d6a03f10c` — see
+`feb23ecc80d3ce7382cefd68ca32aea20c5c26f3057978a272c0b40f44dfec78` — see
 `raw_job_driver.log.sha256`) and the monitor's `events.json`. Epoch basis:
 local CST (tz +8) verified against `events.json` (`monitor_start` epoch
 1790352563.7 == 00:09:23.7 CST).
