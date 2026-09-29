@@ -1,0 +1,92 @@
+{
+  "arms": {
+    "O-M1-off": {
+      "global_sync_count": 68,
+      "global_sync_scope": "cudaDeviceSynchronize API calls only; not all synchronization",
+      "overlap_ratio": 0.3623270838330761,
+      "rank_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "O-M1-on": {
+      "global_sync_count": 68,
+      "global_sync_scope": "cudaDeviceSynchronize API calls only; not all synchronization",
+      "overlap_ratio": 0.3618427497486454,
+      "rank_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "O-M2-off": {
+      "global_sync_count": 68,
+      "global_sync_scope": "cudaDeviceSynchronize API calls only; not all synchronization",
+      "overlap_ratio": 0.3628587769472925,
+      "rank_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "O-M2-on": {
+      "global_sync_count": 68,
+      "global_sync_scope": "cudaDeviceSynchronize API calls only; not all synchronization",
+      "overlap_ratio": 0.3602499689275468,
+      "rank_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "calibration_result_sha256": "a23f44b6e3547bf9659e87e1de37744bd4d04dd8ad616251f5871ecb408fe0a1",
+  "delta_frozen": 0.029498841211211935,
+  "expected_ranks": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "kind": "measurement_result",
+  "measurement_config_sha256": "7533520295834b62febf437b2aa5ff6175e67baae8816f9918cd2a91613df8f4",
+  "pairs": [
+    {
+      "global_sync_scope": "cudaDeviceSynchronize API calls only; not all synchronization",
+      "lower_bound": 0.33282824262186417,
+      "name": "O-M1",
+      "off": "O-M1-off",
+      "off_global_sync_count": 68,
+      "off_overlap_ratio": 0.3623270838330761,
+      "on": "O-M1-on",
+      "on_global_sync_count": 68,
+      "on_overlap_ratio": 0.3618427497486454,
+      "order": "AB",
+      "overlap_delta_on_minus_off": -0.00048433408443071535,
+      "pass": true
+    },
+    {
+      "global_sync_scope": "cudaDeviceSynchronize API calls only; not all synchronization",
+      "lower_bound": 0.3333599357360806,
+      "name": "O-M2",
+      "off": "O-M2-off",
+      "off_global_sync_count": 68,
+      "off_overlap_ratio": 0.3628587769472925,
+      "on": "O-M2-on",
+      "on_global_sync_count": 68,
+      "on_overlap_ratio": 0.3602499689275468,
+      "order": "BA",
+      "overlap_delta_on_minus_off": -0.002608808019745723,
+      "pass": true
+    }
+  ],
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "schema": "task11-c2-overlap-927c5de-v1",
+  "self_sha256": "e56dba854d13b29c8e62ce8f18c962d1a77b14bb54960a322e24f451dbf86812",
+  "verdict": "PASS"
+}
