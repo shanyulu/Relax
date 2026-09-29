@@ -380,7 +380,15 @@ def _execute_arm(args: argparse.Namespace, lock: dict[str, Any], name: str, lock
     path = arm_dir / "manifest.json"
     path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
     try:
-        _run_process(["bash", str(lock["RECIPE_PATH"])], product, env, arm_dir / "submit.log")
+        # Same launcher discipline as trace_campaign_927c5de: the repository
+        # entrypoint owns the flock/preflight/env setup and exports
+        # RELAX_ENTRYPOINT_MODE, keeping the recipe away from local.sh's
+        # full-local "pkill -9 python" fallback (which killed a runner on
+        # 2026-09-29; see the overlap campaign's archived INVALID attempt).
+        launcher = product / "scripts" / "entrypoint" / "ray-job.sh"
+        if not launcher.is_file():
+            raise RuntimeError(f"missing repository launcher: {launcher}")
+        _run_process(["bash", str(launcher), str(lock["RECIPE_PATH"])], product, env, arm_dir / "submit.log")
         deadline = time.monotonic() + 1500
         status = "RUNNING"
         while time.monotonic() < deadline:

@@ -289,7 +289,18 @@ def _execute_arm(args: argparse.Namespace, lock: dict[str, Any], name: str, lock
     path = arm_dir / "manifest.json"
     path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
     try:
-        command = ["bash", str(lock["RECIPE_PATH"]), *TRACE_ARGS, "--tb-experiment-name", str(arm_dir)]
+        # Invoke through the repository launcher (entrypoint mode): it owns the
+        # GPU flock, runs the read-only preflight under RELAX_RAY_JOB_SAFE_SUBMIT,
+        # sets up MASTER_ADDR / RUNTIME_ENV_JSON, and execs the recipe with
+        # RELAX_ENTRYPOINT_MODE already exported — so the recipe skips its
+        # local.sh fallback. Invoking the recipe directly made local.sh take the
+        # full-local path ("ray status" rejects a dashboard RAY_ADDRESS), whose
+        # "pkill -9 python" cleanup killed this runner mid-arm (2026-09-29,
+        # O-C1-off first attempt, archived as INVALID).
+        launcher = product / "scripts" / "entrypoint" / "ray-job.sh"
+        if not launcher.is_file():
+            raise RuntimeError(f"missing repository launcher: {launcher}")
+        command = ["bash", str(launcher), str(lock["RECIPE_PATH"]), *TRACE_ARGS, "--tb-experiment-name", str(arm_dir)]
         _run_process(command, product, env, arm_dir / "submit.log")
         deadline = time.monotonic() + 1500
         status = "RUNNING"
