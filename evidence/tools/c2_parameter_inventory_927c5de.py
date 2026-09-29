@@ -175,8 +175,8 @@ def main() -> int:
         from c2_parameter_campaign_927c5de import load_lock
 
         lock = load_lock(args.lock)
-        if lock["STAGE"] != "CALIBRATION" or args.arm_name not in lock["ARM_ORDER"]:
-            raise RuntimeError("INVALID: inventory export requires a locked calibration arm")
+        if args.arm_name not in lock["ARM_ORDER"]:
+            raise RuntimeError("INVALID: inventory export requires an arm named by the supplied lock")
         export_inventory(
             args.checkpoint, args.out, identity={**lock, "LOCK_SHA256": sha256_file(args.lock)}, arm_name=args.arm_name
         )

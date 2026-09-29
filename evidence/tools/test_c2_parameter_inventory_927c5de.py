@@ -4,6 +4,7 @@
 
 from __future__ import annotations
 
+import json
 import pathlib
 import sys
 
@@ -75,3 +76,93 @@ def test_dcp_layout_fails_closed_before_any_comparison(tmp_path):
         inventory.export_inventory(
             checkpoint_dir, tmp_path / "inventory.json", identity=identity(), arm_name="P-C1-off"
         )
+
+
+def _write_lock(path: pathlib.Path, stage: str, arm_order: list[str]) -> None:
+    import json
+
+    import c2_parameter_campaign_927c5de as campaign
+
+    payload = {
+        "SCHEMA": "C2_PARAMETER_CAMPAIGN_927C5DE/v1",
+        "STAGE": stage,
+        "PRODUCT_SHA": "a" * 40,
+        "RECIPE_SHA256": "b" * 64,
+        "DATASET_SHA256": "c" * 64,
+        "ENV_FINGERPRINT_SHA256": "d" * 64,
+        "PROTOCOL_SHA256": "e" * 64,
+        "RUNNER_SHA256": "f" * 64,
+        "COMPARATOR_SHA256": "0" * 64,
+        "EXPECTED_STEPS": 48,
+        "SAVE": 1,
+        "CHECKPOINT_POLICY": "RETAIN_UNTIL_ARCHIVED",
+        "TOPOLOGY": {"kind": "DP4", "gpus": 4},
+        "ARM_ORDER": arm_order,
+    }
+    if stage == "MEASUREMENT":
+        payload["CALIBRATION_RESULT_SHA256"] = "1" * 64
+        payload["CALIBRATION_RESULT_COMMIT"] = "2" * 40
+    payload["_self_sha256"] = campaign.canonical_hash(payload)
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+
+
+def test_cli_exports_a_measurement_arm_under_a_measurement_lock(tmp_path, monkeypatch):
+    """The verdict needs inventories for ON/OFF arms too, not just calibration.
+
+    The CLI used to require a CALIBRATION lock, which made every measurement
+    arm's inventory inexportable — a gap found before any 927c5de arm ran.
+    """
+    import hashlib
+    import sys
+
+    lock_path = tmp_path / "P_MEASUREMENT_LOCK.json"
+    _write_lock(lock_path, "MEASUREMENT", ["P-M1-off", "P-M1-on", "P-M2-on", "P-M2-off"])
+    source = tmp_path / "arm-checkpoint"
+    checkpoint(source, 1.0)
+    out = tmp_path / "P-M1-off.json"
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "c2_parameter_inventory_927c5de.py",
+            "--checkpoint",
+            str(source),
+            "--lock",
+            str(lock_path),
+            "--arm-name",
+            "P-M1-off",
+            "--out",
+            str(out),
+        ],
+    )
+    assert inventory.main() == 0
+    payload = json.loads(out.read_text())
+    assert payload["arm_name"] == "P-M1-off"
+    assert payload["lock_sha256"] == hashlib.sha256(lock_path.read_bytes()).hexdigest()
+    assert verdict.read_inventory(out, product_sha="a" * 40, protocol_sha256="e" * 64)
+
+
+def test_cli_rejects_an_arm_not_named_by_the_supplied_lock(tmp_path, monkeypatch):
+    import sys
+
+    lock_path = tmp_path / "P_CALIBRATION_LOCK.json"
+    _write_lock(lock_path, "CALIBRATION", ["P-C1-off", "P-C2-off", "P-C3-off", "P-C4-off"])
+    source = tmp_path / "arm-checkpoint"
+    checkpoint(source, 1.0)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "c2_parameter_inventory_927c5de.py",
+            "--checkpoint",
+            str(source),
+            "--lock",
+            str(lock_path),
+            "--arm-name",
+            "P-M1-off",
+            "--out",
+            str(tmp_path / "P-M1-off.json"),
+        ],
+    )
+    assert inventory.main() == 2
+    assert not (tmp_path / "P-M1-off.json").exists()
