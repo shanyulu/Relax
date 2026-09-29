@@ -1,0 +1,88 @@
+{
+  "checkpoint_tree": {
+    "files": [
+      {
+        "bytes": 308529,
+        "path": "iter_0000003/.metadata",
+        "sha256": "6e4a69f7fbb9b9b4039173530e11e281b12c1a4da9959778295de9c85f5576b7"
+      },
+      {
+        "bytes": 2100001975,
+        "path": "iter_0000003/__0_0.distcp",
+        "sha256": "551508ab5d7f52d0916d516ca8afaf5888d03924e3d787ebca055850613d587a"
+      },
+      {
+        "bytes": 2084296060,
+        "path": "iter_0000003/__1_0.distcp",
+        "sha256": "bea690071ec9b3c022363a352580862d6ac51a0736f70f1f0a75ed3194b2f524"
+      },
+      {
+        "bytes": 2080385797,
+        "path": "iter_0000003/__2_0.distcp",
+        "sha256": "b37f08bc60b7d30911b2090a1316a47f35140fc7229eee9de1369dab62291809"
+      },
+      {
+        "bytes": 2081829890,
+        "path": "iter_0000003/__3_0.distcp",
+        "sha256": "0816c8b78572c09526f9149235386f99aedc74391a7f665e1d04d2771ae2cb26"
+      },
+      {
+        "bytes": 63,
+        "path": "iter_0000003/metadata.json",
+        "sha256": "56b32e2dfbc0255db319bddf6880c9dfd3475135ca8d5ace23b8a6a384ed63c6"
+      },
+      {
+        "bytes": 1,
+        "path": "latest_checkpointed_iteration.txt",
+        "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+      },
+      {
+        "bytes": 21788,
+        "path": "transformer_config.json",
+        "sha256": "0a90915aeeda1fda31fd93c2781ec6e42cc67ad1a3681d432259193e286d9df5"
+      },
+      {
+        "bytes": 10242,
+        "path": "transformer_config.pkl",
+        "sha256": "02b81b109410111d595feedee0ba8c7376b959231a0959c85f308dda7f3d322a"
+      }
+    ],
+    "format_evidence": [
+      "__0_0.distcp",
+      "__1_0.distcp",
+      "__2_0.distcp",
+      "__3_0.distcp",
+      ".metadata"
+    ],
+    "format_verdict": "DCP_SHARDED",
+    "iterations_saved": [
+      "iter_0000003"
+    ],
+    "root": "/root/autodl-tmp/c2p927c5de/probe/checkpoints/sft/probe-layout-927c5de",
+    "total_bytes": 8346854345,
+    "total_gib": 7.774
+  },
+  "dataset_sha256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "date": "2026-09-29",
+  "decision": [
+    "Per checklist section 2: DCP/sharded layout => STOP formal parameter arms; a separately reviewed DCP adapter is required before any formal lock.",
+    "Per checklist section 1: storage gate FAIL => the 8-arm parameter campaign cannot launch on this disk regardless of adapter.",
+    "Overlap (SAVE=0) and C3 (SAVE=0) campaigns are unaffected and proceed."
+  ],
+  "disposition": "Probe checkpoint retained on disk as the adapter test fixture (hashes above); probe is not an evidence arm.",
+  "env_fingerprint_sha256": "a3ffe4a6c23705ea7c81f58e34683f13b889f1eba8d2f751a7d5a85d7953a22e",
+  "job_id": "codex-c2p-probe-layout-927c5de",
+  "job_status": "SUCCEEDED",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "recipe_sha256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "save": 1,
+  "schema": "C2_927C5DE_LAYOUT_PROBE/v1",
+  "steps": 4,
+  "storage_gate": {
+    "free_gib_at_probe": 67.0,
+    "note": "Fails before inventory payloads (~float32 expansion, roughly another tree-size per arm) are counted.",
+    "required_gib": 74.63,
+    "rule": "free_durable >= 8 * tree_size * 1.20 (C2_EXECUTION_CHECKLIST_927C5DE.md section 1)",
+    "verdict": "FAIL"
+  }
+}
