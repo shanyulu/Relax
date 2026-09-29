@@ -1,0 +1,46 @@
+{
+  "ARM_ORDER": [
+    "C3-healthy-on",
+    "C3-slow-on"
+  ],
+  "DATASET_PATH": "/root/autodl-tmp/relax-work/task11-c2/scripts/training/sft/data/dapo-math-17k-sft-256.jsonl",
+  "DATASET_SHA256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "ENV_FINGERPRINT_PATH": "/root/autodl-tmp/c2p927c5de/env_fingerprint_927c5de.txt",
+  "ENV_FINGERPRINT_SHA256": "a3ffe4a6c23705ea7c81f58e34683f13b889f1eba8d2f751a7d5a85d7953a22e",
+  "EXPECTED_STEPS": 48,
+  "ON_PROFILE": {
+    "RELAX_STRAGGLER_ENABLE": "1",
+    "RELAX_STRAGGLER_REPORT_INTERVAL_S": "10",
+    "RELAX_STRAGGLER_WARMUP_WINDOWS": "2",
+    "RELAX_STRAGGLER_WINDOW_S": "5"
+  },
+  "PRODUCT_SHA": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "PROTOCOL_PATH": "/tmp/codex-task11-evidence/evidence/C3_EVENT_CHAIN_PROTOCOL_927C5DE.md",
+  "PROTOCOL_SHA256": "5f4f2e436b8556303578cfc0e9ed689e7dcd98482f5b297f6abc2e019e16f45b",
+  "RECIPE_ENV": {
+    "GLOBAL_BATCH_SIZE": "32",
+    "NUM_ROLLOUT": "48",
+    "SAVE": "0"
+  },
+  "RECIPE_PATH": "/root/autodl-tmp/relax-work/task11-c2-927c5de/scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "RECIPE_SHA256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "RUNNER_PATH": "/tmp/codex-task11-evidence/evidence/tools/c3_campaign_927c5de.py",
+  "RUNNER_SHA256": "155a6faa9adbe5cd214e04be9c45b7f87fe8c66fc5ede65beea6733a4bbdd3ba",
+  "SAVE": "0",
+  "SCHEMA": "C3_CAMPAIGN_927C5DE/v1",
+  "SPINNER_PATH": "/tmp/codex-task11-evidence/evidence/tools/gpu3_spinner.py",
+  "SPINNER_SHA256": "08eace316a75107aacc5083158df0f33c5e6cf74aae9ea47379ade260cc744eb",
+  "SPINNER_SPEC": {
+    "duty_ms": 30.0,
+    "gpu": 3,
+    "idle_ms": 10.0,
+    "kill": "by_pid",
+    "kill_at": "terminal",
+    "start_after": "RUNNING"
+  },
+  "TOPOLOGY": {
+    "gpus": 4,
+    "kind": "DP4"
+  },
+  "_self_sha256": "c74a64b9c45a9b5d2c8e7b5b045219d83a6e82dc1aaabfee36f1e778f7401325"
+}
