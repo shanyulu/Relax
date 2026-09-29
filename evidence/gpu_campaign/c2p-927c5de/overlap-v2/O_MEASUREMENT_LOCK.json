@@ -1,0 +1,53 @@
+{
+  "ANALYZER_PATH": "/tmp/codex-task11-evidence/evidence/tools/trace_verdict_927c5de.py",
+  "ANALYZER_SHA256": "7654e337e46b0be6a7e92506b61b9a549813e3988e9fba21978c5fb64df31e0d",
+  "ARM_ORDER": [
+    "O-M1-off",
+    "O-M1-on",
+    "O-M2-on",
+    "O-M2-off"
+  ],
+  "CALIBRATION_RESULT_COMMIT": "a30910fb44907754068266ebb9a1b726c9a430ad",
+  "CALIBRATION_RESULT_SHA256": "a23f44b6e3547bf9659e87e1de37744bd4d04dd8ad616251f5871ecb408fe0a1",
+  "CHECKPOINT_POLICY": "NONE_TRACES_ONLY",
+  "DATASET_PATH": "/root/autodl-tmp/relax-work/task11-c2/scripts/training/sft/data/dapo-math-17k-sft-256.jsonl",
+  "DATASET_SHA256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "ENV_FINGERPRINT_PATH": "/root/autodl-tmp/c2p927c5de/env_fingerprint_927c5de.txt",
+  "ENV_FINGERPRINT_SHA256": "a3ffe4a6c23705ea7c81f58e34683f13b889f1eba8d2f751a7d5a85d7953a22e",
+  "EXPECTED_STEPS": 48,
+  "ON_PROFILE": {
+    "RELAX_STRAGGLER_ENABLE": "1",
+    "RELAX_STRAGGLER_REPORT_INTERVAL_S": "10",
+    "RELAX_STRAGGLER_WARMUP_WINDOWS": "2",
+    "RELAX_STRAGGLER_WINDOW_S": "5"
+  },
+  "PRODUCT_SHA": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "PROTOCOL_PATH": "/tmp/codex-task11-evidence/evidence/OVERLAP_CALIBRATION_PROTOCOL_927C5DE.md",
+  "PROTOCOL_SHA256": "e2b738b97f9248e31f14eb881becedf6898808f7f783882a18f47599b62d86c9",
+  "RECIPE_ENV": {
+    "GLOBAL_BATCH_SIZE": "32",
+    "NUM_ROLLOUT": "48",
+    "SAVE": "0"
+  },
+  "RECIPE_PATH": "/root/autodl-tmp/relax-work/task11-c2-927c5de/scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "RECIPE_SHA256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "RUNNER_PATH": "/tmp/codex-task11-evidence/evidence/tools/trace_campaign_927c5de.py",
+  "RUNNER_SHA256": "6beecb45317091dce4314e767523f8e3660c531cb9d083feafb2360af3018722",
+  "SAVE": "0",
+  "SCHEMA": "TRACE_OVERLAP_CAMPAIGN_927C5DE/v1",
+  "STAGE": "MEASUREMENT",
+  "TOPOLOGY": {
+    "gpus": 4,
+    "kind": "DP4"
+  },
+  "TRACE_ARGS": [
+    "--use-pytorch-profiler",
+    "--profile-step-start",
+    "9",
+    "--profile-step-end",
+    "24",
+    "--overlap-grad-reduce"
+  ],
+  "TRACE_DIR_TEMPLATE": "{out}/{arm}/train_trace",
+  "_self_sha256": "956624f4d37a5f65f4c4b8d78916a82f472672dbf4277631d35f35069dca4ded"
+}
