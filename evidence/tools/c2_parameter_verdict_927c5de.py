@@ -31,7 +31,7 @@ from typing import Any
 
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
 SHA1_RE = re.compile(r"[0-9a-f]{40}")
-FLOAT_DTYPES = {"<f2", "<f4", "<f8", ">f2", ">f4", ">f8"}
+FLOAT_DTYPES = {"<f2", "<f4", "<f8", ">f2", ">f4", ">f8", "bfloat16"}
 NPY_TYPES = {
     "|b1": ("?", 1, False),
     "|u1": ("B", 1, False),
@@ -136,6 +136,7 @@ def normalize_dtype(dtype: Any) -> str:
         "float16": "<f2",
         "float32": "<f4",
         "float64": "<f8",
+        "bfloat16": "bfloat16",
     }
     return aliases.get(dtype, dtype)
 
@@ -213,7 +214,11 @@ def read_inventory(path: Path, *, product_sha: str, protocol_sha256: str) -> dic
         elif "npy" in entry:
             payload = resolve_relative(path.parent, entry["npy"], f"npy payload for {name}")
             npy_dtype, npy_shape, values = read_npy(payload)
-            if npy_dtype != dtype or npy_shape != shape:
+            # NumPy has no portable bf16 scalar descriptor.  The exporter
+            # stores the exact CPU bf16 values converted to float32, while the
+            # inventory preserves the model dtype for topology comparison.
+            representation = normalize_dtype(entry.get("payload_dtype", dtype))
+            if npy_dtype != representation or npy_shape != shape or (dtype != representation and dtype != "bfloat16"):
                 raise InvalidError(f"npy metadata differs from inventory for tensor {name}")
         else:
             raise IncompleteError(f"missing payload for tensor {name}")
