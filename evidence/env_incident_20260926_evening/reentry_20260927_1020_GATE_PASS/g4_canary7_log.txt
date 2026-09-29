@@ -1,4 +1,4 @@
-2026-09-27 10:28:57,142	INFO worker.py:1833 -- Connecting to existing Ray cluster at address: 172.17.0.5:6379...
+2026-09-27 10:28:57,142	INFO worker.py:1833 -- Connecting to existing Ray cluster at address: <current-container-private-ip>:6379...
 2026-09-27 10:28:57,160	INFO worker.py:2015 -- Connected to Ray cluster. View the dashboard at [1m[32mhttp://127.0.0.1:8265 [39m[22m
 canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m flash_attn_3 failed to import: No module named 'flash_attn_interface'. Falling back to native attention.
@@ -6,10 +6,10 @@ canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m   _warnings.warn(
 [36m(canary7_actor pid=124520)[0m [32m2026-09-27 10:29:15[0m | [1;37mINFO[0m | [36mrelax.backends.megatron.megatron_patch.chunked_grad_coalesce_patch:141[0m [1;37mRelax grad coalesce patch applied to megatron.core.distributed.finalize_model_grads._allreduce_non_tensor_model_parallel_grads (chunk=1024 MiB)[0m
 [36m(canary7_actor pid=124520)[0m [32m2026-09-27 10:29:15[0m | [1;37mINFO[0m | [36mrelax.backends.megatron.megatron_patch.chunked_mtp_loss_patch:309[0m [1;37mRelax chunked MTP loss patch applied to process_mtp_loss (multi_token_prediction + gpt_model bindings; native CE branch chunked by --sft-logits-chunk-size, gated on enable_mtp_training AND sft_chunked_logits).[0m
-[36m(canary7_actor pid=124520)[0m [W927 10:29:18.733862235 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:172.17.0.3]:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [W927 10:29:21.805253819 socket.cpp:755] [c10d] The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [E927 10:29:21.805325219 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (172.17.0.3, 10998).
-[36m(canary7_actor pid=124520)[0m [W927 10:29:21.806243482 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host 172.17.0.3:10998 - retrying (try=0, timeout=200000ms, delay=398ms): The client socket has failed to connect to any network address of (172.17.0.3, 10998). The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:18.733862235 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:<previous-container-private-ip>]:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:21.805253819 socket.cpp:755] [c10d] The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [E927 10:29:21.805325219 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:21.806243482 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host <previous-container-private-ip>:10998 - retrying (try=0, timeout=200000ms, delay=398ms): The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998). The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
 [36m(canary7_actor pid=124520)[0m Exception raised from run at /pytorch/torch/csrc/distributed/c10d/socket.cpp:811 (most recent call first):
 [36m(canary7_actor pid=124520)[0m frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f6f30777eb0 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libc10.so)
 [36m(canary7_actor pid=124520)[0m frame #1: <unknown function> + 0x5d694d1 (0x7f4aad8b14d1 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so)
@@ -63,10 +63,10 @@ canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m frame #49: __libc_start_main + 0x80 (0x7f6f575abe40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
 [36m(canary7_actor pid=124520)[0m frame #50: ray::canary7_actor() [0x5cab99]
 [36m(canary7_actor pid=124520)[0m 
-[36m(canary7_actor pid=124520)[0m [W927 10:29:24.878110812 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:172.17.0.3]:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [W927 10:29:27.949845388 socket.cpp:755] [c10d] The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [E927 10:29:27.949915384 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (172.17.0.3, 10998).
-[36m(canary7_actor pid=124520)[0m [W927 10:29:27.950135236 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host 172.17.0.3:10998 - retrying (try=1, timeout=200000ms, delay=623ms): The client socket has failed to connect to any network address of (172.17.0.3, 10998). The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:24.878110812 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:<previous-container-private-ip>]:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:27.949845388 socket.cpp:755] [c10d] The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [E927 10:29:27.949915384 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:27.950135236 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host <previous-container-private-ip>:10998 - retrying (try=1, timeout=200000ms, delay=623ms): The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998). The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
 [36m(canary7_actor pid=124520)[0m Exception raised from run at /pytorch/torch/csrc/distributed/c10d/socket.cpp:811 (most recent call first):
 [36m(canary7_actor pid=124520)[0m frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f6f30777eb0 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libc10.so)
 [36m(canary7_actor pid=124520)[0m frame #1: <unknown function> + 0x5d694d1 (0x7f4aad8b14d1 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so)
@@ -120,10 +120,10 @@ canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m frame #49: __libc_start_main + 0x80 (0x7f6f575abe40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
 [36m(canary7_actor pid=124520)[0m frame #50: ray::canary7_actor() [0x5cab99]
 [36m(canary7_actor pid=124520)[0m 
-[36m(canary7_actor pid=124520)[0m [W927 10:29:30.022004451 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:172.17.0.3]:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [W927 10:29:33.097912216 socket.cpp:755] [c10d] The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [E927 10:29:33.097980533 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (172.17.0.3, 10998).
-[36m(canary7_actor pid=124520)[0m [W927 10:29:33.098204155 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host 172.17.0.3:10998 - retrying (try=2, timeout=200000ms, delay=1565ms): The client socket has failed to connect to any network address of (172.17.0.3, 10998). The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:30.022004451 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:<previous-container-private-ip>]:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:33.097912216 socket.cpp:755] [c10d] The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [E927 10:29:33.097980533 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:33.098204155 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host <previous-container-private-ip>:10998 - retrying (try=2, timeout=200000ms, delay=1565ms): The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998). The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
 [36m(canary7_actor pid=124520)[0m Exception raised from run at /pytorch/torch/csrc/distributed/c10d/socket.cpp:811 (most recent call first):
 [36m(canary7_actor pid=124520)[0m frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f6f30777eb0 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libc10.so)
 [36m(canary7_actor pid=124520)[0m frame #1: <unknown function> + 0x5d694d1 (0x7f4aad8b14d1 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so)
@@ -177,10 +177,10 @@ canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m frame #49: __libc_start_main + 0x80 (0x7f6f575abe40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
 [36m(canary7_actor pid=124520)[0m frame #50: ray::canary7_actor() [0x5cab99]
 [36m(canary7_actor pid=124520)[0m 
-[36m(canary7_actor pid=124520)[0m [W927 10:29:37.165748412 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:172.17.0.3]:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [W927 10:29:40.237719135 socket.cpp:755] [c10d] The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [E927 10:29:40.237789265 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (172.17.0.3, 10998).
-[36m(canary7_actor pid=124520)[0m [W927 10:29:40.238008280 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host 172.17.0.3:10998 - retrying (try=3, timeout=200000ms, delay=2515ms): The client socket has failed to connect to any network address of (172.17.0.3, 10998). The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:37.165748412 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:<previous-container-private-ip>]:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:40.237719135 socket.cpp:755] [c10d] The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [E927 10:29:40.237789265 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:40.238008280 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host <previous-container-private-ip>:10998 - retrying (try=3, timeout=200000ms, delay=2515ms): The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998). The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
 [36m(canary7_actor pid=124520)[0m Exception raised from run at /pytorch/torch/csrc/distributed/c10d/socket.cpp:811 (most recent call first):
 [36m(canary7_actor pid=124520)[0m frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f6f30777eb0 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libc10.so)
 [36m(canary7_actor pid=124520)[0m frame #1: <unknown function> + 0x5d694d1 (0x7f4aad8b14d1 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so)
@@ -234,10 +234,10 @@ canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m frame #49: __libc_start_main + 0x80 (0x7f6f575abe40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
 [36m(canary7_actor pid=124520)[0m frame #50: ray::canary7_actor() [0x5cab99]
 [36m(canary7_actor pid=124520)[0m 
-[36m(canary7_actor pid=124520)[0m [W927 10:29:43.309934927 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:172.17.0.3]:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [W927 10:29:46.413650414 socket.cpp:755] [c10d] The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [E927 10:29:46.413717489 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (172.17.0.3, 10998).
-[36m(canary7_actor pid=124520)[0m [W927 10:29:46.413939298 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host 172.17.0.3:10998 - retrying (try=4, timeout=200000ms, delay=2498ms): The client socket has failed to connect to any network address of (172.17.0.3, 10998). The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:43.309934927 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:<previous-container-private-ip>]:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:46.413650414 socket.cpp:755] [c10d] The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [E927 10:29:46.413717489 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:46.413939298 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host <previous-container-private-ip>:10998 - retrying (try=4, timeout=200000ms, delay=2498ms): The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998). The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
 [36m(canary7_actor pid=124520)[0m Exception raised from run at /pytorch/torch/csrc/distributed/c10d/socket.cpp:811 (most recent call first):
 [36m(canary7_actor pid=124520)[0m frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f6f30777eb0 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libc10.so)
 [36m(canary7_actor pid=124520)[0m frame #1: <unknown function> + 0x5d694d1 (0x7f4aad8b14d1 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so)
@@ -291,10 +291,10 @@ canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m frame #49: __libc_start_main + 0x80 (0x7f6f575abe40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
 [36m(canary7_actor pid=124520)[0m frame #50: ray::canary7_actor() [0x5cab99]
 [36m(canary7_actor pid=124520)[0m 
-[36m(canary7_actor pid=124520)[0m [W927 10:29:49.485837921 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:172.17.0.3]:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [W927 10:29:52.589748252 socket.cpp:755] [c10d] The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [E927 10:29:52.589817028 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (172.17.0.3, 10998).
-[36m(canary7_actor pid=124520)[0m [W927 10:29:52.590034267 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host 172.17.0.3:10998 - retrying (try=5, timeout=200000ms, delay=4748ms): The client socket has failed to connect to any network address of (172.17.0.3, 10998). The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:49.485837921 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:<previous-container-private-ip>]:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:52.589748252 socket.cpp:755] [c10d] The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [E927 10:29:52.589817028 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998).
+[36m(canary7_actor pid=124520)[0m [W927 10:29:52.590034267 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host <previous-container-private-ip>:10998 - retrying (try=5, timeout=200000ms, delay=4748ms): The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998). The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
 [36m(canary7_actor pid=124520)[0m Exception raised from run at /pytorch/torch/csrc/distributed/c10d/socket.cpp:811 (most recent call first):
 [36m(canary7_actor pid=124520)[0m frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f6f30777eb0 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libc10.so)
 [36m(canary7_actor pid=124520)[0m frame #1: <unknown function> + 0x5d694d1 (0x7f4aad8b14d1 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so)
@@ -348,10 +348,10 @@ canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m frame #49: __libc_start_main + 0x80 (0x7f6f575abe40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
 [36m(canary7_actor pid=124520)[0m frame #50: ray::canary7_actor() [0x5cab99]
 [36m(canary7_actor pid=124520)[0m 
-[36m(canary7_actor pid=124520)[0m [W927 10:30:00.461798519 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:172.17.0.3]:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [W927 10:30:03.533537341 socket.cpp:755] [c10d] The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [E927 10:30:03.533607459 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (172.17.0.3, 10998).
-[36m(canary7_actor pid=124520)[0m [W927 10:30:03.533824775 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host 172.17.0.3:10998 - retrying (try=6, timeout=200000ms, delay=6424ms): The client socket has failed to connect to any network address of (172.17.0.3, 10998). The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:30:00.461798519 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:<previous-container-private-ip>]:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:30:03.533537341 socket.cpp:755] [c10d] The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [E927 10:30:03.533607459 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998).
+[36m(canary7_actor pid=124520)[0m [W927 10:30:03.533824775 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host <previous-container-private-ip>:10998 - retrying (try=6, timeout=200000ms, delay=6424ms): The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998). The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
 [36m(canary7_actor pid=124520)[0m Exception raised from run at /pytorch/torch/csrc/distributed/c10d/socket.cpp:811 (most recent call first):
 [36m(canary7_actor pid=124520)[0m frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f6f30777eb0 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libc10.so)
 [36m(canary7_actor pid=124520)[0m frame #1: <unknown function> + 0x5d694d1 (0x7f4aad8b14d1 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so)
@@ -405,10 +405,10 @@ canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m frame #49: __libc_start_main + 0x80 (0x7f6f575abe40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
 [36m(canary7_actor pid=124520)[0m frame #50: ray::canary7_actor() [0x5cab99]
 [36m(canary7_actor pid=124520)[0m 
-[36m(canary7_actor pid=124520)[0m [W927 10:30:12.073778809 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:172.17.0.3]:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [W927 10:30:15.141816468 socket.cpp:755] [c10d] The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [E927 10:30:15.141883411 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (172.17.0.3, 10998).
-[36m(canary7_actor pid=124520)[0m [W927 10:30:15.142093949 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host 172.17.0.3:10998 - retrying (try=7, timeout=200000ms, delay=8573ms): The client socket has failed to connect to any network address of (172.17.0.3, 10998). The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:30:12.073778809 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:<previous-container-private-ip>]:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:30:15.141816468 socket.cpp:755] [c10d] The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [E927 10:30:15.141883411 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998).
+[36m(canary7_actor pid=124520)[0m [W927 10:30:15.142093949 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host <previous-container-private-ip>:10998 - retrying (try=7, timeout=200000ms, delay=8573ms): The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998). The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
 [36m(canary7_actor pid=124520)[0m Exception raised from run at /pytorch/torch/csrc/distributed/c10d/socket.cpp:811 (most recent call first):
 [36m(canary7_actor pid=124520)[0m frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f6f30777eb0 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libc10.so)
 [36m(canary7_actor pid=124520)[0m frame #1: <unknown function> + 0x5d694d1 (0x7f4aad8b14d1 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so)
@@ -462,10 +462,10 @@ canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m frame #49: __libc_start_main + 0x80 (0x7f6f575abe40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
 [36m(canary7_actor pid=124520)[0m frame #50: ray::canary7_actor() [0x5cab99]
 [36m(canary7_actor pid=124520)[0m 
-[36m(canary7_actor pid=124520)[0m [W927 10:30:27.821914722 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:172.17.0.3]:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [W927 10:30:30.893898669 socket.cpp:755] [c10d] The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [E927 10:30:30.893977764 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (172.17.0.3, 10998).
-[36m(canary7_actor pid=124520)[0m [W927 10:30:30.894194244 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host 172.17.0.3:10998 - retrying (try=8, timeout=200000ms, delay=14671ms): The client socket has failed to connect to any network address of (172.17.0.3, 10998). The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:30:27.821914722 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:<previous-container-private-ip>]:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:30:30.893898669 socket.cpp:755] [c10d] The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [E927 10:30:30.893977764 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998).
+[36m(canary7_actor pid=124520)[0m [W927 10:30:30.894194244 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host <previous-container-private-ip>:10998 - retrying (try=8, timeout=200000ms, delay=14671ms): The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998). The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
 [36m(canary7_actor pid=124520)[0m Exception raised from run at /pytorch/torch/csrc/distributed/c10d/socket.cpp:811 (most recent call first):
 [36m(canary7_actor pid=124520)[0m frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f6f30777eb0 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libc10.so)
 [36m(canary7_actor pid=124520)[0m frame #1: <unknown function> + 0x5d694d1 (0x7f4aad8b14d1 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so)
@@ -519,10 +519,10 @@ canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m frame #49: __libc_start_main + 0x80 (0x7f6f575abe40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
 [36m(canary7_actor pid=124520)[0m frame #50: ray::canary7_actor() [0x5cab99]
 [36m(canary7_actor pid=124520)[0m 
-[36m(canary7_actor pid=124520)[0m [W927 10:30:48.685260422 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:172.17.0.3]:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [W927 10:30:51.757179123 socket.cpp:755] [c10d] The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [E927 10:30:51.757251461 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (172.17.0.3, 10998).
-[36m(canary7_actor pid=124520)[0m [W927 10:30:51.757469844 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host 172.17.0.3:10998 - retrying (try=9, timeout=200000ms, delay=28407ms): The client socket has failed to connect to any network address of (172.17.0.3, 10998). The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:30:48.685260422 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:<previous-container-private-ip>]:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:30:51.757179123 socket.cpp:755] [c10d] The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [E927 10:30:51.757251461 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998).
+[36m(canary7_actor pid=124520)[0m [W927 10:30:51.757469844 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host <previous-container-private-ip>:10998 - retrying (try=9, timeout=200000ms, delay=28407ms): The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998). The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
 [36m(canary7_actor pid=124520)[0m Exception raised from run at /pytorch/torch/csrc/distributed/c10d/socket.cpp:811 (most recent call first):
 [36m(canary7_actor pid=124520)[0m frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f6f30777eb0 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libc10.so)
 [36m(canary7_actor pid=124520)[0m frame #1: <unknown function> + 0x5d694d1 (0x7f4aad8b14d1 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so)
@@ -576,10 +576,10 @@ canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m frame #49: __libc_start_main + 0x80 (0x7f6f575abe40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
 [36m(canary7_actor pid=124520)[0m frame #50: ray::canary7_actor() [0x5cab99]
 [36m(canary7_actor pid=124520)[0m 
-[36m(canary7_actor pid=124520)[0m [W927 10:31:23.278142179 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:172.17.0.3]:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [W927 10:31:26.350364706 socket.cpp:755] [c10d] The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [E927 10:31:26.350501216 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (172.17.0.3, 10998).
-[36m(canary7_actor pid=124520)[0m [W927 10:31:26.350967683 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host 172.17.0.3:10998 - retrying (try=10, timeout=200000ms, delay=40061ms): The client socket has failed to connect to any network address of (172.17.0.3, 10998). The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:31:23.278142179 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:<previous-container-private-ip>]:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:31:26.350364706 socket.cpp:755] [c10d] The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [E927 10:31:26.350501216 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998).
+[36m(canary7_actor pid=124520)[0m [W927 10:31:26.350967683 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host <previous-container-private-ip>:10998 - retrying (try=10, timeout=200000ms, delay=40061ms): The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998). The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
 [36m(canary7_actor pid=124520)[0m Exception raised from run at /pytorch/torch/csrc/distributed/c10d/socket.cpp:811 (most recent call first):
 [36m(canary7_actor pid=124520)[0m frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f6f30777eb0 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libc10.so)
 [36m(canary7_actor pid=124520)[0m frame #1: <unknown function> + 0x5d694d1 (0x7f4aad8b14d1 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so)
@@ -633,10 +633,10 @@ canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m frame #49: __libc_start_main + 0x80 (0x7f6f575abe40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
 [36m(canary7_actor pid=124520)[0m frame #50: ray::canary7_actor() [0x5cab99]
 [36m(canary7_actor pid=124520)[0m 
-[36m(canary7_actor pid=124520)[0m [W927 10:32:09.549808230 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:172.17.0.3]:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [W927 10:32:12.621283962 socket.cpp:755] [c10d] The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [E927 10:32:12.621324536 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (172.17.0.3, 10998).
-[36m(canary7_actor pid=124520)[0m [W927 10:32:12.621420065 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host 172.17.0.3:10998 - retrying (try=11, timeout=200000ms, delay=47688ms): The client socket has failed to connect to any network address of (172.17.0.3, 10998). The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:32:09.549808230 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:<previous-container-private-ip>]:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:32:12.621283962 socket.cpp:755] [c10d] The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [E927 10:32:12.621324536 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998).
+[36m(canary7_actor pid=124520)[0m [W927 10:32:12.621420065 TCPStore.cpp:340] [c10d] TCP client failed to connect/validate to host <previous-container-private-ip>:10998 - retrying (try=11, timeout=200000ms, delay=47688ms): The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998). The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
 [36m(canary7_actor pid=124520)[0m Exception raised from run at /pytorch/torch/csrc/distributed/c10d/socket.cpp:811 (most recent call first):
 [36m(canary7_actor pid=124520)[0m frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f6f30777eb0 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libc10.so)
 [36m(canary7_actor pid=124520)[0m frame #1: <unknown function> + 0x5d694d1 (0x7f4aad8b14d1 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so)
@@ -690,10 +690,10 @@ canary7 actor submitted; waiting up to 300s...
 [36m(canary7_actor pid=124520)[0m frame #49: __libc_start_main + 0x80 (0x7f6f575abe40 in /usr/lib/x86_64-linux-gnu/libc.so.6)
 [36m(canary7_actor pid=124520)[0m frame #50: ray::canary7_actor() [0x5cab99]
 [36m(canary7_actor pid=124520)[0m 
-[36m(canary7_actor pid=124520)[0m [W927 10:33:03.405586381 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:172.17.0.3]:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [W927 10:33:06.477257532 socket.cpp:755] [c10d] The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
-[36m(canary7_actor pid=124520)[0m [E927 10:33:06.477327819 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (172.17.0.3, 10998).
-[36m(canary7_actor pid=124520)[0m [E927 10:33:06.477546571 TCPStore.cpp:328] [c10d] TCP client failed to connect/validate to host 172.17.0.3:10998 - timed out (try=12, timeout=200000ms): The client socket has failed to connect to any network address of (172.17.0.3, 10998). The client socket has failed to connect to 172.17.0.3:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:33:03.405586381 socket.cpp:755] [c10d] The client socket has failed to connect to [::ffff:<previous-container-private-ip>]:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [W927 10:33:06.477257532 socket.cpp:755] [c10d] The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
+[36m(canary7_actor pid=124520)[0m [E927 10:33:06.477327819 socket.cpp:809] [c10d] The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998).
+[36m(canary7_actor pid=124520)[0m [E927 10:33:06.477546571 TCPStore.cpp:328] [c10d] TCP client failed to connect/validate to host <previous-container-private-ip>:10998 - timed out (try=12, timeout=200000ms): The client socket has failed to connect to any network address of (<previous-container-private-ip>, 10998). The client socket has failed to connect to <previous-container-private-ip>:10998 (errno: 113 - No route to host).
 [36m(canary7_actor pid=124520)[0m Exception raised from run at /pytorch/torch/csrc/distributed/c10d/socket.cpp:811 (most recent call first):
 [36m(canary7_actor pid=124520)[0m frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x80 (0x7f6f30777eb0 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libc10.so)
 [36m(canary7_actor pid=124520)[0m frame #1: <unknown function> + 0x5d694d1 (0x7f4aad8b14d1 in /root/miniconda3/lib/python3.12/site-packages/torch/lib/libtorch_cpu.so)

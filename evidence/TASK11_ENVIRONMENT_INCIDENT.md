@@ -33,7 +33,7 @@ which completed at ~15:10 on the same day, same code, same venv.
 | ~15:12–15:13 | Aggressive reaper (criterion `RAY_JOB_ID` not in RUNNING) kills two `01000000` processes — **including this task's own driver**. |
 | ~15:55 | Two `sglang::scheduler` processes (each ~21.8 GiB, **belonging to another task**) were killed to free GPU 0/1. Disclosed; not repeated. |
 | 16:54 | Exclusive-window snapshot: HEAD `cac4cb64…`, clean tree, 4× RTX 4090 all 4 MiB, zero compute processes, Ray 1 node, RUNNING jobs 0. |
-| ~16:58 | `abba-final` S1-off fails at 42 s with `Failed to parse Response(url=http://172.17.0.3:8265/api/v0/nodes… status=502`. |
+| ~16:58 | `abba-final` S1-off fails at 42 s with `Failed to parse Response(url=http://<previous-container-private-ip>:8265/api/v0/nodes… status=502`. |
 | ~17:00 | Root-caused: a previous agent's change to the driver had replaced the training-process `RAY_ADDRESS` (`http://127.0.0.1:8265`) with a GCS address; the `ray list nodes` call then resolved to the node IP and got 502, emptying `MASTER_ADDR`. **This driver change was reverted.** |
 | ~17:01 | `abba-final2` S1-off: reverted driver, but now dies after ~9 min with the `Actor` deployment failure. |
 | 17:11 | Old Ray logs archived (125 MB → `ray_archive_171130`); `ray stop --force`; fresh `ray start --head`; new node id `node_cc1da…` (≠ old `node_ed2ee…`); dashboard healthy (200). |

@@ -88,7 +88,7 @@ is made.
 1. 2026-09-26: CUDA-in-Ray worker kills (5-17 s after CUDA init) — eliminated
    matrix, reproducer and re-entry gates in `env_incident_20260926_evening/`.
 2. 2026-09-27: platform-proxy hijack of intra-container HTTP after the
-   overnight container reschedule (172.17.0.3 -> 172.17.0.5; `no_proxy` lacked
+   overnight container reschedule (<previous-container-private-ip> -> <current-container-private-ip>; `no_proxy` lacked
    the container IP) — §8 of the same report. Fixing the proxy does NOT
    retroactively explain incident 1; they are separate causes.
 

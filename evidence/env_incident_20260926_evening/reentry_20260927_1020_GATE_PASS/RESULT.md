@@ -1,7 +1,7 @@
 # Re-entry gate 2026-09-27 10:18-10:40 — GATE PASS
 
 Environment note: overnight the container was rescheduled to a new network
-identity (host IP 172.17.0.3 -> 172.17.0.5); the previous Ray cluster's
+identity (host IP <previous-container-private-ip> -> <current-container-private-ip>); the previous Ray cluster's
 processes died with it (GCS unresponsive at the old address — connection
 timeouts, all session processes gone by 10:25). A FRESH single-node Ray cluster
 was started at 10:26 (session_2026-09-27_10-26-06_968071_112292, 4x GPU

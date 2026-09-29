@@ -62,7 +62,7 @@ GPU_BUSY_UTIL = 10
 GPU_POLL_SECONDS = 60
 GPU_WAIT_SECONDS = 30 * 60
 #: The address `ray job submit` actually uses. The head ALSO answers on its node
-#: IP (172.17.0.2:8265) but that endpoint returned 502 while 127.0.0.1 answered
+#: IP (<ray-head-private-ip>:8265) but that endpoint returned 502 while 127.0.0.1 answered
 #: 200 -- probing the other one deadlocks the block on a healthy cluster.
 # GCS address: valid both for the `ray` CLI and for ray.init(address=...).
 # The HTTP dashboard URL (127.0.0.1:8265) is rejected by ray.init(), which made
@@ -158,7 +158,7 @@ def run_env(arm: str, output_dir: pathlib.Path, collector_addr: Optional[str]) -
             "RELAX": str(WORKTREE),
             "WORKING_DIR": str(WORKTREE),
             # The shared wrapper runs `ray list nodes` to resolve MASTER_ADDR. The
-            # CLI resolves that to the head's node IP (172.17.0.2:8265), which
+            # CLI resolves that to the head's node IP (<ray-head-private-ip>:8265), which
             # answers 502 here, so MASTER_ADDR came back empty and the arm died
             # ~28s in with no step. RAY_ADDRESS points the CLI at the endpoint
             # that does answer, and the env-only fix touches nothing shared.
@@ -205,7 +205,7 @@ def wait_for_ray_head(timeout_seconds: int = 300) -> None:
     """Wait for the exact endpoint the submit uses, then let the arm start.
 
     The probe and the submit MUST share one resolved address: this cluster answers
-    200 on 127.0.0.1:8265 while the node IP (172.17.0.2:8265) returned 502, so
+    200 on 127.0.0.1:8265 while the node IP (<ray-head-private-ip>:8265) returned 502, so
     probing the node IP made the block wait forever on a healthy cluster.
     """
     deadline = time.time() + timeout_seconds

@@ -35,7 +35,7 @@ source /root/autodl-tmp/relax-work/task11_evidence/gpu_campaign/env.sh   # sets 
 # env.sh deliberately does NOT export RAY_ADDRESS or PROMPT_SET.
 ```
 
-Ray head must be up at `172.17.0.2:6379` with `no_proxy` exported in the head's
+Ray head must be up at `<ray-head-private-ip>:6379` with `no_proxy` exported in the head's
 environment; the previous attempt died with `Could not find any running Ray
 instance` and `MASTER_ADDR=`, so **verify the head before submitting**:
 

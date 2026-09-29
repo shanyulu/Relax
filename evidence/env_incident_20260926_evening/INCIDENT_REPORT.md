@@ -159,8 +159,8 @@ initialised (weights, KV cache, CUDA graphs) and was up. Forensics:
   not the engine. `requests` routes through the proxy and urllib3 reports the PROXY's
   host:port, which is why the port did not match the engine's 16000.
 - `no_proxy` covered only `127.0.0.1,localhost`. The container was rescheduled overnight
-  to a new IP (172.17.0.3 -> 172.17.0.5), and the engine binds the Ray node IP, so every
-  internal warmup/health HTTP call to `172.17.0.5:16000` was hijacked into the proxy,
+  to a new IP (<previous-container-private-ip> -> <current-container-private-ip>), and the engine binds the Ray node IP, so every
+  internal warmup/health HTTP call to `<current-container-private-ip>:16000` was hijacked into the proxy,
   which cannot loop back to the container IP: curl through the proxy returns 502 after
   ~5 s; curl with `--noproxy '*'` returns 200 in 3.7 ms.
 - SGLang's warmup loop retried for ~12 minutes (120 x (1 s + 5 s timeout)), then
