@@ -1,0 +1,70 @@
+{
+  "arm_manifest_sha256": {
+    "O-C1-off": "3c07be8e15f36e9497202619eac2b21285936f392272208ce37f7afa9f9e5e89",
+    "O-C2-off": "06eb1ec498dc3abb591d25188ad6891af8e304894acf28788aad11bb022d4825",
+    "O-C3-off": "5c056bf20b1b19273b58cd36a06805e6df2eb50f168627c1dbf46f7aed492eac",
+    "O-C4-off": "34c63475e35f9d034c6fe6758e151041ed37e7277ed1a96080ed5e1d9c157eda"
+  },
+  "arms": [
+    {
+      "condition": "OFF",
+      "id": "O-C1-off",
+      "path": "O-C1-off"
+    },
+    {
+      "condition": "OFF",
+      "id": "O-C2-off",
+      "path": "O-C2-off"
+    },
+    {
+      "condition": "OFF",
+      "id": "O-C3-off",
+      "path": "O-C3-off"
+    },
+    {
+      "condition": "OFF",
+      "id": "O-C4-off",
+      "path": "O-C4-off"
+    }
+  ],
+  "calibration_lock_sha256": "485ab9a75ac035ff04ffca54901c0e73c6b9b047a9b3f8560fff50c2536038e4",
+  "contrasts": [
+    {
+      "left": "O-C1-off",
+      "name": "O-C1-vs-O-C2",
+      "right": "O-C2-off"
+    },
+    {
+      "left": "O-C3-off",
+      "name": "O-C3-vs-O-C4",
+      "right": "O-C4-off"
+    }
+  ],
+  "expected_ranks": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "phase": "calibration",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "raw_trace_hashes": {
+    "O-C1-off/train_trace/train_overall_rank0_dp0_tp0_pp0.1790681707475482301.pt.trace.json.gz": "e71c4cfcd79fa7ab55d1a65bf4b509e3d04bb9308403414621bd3de4d54ad6a8",
+    "O-C1-off/train_trace/train_overall_rank1_dp1_tp0_pp0.1790681706960671635.pt.trace.json.gz": "f4dd39b1a524d9809adae65264a67b77eb3959de4607e746f27fc7a012a3f0cb",
+    "O-C1-off/train_trace/train_overall_rank2_dp2_tp0_pp0.1790681706956460041.pt.trace.json.gz": "4e1624d780b5c579b7f335e04eda2f32eab279afd8e3c674903dff13f283b4ad",
+    "O-C1-off/train_trace/train_overall_rank3_dp3_tp0_pp0.1790681706951819752.pt.trace.json.gz": "b5cee19af24daf275409fe2628a78ea3ebafab9a56aae88661e268c060c004c4",
+    "O-C2-off/train_trace/train_overall_rank0_dp0_tp0_pp0.1790682064840065124.pt.trace.json.gz": "c16bc8574b6c7892b22dc7181847045730c8896fac79463b0ba9b1a08d87e92e",
+    "O-C2-off/train_trace/train_overall_rank1_dp1_tp0_pp0.1790682064979344476.pt.trace.json.gz": "359e48ba02520d5b90081e3e64a130cd55c23d2ceceb1137253180a49e744565",
+    "O-C2-off/train_trace/train_overall_rank2_dp2_tp0_pp0.1790682064617078710.pt.trace.json.gz": "cfaf0df6c845b755cf122acf0a46315e4f2691480846aa596e66b3aac1ac19a9",
+    "O-C2-off/train_trace/train_overall_rank3_dp3_tp0_pp0.1790682064493135608.pt.trace.json.gz": "31acbffc44e3c6f957feb826db8ceaab9953290cea30b237ac2de7e1108c0555",
+    "O-C3-off/train_trace/train_overall_rank0_dp0_tp0_pp0.1790682417122319944.pt.trace.json.gz": "54da329cb7963fe1927fa6cb5b99e59a376da2bf2ec2ae0b4610723d15e29ccc",
+    "O-C3-off/train_trace/train_overall_rank1_dp1_tp0_pp0.1790682417389546294.pt.trace.json.gz": "e11caf33dd811aa767c223dd2a4e2188c6bc0471d56c3c9a5edced6137d54ca0",
+    "O-C3-off/train_trace/train_overall_rank2_dp2_tp0_pp0.1790682417309894808.pt.trace.json.gz": "7b68269eaf727e185f099c13282f8642c25c7ea44f18efaed957fb13fc49e772",
+    "O-C3-off/train_trace/train_overall_rank3_dp3_tp0_pp0.1790682417366754393.pt.trace.json.gz": "2e26c870f49620135086449589c1cde60d6391abc44eed19aa64e1c276b40f0a",
+    "O-C4-off/train_trace/train_overall_rank0_dp0_tp0_pp0.1790682769914153146.pt.trace.json.gz": "f6aab8ecfc209739ba2d30bed477f0a6e84c41db70290fcf9746fde0405985d1",
+    "O-C4-off/train_trace/train_overall_rank1_dp1_tp0_pp0.1790682770023933125.pt.trace.json.gz": "ad64f5650baa5de654d6b211779456eef5102a9539f0e2d338c6d87d63e31c1c",
+    "O-C4-off/train_trace/train_overall_rank2_dp2_tp0_pp0.1790682769959098670.pt.trace.json.gz": "1943be655d8c221eeac0b1a79494446c765004f94908f28c04cea358e322f815",
+    "O-C4-off/train_trace/train_overall_rank3_dp3_tp0_pp0.1790682770038365017.pt.trace.json.gz": "8e5e0bc1371a9111942d12b8a0cf5177605a86f966445bdef90ef072fb3ff8f8"
+  },
+  "schema": "task11-c2-overlap-927c5de-v1"
+}
