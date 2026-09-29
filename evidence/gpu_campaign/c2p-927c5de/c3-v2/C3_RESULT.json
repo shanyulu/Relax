@@ -1,0 +1,119 @@
+{
+  "healthy": {
+    "false_positive_details": [],
+    "false_positives": 0,
+    "recovered": 0,
+    "straggler_verdicts": 0,
+    "total_verdicts": 37,
+    "uncertain": 37
+  },
+  "healthy_manifest_sha256": "8319a0ed6b4e8f65d69654641ac0610fbea87fa616916769a2322279d481774f",
+  "healthy_tail": {
+    "final_collector_report_lines": [
+      "\u001b[36m(MegatronTrainRayActor pid=174370)\u001b[0m \u001b[32m2026-09-29 20:41:54\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:348\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=0 judged=0 invalid=0 duplicate=0 late=0 windows=0 verdicts=0 stragglers=0 active=none\u001b[0m",
+      "\u001b[36m(MegatronTrainRayActor pid=174370)\u001b[0m \u001b[32m2026-09-29 20:42:04\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:348\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=0 judged=0 invalid=0 duplicate=0 late=0 windows=0 verdicts=0 stragglers=0 active=none\u001b[0m",
+      "\u001b[36m(MegatronTrainRayActor pid=174370)\u001b[0m \u001b[32m2026-09-29 20:42:59\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:348\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=0 judged=0 invalid=0 duplicate=0 late=0 windows=0 verdicts=0 stragglers=0 active=none\u001b[0m\u001b[32m [repeated 8x across cluster]\u001b[0m"
+    ],
+    "job_log_sha256": "9298fa836c9771e805cf7d08b4df8ac7bb2b5f0d8eb4fe47d18a5e36ec716bf5",
+    "process_close_record": [
+      "\u001b[32m2026-09-29 20:43:30\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36m__main__:89\u001b[0m \u001b[1;37mRay shutdown successfully\u001b[0m"
+    ]
+  },
+  "latency_claim": "UNMEASURED \u2014 stage-level localization and rollout-level platform confirmation only (protocol section 1)",
+  "lock_sha256": "21efb07926cb4e1d50f25043cf2aa63ee55d4d5c87264e0ac0c79c150ff2fd8a",
+  "schema": "C3_927C5DE_RESULT/v1",
+  "slow": {
+    "non_target_alarms": [
+      {
+        "classification": "false_positive",
+        "consecutive_windows": 3,
+        "deviation": 0.15400550190814905,
+        "overlaps_target_windows": false,
+        "rank": 1,
+        "reason": "host_only_stall",
+        "stage": "backward-compute",
+        "window_index": 14,
+        "workload_evidence_degraded": false
+      },
+      {
+        "classification": "false_positive",
+        "consecutive_windows": 3,
+        "deviation": 1.0287475686290326,
+        "overlaps_target_windows": false,
+        "rank": 2,
+        "reason": "gpu_stream_stall",
+        "stage": "all-grads-sync",
+        "window_index": 14,
+        "workload_evidence_degraded": false
+      },
+      {
+        "classification": "false_positive",
+        "consecutive_windows": 3,
+        "deviation": 0.16302857400318066,
+        "overlaps_target_windows": false,
+        "rank": 2,
+        "reason": "gpu_stream_stall",
+        "stage": "forward-compute",
+        "window_index": 15,
+        "workload_evidence_degraded": false
+      }
+    ],
+    "recovered": 1,
+    "straggler_verdicts": 7,
+    "target_details": [
+      {
+        "consecutive_windows": 3,
+        "deviation": 0.5495813822247808,
+        "rank": 3,
+        "reason": "gpu_stream_stall",
+        "stage": "backward-compute",
+        "window_index": 11,
+        "workload_evidence_degraded": false
+      },
+      {
+        "consecutive_windows": 3,
+        "deviation": 6.868772661248295,
+        "rank": 3,
+        "reason": "host_only_stall",
+        "stage": "all-grads-sync",
+        "window_index": 11,
+        "workload_evidence_degraded": false
+      },
+      {
+        "consecutive_windows": 3,
+        "deviation": 0.15699527135543967,
+        "rank": 3,
+        "reason": "gpu_stream_stall",
+        "stage": "forward-compute",
+        "window_index": 12,
+        "workload_evidence_degraded": false
+      },
+      {
+        "consecutive_windows": 3,
+        "deviation": 0.515073782558875,
+        "rank": 3,
+        "reason": "host_only_stall",
+        "stage": "forward-backward",
+        "window_index": 12,
+        "workload_evidence_degraded": false
+      }
+    ],
+    "target_detections": 4,
+    "target_max_deviation": 6.868772661248295,
+    "target_rank": 3,
+    "total_verdicts": 149,
+    "uncertain": 141
+  },
+  "slow_manifest_sha256": "047338f164c4e54f5022f5923bf4d802bed02c1d2e15e2ea67d81a6637e18286",
+  "slow_tail": {
+    "final_collector_report_lines": [
+      "\u001b[36m(MegatronTrainRayActor pid=182902)\u001b[0m \u001b[32m2026-09-29 20:48:29\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:348\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=1012 judged=1012 invalid=0 duplicate=0 late=0 windows=12 verdicts=67 stragglers=4 active=[{'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'all-grads-sync', 'rank': 3, 'label': 'rank3/tp0/pp0/vpp-1/cp0/ep0/dp3/chunk-1'}, {'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'backward-compute', 'rank': 3, 'label': 'rank3/tp0/pp0/vpp-1/cp0/ep0/dp3/chunk-1'}, {'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'forward-backward', 'rank': 3, 'label': 'rank3/tp0/pp0/vpp-1/cp0/ep0/dp3/chunk-1'}, {'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'forward-compute', 'rank': 3, 'label': 'rank3/tp0/pp0/vpp-1/cp0/ep0/dp3/chunk-1'}]\u001b[0m",
+      "\u001b[36m(MegatronTrainRayActor pid=182902)\u001b[0m \u001b[32m2026-09-29 20:48:39\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:348\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=1540 judged=1540 invalid=0 duplicate=0 late=0 windows=13 verdicts=87 stragglers=4 active=[{'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'all-grads-sync', 'rank': 3, 'label': 'rank3/tp0/pp0/vpp-1/cp0/ep0/dp3/chunk-1'}, {'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'backward-compute', 'rank': 3, 'label': 'rank3/tp0/pp0/vpp-1/cp0/ep0/dp3/chunk-1'}, {'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'forward-backward', 'rank': 3, 'label': 'rank3/tp0/pp0/vpp-1/cp0/ep0/dp3/chunk-1'}, {'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'forward-compute', 'rank': 3, 'label': 'rank3/tp0/pp0/vpp-1/cp0/ep0/dp3/chunk-1'}]\u001b[0m",
+      "\u001b[36m(MegatronTrainRayActor pid=182902)\u001b[0m \u001b[32m2026-09-29 20:48:49\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36mrelax.utils.straggler.collector:348\u001b[0m \u001b[1;37mstraggler[rank0/tp0/pp0/vpp-1/cp0/ep0/dp0/chunk-1]: envelopes=2064 judged=2064 invalid=0 duplicate=0 late=0 windows=16 verdicts=149 stragglers=7 active=[{'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'all-grads-sync', 'rank': 2, 'label': 'rank2/tp0/pp0/vpp-1/cp0/ep0/dp2/chunk-1'}, {'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'all-grads-sync', 'rank': 3, 'label': 'rank3/tp0/pp0/vpp-1/cp0/ep0/dp3/chunk-1'}, {'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'backward-compute', 'rank': 1, 'label': 'rank1/tp0/pp0/vpp-1/cp0/ep0/dp1/chunk-1'}, {'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'backward-compute', 'rank': 3, 'label': 'rank3/tp0/pp0/vpp-1/cp0/ep0/dp3/chunk-1'}, {'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'forward-backward', 'rank': 3, 'label': 'rank3/tp0/pp0/vpp-1/cp0/ep0/dp3/chunk-1'}, {'cohort': 'topo0:dense:0:0:-1:-1:0:0:0', 'name': 'forward-compute', 'rank': 3, 'label': 'rank3/tp0/pp0/vpp-1/cp0/ep0/dp3/chunk-1'}]\u001b[0m"
+    ],
+    "job_log_sha256": "30aaff5c961492d73cfb009c65a2f8fa0ec03057a04a04f5563dd8395e475464",
+    "process_close_record": [
+      "\u001b[32m2026-09-29 20:48:54\u001b[0m | \u001b[1;37mINFO\u001b[0m | \u001b[36m__main__:89\u001b[0m \u001b[1;37mRay shutdown successfully\u001b[0m"
+    ]
+  }
+}

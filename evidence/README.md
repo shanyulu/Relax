@@ -112,3 +112,35 @@ in this tree at the producing commit recorded with it.
   `C3_EVENT_CHAIN_PROTOCOL_927C5DE.md`,
   `OVERLAP_CALIBRATION_PROTOCOL_927C5DE.md` — GPU execution deferred;
   affected acceptance re-declared in PR #378.
+
+### 927c5de campaign addendum (2026-09-29, product head c2875a5 = 927c5de + tests-only)
+
+- PR #378 head `c2875a5` (P3.10 race fix, tests-only): **CI 8/8 green** on the
+  public head. Evidence branch tip advanced through the campaign below.
+- Layout probe (`gpu_campaign/c2p-927c5de/PROBE_LAYOUT_RECORD.json`): SAVE=1
+  output is Megatron **DCP sharded**, 7.774 GiB → per the frozen checklist the
+  formal parameter campaign is STOPPED; storage gate 74.63 GiB vs ~67 GiB free
+  also FAILS. `STORAGE_AND_ADAPTER_ESCALATION_927C5DE.md` records the
+  implemented-and-proven DCP adapter (PROPOSED_PENDING_REVIEW, end-to-end on
+  the probe fixture: 182 tensors sanitized, verdict-readable) and three
+  resumption options. Parameter equivalence stays INCOMPLETE (a48a23b
+  verdict, unchanged).
+- **Overlap: PASS at 927c5de** (`overlap-v2/`): four OFF arms froze this
+  session's own envelope (delta 0.029499); both AB/BA measurement pairs
+  passed (deltas -0.000484 / -0.002609). All arms driver/worker-provenanced,
+  4 unique-rank traces each, 32 traces hash-ledgered. The a48a23b NOT_PASS
+  stands as version-pinned history. One INVALID attempt (runner killed by the
+  recipe's local.sh pkill fallback) is archived with full data.
+- **C3: platform evidence complete** (`c3-v2/C3_RESULT.md`): healthy arm
+  0 false positives (37 uncertain); slow arm convicted the injected rank 3
+  four times across three stages (max deviation 6.869x) and
+  `confirmed_straggler_rank` surfaced 3,3 in TensorBoard alongside
+  rollout_id/optimizer_step/step_ordinal; 3 non-target alarms classified
+  false positives under the frozen rule; latency UNMEASURED by construction;
+  realtime acceptance pending Decision A. One INVALID attempt (runner
+  artifact-path bug) archived with full data.
+- New tools (all CPU-tested): `trace_campaign_927c5de.py`,
+  `c3_campaign_927c5de.py`, `c3_analyze_927c5de.py`,
+  `c2_parameter_dcp_adapter_927c5de.py`; runners now launch arms through
+  `scripts/entrypoint/ray-job.sh` (entrypoint mode) after the local.sh pkill
+  incident.
