@@ -33,20 +33,26 @@ or unclean arm is INVALID; it is retained and is never silently replaced.
 
 ## 2. Tool readiness gate
 
-The currently committed tools are insufficient for this checklist:
+The historical `c2_lock.py` and `trace_verdict.py` remain intentionally
+untouched: they hard-code the old six-OFF and four-arm layouts. The required
+successors are now committed before any `927c5de` arm:
 
-- `tools/c2_lock.py` hard-codes six OFF calibration arms and compares
-  checkpoint-tree hashes. It cannot run this four-OFF design or compare tensor
-  keys, shapes, dtypes, and values.
-- `tools/trace_verdict.py` hard-codes four historical arm names and one
-  ON/OFF pair. It cannot evaluate the new four-OFF-plus-two-pair design.
+- `c2_parameter_campaign_927c5de.py` locks the exact four-OFF calibration and
+  AB/BA measurement order, driver/worker provenance and checkpoint retention;
+  `c2_parameter_inventory_927c5de.py`,
+  `c2_parameter_calibration_927c5de.py` and
+  `c2_parameter_verdict_927c5de.py` build inventories, freeze the two fixed
+  contrasts and emit a non-overwriting self-hashed tensor verdict.
+- `trace_verdict_927c5de.py` locks and evaluates the four-OFF-plus-two-pair
+  trace layout with verified raw hashes and rank coverage.
 
-Before GPU work, add tested, non-overwriting successors (or parameterized
-versions) that enforce the exact arm orders below, reject missing retained
-inputs, write a self-hashed result, and return PASS=0, NOT_PASS/INCOMPLETE=1,
-INVALID=2. Commit those tools and tests, then create the locks from their
-committed SHAs. Until then this checklist is a blocked protocol, not permission
-to run a manually interpreted experiment.
+Before formal GPU work, run one disposable `SAVE=1` layout probe and archive
+its tree listing, size and hash. The retained-checkpoint exporter safely reads
+ordinary `torch.load(..., weights_only=True)` tensor mappings, including BF16
+payloads. It intentionally returns **INCOMPLETE** for DCP or unknown sharded
+layouts; if the probe produces one, stop and implement a separately reviewed
+adapter before creating a formal lock. No manual interpretation, unsafe
+deserialization or run is permitted as a substitute.
 
 ## 3. Parameter equivalence and training correctness
 
