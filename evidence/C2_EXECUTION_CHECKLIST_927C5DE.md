@@ -90,12 +90,12 @@ it must reject duplicate or missing ranks and must preserve the scope of the
 sync counter as `cudaDeviceSynchronize` only.
 
 Each measurement pair passes only if its ON overlap ratio is no lower than its
-paired OFF ratio minus `delta_overlap`, and ON introduces no additional
-`cudaDeviceSynchronize` calls relative to that paired OFF arm. Report per-rank
-and aggregate values, all raw-trace hashes, both pair outcomes, and natural
-OFF/OFF sync variance. Neither condition supports a claim about all possible
-global synchronization. If either pair fails, overlap is NOT_PASS; missing or
-unverifiable traces are INCOMPLETE.
+paired OFF ratio minus `delta_overlap`. Report `cudaDeviceSynchronize` counts
+per rank and in aggregate, the natural OFF/OFF variation, all raw-trace hashes
+and both pair outcomes. That counter is diagnostic context for one API only;
+it is not an overlap acceptance gate and supports no claim about all possible
+global synchronization. If either overlap pair fails, overlap is NOT_PASS;
+missing or unverifiable traces are INCOMPLETE.
 
 ## 5. One-shot publication rule
 
