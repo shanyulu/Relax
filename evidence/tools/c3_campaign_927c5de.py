@@ -121,11 +121,20 @@ def lock_payload(args: argparse.Namespace) -> dict[str, Any]:
 
 
 def _straggler_artifacts(arm_dir: Path) -> dict[str, Any]:
-    """The protocol's retained observable outputs, counted as-is."""
+    """The protocol's retained observable outputs, counted as-is.
+
+    The runtime nests every artifact under ``run_<id>/`` inside the configured
+    output directory (found on the real healthy arm 2026-09-29), so the files
+    are located recursively — a direct-path check wrongly failed the arm.
+    """
     found: dict[str, Any] = {}
     for name in ("straggler_envelopes.jsonl", "straggler_verdicts.jsonl"):
-        path = arm_dir / "straggler" / name
-        found[name] = path.stat().st_size if path.is_file() else None
+        path = arm_dir / "straggler"
+        hits = sorted(path.rglob(name)) if path.is_dir() else []
+        found[name] = hits[0].stat().st_size if hits else None
+    found["collector_status_files"] = (
+        len(sorted((arm_dir / "straggler").rglob("collector_status*.json"))) if (arm_dir / "straggler").is_dir() else 0
+    )
     events = (
         sorted((arm_dir / "tensorboard").rglob("events.out.tfevents.*")) if (arm_dir / "tensorboard").is_dir() else []
     )
