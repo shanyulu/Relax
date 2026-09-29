@@ -1,0 +1,65 @@
+{
+  "analyzer_sha256": "7654e337e46b0be6a7e92506b61b9a549813e3988e9fba21978c5fb64df31e0d",
+  "dataset_sha256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "driver_source_sha256_after": "1879eacb6246104adadd693aa22918b758c62ea2ff7226d370cc0a57c5edaf77",
+  "driver_source_sha256_before": "1879eacb6246104adadd693aa22918b758c62ea2ff7226d370cc0a57c5edaf77",
+  "env_fingerprint_sha256": "a3ffe4a6c23705ea7c81f58e34683f13b889f1eba8d2f751a7d5a85d7953a22e",
+  "expected_steps": 48,
+  "finished_at": 1790684246.5789266,
+  "git": {
+    "commit": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+    "dirty": false
+  },
+  "job_id": "codex-c2o-927c5de2-overlap-measurement-O-M2-on",
+  "job_status": "SUCCEEDED",
+  "lock_sha256": "9e0d38c23f541f9f635cd67ad32244d15b8174254da36130cb8f3c573c2be76a",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "protocol_sha256": "e2b738b97f9248e31f14eb881becedf6898808f7f783882a18f47599b62d86c9",
+  "recipe_sha256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "resources_after": {
+    "nvidia_smi": [
+      "0, GPU-5899efa5-27b3-2a75-6fcb-d753a1e8f7bd, 1, 24564",
+      "1, GPU-91fe7fd3-c2a9-39a0-38c7-b814d9cbfa6a, 1, 24564",
+      "2, GPU-06006bd2-9dad-fc0d-c851-e7352d272113, 1, 24564",
+      "3, GPU-a46c748b-ea22-9080-84c0-f7151e4102c3, 1, 24564"
+    ]
+  },
+  "resources_before": {
+    "nvidia_smi": [
+      "0, GPU-5899efa5-27b3-2a75-6fcb-d753a1e8f7bd, 1, 24564",
+      "1, GPU-91fe7fd3-c2a9-39a0-38c7-b814d9cbfa6a, 1, 24564",
+      "2, GPU-06006bd2-9dad-fc0d-c851-e7352d272113, 1, 24564",
+      "3, GPU-a46c748b-ea22-9080-84c0-f7151e4102c3, 1, 24564"
+    ]
+  },
+  "resources_returned": true,
+  "run_id": "O-M2-on",
+  "runner_sha256": "6beecb45317091dce4314e767523f8e3660c531cb9d083feafb2360af3018722",
+  "save": 0,
+  "stage": "MEASUREMENT",
+  "started_at": 1790683898.2695436,
+  "tb_experiment_name": "/root/autodl-tmp/c2p927c5de/overlap-measurement/O-M2-on",
+  "trace_args": [
+    "--use-pytorch-profiler",
+    "--profile-step-start",
+    "9",
+    "--profile-step-end",
+    "24",
+    "--overlap-grad-reduce"
+  ],
+  "trace_summary": {
+    "global_sync_count_total": 68,
+    "overlap_ratio_total": 0.3602499689275468,
+    "rank_ids": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "trace_files": 4
+  },
+  "valid": true,
+  "worker_source_hashes": {
+    "/tmp/ray/session_2026-09-29_19-17-30_134911_69281/runtime_resources/working_dir_files/_ray_pkg_dbbaceba5021f243/relax": "1879eacb6246104adadd693aa22918b758c62ea2ff7226d370cc0a57c5edaf77"
+  }
+}

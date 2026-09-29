@@ -128,9 +128,23 @@ in this tree at the producing commit recorded with it.
 - **Overlap: PASS at 927c5de** (`overlap-v2/`): four OFF arms froze this
   session's own envelope (delta 0.029499); both AB/BA measurement pairs
   passed (deltas -0.000484 / -0.002609). All arms driver/worker-provenanced,
-  4 unique-rank traces each, 32 traces hash-ledgered. The a48a23b NOT_PASS
+  4 unique-rank traces each, all 32 traces archived in-repo and hash-ledgered
+  (`trace_dp4/`). The a48a23b NOT_PASS
   stands as version-pinned history. One INVALID attempt (runner killed by the
   recipe's local.sh pkill fallback) is archived with full data.
+- **Overlap trace archive** (`gpu_campaign/c2p-927c5de/trace_dp4/`, added
+  2026-09-29 to complete the preregistered in-repo retention): all 32 raw
+  traces (4 calibration + 4 measurement arms × 4 ranks, ~512MB) with per-arm
+  `manifest.json` (pinned by the configs' `arm_manifest_sha256`) and
+  `overlap_metrics.json`. `RAW_TRACE_SHA256.json` +
+  `PUBLIC_TRACE_LEDGER_20260929.json` dual-hash ledger (policy
+  scan-passed-as-is-v1; gitleaks 8.30.1, 32/32 decompressed scans PASS, zero
+  findings) + `task11-trace-scan-20260929.json`. All 32 hashes match the
+  `raw_trace_hashes` pinned in `overlap-v2/O_FREEZE_CONFIG.json` /
+  `O_MEASUREMENT_CONFIG.json`. Recompute from the archive with
+  `tools/trace_verdict_927c5de.py freeze/compare` reproduces the published
+  `O_CALIBRATION_RESULT.json` / `O_MEASUREMENT_RESULT.json` byte-identically
+  (verified before committing the archive).
 - **C3: platform evidence complete** (`c3-v2/C3_RESULT.md`): healthy arm
   0 false positives (37 uncertain); slow arm convicted the injected rank 3
   four times across three stages (max deviation 6.869x) and
