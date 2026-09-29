@@ -84,3 +84,20 @@ def test_flattened_tensor_keys_cannot_silently_collide():
     state = {"a": {"b": torch.tensor([1])}, "a.b": torch.tensor([2])}
     with pytest.raises(RuntimeError, match="flattened checkpoint key collision"):
         adapter.flatten_leaves(state)
+
+
+def test_failed_dcp_conversion_cleans_only_its_own_partial_outputs(tmp_path, monkeypatch):
+    source = tmp_path / "iter_00000007"
+    make_dcp(source)
+    out = tmp_path / "converted"
+
+    def fail_after_partial_write(_source, target):
+        target.write_bytes(b"partial")
+        raise RuntimeError("synthetic conversion failure")
+
+    monkeypatch.setattr("torch.distributed.checkpoint.format_utils.dcp_to_torch_save", fail_after_partial_write)
+    with pytest.raises(RuntimeError, match="synthetic conversion failure"):
+        adapter.convert(source, out, arm_name="P-C1-off")
+    assert not out.exists()
+    assert not (tmp_path / "converted_raw").exists()
+    assert (source / ".metadata").is_file()

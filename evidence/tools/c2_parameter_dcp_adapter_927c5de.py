@@ -114,16 +114,20 @@ def convert(checkpoint: Path, out: Path, *, arm_name: str) -> dict[str, Any]:
     if raw_dir.exists():
         raise RuntimeError(f"INVALID: refusing to overwrite raw conversion {raw_dir}")
     out.mkdir(parents=True)
-    raw_dir.mkdir(parents=True)
-    payload = raw_dir / "converted.pt"
-    source_tree = tree_hash(iteration)
+    raw_created = False
     try:
+        raw_dir.mkdir(parents=True)
+        raw_created = True
+        payload = raw_dir / "converted.pt"
+        source_tree = tree_hash(iteration)
         dcp_to_torch_save(iteration, payload)
     except BaseException:
-        # A failed conversion must not leave a partial payload that blocks a
-        # clean retry; the source tree is never touched.
+        # Both directories were created by this invocation. A failed
+        # conversion must not leave a partial sibling that blocks retry.
         import shutil
 
+        if raw_created:
+            shutil.rmtree(raw_dir, ignore_errors=True)
         shutil.rmtree(out, ignore_errors=True)
         raise
     # Megatron checkpoints carry non-tensor leaves (omegaconf configs, param
