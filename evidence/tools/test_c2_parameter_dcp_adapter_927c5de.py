@@ -78,3 +78,9 @@ def test_non_dcp_layout_fails_closed(tmp_path):
     torch.save({"w": torch.zeros(2)}, plain / "model.pt")
     with pytest.raises(RuntimeError, match="INCOMPLETE"):
         adapter.convert(plain.parent, tmp_path / "out", arm_name="P-C3-off")
+
+
+def test_flattened_tensor_keys_cannot_silently_collide():
+    state = {"a": {"b": torch.tensor([1])}, "a.b": torch.tensor([2])}
+    with pytest.raises(RuntimeError, match="flattened checkpoint key collision"):
+        adapter.flatten_leaves(state)

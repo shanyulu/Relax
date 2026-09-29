@@ -1,0 +1,52 @@
+{
+  "dataset_sha256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "driver_source_sha256_after": "1879eacb6246104adadd693aa22918b758c62ea2ff7226d370cc0a57c5edaf77",
+  "driver_source_sha256_before": "1879eacb6246104adadd693aa22918b758c62ea2ff7226d370cc0a57c5edaf77",
+  "env_fingerprint_sha256": "a3ffe4a6c23705ea7c81f58e34683f13b889f1eba8d2f751a7d5a85d7953a22e",
+  "expected_steps": 48,
+  "finished_at": 1790685817.4189827,
+  "git": {
+    "commit": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+    "dirty": false
+  },
+  "job_id": "codex-c3-927c5de2-c3v2-C3-healthy-on",
+  "job_status": "SUCCEEDED",
+  "lock_sha256": "21efb07926cb4e1d50f25043cf2aa63ee55d4d5c87264e0ac0c79c150ff2fd8a",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "protocol_sha256": "5f4f2e436b8556303578cfc0e9ed689e7dcd98482f5b297f6abc2e019e16f45b",
+  "recipe_sha256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "resources_after": {
+    "nvidia_smi": [
+      "0, GPU-5899efa5-27b3-2a75-6fcb-d753a1e8f7bd, 1, 24564",
+      "1, GPU-91fe7fd3-c2a9-39a0-38c7-b814d9cbfa6a, 1, 24564",
+      "2, GPU-06006bd2-9dad-fc0d-c851-e7352d272113, 1, 24564",
+      "3, GPU-a46c748b-ea22-9080-84c0-f7151e4102c3, 1, 24564"
+    ]
+  },
+  "resources_before": {
+    "nvidia_smi": [
+      "0, GPU-5899efa5-27b3-2a75-6fcb-d753a1e8f7bd, 1, 24564",
+      "1, GPU-91fe7fd3-c2a9-39a0-38c7-b814d9cbfa6a, 1, 24564",
+      "2, GPU-06006bd2-9dad-fc0d-c851-e7352d272113, 1, 24564",
+      "3, GPU-a46c748b-ea22-9080-84c0-f7151e4102c3, 1, 24564"
+    ]
+  },
+  "resources_returned": true,
+  "run_id": "C3-healthy-on",
+  "runner_sha256": "f3b8cae031bdb9d391ad9047713831ba0f05d3a4ab46f3f02633b5448d35e699",
+  "save": 0,
+  "spinner_sha256": "08eace316a75107aacc5083158df0f33c5e6cf74aae9ea47379ade260cc744eb",
+  "spinner_spec": null,
+  "stage": "C3",
+  "started_at": 1790685513.813754,
+  "straggler_artifacts": {
+    "collector_status_files": 2,
+    "straggler_envelopes.jsonl": 888969,
+    "straggler_verdicts.jsonl": 58559,
+    "tensorboard_event_files": 1
+  },
+  "valid": true,
+  "worker_source_hashes": {
+    "/tmp/ray/session_2026-09-29_19-17-30_134911_69281/runtime_resources/working_dir_files/_ray_pkg_dbbaceba5021f243/relax": "1879eacb6246104adadd693aa22918b758c62ea2ff7226d370cc0a57c5edaf77"
+  }
+}

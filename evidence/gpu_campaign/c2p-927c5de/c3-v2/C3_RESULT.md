@@ -8,10 +8,10 @@ construction (protocol section 1).
 
 ## Arms
 
-| Arm | Job | Provenance | Artifacts |
-| --- | --- | --- | --- |
-| `C3-healthy-on` | SUCCEEDED, resources returned | driver/worker source hashes verified | full straggler tree under `run_0c000000/` + TensorBoard events |
-| `C3-slow-on` | SUCCEEDED, resources returned | driver/worker source hashes verified | same + spinner (GPU 3, 30 ms duty / 10 ms idle) started at RUNNING, killed by PID at terminal state |
+| Arm             | Job                           | Provenance                           | Artifacts                                                                                           |
+| --------------- | ----------------------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `C3-healthy-on` | SUCCEEDED, resources returned | driver/worker source hashes verified | full straggler tree under `run_0c000000/` + TensorBoard events                                      |
+| `C3-slow-on`    | SUCCEEDED, resources returned | driver/worker source hashes verified | same + spinner (GPU 3, 30 ms duty / 10 ms idle) started at RUNNING, killed by PID at terminal state |
 
 The first healthy attempt hit a runner artifact-path bug (files nest under
 `run_<id>/`) and is archived INVALID with full data
@@ -26,16 +26,18 @@ The first healthy attempt hit a runner artifact-path bug (files nest under
   (dev 6.869, `host_only_stall`), `forward-compute` w12 (dev 0.157),
   `forward-backward` w12 (dev 0.515, `host_only_stall`) — all with
   consecutive_windows = 3. 141 `uncertain`, 1 `recovered`.
-- **3 non-target alarms, all classified `false_positive` under the frozen
-  rule** (their windows — 14/15 — do not overlap the target's stall windows
-  11/12): rank 1 `backward-compute` w14 (dev 0.154), rank 2 `all-grads-sync`
-  w14 (dev 1.029), rank 2 `forward-compute` w15 (dev 0.163). Reported, not
-  explained away.
+- **3 non-target alarms, classified `false_positive` by the frozen
+  alert-window proxy**: rank 1 `backward-compute` w14 (dev 0.154), rank 2
+  `all-grads-sync` w14 (dev 1.029), rank 2 `forward-compute` w15 (dev 0.163).
+  The analyzer compares these windows with target *alert* windows 11/12;
+  the competing GPU process was still active at the terminal state. An alert
+  window is not a complete record of the injected rank's stall intervals,
+  so the proxy label does not establish the non-target alarms' cause.
 
 ## Rollout-level platform confirmation (TensorBoard record)
 
 `perf/straggler/confirmed_straggler_rank` = **3, 3, 2, 2** (steps 16, 22, 35,
-41) with `confirmed_straggler_deviation` = 6.869, 0.515, 1.029, 0.163 — the
+41\) with `confirmed_straggler_deviation` = 6.869, 0.515, 1.029, 0.163 — the
 injected rank surfaces as the confirmed alert for the rollouts covering the
 stall windows, alongside the run's `rollout_id`, `optimizer_step` and
 `step_ordinal` summaries (all 48 steps). This is rollout-level corroboration
@@ -62,3 +64,9 @@ these.
 - Latency: **UNMEASURED** (no per-event identity exists in this build).
 - "Realtime": rollout-cadence export observed working; the acceptance call
   is the maintainer's (Decision A, RFC #357).
+
+The two arms, including compressed verdict/envelope JSONL and collector status,
+TensorBoard events, manifests and public job logs, are archived under
+`c3-v2/arms/`. The job logs replace RFC1918 addresses only; their original and
+public SHA-256 values are both recorded. See `C3_PUBLIC_RECOMPUTE.md` for the
+commands that reproduce the stage and platform results from these files.

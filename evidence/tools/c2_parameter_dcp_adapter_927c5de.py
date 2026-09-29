@@ -8,12 +8,14 @@ inventory exporter correctly refuses to guess. This adapter is the separately
 reviewed bridge required by ``C2_EXECUTION_CHECKLIST_927C5DE.md`` section 2:
 it converts one iteration directory with torch's own offline utility
 ``torch.distributed.checkpoint.format_utils.dcp_to_torch_save`` (CPU, no
-process group, no speculative deserialization), records full provenance
+process group), records full provenance
 (source tree hash, converted payload hash, torch build), and never overwrites
 existing output. The converted tree is what
 ``c2_parameter_inventory_927c5de.py`` then exports.
 
-Status: PROPOSED for review — no formal parameter lock may reference this
+The converter and the intermediate load deserialize checkpoint byte payloads;
+only use this tool on checkpoints produced by this campaign's own training
+jobs. Status: PROPOSED for review — no formal parameter lock may reference this
 adapter until the review lands (see STORAGE_AND_ADAPTER_ESCALATION_927C5DE.md).
 """
 
@@ -41,7 +43,8 @@ def tree_hash(root: Path) -> str:
 
 
 def find_iteration(checkpoint: Path) -> Path:
-    """Resolve the retained iteration directory of a Megatron DCP checkpoint."""
+    """Resolve the retained iteration directory of a Megatron DCP
+    checkpoint."""
     if (checkpoint / ".metadata").is_file():
         return checkpoint
     marker = checkpoint / "latest_checkpointed_iteration.txt"
@@ -54,6 +57,26 @@ def find_iteration(checkpoint: Path) -> Path:
     if len(candidates) == 1:
         return candidates[0]
     raise RuntimeError("INCOMPLETE: no single DCP iteration directory found")
+
+
+def flatten_leaves(value: Any, prefix: str = "") -> dict[str, Any]:
+    """Flatten checkpoint leaves while rejecting ambiguous encoded paths."""
+    result: dict[str, Any] = {}
+
+    def visit(item: Any, path: str) -> None:
+        if isinstance(item, dict):
+            for key in sorted(item, key=str):
+                visit(item[key], f"{path}.{key}" if path else str(key))
+        elif isinstance(item, (list, tuple)):
+            for index, child in enumerate(item):
+                visit(child, f"{path}[{index}]")
+        else:
+            if path in result:
+                raise RuntimeError(f"INVALID: flattened checkpoint key collision: {path}")
+            result[path] = item
+
+    visit(value, prefix)
+    return result
 
 
 def convert(checkpoint: Path, out: Path, *, arm_name: str) -> dict[str, Any]:
@@ -111,19 +134,7 @@ def convert(checkpoint: Path, out: Path, *, arm_name: str) -> dict[str, Any]:
     # campaign's own arm output only.
     state = torch.load(payload, map_location="cpu", weights_only=False)
 
-    def _flatten(value: Any, prefix: str = "") -> dict[str, Any]:
-        result: dict[str, Any] = {}
-        if isinstance(value, dict):
-            for key in sorted(value, key=str):
-                result.update(_flatten(value[key], f"{prefix}.{key}" if prefix else str(key)))
-        elif isinstance(value, (list, tuple)):
-            for index, item in enumerate(value):
-                result.update(_flatten(item, f"{prefix}[{index}]"))
-        else:
-            result[prefix] = value
-        return result
-
-    flat = _flatten(state)
+    flat = flatten_leaves(state)
     tensors = {key: value for key, value in flat.items() if isinstance(value, torch.Tensor)}
     dropped = [
         {"key": key, "type": type(value).__module__ + "." + type(value).__qualname__}

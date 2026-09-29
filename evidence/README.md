@@ -145,14 +145,17 @@ in this tree at the producing commit recorded with it.
   `tools/trace_verdict_927c5de.py freeze/compare` reproduces the published
   `O_CALIBRATION_RESULT.json` / `O_MEASUREMENT_RESULT.json` byte-identically
   (verified before committing the archive).
-- **C3: platform evidence complete** (`c3-v2/C3_RESULT.md`): healthy arm
-  0 false positives (37 uncertain); slow arm convicted the injected rank 3
-  four times across three stages (max deviation 6.869x) and
-  `confirmed_straggler_rank` surfaced 3,3 in TensorBoard alongside
-  rollout_id/optimizer_step/step_ordinal; 3 non-target alarms classified
-  false positives under the frozen rule; latency UNMEASURED by construction;
-  realtime acceptance pending Decision A. One INVALID attempt (runner
-  artifact-path bug) archived with full data.
+- **C3: platform evidence collected** (`c3-v2/C3_RESULT.md`): healthy arm
+  0/37 straggler verdicts; slow arm detected the injected rank 3 four times
+  across three stages (max deviation 6.869x). TensorBoard's confirmed-rank
+  series is 3,3,2,2. Three non-target alerts are labelled false positives by
+  the frozen alert-window proxy; their causal origin is not established.
+  Per-event latency remains UNMEASURED and realtime acceptance awaits
+  Decision A. The public archive has 11 direct objects, including two
+  deterministic tarballs with 18 original straggler files. Its dual-hash
+  ledger, text scan and
+  reproduction commands are under `c3-v2/` (`PUBLIC_C3_LEDGER_20260929.json`
+  and `C3_PUBLIC_RECOMPUTE.md`). One earlier INVALID attempt remains recorded.
 - New tools (all CPU-tested): `trace_campaign_927c5de.py`,
   `c3_campaign_927c5de.py`, `c3_analyze_927c5de.py`,
   `c2_parameter_dcp_adapter_927c5de.py`; runners now launch arms through
