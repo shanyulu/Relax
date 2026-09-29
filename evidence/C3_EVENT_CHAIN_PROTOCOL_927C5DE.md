@@ -1,4 +1,4 @@
-# C3 event-chain protocol — build `927c5de` (preregistered)
+# C3 localization and platform-summary protocol — build `927c5de` (preregistered)
 
 Status: **pre-registered before any `927c5de` C3 data exists.** Follow-up to
 `REVIEW_CORRECTIONS_20260927.md` items 1, 3 and 4: at `a48a23b` the C3
@@ -12,31 +12,39 @@ fixed public build. Product chain `a48a23b` → … → `927c5de` adds
 
 Execution deferred until GPU access; frozen before first data.
 
-## 1. Event identity (the unit of every latency claim)
+## 1. What this protocol can establish
 
-Every verdict carries (run_id, rank, window index, kind). The chain for one
-event is: interval completion (observer) → verdict emission (detector) →
-JSONL persistence (collector) → platform visibility (tensorboard scalar).
-Latency is reported **per event identity** as raw durations between adjacent
-chain points. p50/p95 may be cited only over event-associated samples;
-anything else is reported UNMEASURED. No subtraction of unrelated intervals.
+This build has two distinct outputs, not an event-correlated telemetry chain:
 
-## 2. Clock comparability (preregistered check, run once per session)
+- The collector's run-scoped JSONL retains stage-level detector verdicts. A
+  verdict carries `cohort`, `name`, `rank`, `window_index`, and `kind`, but no
+  `run_id` or unique verdict ID. Different stages can therefore share the
+  same rank, window, and kind. These fields are used to localize detections;
+  they are **not** an immutable event key.
+- TensorBoard receives rollout-level scalar summaries, including
+  `confirmed_straggler_rank` and `confirmed_straggler_deviation`. The reporter
+  drains a set of verdicts and selects one confirmed alert; the scalar does
+  not retain stage, window index, or a verdict ID. It confirms that an alert
+  was surfaced for a rollout, not that it represents one particular JSONL
+  line.
 
-Collector and trainer may live in different processes. Before any latency is
-claimed: record both processes' clocks at a common marked event (a synthetic
-envelope ingested at a known trainer timestamp) and verify the mapping is
-linear and stable within the session; report the measured skew. A session
-without this check cannot claim latency numbers.
+Consequently, C3 makes no per-event join and reports no observer-to-verdict,
+verdict-to-file, or verdict-to-platform latency. Those quantities remain
+**UNMEASURED** on `927c5de`. A future event-latency claim requires a stable
+event ID propagated through the collector and platform path, plus a separately
+validated clock model; neither is introduced or implied by this protocol.
 
-## 3. Tail window
+## 2. Tail window
 
-Shutdown must close the last accepted window via the explicit flush; the
-evidence is (a) a flush-produced verdict for the previously open window and
-(b) zero verdicts after close. The last verdict's kind alone proves nothing
-(the withdrawn `a48a23b` inference) and must not be cited.
+Shutdown must invoke the explicit collector flush. Preserve the pre-flush and
+post-flush collector status, the raw JSONL files, and the process-close record.
+For an open final window that meets the detector's normal eligibility rules,
+the resulting verdict must be present in JSONL; if it does not meet those
+rules, retain the detector status that explains the absence. In both cases,
+zero additional verdicts may appear after close. The last verdict's kind alone
+proves nothing (the withdrawn `a48a23b` inference) and must not be cited.
 
-## 4. Non-target-rank alarms (preregistered classification)
+## 3. Non-target-rank alarms (preregistered classification)
 
 - Healthy arm (no injection): a straggler verdict on ANY rank is a false
   positive; count and report.
@@ -46,14 +54,24 @@ evidence is (a) a flush-produced verdict for the previously open window and
   comparable; otherwise **false positive**. Both classes are reported; the
   classification rule is fixed here, before data.
 
-## 5. Platform attribution regression
+## 4. Rollout-level platform confirmation
 
-Verify on `927c5de` that `perf/straggler/confirmed_straggler_deviation` and
-`confirmed_straggler_rank` appear in the tensorboard event files and match
-the JSONL verdicts of the same event identity (value and window). Local unit
-tests do not substitute (REVIEW_CORRECTIONS item 1).
+Verify on `927c5de` that
+`perf/straggler/confirmed_straggler_deviation` and
+`perf/straggler/confirmed_straggler_rank` appear in the TensorBoard event
+files for the slow arm, alongside the run's `rollout_id`, `optimizer_step`,
+and `step_ordinal` summaries. The expected confirmed rank is 3 for the
+injected arm; record the scalar deviation exactly as emitted. JSONL must
+independently show the stage-level rank-3 detections used for localization.
 
-## 6. Arms and order
+This is a rollout-level corroboration, not a JSONL-to-TensorBoard row join:
+do not claim equality by window, stage, timestamp, or latency. Local unit
+tests do not substitute for this real-path check (REVIEW_CORRECTIONS item 1).
+Whether the observed rollout cadence meets the Task 11 interpretation of
+"real-time reporting" remains a maintainer decision; before that decision,
+the result is reported as **platform evidence complete, acceptance pending**.
+
+## 5. Arms and order
 
 Healthy baseline arm first (false-positive check), then the real-slowdown arm
 (competing CUDA process on the target GPU, started only after the job reaches
