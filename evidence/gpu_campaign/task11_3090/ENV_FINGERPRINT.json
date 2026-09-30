@@ -1,0 +1,31 @@
+{
+  "captured_at_utc": "2026-09-30T03:26:40Z",
+  "hostname": "autodl-container-2f064db505-c0bbd771",
+  "kernel": "5.15.0-94-generic",
+  "gpu_count": 4,
+  "gpu_model": "NVIDIA GeForce RTX 3090",
+  "gpu_memory_mib_each": 24576,
+  "gpu_topology": "GPU0-GPU1 PIX; all other GPU pairs PXB; no NVLink",
+  "nvidia_driver": "595.71.05",
+  "python": "3.12.3",
+  "torch": "2.8.0+cu128",
+  "torch_cuda": "12.8",
+  "nccl": "2.27.3",
+  "ray": "2.58.0",
+  "transformer_engine": "2.14.1",
+  "flash_attn": "2.8.3",
+  "training_venv_pip_freeze_sha256": "1c5acc007ebe3e9fe1f7b19bae9c5666306e352c23a447679919ed951d77e536",
+  "megatron_python_tree_sha256": "54b085876183e3723ae562ceabe5a4226ce391424dfbb2f2c99a1a090d9eadb1",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "checkout_head": "c2875a5c219fcef38011ea93ce617b74a8efef08",
+  "checkout_delta": "test-only; no product-code changes after product_sha",
+  "recipe_sha256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "dataset_sha256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "model_weights_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+  "storage": {
+    "data_volume": "/root/autodl-tmp",
+    "data_volume_free_bytes_at_capture": 380983934976,
+    "root_free_bytes_at_capture": 8844533760
+  },
+  "note": "Hardware fingerprint, not an acceptance verdict. Formal locks must pin this file's SHA256 and recapture it if the runtime changes."
+}
