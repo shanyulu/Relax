@@ -52,7 +52,7 @@ SHARED_GPU_LOCK = Path("/root/autodl-tmp/relax-ray-gpu.lock")
 MODEL_PATH = (
     "/root/autodl-tmp/hf-cache/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca"
 )
-MODEL_CONFIG_PATH = "scripts/training/models/qwen3-0.6B.sh"
+MODEL_CONFIG_PATH = "scripts/models/qwen3-0.6B.sh"
 
 
 def sha256(path: Path) -> str:
@@ -89,6 +89,15 @@ def host_environment_sha256() -> str:
     values = {name: os.environ.get(name) for name in names}
     payload = json.dumps(values, sort_keys=True, separators=(",", ":")).encode()
     return hashlib.sha256(payload).hexdigest()
+
+
+def discover_gcs_address() -> str:
+    from ray._private.services import get_node_ip_address
+
+    node_ip = get_node_ip_address()
+    with socket.create_connection((node_ip, 6379), timeout=3):
+        pass
+    return f"{node_ip}:6379"
 
 
 def canonical_sha(value: dict[str, Any]) -> str:
@@ -156,8 +165,9 @@ def create_calibration_lock(args: argparse.Namespace) -> dict[str, Any]:
     fingerprint = json.loads(env.read_text())
     if fingerprint.get("product_sha") != PRODUCT_SHA or fingerprint.get("dataset_sha256") != sha256(dataset):
         raise ValueError("environment fingerprint does not match product/dataset")
-    addresses = json.dumps([args.dashboard, args.gcs], separators=(",", ":")).encode()
-    if args.dashboard != "http://127.0.0.1:8265" or args.gcs != "172.17.0.2:6379":
+    gcs_address = discover_gcs_address()
+    addresses = json.dumps([args.dashboard, gcs_address], separators=(",", ":")).encode()
+    if args.dashboard != "http://127.0.0.1:8265" or args.gcs != "auto":
         raise ValueError("Ray endpoints do not match the inspected local cluster")
     lock = {
         "schema": "TASK11_NATIVE_LOSS_CAMPAIGN/v1",
@@ -544,9 +554,13 @@ def command_run(args: argparse.Namespace) -> None:
         raise ValueError("dataset hash mismatch")
     env_path = args.env_fingerprint.resolve()
     committed(repo, env_path, lock["environment_fingerprint_sha256"])
-    address_digest = hashlib.sha256(json.dumps([args.dashboard, args.gcs], separators=(",", ":")).encode()).hexdigest()
+    actual_gcs = discover_gcs_address()
+    address_digest = hashlib.sha256(
+        json.dumps([args.dashboard, actual_gcs], separators=(",", ":")).encode()
+    ).hexdigest()
     if address_digest != lock["dashboard_gcs_sha256"]:
         raise ValueError("cluster endpoints differ from frozen launch context")
+    args.gcs = actual_gcs
     training_paths = [args.venv, args.megatron, args.bridge]
     training_paths_digest = hashlib.sha256(json.dumps(training_paths, separators=(",", ":")).encode()).hexdigest()
     if training_paths_digest != lock["training_paths_sha256"]:
@@ -635,7 +649,7 @@ def run_one(
             "PROMPT_SET": lock["dataset_path"],
             "RELAX_RAY_JOB_SAFE_SUBMIT": "1",
             "MODEL_PATH": lock["runtime"]["model_path"],
-            "MODEL_CONFIG_DIR": str(product / "scripts/training/models"),
+            "MODEL_CONFIG_DIR": str(product / "scripts/models"),
             "NUM_GPUS": "4",
             "RAY_NO_WAIT": "1",
             "RAY_JOB_SUBMISSION_ID": job_id,
@@ -796,7 +810,7 @@ def main() -> None:
     for arg, kind in (("repo", Path), ("product", Path), ("dataset", Path), ("env-fingerprint", Path), ("out", Path)):
         create.add_argument(f"--{arg}", type=kind, required=True)
     create.add_argument("--dashboard", required=True)
-    create.add_argument("--gcs", required=True)
+    create.add_argument("--gcs", choices=("auto",), required=True)
     create.set_defaults(func=command_create_lock)
     freeze = sub.add_parser("freeze-calibration")
     for arg in ("repo", "lock", "campaign", "out"):
