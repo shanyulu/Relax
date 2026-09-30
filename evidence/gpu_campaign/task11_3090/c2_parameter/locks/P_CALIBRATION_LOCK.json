@@ -1,0 +1,44 @@
+{
+  "ADAPTER_PATH": "/tmp/codex-task11-evidence/evidence/tools/c2_parameter_dcp_adapter_927c5de.py",
+  "ADAPTER_SHA256": "28b013f2c2bb230dada3e30f01fbe30b4804b58479ee5b000b833380d3ba8e89",
+  "ARM_ORDER": [
+    "P-C1-off",
+    "P-C2-off",
+    "P-C3-off",
+    "P-C4-off"
+  ],
+  "CHECKPOINT_POLICY": "RETAIN_UNTIL_ARCHIVED",
+  "COMPARATOR_PATH": "/tmp/codex-task11-evidence/evidence/tools/c2_parameter_verdict_927c5de.py",
+  "COMPARATOR_SHA256": "7dffa771ffa57412ffb27813eb0d6629f6e6b20fb478083aeaae3bd430e7aaa9",
+  "DATASET_PATH": "/root/autodl-tmp/task11-3090/preflight/dapo-math-17k-sft-256.jsonl",
+  "DATASET_SHA256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "ENV_FINGERPRINT_PATH": "/tmp/codex-task11-evidence/evidence/gpu_campaign/task11_3090/ENV_FINGERPRINT.json",
+  "ENV_FINGERPRINT_SHA256": "38e446df0c339980d5a85db3efa2a938a5be5fbbcaf5beae21bdfc55888e0290",
+  "EXPECTED_STEPS": 48,
+  "ON_PROFILE": {
+    "RELAX_STRAGGLER_ENABLE": "1",
+    "RELAX_STRAGGLER_REPORT_INTERVAL_S": "10",
+    "RELAX_STRAGGLER_WARMUP_WINDOWS": "2",
+    "RELAX_STRAGGLER_WINDOW_S": "5"
+  },
+  "PRODUCT_SHA": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "PROTOCOL_PATH": "/tmp/codex-task11-evidence/evidence/C2_PARAMETER_PROTOCOL_927C5DE.md",
+  "PROTOCOL_SHA256": "06824b0ab3fd03c5b27494b55c74e69b4de515d0e56b4845661638b648f0607e",
+  "RECIPE_ENV": {
+    "GLOBAL_BATCH_SIZE": "32",
+    "NUM_ROLLOUT": "48",
+    "SAVE": "1"
+  },
+  "RECIPE_PATH": "/root/autodl-tmp/relax-work/task11-c2-927c5de/scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "RECIPE_SHA256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "RUNNER_PATH": "/tmp/codex-task11-evidence/evidence/tools/c2_parameter_campaign_927c5de.py",
+  "RUNNER_SHA256": "05ecafd61d607b06527503550d0823bd9c0dfdc6ff97d62db06488eff7c780bd",
+  "SAVE": 1,
+  "SCHEMA": "C2_PARAMETER_CAMPAIGN_927C5DE/v1",
+  "STAGE": "CALIBRATION",
+  "TOPOLOGY": {
+    "gpus": 4,
+    "kind": "DP4"
+  },
+  "_self_sha256": "53b0da03bd36a17dec9d971795afea2dacf5f08e44aa8be26fd152911c69d42e"
+}
