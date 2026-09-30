@@ -1,0 +1,111 @@
+{
+  "_self_sha256": "6cf7c13e8d538aa44c665d4d7bf9644794f54390c6a8e4135d2161e3c21a1367",
+  "arm_manifests": {
+    "L-C1-off": "34a3696523f5f0cf179366beac570963e022952c15b98f0614f56ab5e5f3c3ec",
+    "L-C2-off": "b6d9eb4c9ec2629ca84a214df194bb71faec703428c0c8c44e2514c644d4fc84",
+    "L-C3-off": "78297f757bb6cb18ca46f583147ea3559505f5f2e5948d22063dc898b578a04a",
+    "L-C4-off": "d77f33fd756f614fa2c30c5bfd5a7e0d0780467e82ac39e620c291df686a3c7d"
+  },
+  "contrasts": [
+    {
+      "grad_norm_series": {
+        "max_abs_delta": 21.13252830505371,
+        "step": 9
+      },
+      "loss_series": {
+        "max_abs_delta": 0.07145798206329346,
+        "step": 30
+      },
+      "pair": [
+        "L-C1-off",
+        "L-C2-off"
+      ]
+    },
+    {
+      "grad_norm_series": {
+        "max_abs_delta": 24.535286903381348,
+        "step": 9
+      },
+      "loss_series": {
+        "max_abs_delta": 0.08342170715332031,
+        "step": 5
+      },
+      "pair": [
+        "L-C1-off",
+        "L-C3-off"
+      ]
+    },
+    {
+      "grad_norm_series": {
+        "max_abs_delta": 6.573722839355469,
+        "step": 5
+      },
+      "loss_series": {
+        "max_abs_delta": 0.03331732749938965,
+        "step": 5
+      },
+      "pair": [
+        "L-C1-off",
+        "L-C4-off"
+      ]
+    },
+    {
+      "grad_norm_series": {
+        "max_abs_delta": 3.4027585983276367,
+        "step": 9
+      },
+      "loss_series": {
+        "max_abs_delta": 0.026836872100830078,
+        "step": 1
+      },
+      "pair": [
+        "L-C2-off",
+        "L-C3-off"
+      ]
+    },
+    {
+      "grad_norm_series": {
+        "max_abs_delta": 25.31437873840332,
+        "step": 9
+      },
+      "loss_series": {
+        "max_abs_delta": 0.09636354446411133,
+        "step": 5
+      },
+      "pair": [
+        "L-C2-off",
+        "L-C4-off"
+      ]
+    },
+    {
+      "grad_norm_series": {
+        "max_abs_delta": 28.717137336730957,
+        "step": 9
+      },
+      "loss_series": {
+        "max_abs_delta": 0.11673903465270996,
+        "step": 5
+      },
+      "pair": [
+        "L-C3-off",
+        "L-C4-off"
+      ]
+    }
+  ],
+  "lock_path": "/tmp/codex-task11-publication-20260930/evidence/gpu_campaign/task11_3090/native_loss_927c5de/calibration_lock.json",
+  "lock_sha256": "4e081f5298c02919b27f4f1b79f034f3842909c37446a18746eb77e96eeb4e67",
+  "normalized_argv_sha256": "d598ee9f04786db4f6f38619ace193e358242a72dc606ad81f3c4bc0ed8f1e28",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "raw_argv_sha256": {
+    "L-C1-off": "6e4146cff4d5cce6997c4aed995e19eb409a3dc80ec921bf7d2224f172c872a8",
+    "L-C2-off": "9aa69639c6e9041ef3e8a5c8d1e86178d4bd7ddda6a6412672c1d92a8980245b",
+    "L-C3-off": "95912eeae67b5b8edf8f5a548dcee31ac9dd916b328dd0593b04b78dab7c3d7d",
+    "L-C4-off": "534ae402407cf5d99146a10ee0657d87e5425b3300c7f08dcf18a75d00463aea"
+  },
+  "schema": "TASK11_NATIVE_LOSS_CALIBRATION_RESULT/v1",
+  "statistical_limit": "Six pairwise contrasts share four arms; envelope only, not CI or independent samples.",
+  "tolerances": {
+    "grad_norm_series": 57.434274673461914,
+    "loss_series": 0.23347806930541992
+  }
+}
