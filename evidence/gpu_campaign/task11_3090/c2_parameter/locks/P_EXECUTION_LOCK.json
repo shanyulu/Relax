@@ -1,0 +1,78 @@
+{
+  "arm_order": [
+    "P-M1-off",
+    "P-M1-on",
+    "P-M2-on",
+    "P-M2-off"
+  ],
+  "calibration_result": "evidence/gpu_campaign/task11_3090/c2_parameter/P_CALIBRATION_RESULT.json",
+  "expected_steps": 48,
+  "measurement_lock": "evidence/gpu_campaign/task11_3090/c2_parameter/locks/P_MEASUREMENT_LOCK.json",
+  "minimum_free_disk_gib": 40,
+  "postprocessing": "AFTER_ALL_GPU_ARMS; SERIAL; NO_CONCURRENT_CACHE_EVICTION",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "schema": "C2_PARAMETER_EXECUTION_LOCK/v1",
+  "self_sha256": "8d15d3df0f6f703901a7a96e2b042ebf9ee6752f511e99079b18d5500c86fd3b",
+  "sources": {
+    "evidence/gpu_campaign/task11_3090/c2_parameter/P_CALIBRATION_RESULT.json": {
+      "commit": "7237e1c9cb0e5ca736998c4cf251f743a1ee9f73",
+      "sha256": "1939d53bb789427cf13f249f64693fb8c91a78a1186ad17e2b8f1cd66ad9a364"
+    },
+    "evidence/gpu_campaign/task11_3090/c2_parameter/locks/P_MEASUREMENT_LOCK.json": {
+      "commit": "4c9d9df45b5f86b06fdf336527e4fc345a939109",
+      "sha256": "cc574c60253d87296cc335276d5fd2050d3c37d792e96cbc37e912af0717c1f2"
+    },
+    "evidence/tools/c2_parameter_bounded_927c5de.py": {
+      "commit": "7237e1c9cb0e5ca736998c4cf251f743a1ee9f73",
+      "sha256": "2842463f717453b38a65ef635631248a640d60346fe33d5637ce0f1943d9a1bc"
+    },
+    "evidence/tools/c2_parameter_calibration_927c5de.py": {
+      "commit": "c2723c43d56fbf4c0dcd48cf9a25f7a2107e4774",
+      "sha256": "d93ae294d06a1c56f2116776d288082d6276655a0be6f46acb87ce934e204c78"
+    },
+    "evidence/tools/c2_parameter_calibration_bounded_927c5de.py": {
+      "commit": "228b536fcb9eb3002f9a61674c464a72e842b27c",
+      "sha256": "430dadd0db716879ae49ef579d4b2d064f6b1f28210859604fa59b408ca4d6f1"
+    },
+    "evidence/tools/c2_parameter_calibration_stream_927c5de.py": {
+      "commit": "f8ae6a1f3cd19257571ed8b90aed3a89e822e96c",
+      "sha256": "67c68a9ff3317cc1508d2cde4b40ce353dbf09cad93a0d2176433695cf02cc67"
+    },
+    "evidence/tools/c2_parameter_campaign_927c5de.py": {
+      "commit": "c2723c43d56fbf4c0dcd48cf9a25f7a2107e4774",
+      "sha256": "05ecafd61d607b06527503550d0823bd9c0dfdc6ff97d62db06488eff7c780bd"
+    },
+    "evidence/tools/c2_parameter_dcp_adapter_927c5de.py": {
+      "commit": "c2723c43d56fbf4c0dcd48cf9a25f7a2107e4774",
+      "sha256": "28b013f2c2bb230dada3e30f01fbe30b4804b58479ee5b000b833380d3ba8e89"
+    },
+    "evidence/tools/c2_parameter_execution_lock_927c5de.py": {
+      "commit": "7237e1c9cb0e5ca736998c4cf251f743a1ee9f73",
+      "sha256": "9d0dd99aaedc15524433b5f6ab1ca2e9565754df9b9a339277a25e56a0e29827"
+    },
+    "evidence/tools/c2_parameter_inventory_927c5de.py": {
+      "commit": "e8975ec37cf1667d19814664757a52ccf0c35099",
+      "sha256": "a173ac3ce50e4c69f00b8e13ba86fe928a96eeecb15472238cb9cdc5f9c5fb4b"
+    },
+    "evidence/tools/c2_parameter_pair_manifest_927c5de.py": {
+      "commit": "228b536fcb9eb3002f9a61674c464a72e842b27c",
+      "sha256": "77b7751d301738761d9b2a75af7af76aaa7448459d20def7a3e03d8bc6ab60f1"
+    },
+    "evidence/tools/c2_parameter_verdict_927c5de.py": {
+      "commit": "fa537b76f7b747659209f98b318a03f4c29eb587",
+      "sha256": "7dffa771ffa57412ffb27813eb0d6629f6e6b20fb478083aeaae3bd430e7aaa9"
+    },
+    "evidence/tools/extract_c2_native.py": {
+      "commit": "c7b66facba45a48bb8e3a8d79e9e6834b2006e9f",
+      "sha256": "0cf3b379fc501c5d42981eca4de61e1900b25f50e17aaad08461538e1617fd09"
+    },
+    "evidence/tools/start_owned_ray_head_3090.py": {
+      "commit": "7237e1c9cb0e5ca736998c4cf251f743a1ee9f73",
+      "sha256": "c957913f7877ded8f10c3f0f1f22c69b4fa2db9c1f24e70ab294e7dc0d0e0174"
+    },
+    "evidence/tools/test_c2_parameter_bounded_927c5de.py": {
+      "commit": "7237e1c9cb0e5ca736998c4cf251f743a1ee9f73",
+      "sha256": "a647cd8cc014eee36ec4d1c7064a1eb92d144457047494fdd6089f342f964c12"
+    }
+  }
+}
