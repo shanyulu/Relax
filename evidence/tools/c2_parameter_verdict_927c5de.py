@@ -3,10 +3,12 @@
 """Frozen C2 parameter-equivalence verdict for build 927c5de.
 
 The command consumes a self-hashed, committed calibration JSON and exactly two
-ON/OFF pair manifests.  Each pair manifest binds the calibration file hash,
-product SHA, protocol SHA, and two retained checkpoint inventory JSON files.
+ON/OFF pair manifests. Each pair manifest binds the calibration and measurement
+lock hashes, product SHA, protocol SHA, exact P-M1/P-M2 arm names, and the
+SHA-256 of two distinct self-hashed checkpoint inventory JSON files.
 An inventory contains one entry per tensor with ``name``, ``shape``, ``dtype``
-and either an inline flat ``values`` array or a C-order ``.npy`` payload.
+and either an inline flat ``values`` array or a SHA-256-pinned C-order ``.npy``
+payload.
 
 This comparator deliberately has no GPU, torch, or numpy dependency.  It is a
 post-run evidence gate: a missing retained input is INCOMPLETE, identity drift
@@ -186,10 +188,23 @@ def read_npy(path: Path) -> tuple[str, tuple[int, ...], tuple[Any, ...]]:
     return dtype, shape, values
 
 
-def read_inventory(path: Path, *, product_sha: str, protocol_sha256: str) -> dict[str, Tensor]:
+def read_inventory(
+    path: Path,
+    *,
+    product_sha: str,
+    protocol_sha256: str,
+    arm_name: str | None = None,
+    measurement_lock_sha256: str | None = None,
+) -> dict[str, Tensor]:
     inventory = load_json(path, "checkpoint inventory")
     if inventory.get("product_sha") != product_sha or inventory.get("protocol_sha256") != protocol_sha256:
         raise InvalidError(f"checkpoint inventory identity mismatch: {path}")
+    if inventory.get("self_sha256") != canonical_sha256(inventory):
+        raise InvalidError(f"checkpoint inventory self hash mismatch: {path}")
+    if arm_name is not None and inventory.get("arm_name") != arm_name:
+        raise InvalidError(f"checkpoint inventory arm mismatch: expected {arm_name}: {path}")
+    if measurement_lock_sha256 is not None and inventory.get("lock_sha256") != measurement_lock_sha256:
+        raise InvalidError(f"checkpoint inventory measurement lock mismatch: {path}")
     tensors = inventory.get("tensors")
     if not isinstance(tensors, list) or not tensors:
         raise IncompleteError(f"checkpoint inventory has no tensors: {path}")
@@ -213,6 +228,10 @@ def read_inventory(path: Path, *, product_sha: str, protocol_sha256: str) -> dic
             values = tuple(values_raw)
         elif "npy" in entry:
             payload = resolve_relative(path.parent, entry["npy"], f"npy payload for {name}")
+            if not payload.is_file():
+                raise IncompleteError(f"missing tensor payload: {payload}")
+            if require_sha(entry.get("payload_sha256"), f"npy hash for {name}") != file_sha256(payload):
+                raise InvalidError(f"npy payload hash mismatch for {name}")
             npy_dtype, npy_shape, values = read_npy(payload)
             # NumPy has no portable bf16 scalar descriptor.  The exporter
             # stores the exact CPU bf16 values converted to float32, while the
@@ -264,13 +283,34 @@ def compare_pair(
         raise InvalidError(f"pair identity mismatch: {pair_path}")
     if pair.get("calibration_sha256") != calibration_sha:
         raise InvalidError(f"pair does not bind the supplied calibration: {pair_path}")
+    measurement_lock_sha256 = require_sha(pair.get("measurement_lock_sha256"), "measurement lock hash")
     pair_id = pair.get("pair_id")
-    if not isinstance(pair_id, str) or not pair_id:
-        raise InvalidError(f"missing pair_id: {pair_path}")
+    if pair_id not in {"P-M1", "P-M2"}:
+        raise InvalidError(f"invalid pair_id: {pair_path}")
     off_path = resolve_relative(pair_path.parent, pair.get("off_inventory"), f"OFF inventory for {pair_id}")
     on_path = resolve_relative(pair_path.parent, pair.get("on_inventory"), f"ON inventory for {pair_id}")
-    off = read_inventory(off_path, product_sha=product_sha, protocol_sha256=protocol_sha256)
-    on = read_inventory(on_path, product_sha=product_sha, protocol_sha256=protocol_sha256)
+    if off_path == on_path:
+        raise InvalidError(f"{pair_id}: ON and OFF cannot reference the same inventory")
+    for side, path in (("off", off_path), ("on", on_path)):
+        if not path.is_file():
+            raise IncompleteError(f"missing {side.upper()} inventory for {pair_id}: {path}")
+        pinned = require_sha(pair.get(f"{side}_inventory_sha256"), f"{side} inventory hash for {pair_id}")
+        if file_sha256(path) != pinned:
+            raise InvalidError(f"{pair_id}: {side} inventory hash mismatch")
+    off = read_inventory(
+        off_path,
+        product_sha=product_sha,
+        protocol_sha256=protocol_sha256,
+        arm_name=f"{pair_id}-off",
+        measurement_lock_sha256=measurement_lock_sha256,
+    )
+    on = read_inventory(
+        on_path,
+        product_sha=product_sha,
+        protocol_sha256=protocol_sha256,
+        arm_name=f"{pair_id}-on",
+        measurement_lock_sha256=measurement_lock_sha256,
+    )
     tolerances = calibration["tensor_tolerances"]
     violations: list[str] = []
     missing_tolerances: list[str] = []
@@ -365,6 +405,8 @@ def run(args: argparse.Namespace) -> int:
             pairs.append(pair)
             all_violations.extend(f"{pair['pair_id']}: {item}" for item in violations)
         missing = [name for pair in pairs for name in pair["missing_tolerances"]]
+        if [pair["pair_id"] for pair in pairs] != ["P-M1", "P-M2"]:
+            raise InvalidError("pair manifests must be P-M1 then P-M2")
         verdict = "NOT_PASS" if all_violations else ("INCOMPLETE" if missing else "PASS")
         reason = (
             "; ".join(all_violations or ([f"missing tolerances: {', '.join(missing)}"] if missing else [])) or None

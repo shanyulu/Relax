@@ -529,6 +529,8 @@ def _measurement_result(args: argparse.Namespace) -> int:
             raise ValueError("pair manifest identity drift")
         if pair.get("calibration_sha256") != lock["CALIBRATION_RESULT_SHA256"]:
             raise ValueError("pair manifest calibration binding drift")
+        if pair.get("measurement_lock_sha256") != lock_sha:
+            raise ValueError("pair manifest measurement lock binding drift")
         pair_ids.append(pair.get("pair_id"))
     if pair_ids != ["P-M1", "P-M2"]:
         raise ValueError("pair manifests must be P-M1 then P-M2")
