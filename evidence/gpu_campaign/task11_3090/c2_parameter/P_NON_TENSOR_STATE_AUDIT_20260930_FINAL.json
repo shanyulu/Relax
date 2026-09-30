@@ -1,0 +1,1209 @@
+{
+  "arms": {
+    "P-M1-off": {
+      "adapter_record_sha256": "d6d7f5816ec5126bf427eaac8082c070dd3fdf0a05878fdb696fc00e8f03d659",
+      "flattened_leaves": 230,
+      "non_tensor_leaves": 48,
+      "non_tensor_type_counts": {
+        "argparse.Namespace": 1,
+        "builtins.bool": 10,
+        "builtins.float": 23,
+        "builtins.int": 10,
+        "builtins.str": 4
+      },
+      "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+      "raw_converted_bytes": 8344822371,
+      "raw_converted_sha256": "f6c36e8f9dc5b77689cede8b4a86f73905f39f6582b63ae7b9b4227e93043d37",
+      "source_tree_sha256": "acc4fc13f6d2dc4534f8a885033e56eb191638266cc2adee9d002d42dc4d8a60",
+      "status": "VERIFIED_AND_READ",
+      "tensor_leaves": 182
+    },
+    "P-M1-on": {
+      "adapter_record_sha256": "22cb8bba7db1c35d34025746e597e2ddf7b8da824784f553b75df5d04bb42bee",
+      "flattened_leaves": 230,
+      "non_tensor_leaves": 48,
+      "non_tensor_type_counts": {
+        "argparse.Namespace": 1,
+        "builtins.bool": 10,
+        "builtins.float": 23,
+        "builtins.int": 10,
+        "builtins.str": 4
+      },
+      "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+      "raw_converted_bytes": 8344822371,
+      "raw_converted_sha256": "d664a2a4514a7c5ee8896235bcc203f7fb22f3caf09e2e1b4c3a8d835633c89f",
+      "source_tree_sha256": "85b193acebfbd1c5a1d07e2927a0109bf0fb1bd5a5b115a72fd2309323877694",
+      "status": "VERIFIED_AND_READ",
+      "tensor_leaves": 182
+    },
+    "P-M2-off": {
+      "adapter_record_sha256": "5e7caf5b5a4af5301d84a63ceb75bf6b8102e3d2605b4e6b81b424087e7398b6",
+      "flattened_leaves": 230,
+      "non_tensor_leaves": 48,
+      "non_tensor_type_counts": {
+        "argparse.Namespace": 1,
+        "builtins.bool": 10,
+        "builtins.float": 23,
+        "builtins.int": 10,
+        "builtins.str": 4
+      },
+      "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+      "raw_converted_bytes": 8344822371,
+      "raw_converted_sha256": "58f38924891cb6c43adc880d5f6bfb9f9d84aff8472b6ce0cb6eadca85e97386",
+      "source_tree_sha256": "5560267ff760da29fe5e52ffa8bfc8201e0a8c9e4d183f97bcc8699f253d3484",
+      "status": "VERIFIED_AND_READ",
+      "tensor_leaves": 182
+    },
+    "P-M2-on": {
+      "adapter_record_sha256": "018b80ff6e489ef6232c9cb35f3b4f4c21ed3ac1709576474479007eeaf979b1",
+      "flattened_leaves": 230,
+      "non_tensor_leaves": 48,
+      "non_tensor_type_counts": {
+        "argparse.Namespace": 1,
+        "builtins.bool": 10,
+        "builtins.float": 23,
+        "builtins.int": 10,
+        "builtins.str": 4
+      },
+      "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+      "raw_converted_bytes": 8344822371,
+      "raw_converted_sha256": "99adb1b8af484d405b0366f09d1d428c61349114a6f1958f68cdc8958f5e0744",
+      "source_tree_sha256": "bfb6e26c1be64506c54994a6e769257096c1e8a4dba73888a9bf93511f88e24f",
+      "status": "VERIFIED_AND_READ",
+      "tensor_leaves": 182
+    }
+  },
+  "execution_lock_sha256": "e5993c8df5626e9fa7c83bcbfb3566283f011685229188241755fc5e4908549e",
+  "leaves": [
+    {
+      "all_four_equal": false,
+      "key": "common_state/shard_0_1[0].args",
+      "namespace_changed_paths": [
+        {
+          "arm": "P-M1-on",
+          "paths": [
+            "$.rollout_result_dir.value",
+            "$.save.value",
+            "$.tb_experiment_name.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#0.fields.id.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#0.fields.ports.fields.put_get_socket.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#1.fields.id.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#1.fields.ports.fields.put_get_socket.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#2.fields.id.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#2.fields.ports.fields.put_get_socket.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#3.fields.id.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#3.fields.ports.fields.put_get_socket.value",
+            "$.tq_config.fields.controller.fields.zmq_info.fields.id.value",
+            "$.tq_config.fields.controller.fields.zmq_info.fields.ports.fields.handshake_socket.value",
+            "$.tq_config.fields.controller.fields.zmq_info.fields.ports.fields.request_handle_socket.value"
+          ]
+        },
+        {
+          "arm": "P-M2-on",
+          "paths": [
+            "$.rollout_result_dir.value",
+            "$.save.value",
+            "$.tb_experiment_name.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#0.fields.id.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#0.fields.ports.fields.put_get_socket.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#1.fields.id.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#1.fields.ports.fields.put_get_socket.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#2.fields.id.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#2.fields.ports.fields.put_get_socket.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#3.fields.id.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#3.fields.ports.fields.put_get_socket.value",
+            "$.tq_config.fields.controller.fields.zmq_info.fields.id.value",
+            "$.tq_config.fields.controller.fields.zmq_info.fields.ports.fields.handshake_socket.value",
+            "$.tq_config.fields.controller.fields.zmq_info.fields.ports.fields.request_handle_socket.value"
+          ]
+        },
+        {
+          "arm": "P-M2-off",
+          "paths": [
+            "$.rollout_result_dir.value",
+            "$.save.value",
+            "$.tb_experiment_name.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#0.fields.id.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#0.fields.ports.fields.put_get_socket.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#1.fields.id.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#1.fields.ports.fields.put_get_socket.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#2.fields.id.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#2.fields.ports.fields.put_get_socket.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#3.fields.id.value",
+            "$.tq_config.fields.backend.fields.SimpleStorage.fields.zmq_info.fields.TransferQueueStorageUnit#3.fields.ports.fields.put_get_socket.value",
+            "$.tq_config.fields.controller.fields.zmq_info.fields.id.value",
+            "$.tq_config.fields.controller.fields.zmq_info.fields.ports.fields.handshake_socket.value",
+            "$.tq_config.fields.controller.fields.zmq_info.fields.ports.fields.request_handle_socket.value"
+          ]
+        }
+      ],
+      "pair_equal": {
+        "P-M1": false,
+        "P-M2": false
+      },
+      "type": "argparse.Namespace",
+      "value_sha256": {
+        "P-M1-off": "b01ecaa340db78e259e68a056e8805ae2b066ec8b56e114d92f0d55eb9271060",
+        "P-M1-on": "1b72438ce92e309b1155d0624881bdf2b9ee410be9087a0c08dd3c11c5e09ca7",
+        "P-M2-off": "41832e2cb6207344de613351670e9036d2202b787f75e1efbfe4302e8012978b",
+        "P-M2-on": "00743e4e6c43c90fec6a099a90a2733be8521ce1d70d3bbff67f3352c1cf118e"
+      },
+      "values": null
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].checkpoint_version",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "64e9c0ecf7ac655fefef1a06b6beef54f7852ddb71d00204931a3df6d96a1412",
+        "P-M1-on": "64e9c0ecf7ac655fefef1a06b6beef54f7852ddb71d00204931a3df6d96a1412",
+        "P-M2-off": "64e9c0ecf7ac655fefef1a06b6beef54f7852ddb71d00204931a3df6d96a1412",
+        "P-M2-on": "64e9c0ecf7ac655fefef1a06b6beef54f7852ddb71d00204931a3df6d96a1412"
+      },
+      "values": {
+        "P-M1-off": 3.0,
+        "P-M1-on": 3.0,
+        "P-M2-off": 3.0,
+        "P-M2-on": 3.0
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].content_metadata.chained_optim_avoid_prefix",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "bool",
+      "value_sha256": {
+        "P-M1-off": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M1-on": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M2-off": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M2-on": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87"
+      },
+      "values": {
+        "P-M1-off": true,
+        "P-M1-on": true,
+        "P-M2-off": true,
+        "P-M2-on": true
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].content_metadata.distrib_optim_sharding_type",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "str",
+      "value_sha256": {
+        "P-M1-off": "88cef8f58c55b5fd37f8a4b4212e7be71af24d8cdc0ccc4807af042b3d5c0b64",
+        "P-M1-on": "88cef8f58c55b5fd37f8a4b4212e7be71af24d8cdc0ccc4807af042b3d5c0b64",
+        "P-M2-off": "88cef8f58c55b5fd37f8a4b4212e7be71af24d8cdc0ccc4807af042b3d5c0b64",
+        "P-M2-on": "88cef8f58c55b5fd37f8a4b4212e7be71af24d8cdc0ccc4807af042b3d5c0b64"
+      },
+      "values": {
+        "P-M1-off": "dp_reshardable",
+        "P-M1-on": "dp_reshardable",
+        "P-M2-off": "dp_reshardable",
+        "P-M2-on": "dp_reshardable"
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].content_metadata.singleton_local_shards",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "bool",
+      "value_sha256": {
+        "P-M1-off": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M1-on": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M2-off": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M2-on": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c"
+      },
+      "values": {
+        "P-M1-off": false,
+        "P-M1-on": false,
+        "P-M2-off": false,
+        "P-M2-on": false
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].iteration",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "int",
+      "value_sha256": {
+        "P-M1-off": "2b8139978d2ed760ab846c0228b024421f69f88c09241ebfe035d04dd970d34a",
+        "P-M1-on": "2b8139978d2ed760ab846c0228b024421f69f88c09241ebfe035d04dd970d34a",
+        "P-M2-off": "2b8139978d2ed760ab846c0228b024421f69f88c09241ebfe035d04dd970d34a",
+        "P-M2-on": "2b8139978d2ed760ab846c0228b024421f69f88c09241ebfe035d04dd970d34a"
+      },
+      "values": {
+        "P-M1-off": 47,
+        "P-M1-on": 47,
+        "P-M2-off": 47,
+        "P-M2-on": 47
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].num_floating_point_operations_so_far",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "int",
+      "value_sha256": {
+        "P-M1-off": "a76ddea3c350274fb39896f51ca5b064c27d067bbafee2cd3a58909b4ebe9c30",
+        "P-M1-on": "a76ddea3c350274fb39896f51ca5b064c27d067bbafee2cd3a58909b4ebe9c30",
+        "P-M2-off": "a76ddea3c350274fb39896f51ca5b064c27d067bbafee2cd3a58909b4ebe9c30",
+        "P-M2-on": "a76ddea3c350274fb39896f51ca5b064c27d067bbafee2cd3a58909b4ebe9c30"
+      },
+      "values": {
+        "P-M1-off": 0,
+        "P-M1-on": 0,
+        "P-M2-off": 0,
+        "P-M2-on": 0
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.end_wd",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "d11a3693b3b5b3ad45407187c28ceacbe4eab71465804a91dcecf7d77610dd75",
+        "P-M1-on": "d11a3693b3b5b3ad45407187c28ceacbe4eab71465804a91dcecf7d77610dd75",
+        "P-M2-off": "d11a3693b3b5b3ad45407187c28ceacbe4eab71465804a91dcecf7d77610dd75",
+        "P-M2-on": "d11a3693b3b5b3ad45407187c28ceacbe4eab71465804a91dcecf7d77610dd75"
+      },
+      "values": {
+        "P-M1-off": 0.1,
+        "P-M1-on": 0.1,
+        "P-M2-off": 0.1,
+        "P-M2-on": 0.1
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.lr_decay_steps",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "int",
+      "value_sha256": {
+        "P-M1-off": "504e748cc8f19c0c70bea112ccaaf4b3a6a0d565cba8082f7dd7e99521f2a964",
+        "P-M1-on": "504e748cc8f19c0c70bea112ccaaf4b3a6a0d565cba8082f7dd7e99521f2a964",
+        "P-M2-off": "504e748cc8f19c0c70bea112ccaaf4b3a6a0d565cba8082f7dd7e99521f2a964",
+        "P-M2-on": "504e748cc8f19c0c70bea112ccaaf4b3a6a0d565cba8082f7dd7e99521f2a964"
+      },
+      "values": {
+        "P-M1-off": 1536,
+        "P-M1-on": 1536,
+        "P-M2-off": 1536,
+        "P-M2-on": 1536
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.lr_decay_style",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "str",
+      "value_sha256": {
+        "P-M1-off": "b49eb8a27115279dc58987cd2ae7b24bcb040f15ac361eda0851cfe2b4215870",
+        "P-M1-on": "b49eb8a27115279dc58987cd2ae7b24bcb040f15ac361eda0851cfe2b4215870",
+        "P-M2-off": "b49eb8a27115279dc58987cd2ae7b24bcb040f15ac361eda0851cfe2b4215870",
+        "P-M2-on": "b49eb8a27115279dc58987cd2ae7b24bcb040f15ac361eda0851cfe2b4215870"
+      },
+      "values": {
+        "P-M1-off": "cosine",
+        "P-M1-on": "cosine",
+        "P-M2-off": "cosine",
+        "P-M2-on": "cosine"
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.lr_warmup_steps",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "int",
+      "value_sha256": {
+        "P-M1-off": "a76ddea3c350274fb39896f51ca5b064c27d067bbafee2cd3a58909b4ebe9c30",
+        "P-M1-on": "a76ddea3c350274fb39896f51ca5b064c27d067bbafee2cd3a58909b4ebe9c30",
+        "P-M2-off": "a76ddea3c350274fb39896f51ca5b064c27d067bbafee2cd3a58909b4ebe9c30",
+        "P-M2-on": "a76ddea3c350274fb39896f51ca5b064c27d067bbafee2cd3a58909b4ebe9c30"
+      },
+      "values": {
+        "P-M1-off": 0,
+        "P-M1-on": 0,
+        "P-M2-off": 0,
+        "P-M2-on": 0
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.max_lr",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "aadd10e2e0fe12578b475f94acea6865966d42ed09a31f02c2b9849b2c94fa6a",
+        "P-M1-on": "aadd10e2e0fe12578b475f94acea6865966d42ed09a31f02c2b9849b2c94fa6a",
+        "P-M2-off": "aadd10e2e0fe12578b475f94acea6865966d42ed09a31f02c2b9849b2c94fa6a",
+        "P-M2-on": "aadd10e2e0fe12578b475f94acea6865966d42ed09a31f02c2b9849b2c94fa6a"
+      },
+      "values": {
+        "P-M1-off": 1e-05,
+        "P-M1-on": 1e-05,
+        "P-M2-off": 1e-05,
+        "P-M2-on": 1e-05
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.min_lr",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M1-on": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M2-off": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M2-on": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094"
+      },
+      "values": {
+        "P-M1-off": 1e-06,
+        "P-M1-on": 1e-06,
+        "P-M2-off": 1e-06,
+        "P-M2-on": 1e-06
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.num_steps",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "int",
+      "value_sha256": {
+        "P-M1-off": "504e748cc8f19c0c70bea112ccaaf4b3a6a0d565cba8082f7dd7e99521f2a964",
+        "P-M1-on": "504e748cc8f19c0c70bea112ccaaf4b3a6a0d565cba8082f7dd7e99521f2a964",
+        "P-M2-off": "504e748cc8f19c0c70bea112ccaaf4b3a6a0d565cba8082f7dd7e99521f2a964",
+        "P-M2-on": "504e748cc8f19c0c70bea112ccaaf4b3a6a0d565cba8082f7dd7e99521f2a964"
+      },
+      "values": {
+        "P-M1-off": 1536,
+        "P-M1-on": 1536,
+        "P-M2-off": 1536,
+        "P-M2-on": 1536
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.start_wd",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "d11a3693b3b5b3ad45407187c28ceacbe4eab71465804a91dcecf7d77610dd75",
+        "P-M1-on": "d11a3693b3b5b3ad45407187c28ceacbe4eab71465804a91dcecf7d77610dd75",
+        "P-M2-off": "d11a3693b3b5b3ad45407187c28ceacbe4eab71465804a91dcecf7d77610dd75",
+        "P-M2-on": "d11a3693b3b5b3ad45407187c28ceacbe4eab71465804a91dcecf7d77610dd75"
+      },
+      "values": {
+        "P-M1-off": 0.1,
+        "P-M1-on": 0.1,
+        "P-M2-off": 0.1,
+        "P-M2-on": 0.1
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.wd_incr_steps",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "int",
+      "value_sha256": {
+        "P-M1-off": "504e748cc8f19c0c70bea112ccaaf4b3a6a0d565cba8082f7dd7e99521f2a964",
+        "P-M1-on": "504e748cc8f19c0c70bea112ccaaf4b3a6a0d565cba8082f7dd7e99521f2a964",
+        "P-M2-off": "504e748cc8f19c0c70bea112ccaaf4b3a6a0d565cba8082f7dd7e99521f2a964",
+        "P-M2-on": "504e748cc8f19c0c70bea112ccaaf4b3a6a0d565cba8082f7dd7e99521f2a964"
+      },
+      "values": {
+        "P-M1-off": 1536,
+        "P-M1-on": 1536,
+        "P-M2-off": 1536,
+        "P-M2-on": 1536
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.wd_incr_style",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "str",
+      "value_sha256": {
+        "P-M1-off": "8b684f5e6d362b26bf6e9a03dd49cfb6445aa2640494440d4766c8cd006dd216",
+        "P-M1-on": "8b684f5e6d362b26bf6e9a03dd49cfb6445aa2640494440d4766c8cd006dd216",
+        "P-M2-off": "8b684f5e6d362b26bf6e9a03dd49cfb6445aa2640494440d4766c8cd006dd216",
+        "P-M2-on": "8b684f5e6d362b26bf6e9a03dd49cfb6445aa2640494440d4766c8cd006dd216"
+      },
+      "values": {
+        "P-M1-off": "constant",
+        "P-M1-on": "constant",
+        "P-M2-off": "constant",
+        "P-M2-on": "constant"
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "common_state/shard_0_1[0].optimizer.param_state_sharding_type",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "str",
+      "value_sha256": {
+        "P-M1-off": "88cef8f58c55b5fd37f8a4b4212e7be71af24d8cdc0ccc4807af042b3d5c0b64",
+        "P-M1-on": "88cef8f58c55b5fd37f8a4b4212e7be71af24d8cdc0ccc4807af042b3d5c0b64",
+        "P-M2-off": "88cef8f58c55b5fd37f8a4b4212e7be71af24d8cdc0ccc4807af042b3d5c0b64",
+        "P-M2-on": "88cef8f58c55b5fd37f8a4b4212e7be71af24d8cdc0ccc4807af042b3d5c0b64"
+      },
+      "values": {
+        "P-M1-off": "dp_reshardable",
+        "P-M1-on": "dp_reshardable",
+        "P-M2-off": "dp_reshardable",
+        "P-M2-on": "dp_reshardable"
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].betas[0]",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "0b966c76cce8c4a2ca2eb355f6ec1bf9e57788488e9567ddeb398c70e6daee80",
+        "P-M1-on": "0b966c76cce8c4a2ca2eb355f6ec1bf9e57788488e9567ddeb398c70e6daee80",
+        "P-M2-off": "0b966c76cce8c4a2ca2eb355f6ec1bf9e57788488e9567ddeb398c70e6daee80",
+        "P-M2-on": "0b966c76cce8c4a2ca2eb355f6ec1bf9e57788488e9567ddeb398c70e6daee80"
+      },
+      "values": {
+        "P-M1-off": 0.9,
+        "P-M1-on": 0.9,
+        "P-M2-off": 0.9,
+        "P-M2-on": 0.9
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].betas[1]",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "afbd2202ffe7c0e0a8162bfecdd7ec8e95580c478fcb3d00fdf242587b400ece",
+        "P-M1-on": "afbd2202ffe7c0e0a8162bfecdd7ec8e95580c478fcb3d00fdf242587b400ece",
+        "P-M2-off": "afbd2202ffe7c0e0a8162bfecdd7ec8e95580c478fcb3d00fdf242587b400ece",
+        "P-M2-on": "afbd2202ffe7c0e0a8162bfecdd7ec8e95580c478fcb3d00fdf242587b400ece"
+      },
+      "values": {
+        "P-M1-off": 0.98,
+        "P-M1-on": 0.98,
+        "P-M2-off": 0.98,
+        "P-M2-on": 0.98
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].bias_correction",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "bool",
+      "value_sha256": {
+        "P-M1-off": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M1-on": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M2-off": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M2-on": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87"
+      },
+      "values": {
+        "P-M1-off": true,
+        "P-M1-on": true,
+        "P-M2-off": true,
+        "P-M2-on": true
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].default_config",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "bool",
+      "value_sha256": {
+        "P-M1-off": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M1-on": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M2-off": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M2-on": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87"
+      },
+      "values": {
+        "P-M1-off": true,
+        "P-M1-on": true,
+        "P-M2-off": true,
+        "P-M2-on": true
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].eps",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "2363a360aa87e73748b2bb924e6be3ede50cde0c9e779ff7869b551595e828a1",
+        "P-M1-on": "2363a360aa87e73748b2bb924e6be3ede50cde0c9e779ff7869b551595e828a1",
+        "P-M2-off": "2363a360aa87e73748b2bb924e6be3ede50cde0c9e779ff7869b551595e828a1",
+        "P-M2-on": "2363a360aa87e73748b2bb924e6be3ede50cde0c9e779ff7869b551595e828a1"
+      },
+      "values": {
+        "P-M1-off": 1e-08,
+        "P-M1-on": 1e-08,
+        "P-M2-off": 1e-08,
+        "P-M2-on": 1e-08
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].is_decoupled_lr",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "bool",
+      "value_sha256": {
+        "P-M1-off": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M1-on": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M2-off": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M2-on": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c"
+      },
+      "values": {
+        "P-M1-off": false,
+        "P-M1-on": false,
+        "P-M2-off": false,
+        "P-M2-on": false
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].is_expert_parallel",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "bool",
+      "value_sha256": {
+        "P-M1-off": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M1-on": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M2-off": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M2-on": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c"
+      },
+      "values": {
+        "P-M1-off": false,
+        "P-M1-on": false,
+        "P-M2-off": false,
+        "P-M2-on": false
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].lr",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M1-on": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M2-off": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M2-on": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094"
+      },
+      "values": {
+        "P-M1-off": 1e-06,
+        "P-M1-on": 1e-06,
+        "P-M2-off": 1e-06,
+        "P-M2-on": 1e-06
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].lr_mult",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "8a12c1e5dd04a7fa28ddc00c8fa979518ca4c6ee7d0b5b117c022c978761b12b",
+        "P-M1-on": "8a12c1e5dd04a7fa28ddc00c8fa979518ca4c6ee7d0b5b117c022c978761b12b",
+        "P-M2-off": "8a12c1e5dd04a7fa28ddc00c8fa979518ca4c6ee7d0b5b117c022c978761b12b",
+        "P-M2-on": "8a12c1e5dd04a7fa28ddc00c8fa979518ca4c6ee7d0b5b117c022c978761b12b"
+      },
+      "values": {
+        "P-M1-off": 1.0,
+        "P-M1-on": 1.0,
+        "P-M2-off": 1.0,
+        "P-M2-on": 1.0
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].max_lr",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "aadd10e2e0fe12578b475f94acea6865966d42ed09a31f02c2b9849b2c94fa6a",
+        "P-M1-on": "aadd10e2e0fe12578b475f94acea6865966d42ed09a31f02c2b9849b2c94fa6a",
+        "P-M2-off": "aadd10e2e0fe12578b475f94acea6865966d42ed09a31f02c2b9849b2c94fa6a",
+        "P-M2-on": "aadd10e2e0fe12578b475f94acea6865966d42ed09a31f02c2b9849b2c94fa6a"
+      },
+      "values": {
+        "P-M1-off": 1e-05,
+        "P-M1-on": 1e-05,
+        "P-M2-off": 1e-05,
+        "P-M2-on": 1e-05
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].min_lr",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M1-on": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M2-off": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M2-on": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094"
+      },
+      "values": {
+        "P-M1-off": 1e-06,
+        "P-M1-on": 1e-06,
+        "P-M2-off": 1e-06,
+        "P-M2-on": 1e-06
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].step",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "int",
+      "value_sha256": {
+        "P-M1-off": "4f88d4dd22371dfd51638813a13b530bf6ee15d7a8874f9026bbd63f2f37cd05",
+        "P-M1-on": "4f88d4dd22371dfd51638813a13b530bf6ee15d7a8874f9026bbd63f2f37cd05",
+        "P-M2-off": "4f88d4dd22371dfd51638813a13b530bf6ee15d7a8874f9026bbd63f2f37cd05",
+        "P-M2-on": "4f88d4dd22371dfd51638813a13b530bf6ee15d7a8874f9026bbd63f2f37cd05"
+      },
+      "values": {
+        "P-M1-off": 48,
+        "P-M1-on": 48,
+        "P-M2-off": 48,
+        "P-M2-on": 48
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].wd_mult",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "8a12c1e5dd04a7fa28ddc00c8fa979518ca4c6ee7d0b5b117c022c978761b12b",
+        "P-M1-on": "8a12c1e5dd04a7fa28ddc00c8fa979518ca4c6ee7d0b5b117c022c978761b12b",
+        "P-M2-off": "8a12c1e5dd04a7fa28ddc00c8fa979518ca4c6ee7d0b5b117c022c978761b12b",
+        "P-M2-on": "8a12c1e5dd04a7fa28ddc00c8fa979518ca4c6ee7d0b5b117c022c978761b12b"
+      },
+      "values": {
+        "P-M1-off": 1.0,
+        "P-M1-on": 1.0,
+        "P-M2-off": 1.0,
+        "P-M2-on": 1.0
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].weight_decay",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "d11a3693b3b5b3ad45407187c28ceacbe4eab71465804a91dcecf7d77610dd75",
+        "P-M1-on": "d11a3693b3b5b3ad45407187c28ceacbe4eab71465804a91dcecf7d77610dd75",
+        "P-M2-off": "d11a3693b3b5b3ad45407187c28ceacbe4eab71465804a91dcecf7d77610dd75",
+        "P-M2-on": "d11a3693b3b5b3ad45407187c28ceacbe4eab71465804a91dcecf7d77610dd75"
+      },
+      "values": {
+        "P-M1-off": 0.1,
+        "P-M1-on": 0.1,
+        "P-M2-off": 0.1,
+        "P-M2-on": 0.1
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].betas[0]",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "0b966c76cce8c4a2ca2eb355f6ec1bf9e57788488e9567ddeb398c70e6daee80",
+        "P-M1-on": "0b966c76cce8c4a2ca2eb355f6ec1bf9e57788488e9567ddeb398c70e6daee80",
+        "P-M2-off": "0b966c76cce8c4a2ca2eb355f6ec1bf9e57788488e9567ddeb398c70e6daee80",
+        "P-M2-on": "0b966c76cce8c4a2ca2eb355f6ec1bf9e57788488e9567ddeb398c70e6daee80"
+      },
+      "values": {
+        "P-M1-off": 0.9,
+        "P-M1-on": 0.9,
+        "P-M2-off": 0.9,
+        "P-M2-on": 0.9
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].betas[1]",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "afbd2202ffe7c0e0a8162bfecdd7ec8e95580c478fcb3d00fdf242587b400ece",
+        "P-M1-on": "afbd2202ffe7c0e0a8162bfecdd7ec8e95580c478fcb3d00fdf242587b400ece",
+        "P-M2-off": "afbd2202ffe7c0e0a8162bfecdd7ec8e95580c478fcb3d00fdf242587b400ece",
+        "P-M2-on": "afbd2202ffe7c0e0a8162bfecdd7ec8e95580c478fcb3d00fdf242587b400ece"
+      },
+      "values": {
+        "P-M1-off": 0.98,
+        "P-M1-on": 0.98,
+        "P-M2-off": 0.98,
+        "P-M2-on": 0.98
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].bias_correction",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "bool",
+      "value_sha256": {
+        "P-M1-off": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M1-on": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M2-off": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M2-on": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87"
+      },
+      "values": {
+        "P-M1-off": true,
+        "P-M1-on": true,
+        "P-M2-off": true,
+        "P-M2-on": true
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].default_config",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "bool",
+      "value_sha256": {
+        "P-M1-off": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M1-on": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M2-off": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87",
+        "P-M2-on": "e89ea334229178466a873d14c56bea013221be78be952866c5ea904bad274b87"
+      },
+      "values": {
+        "P-M1-off": true,
+        "P-M1-on": true,
+        "P-M2-off": true,
+        "P-M2-on": true
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].eps",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "2363a360aa87e73748b2bb924e6be3ede50cde0c9e779ff7869b551595e828a1",
+        "P-M1-on": "2363a360aa87e73748b2bb924e6be3ede50cde0c9e779ff7869b551595e828a1",
+        "P-M2-off": "2363a360aa87e73748b2bb924e6be3ede50cde0c9e779ff7869b551595e828a1",
+        "P-M2-on": "2363a360aa87e73748b2bb924e6be3ede50cde0c9e779ff7869b551595e828a1"
+      },
+      "values": {
+        "P-M1-off": 1e-08,
+        "P-M1-on": 1e-08,
+        "P-M2-off": 1e-08,
+        "P-M2-on": 1e-08
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].is_decoupled_lr",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "bool",
+      "value_sha256": {
+        "P-M1-off": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M1-on": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M2-off": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M2-on": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c"
+      },
+      "values": {
+        "P-M1-off": false,
+        "P-M1-on": false,
+        "P-M2-off": false,
+        "P-M2-on": false
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].is_expert_parallel",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "bool",
+      "value_sha256": {
+        "P-M1-off": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M1-on": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M2-off": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c",
+        "P-M2-on": "0264e05fb65a95852351497e90c8adf770f7673cb6b5750386d67a2b22359d0c"
+      },
+      "values": {
+        "P-M1-off": false,
+        "P-M1-on": false,
+        "P-M2-off": false,
+        "P-M2-on": false
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].lr",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M1-on": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M2-off": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M2-on": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094"
+      },
+      "values": {
+        "P-M1-off": 1e-06,
+        "P-M1-on": 1e-06,
+        "P-M2-off": 1e-06,
+        "P-M2-on": 1e-06
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].lr_mult",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "8a12c1e5dd04a7fa28ddc00c8fa979518ca4c6ee7d0b5b117c022c978761b12b",
+        "P-M1-on": "8a12c1e5dd04a7fa28ddc00c8fa979518ca4c6ee7d0b5b117c022c978761b12b",
+        "P-M2-off": "8a12c1e5dd04a7fa28ddc00c8fa979518ca4c6ee7d0b5b117c022c978761b12b",
+        "P-M2-on": "8a12c1e5dd04a7fa28ddc00c8fa979518ca4c6ee7d0b5b117c022c978761b12b"
+      },
+      "values": {
+        "P-M1-off": 1.0,
+        "P-M1-on": 1.0,
+        "P-M2-off": 1.0,
+        "P-M2-on": 1.0
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].max_lr",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "aadd10e2e0fe12578b475f94acea6865966d42ed09a31f02c2b9849b2c94fa6a",
+        "P-M1-on": "aadd10e2e0fe12578b475f94acea6865966d42ed09a31f02c2b9849b2c94fa6a",
+        "P-M2-off": "aadd10e2e0fe12578b475f94acea6865966d42ed09a31f02c2b9849b2c94fa6a",
+        "P-M2-on": "aadd10e2e0fe12578b475f94acea6865966d42ed09a31f02c2b9849b2c94fa6a"
+      },
+      "values": {
+        "P-M1-off": 1e-05,
+        "P-M1-on": 1e-05,
+        "P-M2-off": 1e-05,
+        "P-M2-on": 1e-05
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].min_lr",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M1-on": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M2-off": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094",
+        "P-M2-on": "78a6a0d6b25997a5770f0a30e94c267fcf7e98660ef0cb6f538ba9d91de87094"
+      },
+      "values": {
+        "P-M1-off": 1e-06,
+        "P-M1-on": 1e-06,
+        "P-M2-off": 1e-06,
+        "P-M2-on": 1e-06
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].step",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "int",
+      "value_sha256": {
+        "P-M1-off": "4f88d4dd22371dfd51638813a13b530bf6ee15d7a8874f9026bbd63f2f37cd05",
+        "P-M1-on": "4f88d4dd22371dfd51638813a13b530bf6ee15d7a8874f9026bbd63f2f37cd05",
+        "P-M2-off": "4f88d4dd22371dfd51638813a13b530bf6ee15d7a8874f9026bbd63f2f37cd05",
+        "P-M2-on": "4f88d4dd22371dfd51638813a13b530bf6ee15d7a8874f9026bbd63f2f37cd05"
+      },
+      "values": {
+        "P-M1-off": 48,
+        "P-M1-on": 48,
+        "P-M2-off": 48,
+        "P-M2-on": 48
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].wd_mult",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "75a763f5d85313db5abf5d85bc0fa98e12575344d8c3bc5c54af43e6827ab485",
+        "P-M1-on": "75a763f5d85313db5abf5d85bc0fa98e12575344d8c3bc5c54af43e6827ab485",
+        "P-M2-off": "75a763f5d85313db5abf5d85bc0fa98e12575344d8c3bc5c54af43e6827ab485",
+        "P-M2-on": "75a763f5d85313db5abf5d85bc0fa98e12575344d8c3bc5c54af43e6827ab485"
+      },
+      "values": {
+        "P-M1-off": 0.0,
+        "P-M1-on": 0.0,
+        "P-M2-off": 0.0,
+        "P-M2-on": 0.0
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].weight_decay",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "float",
+      "value_sha256": {
+        "P-M1-off": "75a763f5d85313db5abf5d85bc0fa98e12575344d8c3bc5c54af43e6827ab485",
+        "P-M1-on": "75a763f5d85313db5abf5d85bc0fa98e12575344d8c3bc5c54af43e6827ab485",
+        "P-M2-off": "75a763f5d85313db5abf5d85bc0fa98e12575344d8c3bc5c54af43e6827ab485",
+        "P-M2-on": "75a763f5d85313db5abf5d85bc0fa98e12575344d8c3bc5c54af43e6827ab485"
+      },
+      "values": {
+        "P-M1-off": 0.0,
+        "P-M1-on": 0.0,
+        "P-M2-off": 0.0,
+        "P-M2-on": 0.0
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.per_bucket_numel/shard_0_1[0][0].(torch.bfloat16, torch.float32)[0]",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "int",
+      "value_sha256": {
+        "P-M1-off": "8ffc51be37d84b4ada7f62e1099ab5b24c698a48aec5cedbf4ab0ef9d97e3086",
+        "P-M1-on": "8ffc51be37d84b4ada7f62e1099ab5b24c698a48aec5cedbf4ab0ef9d97e3086",
+        "P-M2-off": "8ffc51be37d84b4ada7f62e1099ab5b24c698a48aec5cedbf4ab0ef9d97e3086",
+        "P-M2-on": "8ffc51be37d84b4ada7f62e1099ab5b24c698a48aec5cedbf4ab0ef9d97e3086"
+      },
+      "values": {
+        "P-M1-off": 596049920,
+        "P-M1-on": 596049920,
+        "P-M2-off": 596049920,
+        "P-M2-on": 596049920
+      }
+    },
+    {
+      "all_four_equal": true,
+      "key": "optimizer.distributed.dp_group_idx_0.per_bucket_numel_unpadded/shard_0_1[0][0].(torch.bfloat16, torch.float32)[0]",
+      "namespace_changed_paths": [],
+      "pair_equal": {
+        "P-M1": true,
+        "P-M2": true
+      },
+      "type": "int",
+      "value_sha256": {
+        "P-M1-off": "8ffc51be37d84b4ada7f62e1099ab5b24c698a48aec5cedbf4ab0ef9d97e3086",
+        "P-M1-on": "8ffc51be37d84b4ada7f62e1099ab5b24c698a48aec5cedbf4ab0ef9d97e3086",
+        "P-M2-off": "8ffc51be37d84b4ada7f62e1099ab5b24c698a48aec5cedbf4ab0ef9d97e3086",
+        "P-M2-on": "8ffc51be37d84b4ada7f62e1099ab5b24c698a48aec5cedbf4ab0ef9d97e3086"
+      },
+      "values": {
+        "P-M1-off": 596049920,
+        "P-M1-on": 596049920,
+        "P-M2-off": 596049920,
+        "P-M2-on": 596049920
+      }
+    }
+  ],
+  "limits": [
+    "Only the four named measurement-arm raw converted payloads were loaded; no DCP re-conversion was performed.",
+    "Semantic equality covers these 48 non-tensor leaves only; it does not establish full optimizer or scheduler restoration equivalence.",
+    "torch.load(weights_only=False) is code-execution capable; inputs were accepted only after exact local campaign path, adapter lineage, raw hash, and source DCP tree hash checks.",
+    "No GPU was used; one arm was loaded at a time with mmap; no payload copies were created."
+  ],
+  "measurement_lock_sha256": "cc574c60253d87296cc335276d5fd2050d3c37d792e96cbc37e912af0717c1f2",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "schema": "C2_NON_TENSOR_STATE_AUDIT/v1",
+  "scope": "semantic comparison of all 48 adapter-dropped leaves from each retained raw converted measurement payload",
+  "status": "AUDIT_COMPLETE",
+  "equivalence_status": "DIFFERENCES_FOUND",
+  "summary": {
+    "all_four_equal_leaf_count": 47,
+    "leaf_count_per_arm": 48,
+    "pair_count_is_not_a_statistical_sample_count": true,
+    "pair_equal_leaf_counts": {
+      "P-M1": 47,
+      "P-M2": 47
+    }
+  }
+}
