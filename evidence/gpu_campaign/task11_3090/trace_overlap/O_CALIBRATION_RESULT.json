@@ -1,0 +1,78 @@
+{
+  "arms": {
+    "O-C1-off": {
+      "global_sync_count": 68,
+      "global_sync_scope": "cudaDeviceSynchronize API calls only; not all synchronization",
+      "overlap_ratio": 0.4773191375519432,
+      "rank_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "O-C2-off": {
+      "global_sync_count": 68,
+      "global_sync_scope": "cudaDeviceSynchronize API calls only; not all synchronization",
+      "overlap_ratio": 0.47659137578044264,
+      "rank_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "O-C3-off": {
+      "global_sync_count": 68,
+      "global_sync_scope": "cudaDeviceSynchronize API calls only; not all synchronization",
+      "overlap_ratio": 0.4775222335811834,
+      "rank_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "O-C4-off": {
+      "global_sync_count": 68,
+      "global_sync_scope": "cudaDeviceSynchronize API calls only; not all synchronization",
+      "overlap_ratio": 0.47743048847431546,
+      "rank_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "calibration_config_sha256": "fd788ca8ccd420204e51a20f13a3e411e430d4df600c7afd102c1c90fb448acf",
+  "contrasts": [
+    {
+      "global_sync_delta": 0,
+      "left": "O-C1-off",
+      "name": "O-C1-vs-O-C2",
+      "overlap_delta": 0.0007277617715005791,
+      "right": "O-C2-off"
+    },
+    {
+      "global_sync_delta": 0,
+      "left": "O-C3-off",
+      "name": "O-C3-vs-O-C4",
+      "overlap_delta": 9.174510686793536e-05,
+      "right": "O-C4-off"
+    }
+  ],
+  "delta_frozen": 0.0014555235430011582,
+  "expected_ranks": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "kind": "calibration_result",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "raw_trace_hashes_sha256": "0d0944c81cff806de030754f617c048da3af992da36bfe29a0dcd8bff91dbbcb",
+  "schema": "task11-c2-overlap-927c5de-v1",
+  "self_sha256": "f6411c7352353f7950537d235d363abb80fbd24d5e11e48e50d1ed0943fac9c7",
+  "verdict": "PASS"
+}
