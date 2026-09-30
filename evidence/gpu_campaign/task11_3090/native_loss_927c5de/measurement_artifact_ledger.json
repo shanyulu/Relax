@@ -1,0 +1,55 @@
+{
+  "schema": "TASK11_NATIVE_LOSS_ARTIFACT_LEDGER/v1",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "measurement_lock_sha256": "7ba47ae2750da1353bda8395d78415c8a863dd1b218aef24faafba0be3fdf936",
+  "calibration_result_sha256": "8772372921343085097dd01e9ec2e584f5aa3ce5d68e30605892341c7bed33e4",
+  "verdict_sha256": "9e2689573034ee0b6bcd2e5cc25f7b540b4d05464bd9a27ab14bc23b83f34b06",
+  "campaign_root": "/root/autodl-tmp/task11-3090/formal/native-loss-927c5de-20260930/measurement",
+  "raw_artifact_location": "local-only; original logs, resolved argv and manifests have not been published to a public download bundle",
+  "arms": [
+    {
+      "arm": "L-M1-off",
+      "status": "SUCCEEDED",
+      "valid": true,
+      "updates": 48,
+      "resources_returned": true,
+      "checkpoint_directory_created": false,
+      "manifest_sha256": "30fdcf7d8e2f351dff0c7125daae861a894e9eea61f56e707cc3d3cc86965673",
+      "job_log_sha256": "e3d8ce4824597c954b39200558f4babd8b7f780962b0ce3f83591c4f34dec98e",
+      "resolved_argv_sha256": "6eef90a32d64f0567007a5a4e447ce0f4946838c207d5d9cb8b9d926da90a262"
+    },
+    {
+      "arm": "L-M1-on",
+      "status": "SUCCEEDED",
+      "valid": true,
+      "updates": 48,
+      "resources_returned": true,
+      "checkpoint_directory_created": false,
+      "manifest_sha256": "eb8a717b764ca733bd1d1192cba3f7bb4a023d0af97f97934251fb6fac547174",
+      "job_log_sha256": "7c8aa45f1ffdab4a9ecf7f9847a2a56118467c5fac80f3b7735af5afd2cd0a72",
+      "resolved_argv_sha256": "7763ed6d7dafc3e2fec5660b18683b4561a23c2e5077b1cce93f29872da1e2a6"
+    },
+    {
+      "arm": "L-M2-on",
+      "status": "SUCCEEDED",
+      "valid": true,
+      "updates": 48,
+      "resources_returned": true,
+      "checkpoint_directory_created": false,
+      "manifest_sha256": "9704b8faa84e164eead7b52279505ac055abd5e75e937fadf19ccf7b064afa6d",
+      "job_log_sha256": "3990f4581cfe9b39727933856ee2d9d7b1d561589a2daf63bb472c6c83662d30",
+      "resolved_argv_sha256": "1902ccb088768436bd4c58fd15f0baf7a642dfb234a7d0638f17edf07c7c7da7"
+    },
+    {
+      "arm": "L-M2-off",
+      "status": "SUCCEEDED",
+      "valid": true,
+      "updates": 48,
+      "resources_returned": true,
+      "checkpoint_directory_created": false,
+      "manifest_sha256": "ff17ef336bfa373fd823b859847e2c42e35d832cbcb4ce661755f126d72a5685",
+      "job_log_sha256": "08ea11d9676ba167afc36a808e275259c619f80d3e70dfda5ca9d2023658fb15",
+      "resolved_argv_sha256": "996d2f2bb9d8c0dd781421a2fe083974e0268588c5f84695b7fc6c8e2c70c558"
+    }
+  ]
+}

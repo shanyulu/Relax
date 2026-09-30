@@ -1,0 +1,71 @@
+{
+  "_self_sha256": "9e2689573034ee0b6bcd2e5cc25f7b540b4d05464bd9a27ab14bc23b83f34b06",
+  "calibration_result_sha256": "8772372921343085097dd01e9ec2e584f5aa3ce5d68e30605892341c7bed33e4",
+  "measurement_lock_sha256": "7ba47ae2750da1353bda8395d78415c8a863dd1b218aef24faafba0be3fdf936",
+  "pairs": [
+    {
+      "eligible": true,
+      "gates": {
+        "learning_rate_equal": true,
+        "resolved_argv_equal": true,
+        "step_ids_equal": true,
+        "token_volume_equal": true,
+        "updates_equal": true
+      },
+      "metrics": {
+        "grad_norm_series": {
+          "max_abs_delta": 8.3840970993042,
+          "step": 9,
+          "tolerance": 57.434274673461914,
+          "within_envelope": true
+        },
+        "loss_series": {
+          "max_abs_delta": 0.05001947283744812,
+          "step": 38,
+          "tolerance": 0.23347806930541992,
+          "within_envelope": true
+        }
+      },
+      "pair": [
+        "L-M1-off",
+        "L-M1-on"
+      ],
+      "pass": true,
+      "status": "PASS"
+    },
+    {
+      "eligible": true,
+      "gates": {
+        "learning_rate_equal": true,
+        "resolved_argv_equal": true,
+        "step_ids_equal": true,
+        "token_volume_equal": true,
+        "updates_equal": true
+      },
+      "metrics": {
+        "grad_norm_series": {
+          "max_abs_delta": 12.53071403503418,
+          "step": 9,
+          "tolerance": 57.434274673461914,
+          "within_envelope": true
+        },
+        "loss_series": {
+          "max_abs_delta": 0.04827868938446045,
+          "step": 5,
+          "tolerance": 0.23347806930541992,
+          "within_envelope": true
+        }
+      },
+      "pair": [
+        "L-M2-off",
+        "L-M2-on"
+      ],
+      "pass": true,
+      "status": "PASS"
+    }
+  ],
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "schema": "TASK11_NATIVE_LOSS_VERDICT/v1",
+  "scope": "Native loss/grad supplement only; not parameter equivalence, accuracy, C1 or overall C2 verdict.",
+  "status": "PASS_WITHIN_OFF_OFF_ENVELOPE"
+}
