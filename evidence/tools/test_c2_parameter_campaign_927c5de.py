@@ -173,9 +173,11 @@ def _lineage_fixture(tmp_path, monkeypatch):
     lock = seal(base_lock())
     lock_sha = "9" * 64
     arm = tmp_path / "P-C1-off"
-    checkpoint = arm / "checkpoints" / "iter_00000048"
+    run = arm / "checkpoints" / "sft" / arm.name
+    checkpoint = run / "iter_00000048"
     checkpoint.mkdir(parents=True)
     dcp_save({"weight": torch.tensor([1.0, 2.0])}, storage_writer=FileSystemWriter(checkpoint), no_dist=True)
+    (run / "latest_checkpointed_iteration.txt").write_text("48\n")
     log_lines = []
     for index in range(48):
         log_lines.append(
@@ -225,7 +227,7 @@ def test_formal_inventory_binds_arm_dcp_adapter_and_tensor_payload(tmp_path, mon
     campaign.validate_inventory_lineage(output, arm, lock, lock_sha)
     with pytest.raises(ValueError, match="outside its frozen arm"):
         campaign.validate_inventory_lineage(output, tmp_path / "P-C2-off", lock, lock_sha)
-    source = arm / "checkpoints" / "iter_00000048" / "__0_0.distcp"
+    source = arm / "checkpoints" / "sft" / arm.name / "iter_00000048" / "__0_0.distcp"
     source.write_bytes(source.read_bytes() + b"tamper")
     with pytest.raises(ValueError, match="source DCP tree hash mismatch"):
         campaign.validate_inventory_lineage(output, arm, lock, lock_sha)

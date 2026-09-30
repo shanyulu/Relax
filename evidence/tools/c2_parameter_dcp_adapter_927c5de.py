@@ -51,13 +51,23 @@ def find_iteration(checkpoint: Path) -> Path:
     checkpoint."""
     if (checkpoint / ".metadata").is_file():
         return checkpoint
-    marker = checkpoint / "latest_checkpointed_iteration.txt"
-    if marker.is_file():
-        iteration = marker.read_text().strip()
-        candidate = checkpoint / f"iter_{int(iteration):08d}"
-        if (candidate / ".metadata").is_file():
-            return candidate
-    candidates = sorted(path for path in checkpoint.glob("iter_*") if (path / ".metadata").is_file())
+    # The recipe writes SAVE_DIR/sft/<experiment>/iter_*, not SAVE_DIR/iter_*.
+    markers = sorted(checkpoint.rglob("latest_checkpointed_iteration.txt"))
+    if markers:
+        if len(markers) != 1:
+            raise RuntimeError("INCOMPLETE: multiple DCP checkpoint markers found")
+        iteration = markers[0].read_text().strip()
+        if not iteration.isdecimal():
+            raise RuntimeError("INCOMPLETE: invalid DCP checkpoint marker")
+        candidates = sorted(
+            path
+            for path in markers[0].parent.glob("iter_*")
+            if path.name[5:].isdecimal() and int(path.name[5:]) == int(iteration) and (path / ".metadata").is_file()
+        )
+        if len(candidates) == 1:
+            return candidates[0]
+        raise RuntimeError("INCOMPLETE: marked DCP iteration is missing")
+    candidates = sorted(path.parent for path in checkpoint.rglob(".metadata") if path.is_file())
     if len(candidates) == 1:
         return candidates[0]
     raise RuntimeError("INCOMPLETE: no single DCP iteration directory found")

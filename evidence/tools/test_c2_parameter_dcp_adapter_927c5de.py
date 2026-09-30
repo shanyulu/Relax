@@ -72,6 +72,25 @@ def test_adapter_finds_the_marked_iteration_and_refuses_overwrite(tmp_path):
         adapter.convert(root, out, arm_name="P-C2-off")
 
 
+def test_adapter_finds_nested_recipe_checkpoint(tmp_path):
+    root = tmp_path / "checkpoints"
+    run = root / "sft" / "P-C1-off"
+    iteration = run / "iter_0000003"
+    make_dcp(iteration)
+    (run / "latest_checkpointed_iteration.txt").write_text("3\n")
+    assert adapter.find_iteration(root) == iteration
+
+
+def test_adapter_rejects_multiple_nested_checkpoint_runs(tmp_path):
+    root = tmp_path / "checkpoints"
+    for name in ("P-C1-off", "P-C2-off"):
+        run = root / "sft" / name
+        make_dcp(run / "iter_0000003")
+        (run / "latest_checkpointed_iteration.txt").write_text("3\n")
+    with pytest.raises(RuntimeError, match="multiple DCP checkpoint markers"):
+        adapter.find_iteration(root)
+
+
 def test_non_dcp_layout_fails_closed(tmp_path):
     plain = tmp_path / "plain"
     plain.mkdir()
