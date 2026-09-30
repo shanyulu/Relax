@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="692" viewBox="0 0 960 692">
+<rect width="100%" height="100%" fill="#f8fafc"/>
+<g font-family="sans-serif" fill="#182b43">
+<text x="28" y="36" font-size="21" font-weight="600">最终 checkpoint：差值相对冻结包络</text>
+<text x="28" y="62" font-size="13">13 个浮点张量组 × 2 对；空占位项不计入此图</text>
+<text x="550" y="102" font-size="14">M1 · OFF → ON</text>
+<text x="760" y="102" font-size="14">M2 · ON → OFF</text>
+<text x="28" y="136" font-size="12">decoder.final_layernorm.weight</text>
+<rect x="534" y="114" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="546" y="134" font-size="13">0 / 0 · 数值相等</text>
+<rect x="742" y="114" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="754" y="134" font-size="13">0 / 0 · 数值相等</text>
+<text x="28" y="174" font-size="12">decoder.layers.mlp.linear_fc1.layer_norm_weight</text>
+<rect x="534" y="152" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="546" y="172" font-size="13">0.147 × 容差</text>
+<rect x="742" y="152" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="754" y="172" font-size="13">0.154 × 容差</text>
+<text x="28" y="212" font-size="12">decoder.layers.mlp.linear_fc1.weight</text>
+<rect x="534" y="190" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="546" y="210" font-size="13">0.500 × 容差</text>
+<rect x="742" y="190" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="754" y="210" font-size="13">0.500 × 容差</text>
+<text x="28" y="250" font-size="12">decoder.layers.mlp.linear_fc2.weight</text>
+<rect x="534" y="228" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="546" y="248" font-size="13">0.500 × 容差</text>
+<rect x="742" y="228" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="754" y="248" font-size="13">0.500 × 容差</text>
+<text x="28" y="288" font-size="12">decoder.layers.self_attention.k_layernorm.weight</text>
+<rect x="534" y="266" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="546" y="286" font-size="13">0.125 × 容差</text>
+<rect x="742" y="266" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="754" y="286" font-size="13">0.500 × 容差</text>
+<text x="28" y="326" font-size="12">decoder.layers.self_attention.linear_proj.weight</text>
+<rect x="534" y="304" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="546" y="324" font-size="13">0.500 × 容差</text>
+<rect x="742" y="304" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="754" y="324" font-size="13">0.500 × 容差</text>
+<text x="28" y="364" font-size="12">decoder.layers.self_attention.linear_qkv.layer_norm_weight</text>
+<rect x="534" y="342" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="546" y="362" font-size="13">0.125 × 容差</text>
+<rect x="742" y="342" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="754" y="362" font-size="13">0.125 × 容差</text>
+<text x="28" y="402" font-size="12">decoder.layers.self_attention.linear_qkv.weight</text>
+<rect x="534" y="380" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="546" y="400" font-size="13">0.500 × 容差</text>
+<rect x="742" y="380" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="754" y="400" font-size="13">0.500 × 容差</text>
+<text x="28" y="440" font-size="12">decoder.layers.self_attention.q_layernorm.weight</text>
+<rect x="534" y="418" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="546" y="438" font-size="13">0.500 × 容差</text>
+<rect x="742" y="418" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="754" y="438" font-size="13">0.500 × 容差</text>
+<text x="28" y="478" font-size="12">embedding.word_embeddings.weight</text>
+<rect x="534" y="456" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="546" y="476" font-size="13">0.250 × 容差</text>
+<rect x="742" y="456" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="754" y="476" font-size="13">0.500 × 容差</text>
+<text x="28" y="516" font-size="12">optimizer · exp_avg</text>
+<rect x="534" y="494" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="546" y="514" font-size="13">0.217 × 容差</text>
+<rect x="742" y="494" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="754" y="514" font-size="13">0.225 × 容差</text>
+<text x="28" y="554" font-size="12">optimizer · exp_avg_sq</text>
+<rect x="534" y="532" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="546" y="552" font-size="13">0.285 × 容差</text>
+<rect x="742" y="532" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="754" y="552" font-size="13">0.302 × 容差</text>
+<text x="28" y="592" font-size="12">optimizer · param</text>
+<rect x="534" y="570" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="546" y="590" font-size="13">0.423 × 容差</text>
+<rect x="742" y="570" width="192" height="30" rx="4" fill="#e4f2eb"/>
+<text x="754" y="590" font-size="13">0.442 × 容差</text>
+<text x="28" y="630" font-size="12">数值为 max-abs-delta / 冻结容差；≤ 1 通过，不是置信区间。</text>
+<text x="28" y="653" font-size="11">结果 self SHA：06dca1126450fa4376f7b7aa99f03bc8487a5b6332a2d52885637fc77fbf7c8e</text>
+</g></svg>

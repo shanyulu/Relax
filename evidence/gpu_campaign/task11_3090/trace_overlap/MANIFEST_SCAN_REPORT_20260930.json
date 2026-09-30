@@ -1,0 +1,70 @@
+{
+  "verdict": "PASS",
+  "config_sha256": "af3ff7937d25f5bd547a5fa203425afbd17c23805d44b87af3dd721c26cd42c1",
+  "records": [
+    {
+      "file": "evidence/gpu_campaign/task11_3090/trace_overlap/calibration/O-C1-off/manifest.json",
+      "raw_sha256": "4ffcc646beffed0c64189c35ded80404579f1ffe65b82709c99208047fee214a",
+      "scanned_sha256": "4ffcc646beffed0c64189c35ded80404579f1ffe65b82709c99208047fee214a",
+      "scanned_bytes": 2587,
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "evidence/gpu_campaign/task11_3090/trace_overlap/calibration/O-C2-off/manifest.json",
+      "raw_sha256": "5a3bbc5e9868ea3c4e15429fe29ed7655dbe54de017ea2efb98650eaf29b82ce",
+      "scanned_sha256": "5a3bbc5e9868ea3c4e15429fe29ed7655dbe54de017ea2efb98650eaf29b82ce",
+      "scanned_bytes": 2589,
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "evidence/gpu_campaign/task11_3090/trace_overlap/calibration/O-C3-off/manifest.json",
+      "raw_sha256": "8b091c075a88bfcb2ffd0b333d59cf1712070910c159ae8edfbacea769c3ba7e",
+      "scanned_sha256": "8b091c075a88bfcb2ffd0b333d59cf1712070910c159ae8edfbacea769c3ba7e",
+      "scanned_bytes": 2587,
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "evidence/gpu_campaign/task11_3090/trace_overlap/calibration/O-C4-off/manifest.json",
+      "raw_sha256": "9d343c96692ee9a756d15a6175ca4b37afecfa9c1346b852b837a58577d6cbab",
+      "scanned_sha256": "9d343c96692ee9a756d15a6175ca4b37afecfa9c1346b852b837a58577d6cbab",
+      "scanned_bytes": 2588,
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "evidence/gpu_campaign/task11_3090/trace_overlap/measurement/O-M1-off/manifest.json",
+      "raw_sha256": "1bebabfb4c404672a4c7bcd283d03b24f4232533993875e976650de3957d509e",
+      "scanned_sha256": "1bebabfb4c404672a4c7bcd283d03b24f4232533993875e976650de3957d509e",
+      "scanned_bytes": 2589,
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "evidence/gpu_campaign/task11_3090/trace_overlap/measurement/O-M1-on/manifest.json",
+      "raw_sha256": "a951ed1092a5c6e8461d9c12bb50ccffa3d33ae3e929bfe7d923f9fd02069bd1",
+      "scanned_sha256": "a951ed1092a5c6e8461d9c12bb50ccffa3d33ae3e929bfe7d923f9fd02069bd1",
+      "scanned_bytes": 2584,
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "evidence/gpu_campaign/task11_3090/trace_overlap/measurement/O-M2-off/manifest.json",
+      "raw_sha256": "f4a1fa9272fcb823fe06276535a5f9619117f22b92399bec440dfe89baff8641",
+      "scanned_sha256": "f4a1fa9272fcb823fe06276535a5f9619117f22b92399bec440dfe89baff8641",
+      "scanned_bytes": 2587,
+      "status": "PASS",
+      "findings": []
+    },
+    {
+      "file": "evidence/gpu_campaign/task11_3090/trace_overlap/measurement/O-M2-on/manifest.json",
+      "raw_sha256": "5a369b2a33e125dea25be5ee1738e8e49b6a7006f606039c77c6881a4763ceb3",
+      "scanned_sha256": "5a369b2a33e125dea25be5ee1738e8e49b6a7006f606039c77c6881a4763ceb3",
+      "scanned_bytes": 2586,
+      "status": "PASS",
+      "findings": []
+    }
+  ]
+}

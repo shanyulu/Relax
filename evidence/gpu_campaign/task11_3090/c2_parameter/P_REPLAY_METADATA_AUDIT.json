@@ -1,0 +1,12 @@
+{
+  "frozen_manifests_modified": false,
+  "mappings": {
+    "/root/autodl-tmp/relax-work/task11-c2-927c5de": "/root/autodl-tmp/relax-work/task11-c2-927c5de",
+    "/root/autodl-tmp/task11-3090": "/root/autodl-tmp/task11-3090",
+    "/tmp/codex-task11-evidence": "/tmp/codex-task11-evidence"
+  },
+  "replay_source_sha256": "de3d59f37438ffafabbc8fb59357a73f638fabcf01dfc4d71b093d1ac8d7c7dd",
+  "requested_validation_mode": "METADATA_ONLY",
+  "schema": "C2_PARAMETER_REPLAY_MAPPING/v1",
+  "self_sha256": "c4ec204c23be4ea61e677db0c7fddc19371fc6bdb366b09df386b5d4850df9f1"
+}
