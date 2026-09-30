@@ -20,7 +20,11 @@ from typing import Any
 
 
 def sha256_file(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def tree_hash(root: Path) -> str:
@@ -28,7 +32,7 @@ def tree_hash(root: Path) -> str:
     for path in sorted(item for item in root.rglob("*") if item.is_file()):
         digest.update(str(path.relative_to(root)).encode())
         digest.update(str(path.stat().st_size).encode())
-        digest.update(hashlib.sha256(path.read_bytes()).digest())
+        digest.update(bytes.fromhex(sha256_file(path)))
     return digest.hexdigest()
 
 
@@ -91,7 +95,14 @@ def _npy(path: Path, tensor: Any, representation: str) -> None:
             output.write(bytes(raw[offset : offset + (1 << 20)].tolist()))
 
 
-def export_inventory(checkpoint: Path, out: Path, *, identity: dict[str, Any], arm_name: str) -> dict[str, Any]:
+def export_inventory(
+    checkpoint: Path,
+    out: Path,
+    *,
+    identity: dict[str, Any],
+    arm_name: str,
+    lineage: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Export supported tensors and retain content/tree provenance."""
     try:
         import torch
@@ -141,7 +152,7 @@ def export_inventory(checkpoint: Path, out: Path, *, identity: dict[str, Any], a
         if not tensors:
             raise RuntimeError("INCOMPLETE: supported checkpoint has no tensor leaves")
         payload = {
-            "schema_version": 1,
+            "schema_version": 2 if lineage is not None else 1,
             "arm_name": arm_name,
             "product_sha": identity["PRODUCT_SHA"],
             "protocol_sha256": identity["PROTOCOL_SHA256"],
@@ -152,6 +163,7 @@ def export_inventory(checkpoint: Path, out: Path, *, identity: dict[str, Any], a
             "lock_sha256": identity["LOCK_SHA256"],
             "checkpoint_tree_sha256": tree_hash(checkpoint),
             "checkpoint_root": str(checkpoint.resolve()),
+            "lineage": lineage,
             "tensors": tensors,
             "self_sha256": None,
         }
@@ -169,16 +181,24 @@ def main() -> int:
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--lock", type=Path, required=True)
     parser.add_argument("--arm-name", required=True)
+    parser.add_argument("--arm-dir", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     try:
-        from c2_parameter_campaign_927c5de import load_lock
+        from c2_parameter_campaign_927c5de import load_lock, validate_adapter_source
 
         lock = load_lock(args.lock)
         if args.arm_name not in lock["ARM_ORDER"]:
             raise RuntimeError("INVALID: inventory export requires an arm named by the supplied lock")
+        if args.arm_dir.name != args.arm_name:
+            raise RuntimeError("INVALID: arm directory does not match the requested arm")
+        lineage = validate_adapter_source(args.arm_dir, args.checkpoint, lock, sha256_file(args.lock))
         export_inventory(
-            args.checkpoint, args.out, identity={**lock, "LOCK_SHA256": sha256_file(args.lock)}, arm_name=args.arm_name
+            args.checkpoint,
+            args.out,
+            identity={**lock, "LOCK_SHA256": sha256_file(args.lock)},
+            arm_name=args.arm_name,
+            lineage=lineage,
         )
     except RuntimeError as exc:
         print(str(exc), file=sys.stderr)

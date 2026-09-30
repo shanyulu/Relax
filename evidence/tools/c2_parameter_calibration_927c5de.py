@@ -109,12 +109,13 @@ def build_calibration(inventories: dict[str, dict[str, Any]], identity: dict[str
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--lock", type=Path, required=True)
+    parser.add_argument("--campaign", type=Path, required=True)
     for name in ("c1", "c2", "c3", "c4"):
         parser.add_argument(f"--{name}", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     try:
-        from c2_parameter_campaign_927c5de import load_lock
+        from c2_parameter_campaign_927c5de import load_lock, validate_inventory_lineage
 
         if args.out.exists():
             raise ValueError(f"refusing to overwrite {args.out}")
@@ -123,6 +124,8 @@ def main() -> int:
             raise ValueError("calibration builder requires a calibration lock")
         identity = {**lock, "LOCK_SHA256": sha256_file(args.lock)}
         paths = {"P-C1-off": args.c1, "P-C2-off": args.c2, "P-C3-off": args.c3, "P-C4-off": args.c4}
+        for name, path in paths.items():
+            validate_inventory_lineage(path, args.campaign / name, lock, identity["LOCK_SHA256"])
         inventories = {name: {"path": path, **load_inventory(path, identity, name)} for name, path in paths.items()}
         result = build_calibration(inventories, identity)
         args.out.parent.mkdir(parents=True, exist_ok=True)

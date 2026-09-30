@@ -19,12 +19,13 @@ profile. Every arm manifest must repeat the lock hash and prove identical
 driver and worker source hashes, successful job completion, expected steps,
 and returned resources.
 
-Before the first arm, make one disposable `SAVE=1` checkpoint and measure its
-complete tree size. Free durable storage must be at least
-`8 × measured_checkpoint_tree_size × 1.20`, in addition to logs and traces.
-Checkpoint trees are retained until the comparison and its public archive have
-been hash-verified. A tree hash is an integrity record only; it is not a
-parameter-equivalence measurement.
+Before the first arm, measure a disposable `SAVE=1` checkpoint and all adapter
+outputs. The current tool retains DCP, raw conversion, sanitised conversion and
+inventory payloads for every arm: the 2026-09-29 probe implies ~258 GiB across
+eight arms. Require **at least 320 GiB free, writable, durable storage** before
+launch, and remeasure if the recipe or adapter changes. Checkpoint trees and
+conversion copies are retained until comparison and archive verification; a
+tree hash is an integrity record, not a parameter-equivalence measurement.
 
 Do not launch if the product tree is dirty, the lock is not committed, the
 four GPUs are not exclusively owned, Ray preflight or proxy bypass fails, or
@@ -43,6 +44,11 @@ successors are now committed before any `927c5de` arm:
   `c2_parameter_calibration_927c5de.py` and
   `c2_parameter_verdict_927c5de.py` build inventories, freeze the two fixed
   contrasts and emit a non-overwriting self-hashed tensor verdict.
+- Formal inventories use schema 2. Export requires `--arm-dir`; calibration
+  requires `--campaign`. The formal entrypoint recomputes the successful arm
+  manifest, actual 48-step log, retained DCP tree, adapter record and both
+  converted payload hashes before accepting each inventory. The standalone
+  numerical comparator does not by itself certify this provenance chain.
 - `trace_verdict_927c5de.py` locks and evaluates the four-OFF-plus-two-pair
   trace layout with verified raw hashes and rank coverage.
 

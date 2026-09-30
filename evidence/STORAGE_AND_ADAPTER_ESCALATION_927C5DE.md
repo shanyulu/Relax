@@ -6,10 +6,10 @@ since and the decision required to resume. No formal parameter lock exists.
 
 ## 1. Blockers (measured, not estimated)
 
-| Blocker | Measured value | Consequence |
-| --- | --- | --- |
-| Checkpoint layout | Megatron DCP sharded (`__0..3_0.distcp` + `.metadata`), 9 files, 7.774 GiB | The inventory exporter correctly refuses DCP; the checklist requires a separately reviewed adapter before any formal lock |
-| Storage gate | `8 × 7.774 × 1.20 = 74.63 GiB` required vs ~67 GiB free | FAILS the checklist's entry gate before payload expansion is even counted |
+| Blocker           | Measured value                                                                                                            | Consequence                                                                                                               |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Checkpoint layout | Megatron DCP sharded (`__0..3_0.distcp` + `.metadata`), 9 files, 7.774 GiB                                                | The inventory exporter correctly refuses DCP; the checklist requires a separately reviewed adapter before any formal lock |
+| Storage gate      | The original DCP-only floor was `8 × 7.774 × 1.20 = 74.63 GiB`; the adapter also retains three additional representations | FAILS before payload expansion; the full retention calculation is in §3                                                   |
 
 ## 2. Adapter: implemented, tested, proven on the real fixture — PROPOSED_PENDING_REVIEW
 
@@ -30,8 +30,9 @@ Findings baked into the tool after real-fixture failures:
 End-to-end proof on the probe's own 7.774 GiB DCP fixture (2026-09-29):
 adapter → 182 tensors (178 decoder, 1 embedding, 3 fused optimizer; 48 non-tensor leaves
 recorded and dropped) → `c2_parameter_inventory_927c5de.export_inventory` → verdict-readable
-(182/182, dtypes |u1 ×169, bfloat16 ×10, <f4 ×3). Sanitised payload sha256
-`7d7ace9c9a2222b2…`; CPU guards: 3 passed.
+(182/182, dtypes |u1 ×169, bfloat16 ×10, \<f4 ×3). Sanitised payload sha256
+`7d7ace9c9a2222b2…`; subsequent CPU guards cover conversion failure,
+post-conversion failure, swapped-arm lineage, altered DCP bytes and short jobs.
 
 Reviewer checklist (what "separately reviewed" must confirm before a formal lock may
 reference this adapter): the converter choice and its `weights_only=False` byte-payload
@@ -42,19 +43,21 @@ tree and torch build.
 
 ## 3. Storage: the real arithmetic after the end-to-end run
 
-Per arm, transient peak ≈ DCP 7.8 + raw conversion 7.8 + sanitised 7.8 + inventory
-payloads 8.9 ≈ **32.3 GiB**; stable retention (DCP tree + payloads) ≈ **16.7 GiB**.
-Eight arms ≈ **134 GiB stable** plus transients — infeasible on the 67 GiB data disk.
+Per arm, the current tools retain DCP 7.8 + raw conversion 7.8 + sanitised
+conversion 7.8 + inventory payloads 8.9 ≈ **32.3 GiB**. Eight arms therefore
+retain about **258 GiB** before logs, manifests and filesystem headroom. A
+**320 GiB writable durable-volume gate** provides roughly 20% headroom; the
+earlier 150 GiB figure incorrectly treated both conversion copies as transient.
+No retained representation may be deleted under the current protocol.
 
-## 4. Decision requested (any one resumes the campaign)
+## 4. Selected route and remaining gate
 
-1. Provide ≥ ~150 GiB of durable storage for the campaign window; run the frozen
-   eight-arm protocol unchanged, or
-2. Review the adapter (checklist above) AND approve a retention-policy amendment
-   (preregistered before any arm runs, e.g.: DCP tree retained until its sanitised
-   payload and inventory are hash-verified; the raw conversion deleted after hashing —
-   it is deterministically re-derivable; payloads retained through the verdict), or
-3. Accept parameter equivalence as INCOMPLETE with this blocker documented.
+The selected route is the unchanged eight-arm protocol with a new **≥320 GiB
+writable durable volume**. Its path has not been supplied. The adapter remains
+`PROPOSED_PENDING_REVIEW`; approval must cover trusted-source deserialization,
+the dropped-leaf list and the schema-2 arm→DCP→adapter→inventory chain. A
+retention-policy amendment or accepting INCOMPLETE would be a different
+decision and is not assumed here.
 
-Until one lands, the historical `a48a23b` verdict stands: INCOMPLETE — 0 metric
+Until both gates land, the historical `a48a23b` verdict stands: INCOMPLETE — 0 metric
 violations, 2 missing parameter-evidence items.

@@ -101,3 +101,22 @@ def test_failed_dcp_conversion_cleans_only_its_own_partial_outputs(tmp_path, mon
     assert not out.exists()
     assert not (tmp_path / "converted_raw").exists()
     assert (source / ".metadata").is_file()
+
+
+def test_failed_post_conversion_load_also_cleans_owned_outputs(tmp_path, monkeypatch):
+    source = tmp_path / "iter_00000007"
+    make_dcp(source)
+    out = tmp_path / "converted"
+    original = torch.load
+
+    def fail_trusted_load(path, *args, **kwargs):
+        if str(path).endswith("converted.pt"):
+            raise RuntimeError("synthetic post-conversion failure")
+        return original(path, *args, **kwargs)
+
+    monkeypatch.setattr(torch, "load", fail_trusted_load)
+    with pytest.raises(RuntimeError, match="synthetic post-conversion failure"):
+        adapter.convert(source, out, arm_name="P-C1-off")
+    assert not out.exists()
+    assert not (tmp_path / "converted_raw").exists()
+    assert (source / ".metadata").is_file()

@@ -400,6 +400,9 @@ def _execute_arm(args: argparse.Namespace, lock: dict[str, Any], name: str, lock
         if status != "SUCCEEDED":
             raise RuntimeError(f"owned job status: {status}")
         manifest["job_status"] = status
+        from extract_c2_native import parse_arm
+
+        manifest["native"] = parse_arm(arm_dir, expected_steps=lock["EXPECTED_STEPS"])
         manifest["worker_source_hashes"] = _worker_provenance(arm_dir / "job.log")
         manifest["driver_source_sha256_after"] = _source_fingerprint(product)
         # A snapshot alone cannot prove that Ray has released the placement.
@@ -414,6 +417,7 @@ def _execute_arm(args: argparse.Namespace, lock: dict[str, Any], name: str, lock
         manifest["resources_after"] = _resources()
         manifest["valid"] = (
             manifest["driver_source_sha256_before"] == manifest["driver_source_sha256_after"]
+            and manifest["native"].get("native_valid", False)
             and bool(manifest["worker_source_hashes"])
             and all(value == source_before for value in manifest["worker_source_hashes"].values())
             and (arm_dir / "checkpoints").is_dir()
@@ -455,8 +459,8 @@ def validate_arm(arm_dir: Path, lock: dict[str, Any], lock_sha: str) -> dict[str
     ):
         if manifest.get(field) != expected:
             problems.append(f"{field} drift")
-    if manifest.get("run_id") not in lock["ARM_ORDER"]:
-        problems.append("arm not in lock")
+    if manifest.get("run_id") != arm_dir.name or manifest.get("run_id") not in lock["ARM_ORDER"]:
+        problems.append("arm identity mismatch")
     if (
         manifest.get("job_status") != "SUCCEEDED"
         or not manifest.get("valid")
@@ -475,9 +479,101 @@ def validate_arm(arm_dir: Path, lock: dict[str, Any], lock_sha: str) -> dict[str
     checkpoint = arm_dir / "checkpoints"
     if not checkpoint.is_dir() or not any(path.is_file() for path in checkpoint.rglob("*")):
         problems.append("retained checkpoint missing")
+    from extract_c2_native import parse_arm
+
+    native = parse_arm(arm_dir, expected_steps=lock["EXPECTED_STEPS"])
+    if not native.get("native_valid") or manifest.get("native") != native:
+        problems.append("completed-step or native-series proof missing/drift")
     if problems:
         raise ValueError(f"{arm_dir.name}: {', '.join(problems)}")
     return manifest
+
+
+def validate_adapter_source(arm_dir: Path, adapter_dir: Path, lock: dict[str, Any], lock_sha: str) -> dict[str, Any]:
+    """Bind one adapter output to its successful arm and retained DCP bytes."""
+    from c2_parameter_dcp_adapter_927c5de import sha256_file as digest_file
+    from c2_parameter_dcp_adapter_927c5de import tree_hash
+
+    arm_dir = arm_dir.resolve()
+    adapter_dir = adapter_dir.resolve()
+    if arm_dir.name not in lock["ARM_ORDER"] or adapter_dir.parent != arm_dir:
+        raise ValueError("adapter output must be a direct child of its frozen arm")
+    validate_arm(arm_dir, lock, lock_sha)
+    record_path = adapter_dir / "ADAPTER_RECORD.json"
+    if not record_path.is_file():
+        raise ValueError(f"missing DCP adapter record: {record_path}")
+    record = json.loads(record_path.read_text())
+    source_root = arm_dir / "checkpoints"
+    iteration = Path(str(record.get("source_iteration_dir", ""))).resolve()
+    raw = Path(str(record.get("raw_converted_path", ""))).resolve()
+    sanitized = adapter_dir / "converted_tensors.pt"
+    if record.get("schema") != "C2_927C5DE_DCP_ADAPTER/v1" or record.get("arm_name") != arm_dir.name:
+        raise ValueError("DCP adapter identity or arm mismatch")
+    if Path(str(record.get("source_checkpoint_root", ""))).resolve() != source_root:
+        raise ValueError("DCP adapter source root is not the arm checkpoint")
+    if not iteration.is_relative_to(source_root) or not (iteration / ".metadata").is_file():
+        raise ValueError("DCP adapter iteration is outside the retained arm checkpoint")
+    from c2_parameter_dcp_adapter_927c5de import find_iteration
+
+    if find_iteration(source_root).resolve() != iteration:
+        raise ValueError("DCP adapter iteration differs from the retained checkpoint marker")
+    if raw.parent != adapter_dir.parent / f"{adapter_dir.name}_raw":
+        raise ValueError("DCP adapter raw payload is outside its owned sibling directory")
+    for label, path, pinned in (
+        ("source DCP tree", iteration, record.get("source_tree_sha256")),
+        ("raw converted payload", raw, record.get("raw_converted_sha256")),
+        ("sanitized tensor payload", sanitized, record.get("sanitized_sha256")),
+    ):
+        if not path.exists():
+            raise ValueError(f"missing {label}: {path}")
+        actual = tree_hash(path) if path.is_dir() else digest_file(path)
+        if actual != pinned:
+            raise ValueError(f"{label} hash mismatch")
+    return {
+        "arm_manifest_sha256": digest_file(arm_dir / "manifest.json"),
+        "adapter_record_sha256": digest_file(record_path),
+        "source_tree_sha256": record["source_tree_sha256"],
+        "sanitized_sha256": record["sanitized_sha256"],
+    }
+
+
+def validate_inventory_lineage(inventory_path: Path, arm_dir: Path, lock: dict[str, Any], lock_sha: str) -> None:
+    """Recompute every provenance edge before accepting a formal inventory."""
+    from c2_parameter_inventory_927c5de import self_hash, sha256_file, tree_hash
+
+    arm_dir = arm_dir.resolve()
+    inventory_path = inventory_path.resolve()
+    if not inventory_path.is_relative_to(arm_dir):
+        raise ValueError("inventory is outside its frozen arm")
+    inventory = json.loads(inventory_path.read_text())
+    if inventory.get("schema_version") != 2 or inventory.get("self_sha256") != self_hash(inventory):
+        raise ValueError("formal inventory schema or self hash mismatch")
+    identity = {
+        "arm_name": arm_dir.name,
+        "product_sha": lock["PRODUCT_SHA"],
+        "protocol_sha256": lock["PROTOCOL_SHA256"],
+        "recipe_sha256": lock["RECIPE_SHA256"],
+        "dataset_sha256": lock["DATASET_SHA256"],
+        "env_fingerprint_sha256": lock["ENV_FINGERPRINT_SHA256"],
+        "comparator_sha256": lock["COMPARATOR_SHA256"],
+        "lock_sha256": lock_sha,
+    }
+    if any(inventory.get(key) != expected for key, expected in identity.items()):
+        raise ValueError("formal inventory identity mismatch")
+    adapter_dir = Path(str(inventory.get("checkpoint_root", ""))).resolve()
+    expected_lineage = validate_adapter_source(arm_dir, adapter_dir, lock, lock_sha)
+    if inventory.get("lineage") != expected_lineage or inventory.get("checkpoint_tree_sha256") != tree_hash(
+        adapter_dir
+    ):
+        raise ValueError("formal inventory DCP/adapter lineage mismatch")
+    if not isinstance(inventory.get("tensors"), list) or not inventory["tensors"]:
+        raise ValueError("formal inventory has no tensors")
+    for entry in inventory["tensors"]:
+        payload = (inventory_path.parent / str(entry.get("npy", ""))).resolve()
+        if not payload.is_relative_to(arm_dir) or not payload.is_file():
+            raise ValueError("formal tensor payload is missing or outside its arm")
+        if sha256_file(payload) != entry.get("payload_sha256"):
+            raise ValueError("formal tensor payload hash mismatch")
 
 
 def _calibration_bundle(args: argparse.Namespace) -> int:
@@ -531,6 +627,14 @@ def _measurement_result(args: argparse.Namespace) -> int:
             raise ValueError("pair manifest calibration binding drift")
         if pair.get("measurement_lock_sha256") != lock_sha:
             raise ValueError("pair manifest measurement lock binding drift")
+        pair_id = pair.get("pair_id")
+        if pair_id not in {"P-M1", "P-M2"}:
+            raise ValueError("unexpected parameter pair")
+        for side in ("off", "on"):
+            inventory = (Path(raw).parent / str(pair.get(f"{side}_inventory", ""))).resolve()
+            validate_inventory_lineage(inventory, args.campaign / f"{pair_id}-{side}", lock, lock_sha)
+            if sha256_file(inventory) != pair.get(f"{side}_inventory_sha256"):
+                raise ValueError("pair inventory hash differs from its arm evidence")
         pair_ids.append(pair.get("pair_id"))
     if pair_ids != ["P-M1", "P-M2"]:
         raise ValueError("pair manifests must be P-M1 then P-M2")

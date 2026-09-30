@@ -30,7 +30,11 @@ from typing import Any
 
 
 def sha256_file(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def tree_hash(root: Path) -> str:
@@ -38,7 +42,7 @@ def tree_hash(root: Path) -> str:
     for path in sorted(item for item in root.rglob("*") if item.is_file()):
         digest.update(str(path.relative_to(root)).encode())
         digest.update(str(path.stat().st_size).encode())
-        digest.update(hashlib.sha256(path.read_bytes()).digest())
+        digest.update(bytes.fromhex(sha256_file(path)))
     return digest.hexdigest()
 
 
@@ -136,45 +140,53 @@ def convert(checkpoint: Path, out: Path, *, arm_name: str) -> dict[str, Any]:
     # plain {key: Tensor} — every dropped leaf is recorded by key and type in
     # the adapter record for review. The trusted-source load below reads this
     # campaign's own arm output only.
-    state = torch.load(payload, map_location="cpu", weights_only=False)
+    try:
+        state = torch.load(payload, map_location="cpu", weights_only=False)
+        flat = flatten_leaves(state)
+        tensors = {key: value for key, value in flat.items() if isinstance(value, torch.Tensor)}
+        dropped = [
+            {"key": key, "type": type(value).__module__ + "." + type(value).__qualname__}
+            for key, value in flat.items()
+            if not isinstance(value, torch.Tensor)
+        ]
+        final_payload = out / "converted_tensors.pt"
+        torch.save(tensors, final_payload)
+        record = {
+            "schema": "C2_927C5DE_DCP_ADAPTER/v1",
+            "status": "PROPOSED_PENDING_REVIEW",
+            "arm_name": arm_name,
+            "source_checkpoint_root": str(checkpoint.resolve()),
+            "source_iteration_dir": str(iteration.resolve()),
+            "source_tree_sha256": source_tree,
+            "source_files": [
+                {"path": str(path.relative_to(iteration)), "bytes": path.stat().st_size} for path in shards
+            ],
+            "converter": "torch.distributed.checkpoint.format_utils.dcp_to_torch_save",
+            "torch_version": torch.__version__,
+            "raw_converted_path": str(payload.resolve()),
+            "raw_converted_sha256": sha256_file(payload),
+            "raw_converted_bytes": payload.stat().st_size,
+            "sanitized_path": str(final_payload.resolve()),
+            "sanitized_sha256": sha256_file(final_payload),
+            "sanitized_bytes": final_payload.stat().st_size,
+            "sanitized_tensor_count": len(tensors),
+            "dropped_non_tensor_leaves": dropped,
+            "dropped_non_tensor_count": len(dropped),
+        }
+        # The sanitized payload must load with the same safety posture as the
+        # inventory exporter itself before anything downstream may read it.
+        sanitized_state = torch.load(final_payload, map_location="cpu", weights_only=True)
+        if not isinstance(sanitized_state, dict) or not sanitized_state:
+            raise RuntimeError("INVALID: sanitized payload is not a non-empty tensor mapping")
+        record["sanitized_tensor_keys"] = len(sanitized_state)
+        (out / "ADAPTER_RECORD.json").write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
+        return record
+    except BaseException:
+        import shutil
 
-    flat = flatten_leaves(state)
-    tensors = {key: value for key, value in flat.items() if isinstance(value, torch.Tensor)}
-    dropped = [
-        {"key": key, "type": type(value).__module__ + "." + type(value).__qualname__}
-        for key, value in flat.items()
-        if not isinstance(value, torch.Tensor)
-    ]
-    final_payload = out / "converted_tensors.pt"
-    torch.save(tensors, final_payload)
-    record = {
-        "schema": "C2_927C5DE_DCP_ADAPTER/v1",
-        "status": "PROPOSED_PENDING_REVIEW",
-        "arm_name": arm_name,
-        "source_checkpoint_root": str(checkpoint.resolve()),
-        "source_iteration_dir": str(iteration.resolve()),
-        "source_tree_sha256": source_tree,
-        "source_files": [{"path": str(path.relative_to(iteration)), "bytes": path.stat().st_size} for path in shards],
-        "converter": "torch.distributed.checkpoint.format_utils.dcp_to_torch_save",
-        "torch_version": torch.__version__,
-        "raw_converted_path": str(payload.resolve()),
-        "raw_converted_sha256": sha256_file(payload),
-        "raw_converted_bytes": payload.stat().st_size,
-        "sanitized_path": str(final_payload.resolve()),
-        "sanitized_sha256": sha256_file(final_payload),
-        "sanitized_bytes": final_payload.stat().st_size,
-        "sanitized_tensor_count": len(tensors),
-        "dropped_non_tensor_leaves": dropped,
-        "dropped_non_tensor_count": len(dropped),
-    }
-    # The sanitized payload must load with the same safety posture as the
-    # inventory exporter itself before anything downstream may read it.
-    sanitized_state = torch.load(final_payload, map_location="cpu", weights_only=True)
-    if not isinstance(sanitized_state, dict) or not sanitized_state:
-        raise RuntimeError("INVALID: sanitized payload is not a non-empty tensor mapping")
-    record["sanitized_tensor_keys"] = len(sanitized_state)
-    (out / "ADAPTER_RECORD.json").write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
-    return record
+        shutil.rmtree(raw_dir, ignore_errors=True)
+        shutil.rmtree(out, ignore_errors=True)
+        raise
 
 
 def main() -> int:

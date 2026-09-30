@@ -79,7 +79,6 @@ def test_dcp_layout_fails_closed_before_any_comparison(tmp_path):
 
 
 def _write_lock(path: pathlib.Path, stage: str, arm_order: list[str]) -> None:
-    import json
 
     import c2_parameter_campaign_927c5de as campaign
 
@@ -106,14 +105,9 @@ def _write_lock(path: pathlib.Path, stage: str, arm_order: list[str]) -> None:
     path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
 
 
-def test_cli_exports_a_measurement_arm_under_a_measurement_lock(tmp_path, monkeypatch):
-    """The verdict needs inventories for ON/OFF arms too, not just calibration.
-
-    The CLI used to require a CALIBRATION lock, which made every measurement
-    arm's inventory inexportable — a gap found before any 927c5de arm ran.
-    """
-    import hashlib
-    import sys
+def test_cli_refuses_unbound_measurement_checkpoint(tmp_path, monkeypatch):
+    """A plausible arm name is not evidence that its checkpoint belongs to that
+    arm."""
 
     lock_path = tmp_path / "P_MEASUREMENT_LOCK.json"
     _write_lock(lock_path, "MEASUREMENT", ["P-M1-off", "P-M1-on", "P-M2-on", "P-M2-off"])
@@ -131,15 +125,14 @@ def test_cli_exports_a_measurement_arm_under_a_measurement_lock(tmp_path, monkey
             str(lock_path),
             "--arm-name",
             "P-M1-off",
+            "--arm-dir",
+            str(tmp_path / "P-M1-off"),
             "--out",
             str(out),
         ],
     )
-    assert inventory.main() == 0
-    payload = json.loads(out.read_text())
-    assert payload["arm_name"] == "P-M1-off"
-    assert payload["lock_sha256"] == hashlib.sha256(lock_path.read_bytes()).hexdigest()
-    assert verdict.read_inventory(out, product_sha="a" * 40, protocol_sha256="e" * 64)
+    assert inventory.main() == 2
+    assert not out.exists()
 
 
 def test_cli_rejects_an_arm_not_named_by_the_supplied_lock(tmp_path, monkeypatch):
@@ -160,6 +153,8 @@ def test_cli_rejects_an_arm_not_named_by_the_supplied_lock(tmp_path, monkeypatch
             str(lock_path),
             "--arm-name",
             "P-M1-off",
+            "--arm-dir",
+            str(tmp_path / "P-M1-off"),
             "--out",
             str(tmp_path / "P-M1-off.json"),
         ],
