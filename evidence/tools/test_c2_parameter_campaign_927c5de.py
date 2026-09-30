@@ -48,6 +48,8 @@ def base_lock(stage="CALIBRATION") -> dict:
         "PROTOCOL_SHA256": "e" * 64,
         "RUNNER_SHA256": "f" * 64,
         "COMPARATOR_SHA256": "1" * 64,
+        "ADAPTER_PATH": str(HERE / "c2_parameter_dcp_adapter_927c5de.py"),
+        "ADAPTER_SHA256": digest(HERE / "c2_parameter_dcp_adapter_927c5de.py"),
         "EXPECTED_STEPS": 48,
         "SAVE": 1,
         "CHECKPOINT_POLICY": "RETAIN_UNTIL_ARCHIVED",
@@ -68,6 +70,17 @@ def test_calibration_lock_rejects_an_on_arm_and_measurement_needs_committed_resu
         campaign.validate_lock(seal(lock))
 
 
+def test_calibration_lock_requires_reviewed_adapter_hash():
+    lock = base_lock()
+    del lock["ADAPTER_SHA256"]
+    with pytest.raises(ValueError, match="ADAPTER_SHA256"):
+        campaign.validate_lock(seal(lock))
+    lock = base_lock()
+    del lock["ADAPTER_PATH"]
+    with pytest.raises(ValueError, match="ADAPTER_PATH"):
+        campaign.validate_lock(seal(lock))
+
+
 def test_validate_arm_rejects_missing_checkpoint_and_identity_drift(tmp_path):
     lock = seal(base_lock())
     lock_sha = "9" * 64
@@ -83,6 +96,7 @@ def test_validate_arm_rejects_missing_checkpoint_and_identity_drift(tmp_path):
         "protocol_sha256": lock["PROTOCOL_SHA256"],
         "runner_sha256": lock["RUNNER_SHA256"],
         "comparator_sha256": lock["COMPARATOR_SHA256"],
+        "adapter_sha256": lock["ADAPTER_SHA256"],
         "expected_steps": 48,
         "job_status": "SUCCEEDED",
         "valid": True,
@@ -136,6 +150,7 @@ def test_measurement_lock_requires_exact_committed_calibration(tmp_path):
         "ENV_FINGERPRINT_SHA256": digest(environment),
         "PROTOCOL_SHA256": digest(protocol),
         "COMPARATOR_SHA256": digest(HERE / "c2_parameter_verdict_927c5de.py"),
+        "ADAPTER_SHA256": digest(HERE / "c2_parameter_dcp_adapter_927c5de.py"),
         "tolerance_table_sha256": "2" * 64,
         "tensor_tolerances": {"x": 0.0},
         "self_sha256": None,
@@ -150,6 +165,7 @@ def test_measurement_lock_requires_exact_committed_calibration(tmp_path):
         environment=environment,
         protocol=protocol,
         comparator=HERE / "c2_parameter_verdict_927c5de.py",
+        adapter=HERE / "c2_parameter_dcp_adapter_927c5de.py",
         expected_steps=48,
         out=tmp_path / "locks",
         calibration_result=result,
@@ -198,6 +214,7 @@ def _lineage_fixture(tmp_path, monkeypatch):
         "protocol_sha256": lock["PROTOCOL_SHA256"],
         "runner_sha256": lock["RUNNER_SHA256"],
         "comparator_sha256": lock["COMPARATOR_SHA256"],
+        "adapter_sha256": lock["ADAPTER_SHA256"],
         "expected_steps": 48,
         "job_status": "SUCCEEDED",
         "valid": True,
@@ -237,6 +254,12 @@ def test_formal_inventory_rejects_manifest_or_adapter_substitution(tmp_path, mon
     arm, lock, lock_sha, output = _lineage_fixture(tmp_path, monkeypatch)
     record = arm / "adapted" / "ADAPTER_RECORD.json"
     payload = json.loads(record.read_text())
+    payload["adapter_sha256"] = "0" * 64
+    record.write_text(json.dumps(payload))
+    with pytest.raises(ValueError, match="frozen code hash mismatch"):
+        campaign.validate_inventory_lineage(output, arm, lock, lock_sha)
+
+    payload["adapter_sha256"] = lock["ADAPTER_SHA256"]
     payload["arm_name"] = "P-C2-off"
     record.write_text(json.dumps(payload))
     with pytest.raises(ValueError, match="adapter identity or arm mismatch"):

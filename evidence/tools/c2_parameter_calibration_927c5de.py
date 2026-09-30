@@ -94,6 +94,7 @@ def build_calibration(inventories: dict[str, dict[str, Any]], identity: dict[str
         "ENV_FINGERPRINT_SHA256": identity["ENV_FINGERPRINT_SHA256"],
         "PROTOCOL_SHA256": identity["PROTOCOL_SHA256"],
         "COMPARATOR_SHA256": identity["COMPARATOR_SHA256"],
+        "ADAPTER_SHA256": identity["ADAPTER_SHA256"],
         "calibration_lock_sha256": identity["LOCK_SHA256"],
         "expected_steps": identity["EXPECTED_STEPS"],
         "inventory_sha256": {name: sha256_file(item["path"]) for name, item in inventories.items()},

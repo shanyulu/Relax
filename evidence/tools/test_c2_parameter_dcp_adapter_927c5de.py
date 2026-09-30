@@ -118,7 +118,12 @@ def test_formal_cli_requires_successful_locked_arm(tmp_path, monkeypatch):
     checkpoint.mkdir(parents=True)
     lock_path = tmp_path / "lock.json"
     lock_path.write_text("{}\n")
-    monkeypatch.setattr(campaign, "load_lock", lambda _path: {"ARM_ORDER": [arm.name]})
+    lock = {
+        "ARM_ORDER": [arm.name],
+        "ADAPTER_PATH": str(pathlib.Path(adapter.__file__).resolve()),
+        "ADAPTER_SHA256": adapter.sha256_file(pathlib.Path(adapter.__file__)),
+    }
+    monkeypatch.setattr(campaign, "load_lock", lambda _path: lock)
 
     def reject_arm(_arm, _lock, _hash):
         raise ValueError("unsuccessful arm")
@@ -136,7 +141,11 @@ def test_formal_cli_accepts_only_the_verified_arm(tmp_path, monkeypatch):
     checkpoint.mkdir(parents=True)
     lock_path = tmp_path / "lock.json"
     lock_path.write_text("{}\n")
-    lock = {"ARM_ORDER": [arm.name]}
+    lock = {
+        "ARM_ORDER": [arm.name],
+        "ADAPTER_PATH": str(pathlib.Path(adapter.__file__).resolve()),
+        "ADAPTER_SHA256": adapter.sha256_file(pathlib.Path(adapter.__file__)),
+    }
     checked = []
     monkeypatch.setattr(campaign, "load_lock", lambda _path: lock)
     monkeypatch.setattr(campaign, "validate_arm", lambda *args: checked.append(args))

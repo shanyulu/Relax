@@ -28,6 +28,7 @@ def identity():
         "ENV_FINGERPRINT_SHA256": "d" * 64,
         "PROTOCOL_SHA256": "e" * 64,
         "COMPARATOR_SHA256": "f" * 64,
+        "ADAPTER_SHA256": "9" * 64,
         "LOCK_SHA256": "1" * 64,
         "EXPECTED_STEPS": 48,
     }
@@ -92,6 +93,8 @@ def _write_lock(path: pathlib.Path, stage: str, arm_order: list[str]) -> None:
         "PROTOCOL_SHA256": "e" * 64,
         "RUNNER_SHA256": "f" * 64,
         "COMPARATOR_SHA256": "0" * 64,
+        "ADAPTER_PATH": str(HERE / "c2_parameter_dcp_adapter_927c5de.py"),
+        "ADAPTER_SHA256": "9" * 64,
         "EXPECTED_STEPS": 48,
         "SAVE": 1,
         "CHECKPOINT_POLICY": "RETAIN_UNTIL_ARCHIVED",

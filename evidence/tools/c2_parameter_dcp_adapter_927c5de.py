@@ -164,6 +164,7 @@ def convert(checkpoint: Path, out: Path, *, arm_name: str) -> dict[str, Any]:
         record = {
             "schema": "C2_927C5DE_DCP_ADAPTER/v1",
             "status": "REVIEWED_TRUSTED_CAMPAIGN_ONLY",
+            "adapter_sha256": sha256_file(Path(__file__).resolve()),
             "arm_name": arm_name,
             "source_checkpoint_root": str(checkpoint.resolve()),
             "source_iteration_dir": str(iteration.resolve()),
@@ -215,6 +216,11 @@ def validate_formal_source(checkpoint: Path, out: Path, *, arm_name: str, arm_di
     lock = load_lock(lock_path)
     if arm_name not in lock["ARM_ORDER"]:
         raise RuntimeError("INVALID: arm is absent from the frozen lock")
+    if (
+        Path(lock["ADAPTER_PATH"]).resolve() != Path(__file__).resolve()
+        or sha256_file(Path(__file__)) != lock["ADAPTER_SHA256"]
+    ):
+        raise RuntimeError("INVALID: running DCP adapter differs from the frozen lock")
     validate_arm(arm, lock, sha256_file(lock_path))
 
 

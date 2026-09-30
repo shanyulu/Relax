@@ -11,9 +11,10 @@ isolation). The affected-acceptance declaration is in PR #378: C2 parameter
 equivalence must be re-established on this build; the `a48a23b` INCOMPLETE
 verdict stands as version-pinned history.
 
-Execution is deferred until GPU access; nothing in this document may be
-edited after the first `927c5de` C2 arm starts (lock-before-see, enforced by
-the tooling below).
+GPU access and the 320 GiB storage gate were restored on 2026-09-30; no formal
+parameter arm had started when this wording was updated. The design and
+decision rule below are unchanged. Nothing in this document may be edited
+after the first `927c5de` C2 arm starts (lock-before-see).
 
 ## 1. Inputs (fixed)
 
@@ -47,9 +48,10 @@ the tooling below).
    phrasing from the `a48a23b` protocol is superseded by this clause). This
    is an envelope over worst-case same-build noise, not a confidence interval.
 2. The tolerance table is hashed into a calibration result and referenced
-   (sha256) by the measurement lock, produced by extending
-   `tools/c2_lock.py` with a `parameter` stage. The comparison tool is
-   committed BEFORE any ON arm runs; no tolerance may be widened afterwards.
+   (SHA-256) by the measurement lock, produced by
+   `tools/c2_parameter_campaign_927c5de.py`. Both locks also pin the reviewed
+   DCP adapter and comparator code hashes. The comparison tool is committed
+   BEFORE any ON arm runs; no tolerance may be widened afterwards.
 3. **ON/OFF measurement pair(s)** (≥2, AB/BA, same everything else).
 
 ## 4. Decision rule (fixed)

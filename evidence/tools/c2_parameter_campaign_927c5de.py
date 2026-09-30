@@ -88,9 +88,12 @@ def validate_lock(lock: dict[str, Any]) -> None:
         ("PROTOCOL_SHA256", 64),
         ("RUNNER_SHA256", 64),
         ("COMPARATOR_SHA256", 64),
+        ("ADAPTER_SHA256", 64),
     ):
         if not re.fullmatch(rf"[0-9a-f]{{{length}}}", str(lock.get(key, ""))):
             raise ValueError(f"missing or invalid {key}")
+    if not isinstance(lock.get("ADAPTER_PATH"), str) or not lock["ADAPTER_PATH"]:
+        raise ValueError("missing ADAPTER_PATH")
     if type(lock.get("EXPECTED_STEPS")) is not int or lock["EXPECTED_STEPS"] <= 0:
         raise ValueError("EXPECTED_STEPS must be positive")
     if lock.get("SAVE") != 1 or lock.get("CHECKPOINT_POLICY") != "RETAIN_UNTIL_ARCHIVED":
@@ -120,7 +123,8 @@ def lock_payload(args: argparse.Namespace, stage: str, *, calibration: dict[str,
     protocol = Path(args.protocol).resolve()
     runner = Path(__file__).resolve()
     comparator = Path(args.comparator).resolve()
-    for path in (recipe, dataset, environment, protocol, runner, comparator):
+    adapter = Path(args.adapter).resolve()
+    for path in (recipe, dataset, environment, protocol, runner, comparator, adapter):
         if not path.is_file():
             raise ValueError(f"missing frozen input: {path}")
     payload: dict[str, Any] = {
@@ -139,6 +143,8 @@ def lock_payload(args: argparse.Namespace, stage: str, *, calibration: dict[str,
         "RUNNER_SHA256": sha256_file(runner),
         "COMPARATOR_PATH": str(comparator),
         "COMPARATOR_SHA256": sha256_file(comparator),
+        "ADAPTER_PATH": str(adapter),
+        "ADAPTER_SHA256": sha256_file(adapter),
         "EXPECTED_STEPS": int(args.expected_steps),
         "SAVE": 1,
         "CHECKPOINT_POLICY": "RETAIN_UNTIL_ARCHIVED",
@@ -188,6 +194,7 @@ def _lock_common_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--environment", type=Path, required=True)
     parser.add_argument("--protocol", type=Path, required=True)
     parser.add_argument("--comparator", type=Path, required=True)
+    parser.add_argument("--adapter", type=Path, required=True)
     parser.add_argument("--expected-steps", type=int, default=48)
     parser.add_argument("--out", type=Path, required=True)
 
@@ -209,6 +216,7 @@ def cmd_measurement_lock(args: argparse.Namespace) -> int:
         "ENV_FINGERPRINT_SHA256",
         "PROTOCOL_SHA256",
         "COMPARATOR_SHA256",
+        "ADAPTER_SHA256",
     )
     for key in required:
         if calibration.get(key) != payload[key]:
@@ -254,6 +262,7 @@ def _validate_execution(args: argparse.Namespace, lock: dict[str, Any], names: l
         ("PROTOCOL_PATH", "PROTOCOL_SHA256"),
         ("RUNNER_PATH", "RUNNER_SHA256"),
         ("COMPARATOR_PATH", "COMPARATOR_SHA256"),
+        ("ADAPTER_PATH", "ADAPTER_SHA256"),
     ):
         if sha256_file(Path(lock[path_key])) != lock[hash_key]:
             raise ValueError(f"frozen input drift: {path_key}")
@@ -368,6 +377,7 @@ def _execute_arm(args: argparse.Namespace, lock: dict[str, Any], name: str, lock
         "protocol_sha256": lock["PROTOCOL_SHA256"],
         "runner_sha256": lock["RUNNER_SHA256"],
         "comparator_sha256": lock["COMPARATOR_SHA256"],
+        "adapter_sha256": lock["ADAPTER_SHA256"],
         "expected_steps": lock["EXPECTED_STEPS"],
         "save": 1,
         "checkpoint_retained": True,
@@ -455,6 +465,7 @@ def validate_arm(arm_dir: Path, lock: dict[str, Any], lock_sha: str) -> dict[str
         ("protocol_sha256", lock["PROTOCOL_SHA256"]),
         ("runner_sha256", lock["RUNNER_SHA256"]),
         ("comparator_sha256", lock["COMPARATOR_SHA256"]),
+        ("adapter_sha256", lock["ADAPTER_SHA256"]),
         ("expected_steps", lock["EXPECTED_STEPS"]),
     ):
         if manifest.get(field) != expected:
@@ -498,6 +509,8 @@ def validate_adapter_source(arm_dir: Path, adapter_dir: Path, lock: dict[str, An
     adapter_dir = adapter_dir.resolve()
     if arm_dir.name not in lock["ARM_ORDER"] or adapter_dir.parent != arm_dir:
         raise ValueError("adapter output must be a direct child of its frozen arm")
+    if digest_file(Path(lock["ADAPTER_PATH"])) != lock["ADAPTER_SHA256"]:
+        raise ValueError("frozen DCP adapter code hash mismatch")
     validate_arm(arm_dir, lock, lock_sha)
     record_path = adapter_dir / "ADAPTER_RECORD.json"
     if not record_path.is_file():
@@ -509,6 +522,11 @@ def validate_adapter_source(arm_dir: Path, adapter_dir: Path, lock: dict[str, An
     sanitized = adapter_dir / "converted_tensors.pt"
     if record.get("schema") != "C2_927C5DE_DCP_ADAPTER/v1" or record.get("arm_name") != arm_dir.name:
         raise ValueError("DCP adapter identity or arm mismatch")
+    if (
+        record.get("status") != "REVIEWED_TRUSTED_CAMPAIGN_ONLY"
+        or record.get("adapter_sha256") != lock["ADAPTER_SHA256"]
+    ):
+        raise ValueError("DCP adapter review status or frozen code hash mismatch")
     if Path(str(record.get("source_checkpoint_root", ""))).resolve() != source_root:
         raise ValueError("DCP adapter source root is not the arm checkpoint")
     if not iteration.is_relative_to(source_root) or not (iteration / ".metadata").is_file():
@@ -595,6 +613,7 @@ def _calibration_bundle(args: argparse.Namespace) -> int:
         "ENV_FINGERPRINT_SHA256": lock["ENV_FINGERPRINT_SHA256"],
         "PROTOCOL_SHA256": lock["PROTOCOL_SHA256"],
         "COMPARATOR_SHA256": lock["COMPARATOR_SHA256"],
+        "ADAPTER_SHA256": lock["ADAPTER_SHA256"],
         "EXPECTED_STEPS": lock["EXPECTED_STEPS"],
         "arm_manifests": {name: sha256_file(args.campaign / name / "manifest.json") for name in arms},
         "checkpoint_roots": {name: str((args.campaign / name / "checkpoints").resolve()) for name in arms},
