@@ -25,6 +25,8 @@ def test_calibration_uses_all_six_off_pairs_and_doubles_maximum() -> None:
     arms = {
         name: {
             "manifest_sha256": name,
+            "resolved_argv_sha256": f"raw-{name}",
+            "normalized_argv_sha256": "normalized-common",
             "loss_series": [float(i) + offset for i in range(campaign.STEPS)],
             "grad_norm_series": [float(i) + offset * 2 for i in range(campaign.STEPS)],
         }
@@ -34,6 +36,8 @@ def test_calibration_uses_all_six_off_pairs_and_doubles_maximum() -> None:
     assert len(result["contrasts"]) == 6
     assert result["tolerances"]["loss_series"] == approx(0.6)
     assert result["tolerances"]["grad_norm_series"] == approx(1.2)
+    assert result["raw_argv_sha256"] == {name: f"raw-{name}" for name in campaign.CALIBRATION_ARMS}
+    assert result["normalized_argv_sha256"] == "normalized-common"
     assert result["_self_sha256"] == campaign.canonical_sha(result)
 
 
@@ -66,7 +70,7 @@ def test_compare_pair_distinguishes_invalid_pair_from_valid_threshold_failure() 
         "token_series": [32] * campaign.STEPS,
         "learning_rate_series": [{"lr": 1e-5}] * campaign.STEPS,
         "update_count": campaign.STEPS,
-        "resolved_argv_sha256": "same",
+        "normalized_argv_sha256": "same",
         "loss_series": [0.0] * campaign.STEPS,
         "grad_norm_series": [0.0] * campaign.STEPS,
     }
@@ -77,6 +81,16 @@ def test_compare_pair_distinguishes_invalid_pair_from_valid_threshold_failure() 
     assert campaign.compare_pair(baseline, too_far, tolerance)["status"] == "NOT_PASS"
     wrong_tokens = {**shifted, "token_series": [31] * campaign.STEPS}
     assert campaign.compare_pair(baseline, wrong_tokens, tolerance)["status"] == "INVALID"
+
+
+def test_normalized_argv_ignores_only_tensorboard_experiment_name() -> None:
+    baseline = ["--seed", "1234", "--lr", "1e-5", "--tb-experiment-name", "arm-a"]
+    other_name = ["--seed", "1234", "--lr", "1e-5", "--tb-experiment-name", "arm-b"]
+    changed_training_arg = ["--seed", "1234", "--lr", "2e-5", "--tb-experiment-name", "arm-b"]
+    assert campaign.normalized_argv_sha256(baseline) == campaign.normalized_argv_sha256(other_name)
+    assert campaign.normalized_argv_sha256(baseline) != campaign.normalized_argv_sha256(changed_training_arg)
+    with pytest.raises(ValueError, match="has no value"):
+        campaign.normalized_argv_sha256(["--seed", "1234", "--tb-experiment-name"])
 
 
 def test_resolved_argv_and_verdict_hashes_detect_tampering() -> None:

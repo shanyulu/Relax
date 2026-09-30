@@ -53,6 +53,8 @@ MODEL_PATH = (
     "/root/autodl-tmp/hf-cache/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca"
 )
 MODEL_CONFIG_PATH = "scripts/models/qwen3-0.6B.sh"
+CALIBRATION_RUNNER_COMMIT = "0220899"
+RUNNER_REL = Path("evidence/tools/native_loss_campaign_927c5de.py")
 
 
 def sha256(path: Path) -> str:
@@ -130,6 +132,11 @@ def committed(root: Path, path: Path, expected_sha: str | None = None) -> str:
     if expected_sha and sha256(path) != expected_sha:
         raise ValueError(f"file hash differs from lock: {rel}")
     return commit
+
+
+def historical_file_sha256(root: Path, commit: str, relpath: Path) -> str:
+    payload = subprocess.check_output(["git", "-C", str(root), "show", f"{commit}:{relpath.as_posix()}"])
+    return hashlib.sha256(payload).hexdigest()
 
 
 def product_preflight(product: Path) -> None:
@@ -224,8 +231,15 @@ def validate_lock(repo: Path, lock_path: Path, stage: str) -> dict[str, Any]:
         raise ValueError("campaign lock self-hash mismatch")
     if lock.get("stage") != stage or lock.get("product_sha") != PRODUCT_SHA:
         raise ValueError("campaign stage/product mismatch")
-    for key, rel in (("runner_sha256", Path(__file__)), ("extractor_sha256", repo / EXTRACTOR_REL)):
-        committed(repo, rel, lock.get(key))
+    if stage == "MEASUREMENT":
+        committed(repo, Path(__file__), lock.get("measurement_runner_sha256"))
+    try:
+        committed(repo, repo / RUNNER_REL, lock.get("runner_sha256"))
+    except ValueError:
+        historic_sha = historical_file_sha256(repo, CALIBRATION_RUNNER_COMMIT, RUNNER_REL)
+        if lock.get("runner_sha256") != historic_sha:
+            raise
+    committed(repo, repo / EXTRACTOR_REL, lock.get("extractor_sha256"))
     committed(repo, repo / PROTOCOL_REL, lock.get("protocol_sha256"))
     if stage == "MEASUREMENT":
         calibration_lock_path = Path(lock.get("calibration_lock_path", ""))
@@ -309,10 +323,11 @@ def validate_arm(arm_dir: Path, lock: dict[str, Any], name: str, job_log: Path) 
     if not parsed.get("native_valid"):
         raise ValueError(f"{name}: invalid native metrics: {parsed.get('extraction_errors')}")
     try:
-        validate_resolved_argv(argv_path.read_bytes())
+        argv = validate_resolved_argv(argv_path.read_bytes())
     except ValueError as exc:
         raise ValueError(f"{name}: invalid resolved launch argv: {exc}") from exc
     parsed["resolved_argv_sha256"] = manifest["resolved_argv_sha256"]
+    parsed["normalized_argv_sha256"] = normalized_argv_sha256(argv)
     return parsed
 
 
@@ -334,13 +349,29 @@ def validate_resolved_argv(payload: bytes, seed: int = SEED) -> list[str]:
     return argv
 
 
+def normalized_argv_sha256(argv: list[str]) -> str:
+    normalized: list[str] = []
+    index = 0
+    while index < len(argv):
+        value = argv[index]
+        normalized.append(value)
+        if value == "--tb-experiment-name":
+            if index + 1 >= len(argv):
+                raise ValueError("TensorBoard experiment-name flag has no value")
+            normalized.append("<per-arm-tensorboard-name>")
+            index += 2
+            continue
+        index += 1
+    return hashlib.sha256(json.dumps(normalized, separators=(",", ":")).encode()).hexdigest()
+
+
 def compare_pair(a: dict[str, Any], b: dict[str, Any], tolerances: dict[str, float]) -> dict[str, Any]:
     gates = {
         "step_ids_equal": a["native_step_ids"] == b["native_step_ids"],
         "token_volume_equal": a["token_series"] == b["token_series"],
         "learning_rate_equal": a["learning_rate_series"] == b["learning_rate_series"],
         "updates_equal": a["update_count"] == b["update_count"] == STEPS,
-        "resolved_argv_equal": a["resolved_argv_sha256"] == b["resolved_argv_sha256"],
+        "resolved_argv_equal": a["normalized_argv_sha256"] == b["normalized_argv_sha256"],
     }
     metrics = {}
     for field in ("loss_series", "grad_norm_series"):
@@ -381,6 +412,8 @@ def calibration_result(lock: dict[str, Any], arm_series: dict[str, dict[str, Any
         "product_sha": PRODUCT_SHA,
         "lock_sha256": lock["_self_sha256"],
         "arm_manifests": {name: arm_series[name]["manifest_sha256"] for name in lock["arm_order"]},
+        "raw_argv_sha256": {name: arm_series[name]["resolved_argv_sha256"] for name in lock["arm_order"]},
+        "normalized_argv_sha256": arm_series[lock["arm_order"][0]]["normalized_argv_sha256"],
         "contrasts": contrasts,
         "tolerances": tolerances,
         "statistical_limit": "Six pairwise contrasts share four arms; envelope only, not CI or independent samples.",
@@ -402,8 +435,8 @@ def command_freeze_calibration(args: argparse.Namespace) -> None:
         arm_dir = root / name
         arm_series[name] = validate_arm(arm_dir, lock, name, arm_dir / "job.log")
         arm_series[name]["manifest_sha256"] = sha256(arm_dir / "manifest.json")
-    if len({value["resolved_argv_sha256"] for value in arm_series.values()}) != 1:
-        raise ValueError("calibration OFF arms resolved to different training argv")
+    if len({value["normalized_argv_sha256"] for value in arm_series.values()}) != 1:
+        raise ValueError("calibration OFF arms differ beyond per-arm TensorBoard naming")
     result = calibration_result(lock, arm_series)
     result["lock_path"] = str(lock_path)
     result["_self_sha256"] = canonical_sha(result)
@@ -464,6 +497,7 @@ def command_create_measurement_lock(args: argparse.Namespace) -> None:
         "calibration_result_sha256": sha256(calibration),
         "calibration_result_commit": calibration_commit,
         "calibration_result_path": str(calibration),
+        "measurement_runner_sha256": sha256(Path(__file__).resolve()),
         "arm_order": MEASUREMENT_ARMS,
         "measurement_pairs": [["L-M1-off", "L-M1-on"], ["L-M2-off", "L-M2-on"]],
         "_self_sha256": None,
