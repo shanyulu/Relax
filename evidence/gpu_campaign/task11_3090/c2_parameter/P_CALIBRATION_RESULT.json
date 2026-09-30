@@ -1,0 +1,69 @@
+{
+  "ADAPTER_SHA256": "28b013f2c2bb230dada3e30f01fbe30b4804b58479ee5b000b833380d3ba8e89",
+  "COMPARATOR_SHA256": "7dffa771ffa57412ffb27813eb0d6629f6e6b20fb478083aeaae3bd430e7aaa9",
+  "DATASET_SHA256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "ENV_FINGERPRINT_SHA256": "38e446df0c339980d5a85db3efa2a938a5be5fbbcaf5beae21bdfc55888e0290",
+  "PRODUCT_SHA": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "PROTOCOL_SHA256": "06824b0ab3fd03c5b27494b55c74e69b4de515d0e56b4845661638b648f0607e",
+  "RECIPE_SHA256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "calibration_lock_sha256": "a5921e7d9c3820671d01a82f8153560a63894dc93f23d2103e28cf1eef72afd1",
+  "contrast_max_abs_delta": {
+    "P-C1/P-C2": {
+      "converted_tensors.pt::decoder.final_layernorm.weight": 0.0,
+      "converted_tensors.pt::decoder.layers.mlp.linear_fc1.layer_norm_weight": 6.103515625e-05,
+      "converted_tensors.pt::decoder.layers.mlp.linear_fc1.weight": 0.000244140625,
+      "converted_tensors.pt::decoder.layers.mlp.linear_fc2.weight": 0.000244140625,
+      "converted_tensors.pt::decoder.layers.self_attention.k_layernorm.weight": 0.000244140625,
+      "converted_tensors.pt::decoder.layers.self_attention.linear_proj.weight": 0.000244140625,
+      "converted_tensors.pt::decoder.layers.self_attention.linear_qkv.layer_norm_weight": 0.0,
+      "converted_tensors.pt::decoder.layers.self_attention.linear_qkv.weight": 0.000244140625,
+      "converted_tensors.pt::decoder.layers.self_attention.q_layernorm.weight": 0.0001220703125,
+      "converted_tensors.pt::embedding.word_embeddings.weight": 0.00048828125,
+      "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.exp_avg": 0.010126417502760887,
+      "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.exp_avg_sq": 0.0005315032321959734,
+      "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.param": 0.00019157241331413388
+    },
+    "P-C3/P-C4": {
+      "converted_tensors.pt::decoder.final_layernorm.weight": 0.0,
+      "converted_tensors.pt::decoder.layers.mlp.linear_fc1.layer_norm_weight": 6.103515625e-05,
+      "converted_tensors.pt::decoder.layers.mlp.linear_fc1.weight": 0.000244140625,
+      "converted_tensors.pt::decoder.layers.mlp.linear_fc2.weight": 0.000244140625,
+      "converted_tensors.pt::decoder.layers.self_attention.k_layernorm.weight": 0.000244140625,
+      "converted_tensors.pt::decoder.layers.self_attention.linear_proj.weight": 0.000244140625,
+      "converted_tensors.pt::decoder.layers.self_attention.linear_qkv.layer_norm_weight": 3.0517578125e-05,
+      "converted_tensors.pt::decoder.layers.self_attention.linear_qkv.weight": 0.000244140625,
+      "converted_tensors.pt::decoder.layers.self_attention.q_layernorm.weight": 0.0001220703125,
+      "converted_tensors.pt::embedding.word_embeddings.weight": 0.00048828125,
+      "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.exp_avg": 0.007888420717790723,
+      "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.exp_avg_sq": 0.0007682992145419121,
+      "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.param": 0.00019905372755602002
+    }
+  },
+  "expected_steps": 48,
+  "inventory_sha256": {
+    "P-C1-off": "27653d0780b93b7b9c038adf0b4a26d7ffe5998066a84b8e67a92e653faa4b84",
+    "P-C2-off": "e6fa29039b1b1af5b7b0f79cef56f1fb62c328875793b46284f6781ba54c6280",
+    "P-C3-off": "b3c78d7707972e7d01342c07af50135f8bed9f79df805e3de996d35278e3a5b9",
+    "P-C4-off": "3a18375355f2009bcb72db5fe9f9f27d1f4a06e2b5976c2205ae94b2a42ac61a"
+  },
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "protocol_sha256": "06824b0ab3fd03c5b27494b55c74e69b4de515d0e56b4845661638b648f0607e",
+  "self_sha256": "8ec98801c5eb4cb83e06157ee4d3dcd36a5d681580efb1b97cba93d7ea8414f1",
+  "status": "FROZEN_OFF_ONLY",
+  "tensor_tolerances": {
+    "converted_tensors.pt::decoder.final_layernorm.weight": 0.0,
+    "converted_tensors.pt::decoder.layers.mlp.linear_fc1.layer_norm_weight": 0.0001220703125,
+    "converted_tensors.pt::decoder.layers.mlp.linear_fc1.weight": 0.00048828125,
+    "converted_tensors.pt::decoder.layers.mlp.linear_fc2.weight": 0.00048828125,
+    "converted_tensors.pt::decoder.layers.self_attention.k_layernorm.weight": 0.00048828125,
+    "converted_tensors.pt::decoder.layers.self_attention.linear_proj.weight": 0.00048828125,
+    "converted_tensors.pt::decoder.layers.self_attention.linear_qkv.layer_norm_weight": 6.103515625e-05,
+    "converted_tensors.pt::decoder.layers.self_attention.linear_qkv.weight": 0.00048828125,
+    "converted_tensors.pt::decoder.layers.self_attention.q_layernorm.weight": 0.000244140625,
+    "converted_tensors.pt::embedding.word_embeddings.weight": 0.0009765625,
+    "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.exp_avg": 0.020252835005521774,
+    "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.exp_avg_sq": 0.0015365984290838242,
+    "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.param": 0.00039810745511204004
+  },
+  "tolerance_table_sha256": "e90ef4717fc54ff09380f978d7bffa044c76273855885c7ffd1686d506df4462"
+}

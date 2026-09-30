@@ -1,0 +1,25 @@
+{
+  "ADAPTER_SHA256": "28b013f2c2bb230dada3e30f01fbe30b4804b58479ee5b000b833380d3ba8e89",
+  "COMPARATOR_SHA256": "7dffa771ffa57412ffb27813eb0d6629f6e6b20fb478083aeaae3bd430e7aaa9",
+  "DATASET_SHA256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "ENV_FINGERPRINT_SHA256": "38e446df0c339980d5a85db3efa2a938a5be5fbbcaf5beae21bdfc55888e0290",
+  "EXPECTED_STEPS": 48,
+  "PRODUCT_SHA": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "PROTOCOL_SHA256": "06824b0ab3fd03c5b27494b55c74e69b4de515d0e56b4845661638b648f0607e",
+  "RECIPE_SHA256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "_self_sha256": "6ef93f8e5b5ed74f4efd73b851eb595e7e78080b2c524e4bc7c94498694cb5ba",
+  "arm_manifests": {
+    "P-C1-off": "c7c4694ea7f8b8b3464624761c0f7973c20e0a4633ef145991668a4f801c6e02",
+    "P-C2-off": "df68a85564e7824e0f7947ffd7021eb140dc4f94ba86ac654a9702cb6aaeebeb",
+    "P-C3-off": "b902951ac82097c6e28cc58f8f5ce4300a6739ffc2838ac297dbd33daa6d6911",
+    "P-C4-off": "43962700146450b8fe60a64e889e1eb57a95498471dc9edd9ad3b4556cb188ed"
+  },
+  "calibration_lock_sha256": "a5921e7d9c3820671d01a82f8153560a63894dc93f23d2103e28cf1eef72afd1",
+  "checkpoint_roots": {
+    "P-C1-off": "/root/autodl-tmp/task11-3090/formal/parameter-calibration-937cf2b/P-C1-off/checkpoints",
+    "P-C2-off": "/root/autodl-tmp/task11-3090/formal/parameter-calibration-937cf2b/P-C2-off/checkpoints",
+    "P-C3-off": "/root/autodl-tmp/task11-3090/formal/parameter-calibration-937cf2b/P-C3-off/checkpoints",
+    "P-C4-off": "/root/autodl-tmp/task11-3090/formal/parameter-calibration-937cf2b/P-C4-off/checkpoints"
+  },
+  "status": "READY_FOR_INVENTORY_EXPORT"
+}

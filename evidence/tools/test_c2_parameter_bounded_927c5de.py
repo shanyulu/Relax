@@ -17,6 +17,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import c2_parameter_bounded_927c5de as bounded  # noqa: E402
 import c2_parameter_calibration_927c5de as calibration  # noqa: E402
 import c2_parameter_calibration_bounded_927c5de as lazy_calibration  # noqa: E402
+import c2_parameter_execution_lock_927c5de as execution  # noqa: E402
 import c2_parameter_pair_manifest_927c5de as pair_builder  # noqa: E402
 import c2_parameter_verdict_927c5de as frozen  # noqa: E402
 import test_c2_parameter_inventory_927c5de as calibration_fixtures  # noqa: E402
@@ -226,3 +227,67 @@ def test_pair_two_keeps_treatment_labels_despite_ba_order(tmp_path, monkeypatch)
     assert second["off_inventory"] == "P-M2-off/inventory.json"
     with pytest.raises(ValueError, match="overwrite"):
         pair_builder.build(tmp_path, cal, lock_path)
+
+
+def test_execution_lock_rejects_drift_and_uncommitted_inputs(tmp_path, monkeypatch):
+    cal, _, _ = fixtures.setup_case(tmp_path)
+    measurement = tmp_path / "measurement.json"
+    measurement.write_text("{}")
+    source = tmp_path / "source.py"
+    source.write_text("# fixture\n")
+    lock = {
+        "STAGE": "MEASUREMENT",
+        "CALIBRATION_RESULT_SHA256": bounded.sha256_file(cal),
+        "PRODUCT_SHA": fixtures.PRODUCT,
+        "ARM_ORDER": ["P-M1-off", "P-M1-on", "P-M2-on", "P-M2-off"],
+        "EXPECTED_STEPS": 48,
+    }
+    monkeypatch.setattr(execution, "load_lock", lambda _: lock)
+    monkeypatch.setattr(execution, "committed_file", lambda *_: "1" * 40)
+    out = tmp_path / "execution.json"
+    execution.create(tmp_path, measurement, cal, [source], out)
+    assert execution.verify(tmp_path, out)["expected_steps"] == 48
+    source.write_text("# drift\n")
+    with pytest.raises(ValueError, match="source drift"):
+        execution.verify(tmp_path, out)
+    source.write_text("# fixture\n")
+
+    def uncommitted(*_):
+        raise ValueError("uncommitted execution input")
+
+    monkeypatch.setattr(execution, "committed_file", uncommitted)
+    with pytest.raises(ValueError, match="uncommitted"):
+        execution.verify(tmp_path, out)
+
+
+@pytest.mark.parametrize("message", ["missing manifest: absent", "P-M1-off: retained checkpoint missing"])
+def test_formal_missing_evidence_is_incomplete(tmp_path, monkeypatch, message):
+    import c2_parameter_campaign_927c5de as campaign
+
+    cal, pairs, out = fixtures.setup_case(tmp_path)
+
+    def reject(_):
+        raise ValueError(message)
+
+    monkeypatch.setattr(campaign, "_measurement_result", reject)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "bounded",
+            "--lock",
+            str(tmp_path / "lock.json"),
+            "--campaign",
+            str(tmp_path),
+            "--calibration-result",
+            str(cal),
+            "--pair-manifest",
+            str(pairs[0]),
+            "--pair-manifest",
+            str(pairs[1]),
+            "--out",
+            str(out),
+        ],
+    )
+    assert bounded.main() == 1
+    assert json.loads(out.read_text())["verdict"] == "INCOMPLETE"

@@ -1,0 +1,7 @@
+validated lineage + identity: P-C1-off
+validated lineage + identity: P-C2-off
+validated lineage + identity: P-C3-off
+validated lineage + identity: P-C4-off
+contrast P-C1/P-C2 complete
+contrast P-C3/P-C4 complete
+wrote evidence/gpu_campaign/task11_3090/c2_parameter/P_CALIBRATION_RESULT.json (self-sha 8ec98801c5eb)

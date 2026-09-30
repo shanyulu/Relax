@@ -210,7 +210,11 @@ def main() -> int:
     try:
         return campaign._measurement_result(args)
     except (ValueError, OSError, frozen.InvalidError, frozen.IncompleteError) as exc:
-        verdict = "INCOMPLETE" if isinstance(exc, (FileNotFoundError, frozen.IncompleteError)) else "INVALID"
+        missing = isinstance(exc, (FileNotFoundError, frozen.IncompleteError)) or str(exc).startswith(
+            "missing manifest:"
+        )
+        missing = missing or str(exc).endswith(": retained checkpoint missing")
+        verdict = "INCOMPLETE" if missing else "INVALID"
         payload = frozen.result_payload(verdict, str(exc), calibration=args.calibration_result, pairs=[])
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
