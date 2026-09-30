@@ -1,8 +1,9 @@
 # C2 parameter campaign — storage and DCP adapter escalation (927c5de)
 
-Status: **parameter arms remain STOPPED.** The layout probe (`PROBE_LAYOUT_RECORD.json`)
-settled both blockers on 2026-09-29; this document records the adapter work completed
-since and the decision required to resume. No formal parameter lock exists.
+Status on 2026-09-30: **storage and local adapter-review gates cleared; formal
+parameter arms not yet run.** The original 2026-09-29 probe and its failed
+storage gate remain historical facts. See
+`gpu_campaign/task11_3090/C2_DCP_ADAPTER_REVIEW.md` for the new-machine review.
 
 ## 1. Blockers (measured, not estimated)
 
@@ -11,7 +12,7 @@ since and the decision required to resume. No formal parameter lock exists.
 | Checkpoint layout | Megatron DCP sharded (`__0..3_0.distcp` + `.metadata`), 9 files, 7.774 GiB                                                | The inventory exporter correctly refuses DCP; the checklist requires a separately reviewed adapter before any formal lock |
 | Storage gate      | The original DCP-only floor was `8 × 7.774 × 1.20 = 74.63 GiB`; the adapter also retains three additional representations | FAILS before payload expansion; the full retention calculation is in §3                                                   |
 
-## 2. Adapter: implemented, tested, proven on the real fixture — PROPOSED_PENDING_REVIEW
+## 2. Adapter: reviewed for campaign-owned DCP only
 
 `tools/c2_parameter_dcp_adapter_927c5de.py` converts one retained DCP iteration with
 torch's own offline utility (`torch.distributed.checkpoint.format_utils.dcp_to_torch_save`),
@@ -34,12 +35,10 @@ recorded and dropped) → `c2_parameter_inventory_927c5de.export_inventory` → 
 `7d7ace9c9a2222b2…`; subsequent CPU guards cover conversion failure,
 post-conversion failure, swapped-arm lineage, altered DCP bytes and short jobs.
 
-Reviewer checklist (what "separately reviewed" must confirm before a formal lock may
-reference this adapter): the converter choice and its `weights_only=False` byte-payload
-path is acceptable for this campaign's own arm output; the sanitise-drop list contains
-nothing parameter-equivalence needs; the sanitised payload's `weights_only` posture is
-the same as the inventory exporter's; the conversion is deterministic for a fixed source
-tree and torch build.
+The separate local review repeated conversion from the retained source: raw and
+sanitised payload hashes, tensor count, and dropped-leaf key/type list matched
+exactly. The CLI was additionally fenced so a successful frozen arm is verified
+before the `weights_only=False` path. This is not approval for untrusted DCP.
 
 ## 3. Storage: the real arithmetic after the end-to-end run
 
@@ -52,12 +51,14 @@ No retained representation may be deleted under the current protocol.
 
 ## 4. Selected route and remaining gate
 
-The selected route is the unchanged eight-arm protocol with a new **≥320 GiB
-writable durable volume**. Its path has not been supplied. The adapter remains
-`PROPOSED_PENDING_REVIEW`; approval must cover trusted-source deserialization,
-the dropped-leaf list and the schema-2 arm→DCP→adapter→inventory chain. A
-retention-policy amendment or accepting INCOMPLETE would be a different
-decision and is not assumed here.
+The unchanged eight-arm protocol now has a 400 GiB data volume at
+`/root/autodl-tmp`, with ~354 GiB free after removing the duplicate review
+conversion. The ≥320 GiB **start** gate and local trusted-source adapter review
+are met. Formal locks must still pin the reviewed adapter's exact hash before
+the first arm. All arm checkpoints and intermediate conversions remain on the
+volume; the repository's 500 KB hook does not permit committing the raw trees.
+An external artifact channel is required before claiming public raw-data replay.
 
-Until both gates land, the historical `a48a23b` verdict stands: INCOMPLETE — 0 metric
-violations, 2 missing parameter-evidence items.
+Until the eight-arm campaign has a frozen comparison verdict, the historical
+`a48a23b` verdict stands: INCOMPLETE — 0 metric violations, 2 missing
+parameter-evidence items.

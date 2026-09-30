@@ -15,8 +15,8 @@ existing output. The converted tree is what
 
 The converter and the intermediate load deserialize checkpoint byte payloads;
 only use this tool on checkpoints produced by this campaign's own training
-jobs. Status: PROPOSED for review — no formal parameter lock may reference this
-adapter until the review lands (see STORAGE_AND_ADAPTER_ESCALATION_927C5DE.md).
+jobs. The CLI validates a successful, locked arm before decoding. This is not
+an untrusted-checkpoint converter; see the 3090 adapter review record.
 """
 
 from __future__ import annotations
@@ -163,7 +163,7 @@ def convert(checkpoint: Path, out: Path, *, arm_name: str) -> dict[str, Any]:
         torch.save(tensors, final_payload)
         record = {
             "schema": "C2_927C5DE_DCP_ADAPTER/v1",
-            "status": "PROPOSED_PENDING_REVIEW",
+            "status": "REVIEWED_TRUSTED_CAMPAIGN_ONLY",
             "arm_name": arm_name,
             "source_checkpoint_root": str(checkpoint.resolve()),
             "source_iteration_dir": str(iteration.resolve()),
@@ -199,15 +199,39 @@ def convert(checkpoint: Path, out: Path, *, arm_name: str) -> dict[str, Any]:
         raise
 
 
+def validate_formal_source(checkpoint: Path, out: Path, *, arm_name: str, arm_dir: Path, lock_path: Path) -> None:
+    """Verify campaign ownership before the CLI deserializes DCP bytes."""
+    arm = arm_dir.resolve()
+    source = checkpoint.resolve()
+    if arm.name != arm_name or source != (arm / "checkpoints").resolve() or not source.is_relative_to(arm):
+        raise RuntimeError("INVALID: DCP source must be the named campaign arm's checkpoint")
+    if checkpoint.is_symlink() or any(path.is_symlink() for path in checkpoint.rglob("*")):
+        raise RuntimeError("INVALID: DCP source may not contain symlinks")
+    if out.resolve().parent != arm:
+        raise RuntimeError("INVALID: adapter output must be a direct child of its campaign arm")
+
+    from c2_parameter_campaign_927c5de import load_lock, validate_arm
+
+    lock = load_lock(lock_path)
+    if arm_name not in lock["ARM_ORDER"]:
+        raise RuntimeError("INVALID: arm is absent from the frozen lock")
+    validate_arm(arm, lock, sha256_file(lock_path))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--arm-name", required=True)
+    parser.add_argument("--arm-dir", type=Path, required=True)
+    parser.add_argument("--lock", type=Path, required=True)
     args = parser.parse_args()
     try:
+        validate_formal_source(
+            args.checkpoint, args.out, arm_name=args.arm_name, arm_dir=args.arm_dir, lock_path=args.lock
+        )
         record = convert(args.checkpoint, args.out, arm_name=args.arm_name)
-    except RuntimeError as exc:
+    except (RuntimeError, ValueError, OSError, json.JSONDecodeError) as exc:
         print(str(exc), file=sys.stderr)
         return 1 if str(exc).startswith("INCOMPLETE:") else 2
     print(

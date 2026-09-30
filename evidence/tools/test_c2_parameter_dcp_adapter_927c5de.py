@@ -19,6 +19,7 @@ from torch.distributed.checkpoint.state_dict_saver import save as dcp_save
 HERE = pathlib.Path(__file__).parent
 sys.path.insert(0, str(HERE))
 
+import c2_parameter_campaign_927c5de as campaign  # noqa: E402
 import c2_parameter_dcp_adapter_927c5de as adapter  # noqa: E402
 
 
@@ -46,7 +47,7 @@ def test_synthetic_dcp_round_trips_through_the_adapter(tmp_path):
     make_dcp(source)
     out = tmp_path / "converted"
     record = adapter.convert(source.parent, out, arm_name="P-C1-off")
-    assert record["status"] == "PROPOSED_PENDING_REVIEW"
+    assert record["status"] == "REVIEWED_TRUSTED_CAMPAIGN_ONLY"
     assert record["source_tree_sha256"] == adapter.tree_hash(source)
     assert record["sanitized_tensor_count"] == 2
     assert record["dropped_non_tensor_count"] == 0
@@ -89,6 +90,58 @@ def test_adapter_rejects_multiple_nested_checkpoint_runs(tmp_path):
         (run / "latest_checkpointed_iteration.txt").write_text("3\n")
     with pytest.raises(RuntimeError, match="multiple DCP checkpoint markers"):
         adapter.find_iteration(root)
+
+
+def test_formal_cli_rejects_unowned_dcp_before_deserialization(tmp_path):
+    arm = tmp_path / "P-C1-off"
+    arm.mkdir()
+    with pytest.raises(RuntimeError, match="named campaign arm"):
+        adapter.validate_formal_source(
+            tmp_path / "untrusted", arm / "converted", arm_name=arm.name, arm_dir=arm, lock_path=tmp_path / "lock.json"
+        )
+
+
+def test_formal_cli_rejects_symlinked_dcp_before_deserialization(tmp_path):
+    arm = tmp_path / "P-C1-off"
+    checkpoint = arm / "checkpoints"
+    checkpoint.mkdir(parents=True)
+    (checkpoint / "outside").symlink_to(tmp_path / "untrusted")
+    with pytest.raises(RuntimeError, match="may not contain symlinks"):
+        adapter.validate_formal_source(
+            checkpoint, arm / "converted", arm_name=arm.name, arm_dir=arm, lock_path=tmp_path / "lock.json"
+        )
+
+
+def test_formal_cli_requires_successful_locked_arm(tmp_path, monkeypatch):
+    arm = tmp_path / "P-C1-off"
+    checkpoint = arm / "checkpoints"
+    checkpoint.mkdir(parents=True)
+    lock_path = tmp_path / "lock.json"
+    lock_path.write_text("{}\n")
+    monkeypatch.setattr(campaign, "load_lock", lambda _path: {"ARM_ORDER": [arm.name]})
+
+    def reject_arm(_arm, _lock, _hash):
+        raise ValueError("unsuccessful arm")
+
+    monkeypatch.setattr(campaign, "validate_arm", reject_arm)
+    with pytest.raises(ValueError, match="unsuccessful arm"):
+        adapter.validate_formal_source(
+            checkpoint, arm / "converted", arm_name=arm.name, arm_dir=arm, lock_path=lock_path
+        )
+
+
+def test_formal_cli_accepts_only_the_verified_arm(tmp_path, monkeypatch):
+    arm = tmp_path / "P-C1-off"
+    checkpoint = arm / "checkpoints"
+    checkpoint.mkdir(parents=True)
+    lock_path = tmp_path / "lock.json"
+    lock_path.write_text("{}\n")
+    lock = {"ARM_ORDER": [arm.name]}
+    checked = []
+    monkeypatch.setattr(campaign, "load_lock", lambda _path: lock)
+    monkeypatch.setattr(campaign, "validate_arm", lambda *args: checked.append(args))
+    adapter.validate_formal_source(checkpoint, arm / "converted", arm_name=arm.name, arm_dir=arm, lock_path=lock_path)
+    assert checked == [(arm, lock, adapter.sha256_file(lock_path))]
 
 
 def test_non_dcp_layout_fails_closed(tmp_path):
