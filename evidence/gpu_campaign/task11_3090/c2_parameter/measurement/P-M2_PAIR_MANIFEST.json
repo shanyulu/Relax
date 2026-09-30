@@ -1,0 +1,13 @@
+{
+  "calibration_sha256": "1939d53bb789427cf13f249f64693fb8c91a78a1186ad17e2b8f1cd66ad9a364",
+  "measurement_lock_sha256": "cc574c60253d87296cc335276d5fd2050d3c37d792e96cbc37e912af0717c1f2",
+  "off_arm": "P-M2-off",
+  "off_inventory": "P-M2-off/inventory.json",
+  "off_inventory_sha256": "3143817207624db035d8be9a4ed49f9e4ccf56760e351ebab9c71d1ff01a2f6a",
+  "on_arm": "P-M2-on",
+  "on_inventory": "P-M2-on/inventory.json",
+  "on_inventory_sha256": "bc530dd0201908cc813717c05fe001675806666e57411a6287c18524510fa6a0",
+  "pair_id": "P-M2",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "protocol_sha256": "06824b0ab3fd03c5b27494b55c74e69b4de515d0e56b4845661638b648f0607e"
+}

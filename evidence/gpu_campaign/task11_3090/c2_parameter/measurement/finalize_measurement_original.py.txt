@@ -1,0 +1,130 @@
+#!/usr/bin/env python3
+"""Verify completed small records without rereading large tensor payloads."""
+
+import hashlib
+import json
+import subprocess
+import tarfile
+from collections import Counter
+from pathlib import Path
+
+REPO = Path("/tmp/codex-task11-evidence")
+BASE = REPO / "evidence/gpu_campaign/task11_3090/c2_parameter"
+CAMPAIGN = Path(__file__).parent
+PRODUCT = Path("/root/autodl-tmp/relax-work/task11-c2-927c5de")
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def canonical(value):
+    return hashlib.sha256(json.dumps({**value, "self_sha256": None}, sort_keys=True,
+                                     separators=(",", ":")).encode()).hexdigest()
+
+
+def checked(path):
+    value = json.loads(path.read_text())
+    assert value["self_sha256"] == canonical(value), f"self hash mismatch: {path}"
+    return value
+
+
+def events(text):
+    return {line.split()[0]: int(line.split()[1]) for line in text.splitlines()}
+
+
+def main():
+    result_path = BASE / "P_MEASUREMENT_RESULT.json"
+    assert result_path.is_file(), "comparison still pending; do not finalize"
+    rows = [json.loads(line) for line in (CAMPAIGN / "analysis_memory.jsonl").read_text().splitlines()]
+    assert rows[-1]["state"] != "RUNNING", "memory watcher still active; wait for its terminal record"
+    calibration = checked(BASE / "P_CALIBRATION_RESULT.json")
+    result = checked(result_path)
+    control = checked(BASE / "P_CONTROL_AUDIT.json")
+    assert result["calibration_sha256"] == sha(BASE / "P_CALIBRATION_RESULT.json")
+    pair_ids = [pair["pair_id"] for pair in result["pairs"]]
+    assert result["verdict"] in {"PASS", "NOT_PASS", "INCOMPLETE", "INVALID"}
+    if result["verdict"] in {"PASS", "NOT_PASS"}:
+        assert pair_ids == ["P-M1", "P-M2"]
+    else:
+        assert pair_ids == ["P-M1", "P-M2"][:len(pair_ids)]
+    assert subprocess.check_output(["git", "-C", str(PRODUCT), "rev-parse", "HEAD"], text=True).strip() == calibration["product_sha"]
+    assert not subprocess.check_output(["git", "-C", str(PRODUCT), "status", "--porcelain"], text=True).strip()
+    subprocess.run(["python3", "evidence/tools/c2_parameter_execution_lock_927c5de.py", "verify",
+                    "--repo", str(REPO), "--lock", str(BASE / "locks/P_EXECUTION_LOCK.json")], cwd=REPO, check=True)
+    pairs = {}
+    archives = {}
+    for pair in result["pairs"]:
+        name = pair["pair_id"]
+        manifest_path = CAMPAIGN / f"{name}_PAIR_MANIFEST.json"
+        assert pair["manifest_sha256"] == sha(manifest_path)
+        assert (BASE / "measurement" / manifest_path.name).read_bytes() == manifest_path.read_bytes()
+        manifest = json.loads(manifest_path.read_text())
+        for side in ("off", "on"):
+            arm = f"{name}-{side}"
+            source = CAMPAIGN / arm
+            archived = BASE / "measurement" / arm
+            assert manifest[f"{side}_arm"] == arm
+            for filename in ("manifest.json", "inventory.json"):
+                assert (source / filename).read_bytes() == (archived / filename).read_bytes(), f"archive drift: {arm}/{filename}"
+            archives[arm] = {}
+            for archive_name in ("raw_logs.tar.gz", "observer_raw.tar.gz"):
+                archive_path = archived / archive_name
+                if not archive_path.exists():
+                    assert archive_name == "observer_raw.tar.gz" and side == "off"
+                    continue
+                with tarfile.open(archive_path, "r:gz") as archive:
+                    members = [member for member in archive.getmembers() if member.isfile()]
+                    assert len({member.name for member in members}) == len(members), "duplicate archive member"
+                    if archive_name == "raw_logs.tar.gz":
+                        expected = {"job.log", "submit.log", "post_adapter.log", "post_inventory.log"}
+                        expected |= {str(path.relative_to(source)) for path in (source / "submit-logs").rglob("*") if path.is_file()}
+                    else:
+                        expected = {str(path.relative_to(source)) for path in (source / "straggler").rglob("*") if path.is_file()}
+                    assert {member.name for member in members} == expected, f"incomplete archive: {arm}/{archive_name}"
+                    for member in members:
+                        assert not Path(member.name).is_absolute() and ".." not in Path(member.name).parts
+                        assert archive.extractfile(member).read() == (source / member.name).read_bytes(), f"archive drift: {arm}/{member.name}"
+                archives[arm][archive_name] = {"sha256": sha(archive_path), "files": len(members)}
+            assert (source / "adapted/ADAPTER_RECORD.json").read_bytes() == (archived / "ADAPTER_RECORD.json").read_bytes()
+            inventory = checked(source / "inventory.json")
+            keys = [tensor["name"] for tensor in inventory["tensors"]]
+            assert len(keys) == 182 and len(set(keys)) == 182
+            assert set(keys) == set(pair["tensors"])
+            assert pair[f"{side}_inventory_sha256"] == sha(source / "inventory.json")
+            assert control["arms"][arm]["manifest_sha256"] == sha(source / "manifest.json")
+        pairs[name] = {"tensor_count": len(pair["tensors"]),
+                       "states": dict(Counter(item["state"] for item in pair["tensors"].values())),
+                       "violations": pair["violations"], "missing_tolerances": pair["missing_tolerances"]}
+    running = [row for row in rows if row["state"] == "RUNNING"]
+    first, last = events(running[0]["cgroup_memory_events"]), events(running[-1]["cgroup_memory_events"])
+    telemetry = {
+        "coverage": "partial; watcher started after comparator; sampled peaks only",
+        "running_samples": len(running), "terminal_state": rows[-1]["state"],
+        "rss_sampled_peak_bytes": max(row["rss_kib"] * 1024 for row in running),
+        "cgroup_sampled_peak_bytes": max(row["cgroup_current_bytes"] for row in running),
+        "cgroup_limit_bytes": int(running[0]["cgroup_max_bytes"]),
+        "memory_events_first": first, "memory_events_last": last,
+        "memory_events_change": {key: last[key] - first[key] for key in first},
+        "first_sample_unix": running[0]["time_unix"], "last_sample_unix": rows[-1]["time_unix"],
+        "raw_samples_sha256": sha(CAMPAIGN / "analysis_memory.jsonl"),
+    }
+    payload = {
+        "schema": "C2_PARAMETER_COMPLETION_AUDIT/v1", "product_sha": calibration["product_sha"],
+        "scope": "final-checkpoint parameter gate only; not whole C2 or Task11 acceptance",
+        "verdict": result["verdict"], "reason": result["reason"], "result_file_sha256": sha(result_path),
+        "result_self_sha256": result["self_sha256"], "calibration_file_sha256": sha(BASE / "P_CALIBRATION_RESULT.json"),
+        "frozen_tolerance_table_sha256": calibration["tolerance_table_sha256"],
+        "control_audit_sha256": sha(BASE / "P_CONTROL_AUDIT.json"), "pairs": pairs, "archives": archives,
+        "telemetry": telemetry, "audit_source_sha256": sha(Path(__file__)),
+        "originals_availability": "LOCAL_RETAINED; PUBLIC_RECOMPUTATION_NOT_CLOSED", "self_sha256": None,
+    }
+    payload["self_sha256"] = canonical(payload)
+    out = BASE / "P_COMPLETION_AUDIT.json"
+    with out.open("x") as target:
+        target.write(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+    print(json.dumps(payload, indent=2, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

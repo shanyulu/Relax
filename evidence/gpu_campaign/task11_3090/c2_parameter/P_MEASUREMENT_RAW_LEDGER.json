@@ -1,0 +1,271 @@
+{
+  "arms": [
+    {
+      "adapter": {
+        "adapter_sha256": "28b013f2c2bb230dada3e30f01fbe30b4804b58479ee5b000b833380d3ba8e89",
+        "dropped_non_tensor_count": 48,
+        "raw_converted_bytes": 8344822371,
+        "raw_converted_sha256": "f6c36e8f9dc5b77689cede8b4a86f73905f39f6582b63ae7b9b4227e93043d37",
+        "sanitized_bytes": 8344751703,
+        "sanitized_sha256": "c8520a5b594f936954fe847f8bd9aed4361c9470b90384d1318913254477d821",
+        "sanitized_tensor_count": 182,
+        "source_iteration_dir": "/root/autodl-tmp/task11-3090/formal/parameter-measurement-4c74209/P-M1-off/checkpoints/sft/P-M1-off/iter_0000047",
+        "source_tree_sha256": "acc4fc13f6d2dc4534f8a885033e56eb191638266cc2adee9d002d42dc4d8a60",
+        "status": "REVIEWED_TRUSTED_CAMPAIGN_ONLY",
+        "torch_version": "2.8.0+cu128"
+      },
+      "adapter_record_sha256": "d6d7f5816ec5126bf427eaac8082c070dd3fdf0a05878fdb696fc00e8f03d659",
+      "arm": "P-M1-off",
+      "checkpoint_dir_bytes": 8346854375,
+      "checkpoint_dir_gib": 7.77,
+      "finished_at": 1790759820.5171323,
+      "inventory": {
+        "checkpoint_tree_sha256": "8eeff4ce32cfb22033ca10583de9127f4c443a3d38d49957f1c42f4bbe2f738d",
+        "payload_count": 182,
+        "payload_dir": "inventory.payloads",
+        "payload_dir_bytes": 9536813280,
+        "schema_version": 2,
+        "tensor_count": 182
+      },
+      "inventory_sha256": "0196f4f24a92c194cff9cc57a6bf4d139a80582a4f5967d943b3ca7cbbf28cbc",
+      "job_id": "codex-c2p-927c5de2-parameter-measurement-4c74209-P-M1-off",
+      "job_status": "SUCCEEDED",
+      "manifest_sha256": "4c12420361248f3b70fba5660b4487e6cf9350e4ddbe19f3bffcfa9469c30a37",
+      "native_summary": {
+        "arm": "P-M1-off",
+        "extraction_errors": 0,
+        "grad_norm_series": 48,
+        "learning_rate_series": 48,
+        "log_present": true,
+        "loss_series": 48,
+        "nan_inf_findings": 0,
+        "native_step_ids": 48,
+        "native_valid": true,
+        "step_ids_contiguous": true,
+        "token_series": 48,
+        "train_time_series": 48,
+        "update_count": 48
+      },
+      "native_valid": true,
+      "raw_logs": {
+        "job.log": {
+          "bytes": 334392,
+          "sha256": "0ceaa768dda805d99bdfa181684598cdba8632efcf8aa5dbd8ef4ba30154a86d"
+        },
+        "submit-logs/P-M1-off-2026-09-30-17:12:06.log": {
+          "bytes": 3877,
+          "sha256": "93e6579b04d6e8929522f81f1e98c80d7a639b1ee6af0683bf02d8277dd0931b"
+        },
+        "submit.log": {
+          "bytes": 19832,
+          "sha256": "8171dba67df8e250f52970dc25a73870d748e6ef73e6ec884176f1a444381f67"
+        }
+      },
+      "resources_returned": true,
+      "started_at": 1790759518.978368,
+      "valid": true
+    },
+    {
+      "adapter": {
+        "adapter_sha256": "28b013f2c2bb230dada3e30f01fbe30b4804b58479ee5b000b833380d3ba8e89",
+        "dropped_non_tensor_count": 48,
+        "raw_converted_bytes": 8344822371,
+        "raw_converted_sha256": "d664a2a4514a7c5ee8896235bcc203f7fb22f3caf09e2e1b4c3a8d835633c89f",
+        "sanitized_bytes": 8344751703,
+        "sanitized_sha256": "5f5746333b84e99a44c23f0d962fa43abb1248ff84f09f299042939453bc8d38",
+        "sanitized_tensor_count": 182,
+        "source_iteration_dir": "/root/autodl-tmp/task11-3090/formal/parameter-measurement-4c74209/P-M1-on/checkpoints/sft/P-M1-on/iter_0000047",
+        "source_tree_sha256": "85b193acebfbd1c5a1d07e2927a0109bf0fb1bd5a5b115a72fd2309323877694",
+        "status": "REVIEWED_TRUSTED_CAMPAIGN_ONLY",
+        "torch_version": "2.8.0+cu128"
+      },
+      "adapter_record_sha256": "22cb8bba7db1c35d34025746e597e2ddf7b8da824784f553b75df5d04bb42bee",
+      "arm": "P-M1-on",
+      "checkpoint_dir_bytes": 8346854373,
+      "checkpoint_dir_gib": 7.77,
+      "finished_at": 1790760123.0353765,
+      "inventory": {
+        "checkpoint_tree_sha256": "070c1e44f283123f9020afb05c40f459e7f07f9376281e5fbf2e82c26580e8b0",
+        "payload_count": 182,
+        "payload_dir": "inventory.payloads",
+        "payload_dir_bytes": 9536813280,
+        "schema_version": 2,
+        "tensor_count": 182
+      },
+      "inventory_sha256": "4cc311feae49fa63440439f536d864a5f05f3df866d8ef4f0c3302e94d49877a",
+      "job_id": "codex-c2p-927c5de2-parameter-measurement-4c74209-P-M1-on",
+      "job_status": "SUCCEEDED",
+      "manifest_sha256": "c534758b2a6d5631ee10e99ba444ea4940d10657ca84b433a7fc30ac831dae33",
+      "native_summary": {
+        "arm": "P-M1-on",
+        "extraction_errors": 0,
+        "grad_norm_series": 48,
+        "learning_rate_series": 48,
+        "log_present": true,
+        "loss_series": 48,
+        "nan_inf_findings": 0,
+        "native_step_ids": 48,
+        "native_valid": true,
+        "step_ids_contiguous": true,
+        "token_series": 48,
+        "train_time_series": 48,
+        "update_count": 48
+      },
+      "native_valid": true,
+      "raw_logs": {
+        "job.log": {
+          "bytes": 338630,
+          "sha256": "1119050f64709f3ff25fd032827087fce4c1600398ac6aecee15d3e5eb43dbc1"
+        },
+        "submit-logs/P-M1-on-2026-09-30-17:17:10.log": {
+          "bytes": 3017,
+          "sha256": "7b31a132c0fb6acc259d861a9bf638643954d32abfa9f0ea10a7c79e12564079"
+        },
+        "submit.log": {
+          "bytes": 23434,
+          "sha256": "cf0a1113a3ddf64b461801ee227e189c6afdbba72a78601f7cbb2b1a0352500c"
+        }
+      },
+      "resources_returned": true,
+      "started_at": 1790759822.6521332,
+      "valid": true
+    },
+    {
+      "adapter": {
+        "adapter_sha256": "28b013f2c2bb230dada3e30f01fbe30b4804b58479ee5b000b833380d3ba8e89",
+        "dropped_non_tensor_count": 48,
+        "raw_converted_bytes": 8344822371,
+        "raw_converted_sha256": "58f38924891cb6c43adc880d5f6bfb9f9d84aff8472b6ce0cb6eadca85e97386",
+        "sanitized_bytes": 8344751703,
+        "sanitized_sha256": "2be73cf133c60afea3caa2cf59a46d913264c5add6cf847891bcd3108bb864ff",
+        "sanitized_tensor_count": 182,
+        "source_iteration_dir": "/root/autodl-tmp/task11-3090/formal/parameter-measurement-4c74209/P-M2-off/checkpoints/sft/P-M2-off/iter_0000047",
+        "source_tree_sha256": "5560267ff760da29fe5e52ffa8bfc8201e0a8c9e4d183f97bcc8699f253d3484",
+        "status": "REVIEWED_TRUSTED_CAMPAIGN_ONLY",
+        "torch_version": "2.8.0+cu128"
+      },
+      "adapter_record_sha256": "5e7caf5b5a4af5301d84a63ceb75bf6b8102e3d2605b4e6b81b424087e7398b6",
+      "arm": "P-M2-off",
+      "checkpoint_dir_bytes": 8346854375,
+      "checkpoint_dir_gib": 7.77,
+      "finished_at": 1790760725.1776035,
+      "inventory": {
+        "checkpoint_tree_sha256": "1d4fde40789857893994787fa46adf8b694d167dd184dff27f321e110bef6fd3",
+        "payload_count": 182,
+        "payload_dir": "inventory.payloads",
+        "payload_dir_bytes": 9536813280,
+        "schema_version": 2,
+        "tensor_count": 182
+      },
+      "inventory_sha256": "3143817207624db035d8be9a4ed49f9e4ccf56760e351ebab9c71d1ff01a2f6a",
+      "job_id": "codex-c2p-927c5de2-parameter-measurement-4c74209-P-M2-off",
+      "job_status": "SUCCEEDED",
+      "manifest_sha256": "d308efbb99c60fcabac044c552dac6dfa31445dcdace7f2450f66a0f61752a2e",
+      "native_summary": {
+        "arm": "P-M2-off",
+        "extraction_errors": 0,
+        "grad_norm_series": 48,
+        "learning_rate_series": 48,
+        "log_present": true,
+        "loss_series": 48,
+        "nan_inf_findings": 0,
+        "native_step_ids": 48,
+        "native_valid": true,
+        "step_ids_contiguous": true,
+        "token_series": 48,
+        "train_time_series": 48,
+        "update_count": 48
+      },
+      "native_valid": true,
+      "raw_logs": {
+        "job.log": {
+          "bytes": 335297,
+          "sha256": "2189b2cfc57ca9d2c164c82fda7845c10392bae9a833feb257a53d8d373dbf0d"
+        },
+        "submit-logs/P-M2-off-2026-09-30-17:27:16.log": {
+          "bytes": 3023,
+          "sha256": "8ad4476a516d3100984f6ffd28034eb50aa82da6579ffe63647afff3a9a3a393"
+        },
+        "submit.log": {
+          "bytes": 18978,
+          "sha256": "979a18d135a27148b6cd0ddb6d73d755a5ccbf95a35c6cf05f41a7ed13075240"
+        }
+      },
+      "resources_returned": true,
+      "started_at": 1790760428.6340208,
+      "valid": true
+    },
+    {
+      "adapter": {
+        "adapter_sha256": "28b013f2c2bb230dada3e30f01fbe30b4804b58479ee5b000b833380d3ba8e89",
+        "dropped_non_tensor_count": 48,
+        "raw_converted_bytes": 8344822371,
+        "raw_converted_sha256": "99adb1b8af484d405b0366f09d1d428c61349114a6f1958f68cdc8958f5e0744",
+        "sanitized_bytes": 8344751703,
+        "sanitized_sha256": "703e923fcdbd98781b6a2c2b7442944155d7bcd3cd5ca7232dfc5ff081858268",
+        "sanitized_tensor_count": 182,
+        "source_iteration_dir": "/root/autodl-tmp/task11-3090/formal/parameter-measurement-4c74209/P-M2-on/checkpoints/sft/P-M2-on/iter_0000047",
+        "source_tree_sha256": "bfb6e26c1be64506c54994a6e769257096c1e8a4dba73888a9bf93511f88e24f",
+        "status": "REVIEWED_TRUSTED_CAMPAIGN_ONLY",
+        "torch_version": "2.8.0+cu128"
+      },
+      "adapter_record_sha256": "018b80ff6e489ef6232c9cb35f3b4f4c21ed3ac1709576474479007eeaf979b1",
+      "arm": "P-M2-on",
+      "checkpoint_dir_bytes": 8346854373,
+      "checkpoint_dir_gib": 7.77,
+      "finished_at": 1790760426.4477992,
+      "inventory": {
+        "checkpoint_tree_sha256": "f09ad57ea5fb8e74dc26d7d4c59fb5a551e5036d7ed989440a1bf4284bb6ca5f",
+        "payload_count": 182,
+        "payload_dir": "inventory.payloads",
+        "payload_dir_bytes": 9536813280,
+        "schema_version": 2,
+        "tensor_count": 182
+      },
+      "inventory_sha256": "bc530dd0201908cc813717c05fe001675806666e57411a6287c18524510fa6a0",
+      "job_id": "codex-c2p-927c5de2-parameter-measurement-4c74209-P-M2-on",
+      "job_status": "SUCCEEDED",
+      "manifest_sha256": "429074eadcbe127224896156f4b73fada83b8f751f568d6b5a14c837cdb4b72b",
+      "native_summary": {
+        "arm": "P-M2-on",
+        "extraction_errors": 0,
+        "grad_norm_series": 48,
+        "learning_rate_series": 48,
+        "log_present": true,
+        "loss_series": 48,
+        "nan_inf_findings": 0,
+        "native_step_ids": 48,
+        "native_valid": true,
+        "step_ids_contiguous": true,
+        "token_series": 48,
+        "train_time_series": 48,
+        "update_count": 48
+      },
+      "native_valid": true,
+      "raw_logs": {
+        "job.log": {
+          "bytes": 340576,
+          "sha256": "e466e79fcebb3de4efe746cdae0c0d587b1c91ecea3b8c8a33f0ba5e4f4ba331"
+        },
+        "submit-logs/P-M2-on-2026-09-30-17:22:13.log": {
+          "bytes": 3017,
+          "sha256": "a125e318c7f11f479fc8d3796f53358425a6e6ab50ee89dad8c0f996799d9c48"
+        },
+        "submit.log": {
+          "bytes": 23434,
+          "sha256": "c3dbf8c5123e93c6031202ca84f11df0362d89db19cbb8526fb6822d6a3234ea"
+        }
+      },
+      "resources_returned": true,
+      "started_at": 1790760125.2169724,
+      "valid": true
+    }
+  ],
+  "campaign_root": "/root/autodl-tmp/task11-3090/formal/parameter-measurement-4c74209",
+  "cleanup": "NONE; all raw checkpoints, conversions, payloads and logs retained on data disk",
+  "schema": "C2_927C5DE_PARAMETER_RAW_LEDGER/v1",
+  "stage": "measurement",
+  "storage": {
+    "data_disk_free_gib": 97.0
+  }
+}

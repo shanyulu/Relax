@@ -1,0 +1,99 @@
+{
+  "archives": {
+    "P-M1-off": {
+      "raw_logs.tar.gz": {
+        "files": 5,
+        "sha256": "224bd383bfd091dad8778915e08176c785de8c904c6105658ed72fc55c1e516d"
+      }
+    },
+    "P-M1-on": {
+      "observer_raw.tar.gz": {
+        "files": 9,
+        "sha256": "a305b27aca6235e97107b9efa390e5a0a032eac4a707166477623485a6e90743"
+      },
+      "raw_logs.tar.gz": {
+        "files": 5,
+        "sha256": "2cf5c0e61318c96a291b16968e0d0801747c09df067c8ee74ce08e33fd06c4f8"
+      }
+    },
+    "P-M2-off": {
+      "raw_logs.tar.gz": {
+        "files": 5,
+        "sha256": "35313972a64677df6d93c50f0126d012ffa979fb96116e04ff762550afae9e94"
+      }
+    },
+    "P-M2-on": {
+      "observer_raw.tar.gz": {
+        "files": 9,
+        "sha256": "26223aa0da1cba30a56f9f9b8ab7f65a4af9605fc4da5837635efb09f09bee24"
+      },
+      "raw_logs.tar.gz": {
+        "files": 5,
+        "sha256": "2206eb5efeb305d26e6f741a0bc4ebe2a07871d80e28f0a0a0e19c81b82f865f"
+      }
+    }
+  },
+  "audit_source_sha256": "f8a32c78bf70765987a8ffb42742f752a9537471ff94be113d625e7582daa18a",
+  "calibration_file_sha256": "1939d53bb789427cf13f249f64693fb8c91a78a1186ad17e2b8f1cd66ad9a364",
+  "control_audit_sha256": "f1f1db521543109acd54ab07844176a619d9c01bb98824c8183e03cd280f83d1",
+  "frozen_tolerance_table_sha256": "e90ef4717fc54ff09380f978d7bffa044c76273855885c7ffd1686d506df4462",
+  "originals_availability": "LOCAL_RETAINED; PUBLIC_RECOMPUTATION_NOT_CLOSED",
+  "pairs": {
+    "P-M1": {
+      "missing_tolerances": [],
+      "states": {
+        "PASS": 182
+      },
+      "tensor_count": 182,
+      "violations": []
+    },
+    "P-M2": {
+      "missing_tolerances": [],
+      "states": {
+        "PASS": 182
+      },
+      "tensor_count": 182,
+      "violations": []
+    }
+  },
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "reason": null,
+  "result_file_sha256": "d9f2e043ecbd0ebe86a51aeea2e69b051b32f95e16fb55b5b406d9875d45cb1c",
+  "result_self_sha256": "06dca1126450fa4376f7b7aa99f03bc8487a5b6332a2d52885637fc77fbf7c8e",
+  "schema": "C2_PARAMETER_COMPLETION_AUDIT/v1",
+  "scope": "final-checkpoint parameter gate only; not whole C2 or Task11 acceptance",
+  "self_sha256": "cc3afa85a4467ea93f4510ff8a4480353db2573de01ee7c2ca196d5716ae1aa7",
+  "telemetry": {
+    "cgroup_limit_bytes": 386547056640,
+    "cgroup_sampled_peak_bytes": 201841381376,
+    "coverage": "partial; watcher started after comparator; sampled peaks only",
+    "first_sample_unix": 1790762360.1901922,
+    "last_sample_unix": 1790765120.4527812,
+    "memory_events_change": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_kill": 0
+    },
+    "memory_events_first": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_kill": 0
+    },
+    "memory_events_last": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_kill": 0
+    },
+    "raw_samples_sha256": "21e28c287fab59daf6a73d66d3a06db0fa7d812834432376ddcd956ccba1356b",
+    "rss_sampled_peak_bytes": 51236851712,
+    "running_samples": 276,
+    "terminal_state": "PROCESS_ENDED"
+  },
+  "verdict": "PASS"
+}

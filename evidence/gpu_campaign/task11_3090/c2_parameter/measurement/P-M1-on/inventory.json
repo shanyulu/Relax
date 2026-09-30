@@ -1,0 +1,1855 @@
+{
+  "arm_name": "P-M1-on",
+  "checkpoint_root": "/root/autodl-tmp/task11-3090/formal/parameter-measurement-4c74209/P-M1-on/adapted",
+  "checkpoint_tree_sha256": "070c1e44f283123f9020afb05c40f459e7f07f9376281e5fbf2e82c26580e8b0",
+  "comparator_sha256": "7dffa771ffa57412ffb27813eb0d6629f6e6b20fb478083aeaae3bd430e7aaa9",
+  "dataset_sha256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "env_fingerprint_sha256": "38e446df0c339980d5a85db3efa2a938a5be5fbbcaf5beae21bdfc55888e0290",
+  "lineage": {
+    "adapter_record_sha256": "22cb8bba7db1c35d34025746e597e2ddf7b8da824784f553b75df5d04bb42bee",
+    "arm_manifest_sha256": "c534758b2a6d5631ee10e99ba444ea4940d10657ca84b433a7fc30ac831dae33",
+    "sanitized_sha256": "5f5746333b84e99a44c23f0d962fa43abb1248ff84f09f299042939453bc8d38",
+    "source_tree_sha256": "85b193acebfbd1c5a1d07e2927a0109bf0fb1bd5a5b115a72fd2309323877694"
+  },
+  "lock_sha256": "cc574c60253d87296cc335276d5fd2050d3c37d792e96cbc37e912af0717c1f2",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "protocol_sha256": "06824b0ab3fd03c5b27494b55c74e69b4de515d0e56b4845661638b648f0607e",
+  "recipe_sha256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "schema_version": 2,
+  "self_sha256": "403c99781d447192148e97e3ccbfc99b8f47293a2ae78a18a6d180ba52343a1b",
+  "tensors": [
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.final_layernorm._extra_state/shard_0_1[0]",
+      "npy": "inventory.payloads/589169c03ca6acbf00d5.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "bfloat16",
+      "name": "converted_tensors.pt::decoder.final_layernorm.weight",
+      "npy": "inventory.payloads/9944c2b0381009d0b555.npy",
+      "payload_dtype": "<f4",
+      "payload_sha256": "8c9016ca78b6141902458ac58ea515b1a25c93db2767abecfcfc7d0f5fe2eb7d",
+      "shape": [
+        1024
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_0_28[0]",
+      "npy": "inventory.payloads/8e2023aa811c113f9181.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_10_28[0]",
+      "npy": "inventory.payloads/c6b443464b5a71834851.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_11_28[0]",
+      "npy": "inventory.payloads/0613036216687ccdb97b.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_12_28[0]",
+      "npy": "inventory.payloads/d85601a35ede1f3a458b.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_13_28[0]",
+      "npy": "inventory.payloads/4742e46ae663b8db28ee.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_14_28[0]",
+      "npy": "inventory.payloads/2a2e7541add3853abc8f.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_15_28[0]",
+      "npy": "inventory.payloads/4334c63fc54a64d96931.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_16_28[0]",
+      "npy": "inventory.payloads/1cbaf69c6c0b54af7af8.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_17_28[0]",
+      "npy": "inventory.payloads/e27131d64ed5a6e04461.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_18_28[0]",
+      "npy": "inventory.payloads/63bb236928cadac67c22.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_19_28[0]",
+      "npy": "inventory.payloads/124c096a9165ef883836.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_1_28[0]",
+      "npy": "inventory.payloads/a8d26e6bdbecce80c9ba.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_20_28[0]",
+      "npy": "inventory.payloads/5d405e4020fffcc80a49.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_21_28[0]",
+      "npy": "inventory.payloads/0f0327d1a9e876d4fb46.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_22_28[0]",
+      "npy": "inventory.payloads/031e9ba79f24c0324e38.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_23_28[0]",
+      "npy": "inventory.payloads/765f23a38dc44019b241.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_24_28[0]",
+      "npy": "inventory.payloads/773c16f9e0742674a64e.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_25_28[0]",
+      "npy": "inventory.payloads/8709b85d10d299015b44.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_26_28[0]",
+      "npy": "inventory.payloads/19b6112adfd2d8d411d0.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_27_28[0]",
+      "npy": "inventory.payloads/2c076f16c627e4945740.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_2_28[0]",
+      "npy": "inventory.payloads/f1e0929057a0a119ce45.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_3_28[0]",
+      "npy": "inventory.payloads/2f2558ba828400e20c75.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_4_28[0]",
+      "npy": "inventory.payloads/4c9387c5af684ca4a2ae.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_5_28[0]",
+      "npy": "inventory.payloads/624c393acb480e8fd8e6.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_6_28[0]",
+      "npy": "inventory.payloads/ce831dbd54d95c207d7a.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_7_28[0]",
+      "npy": "inventory.payloads/741a377dad5d6e479a0c.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_8_28[0]",
+      "npy": "inventory.payloads/c1a7fe8b7ea6f8c57114.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_9_28[0]",
+      "npy": "inventory.payloads/c15d87373cf5f427687a.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "bfloat16",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1.layer_norm_weight",
+      "npy": "inventory.payloads/8cbb748af3788cb7bbe6.npy",
+      "payload_dtype": "<f4",
+      "payload_sha256": "8727158c89496b03b061c17ba7df3d51e7d4f8277892b1d62c643523d2682b2f",
+      "shape": [
+        28,
+        1024
+      ]
+    },
+    {
+      "dtype": "bfloat16",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc1.weight",
+      "npy": "inventory.payloads/13d46cce41a6ce609ff9.npy",
+      "payload_dtype": "<f4",
+      "payload_sha256": "f1156d1667eaaa472ac1d799ec83366dd24b655f78308a00825a3c48ddd80161",
+      "shape": [
+        28,
+        6144,
+        1024
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_0_28[0]",
+      "npy": "inventory.payloads/60eddbab00bf43f3cdd1.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_10_28[0]",
+      "npy": "inventory.payloads/ee22cd482a310489d456.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_11_28[0]",
+      "npy": "inventory.payloads/94de023f31f2558d229c.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_12_28[0]",
+      "npy": "inventory.payloads/feac61bdbbe1147f0e51.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_13_28[0]",
+      "npy": "inventory.payloads/4ef6a37afedba031c473.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_14_28[0]",
+      "npy": "inventory.payloads/3d7614463afbc9483b12.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_15_28[0]",
+      "npy": "inventory.payloads/182855c497227e37ffe5.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_16_28[0]",
+      "npy": "inventory.payloads/f9bb584689374a24ffa6.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_17_28[0]",
+      "npy": "inventory.payloads/c9760c4e8bfe09324d0c.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_18_28[0]",
+      "npy": "inventory.payloads/259597d04a8b6cc17f92.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_19_28[0]",
+      "npy": "inventory.payloads/9e6f6fc8e017d7d8b95e.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_1_28[0]",
+      "npy": "inventory.payloads/312b714d33ae5541558f.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_20_28[0]",
+      "npy": "inventory.payloads/ac3fd837c52d37b74621.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_21_28[0]",
+      "npy": "inventory.payloads/4779d00c2cac417bffd3.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_22_28[0]",
+      "npy": "inventory.payloads/2cea4575bf7bc04bc669.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_23_28[0]",
+      "npy": "inventory.payloads/d131cfab9a153f7e5d15.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_24_28[0]",
+      "npy": "inventory.payloads/1b03f1d1a9427b4f6618.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_25_28[0]",
+      "npy": "inventory.payloads/64ce5221e165aabc5307.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_26_28[0]",
+      "npy": "inventory.payloads/2bb7d3e61f3149eb8379.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_27_28[0]",
+      "npy": "inventory.payloads/9f776c4c14fc9d2dc39c.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_2_28[0]",
+      "npy": "inventory.payloads/6d31977cd3c90c59b98a.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_3_28[0]",
+      "npy": "inventory.payloads/5cba0c0540ee475c5a95.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_4_28[0]",
+      "npy": "inventory.payloads/39dfdd92a4569f5b515c.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_5_28[0]",
+      "npy": "inventory.payloads/254305f3a52666c552be.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_6_28[0]",
+      "npy": "inventory.payloads/cda30ec03b888d25c359.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_7_28[0]",
+      "npy": "inventory.payloads/b5482ebed33390552396.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_8_28[0]",
+      "npy": "inventory.payloads/9efdd49118056f5e62b4.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_9_28[0]",
+      "npy": "inventory.payloads/4f86c977583f9406e1b0.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "bfloat16",
+      "name": "converted_tensors.pt::decoder.layers.mlp.linear_fc2.weight",
+      "npy": "inventory.payloads/eb3e6ae031ebc759f765.npy",
+      "payload_dtype": "<f4",
+      "payload_sha256": "e72ce5feef4d65818ae8194e865429e7ba0fa5e26e91f491a9a42d4cbc0642f6",
+      "shape": [
+        28,
+        1024,
+        3072
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_0_28[0]",
+      "npy": "inventory.payloads/cbbb1bfe16c9fa4d134f.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_10_28[0]",
+      "npy": "inventory.payloads/82863dba726d731533ea.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_11_28[0]",
+      "npy": "inventory.payloads/bcee607e2e09e4f1bfb9.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_12_28[0]",
+      "npy": "inventory.payloads/7bc12c65f8f72e199b06.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_13_28[0]",
+      "npy": "inventory.payloads/00c856a502b3b7bb3628.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_14_28[0]",
+      "npy": "inventory.payloads/d6e17b2b0925f8298ddc.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_15_28[0]",
+      "npy": "inventory.payloads/b03e60d8b83820904147.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_16_28[0]",
+      "npy": "inventory.payloads/81499eed469529483224.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_17_28[0]",
+      "npy": "inventory.payloads/c862eedb1d1855e79473.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_18_28[0]",
+      "npy": "inventory.payloads/bde8819353d934015793.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_19_28[0]",
+      "npy": "inventory.payloads/229e86600411e184d9fb.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_1_28[0]",
+      "npy": "inventory.payloads/18b3ccfeb99330c79803.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_20_28[0]",
+      "npy": "inventory.payloads/b24fda8a1c499ed530e4.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_21_28[0]",
+      "npy": "inventory.payloads/ef779092d77b4ceece69.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_22_28[0]",
+      "npy": "inventory.payloads/90631190a4e05fe6f891.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_23_28[0]",
+      "npy": "inventory.payloads/5ff0048b60805199bab9.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_24_28[0]",
+      "npy": "inventory.payloads/e97c50176ea863a1f1ac.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_25_28[0]",
+      "npy": "inventory.payloads/4da554eed25b9b131e3f.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_26_28[0]",
+      "npy": "inventory.payloads/f18163e740b3fa76b6e8.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_27_28[0]",
+      "npy": "inventory.payloads/fda18b4625410d4026ef.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_2_28[0]",
+      "npy": "inventory.payloads/765ee7c9f0b2e67d5bd7.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_3_28[0]",
+      "npy": "inventory.payloads/aba38e19041bcbc17f5d.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_4_28[0]",
+      "npy": "inventory.payloads/68aac77b7a0f5c935131.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_5_28[0]",
+      "npy": "inventory.payloads/297cd0d33321cf52a0bd.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_6_28[0]",
+      "npy": "inventory.payloads/b356163974f5f9aa0886.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_7_28[0]",
+      "npy": "inventory.payloads/0712c4219d4bbce9ebb9.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_8_28[0]",
+      "npy": "inventory.payloads/fc366f00b597a411c78a.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_9_28[0]",
+      "npy": "inventory.payloads/0529178867192d516606.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "bfloat16",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.k_layernorm.weight",
+      "npy": "inventory.payloads/5e8202b8da44245b0837.npy",
+      "payload_dtype": "<f4",
+      "payload_sha256": "af09b9879842bc0e382b3332de9c89d284e4bec1225e2e1f82777c5b9080dbe7",
+      "shape": [
+        28,
+        128
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_0_28[0]",
+      "npy": "inventory.payloads/9a455bd1b3d19ca1b768.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_10_28[0]",
+      "npy": "inventory.payloads/2caeb50269ff8a1d7d44.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_11_28[0]",
+      "npy": "inventory.payloads/00b91d98254ae2fc63f6.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_12_28[0]",
+      "npy": "inventory.payloads/50cc1df01d61b2e7919b.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_13_28[0]",
+      "npy": "inventory.payloads/7dee605de1ebfe16c00c.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_14_28[0]",
+      "npy": "inventory.payloads/5f225602b0bb1ee56bae.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_15_28[0]",
+      "npy": "inventory.payloads/0046f4be8ccb235319ee.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_16_28[0]",
+      "npy": "inventory.payloads/889f140f2e6ad344f5ed.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_17_28[0]",
+      "npy": "inventory.payloads/9d439490b6eab8a30798.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_18_28[0]",
+      "npy": "inventory.payloads/da0e4608eee160064225.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_19_28[0]",
+      "npy": "inventory.payloads/8307c5139530f08b87e9.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_1_28[0]",
+      "npy": "inventory.payloads/ab67a2bf531bd1a100ee.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_20_28[0]",
+      "npy": "inventory.payloads/ef77398e6151407f459d.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_21_28[0]",
+      "npy": "inventory.payloads/f534cb00b0a6c8dba91d.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_22_28[0]",
+      "npy": "inventory.payloads/094c483d65185466b509.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_23_28[0]",
+      "npy": "inventory.payloads/25defbcedea4b78f225a.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_24_28[0]",
+      "npy": "inventory.payloads/683eb54d56800aac2809.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_25_28[0]",
+      "npy": "inventory.payloads/14463451d03a9fc6be02.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_26_28[0]",
+      "npy": "inventory.payloads/72af08b3c5314debe23e.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_27_28[0]",
+      "npy": "inventory.payloads/17a37a7eafc8a50b91ae.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_2_28[0]",
+      "npy": "inventory.payloads/c3d90cf1df83723186b9.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_3_28[0]",
+      "npy": "inventory.payloads/12f9701e0407c8c32270.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_4_28[0]",
+      "npy": "inventory.payloads/2211fc15316918495bfe.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_5_28[0]",
+      "npy": "inventory.payloads/9c4d30971a2da2a2728f.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_6_28[0]",
+      "npy": "inventory.payloads/68e1a84390a494bbb10d.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_7_28[0]",
+      "npy": "inventory.payloads/aa9bfa02ebaca9de7a72.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_8_28[0]",
+      "npy": "inventory.payloads/3a3bd085c63dd6dbcc2c.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_9_28[0]",
+      "npy": "inventory.payloads/635d64291e9a33782986.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "bfloat16",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_proj.weight",
+      "npy": "inventory.payloads/1915a16a6c0a4ddc1270.npy",
+      "payload_dtype": "<f4",
+      "payload_sha256": "b8458677c5abc5cb737ed3e611fe0af92611e0ed5a502ddd86894426f4899088",
+      "shape": [
+        28,
+        1024,
+        2048
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_0_28[0]",
+      "npy": "inventory.payloads/3c1f966e2a0786ff773a.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_10_28[0]",
+      "npy": "inventory.payloads/952cd57433cec126ad22.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_11_28[0]",
+      "npy": "inventory.payloads/a769d26f8a014aea1dfb.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_12_28[0]",
+      "npy": "inventory.payloads/cac9fe557711e1db871b.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_13_28[0]",
+      "npy": "inventory.payloads/965915945d38224394cf.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_14_28[0]",
+      "npy": "inventory.payloads/5d2c16c01c1b515928a0.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_15_28[0]",
+      "npy": "inventory.payloads/cfa2ade4faaabe9bfc27.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_16_28[0]",
+      "npy": "inventory.payloads/9d939f6a2d7655c8a41d.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_17_28[0]",
+      "npy": "inventory.payloads/11a32d36c3f6d88ae169.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_18_28[0]",
+      "npy": "inventory.payloads/27d88be339c8b0c82e2f.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_19_28[0]",
+      "npy": "inventory.payloads/d38437729953e7877e5e.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_1_28[0]",
+      "npy": "inventory.payloads/27b856ab1caf8926c818.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_20_28[0]",
+      "npy": "inventory.payloads/a080fd98f00ea6c761d7.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_21_28[0]",
+      "npy": "inventory.payloads/9f589e5ddeb540fe66d5.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_22_28[0]",
+      "npy": "inventory.payloads/b847723cdda79f86422f.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_23_28[0]",
+      "npy": "inventory.payloads/831d6a0aa4129ae27b43.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_24_28[0]",
+      "npy": "inventory.payloads/c3f3be923713e46f4dae.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_25_28[0]",
+      "npy": "inventory.payloads/bef27a7e685598b30a15.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_26_28[0]",
+      "npy": "inventory.payloads/2f5a27bc21793f9d3051.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_27_28[0]",
+      "npy": "inventory.payloads/94263b50b0da3ee16108.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_2_28[0]",
+      "npy": "inventory.payloads/43de7e8c490d5c171939.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_3_28[0]",
+      "npy": "inventory.payloads/e53aa9d3656225825e76.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_4_28[0]",
+      "npy": "inventory.payloads/979ec52a78bcb0209403.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_5_28[0]",
+      "npy": "inventory.payloads/6d989732a0164127b90b.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_6_28[0]",
+      "npy": "inventory.payloads/a850e81594c626ef89ac.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_7_28[0]",
+      "npy": "inventory.payloads/a07c847d285a1302e7a3.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_8_28[0]",
+      "npy": "inventory.payloads/3187eadd421e715309cb.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_9_28[0]",
+      "npy": "inventory.payloads/207845503c4e370c73f3.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "bfloat16",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv.layer_norm_weight",
+      "npy": "inventory.payloads/623d64d4ee61d4098130.npy",
+      "payload_dtype": "<f4",
+      "payload_sha256": "7d7f1ce0030dcbce88d1fdf321e2c3c0e6ea296bbfb0d983dddb34c5ed64fd1a",
+      "shape": [
+        28,
+        1024
+      ]
+    },
+    {
+      "dtype": "bfloat16",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.linear_qkv.weight",
+      "npy": "inventory.payloads/4494994b7df72f37c661.npy",
+      "payload_dtype": "<f4",
+      "payload_sha256": "4c05474b1c671851acd047a3b2b03572a6e09b6bb75558f9dcc76339f6cd3fb3",
+      "shape": [
+        28,
+        4096,
+        1024
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_0_28[0]",
+      "npy": "inventory.payloads/eeaa4bb95aa0cf110a26.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_10_28[0]",
+      "npy": "inventory.payloads/dc1f610759b31740a70f.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_11_28[0]",
+      "npy": "inventory.payloads/da5b35fd1d5ae2a3947f.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_12_28[0]",
+      "npy": "inventory.payloads/108fa77c582ed0d7da10.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_13_28[0]",
+      "npy": "inventory.payloads/89a9390d6b7bac0462e0.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_14_28[0]",
+      "npy": "inventory.payloads/68d4c75831d2cbe94268.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_15_28[0]",
+      "npy": "inventory.payloads/1aa566fd5b4d8e3fb517.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_16_28[0]",
+      "npy": "inventory.payloads/ef9048f25d2b388fb68c.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_17_28[0]",
+      "npy": "inventory.payloads/6641fbae06b9ad1f15d3.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_18_28[0]",
+      "npy": "inventory.payloads/78841c575364596fd124.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_19_28[0]",
+      "npy": "inventory.payloads/94eb505b8cf3cbf54371.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_1_28[0]",
+      "npy": "inventory.payloads/0069c6ee8eadd261a79c.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_20_28[0]",
+      "npy": "inventory.payloads/1ea99d18004c46661d95.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_21_28[0]",
+      "npy": "inventory.payloads/779ee7cdb25a2c8050e8.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_22_28[0]",
+      "npy": "inventory.payloads/ac5891bca89471c59618.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_23_28[0]",
+      "npy": "inventory.payloads/c7e1b4e9ec4925921604.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_24_28[0]",
+      "npy": "inventory.payloads/cedbc36dcdf105427026.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_25_28[0]",
+      "npy": "inventory.payloads/6d69cf041c7d9514c4bc.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_26_28[0]",
+      "npy": "inventory.payloads/c69c8a9cb8abd013ad15.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_27_28[0]",
+      "npy": "inventory.payloads/34153ee81b1d1292f864.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_2_28[0]",
+      "npy": "inventory.payloads/c7d5a18c551990b96718.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_3_28[0]",
+      "npy": "inventory.payloads/fe5be15ba158783300b1.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_4_28[0]",
+      "npy": "inventory.payloads/c2423598f1b1c648cf58.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_5_28[0]",
+      "npy": "inventory.payloads/b8ab8bc548549060c342.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_6_28[0]",
+      "npy": "inventory.payloads/536146e1eafc709658a7.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_7_28[0]",
+      "npy": "inventory.payloads/fdcd1be22bbef0ce67f2.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_8_28[0]",
+      "npy": "inventory.payloads/aa87193702e1321f8ede.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "uint8",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_9_28[0]",
+      "npy": "inventory.payloads/7da1f81e8245494c2027.npy",
+      "payload_dtype": "|u1",
+      "payload_sha256": "4c48042a24c749a26390d950fe21b2c965dd30033d1239fb5101223540b275e3",
+      "shape": [
+        0
+      ]
+    },
+    {
+      "dtype": "bfloat16",
+      "name": "converted_tensors.pt::decoder.layers.self_attention.q_layernorm.weight",
+      "npy": "inventory.payloads/9115cc8147661cc2c158.npy",
+      "payload_dtype": "<f4",
+      "payload_sha256": "8602e1b2b36837f373dc2560c8144a42cc7c8b14a8dba11d336e75400e19f70a",
+      "shape": [
+        28,
+        128
+      ]
+    },
+    {
+      "dtype": "bfloat16",
+      "name": "converted_tensors.pt::embedding.word_embeddings.weight",
+      "npy": "inventory.payloads/a1c5a49d1fa2bac33f91.npy",
+      "payload_dtype": "<f4",
+      "payload_sha256": "5011875073e5aa3ba07a47b33dd8851e0a8aa4b8b44f9499bd39842e63ba95cb",
+      "shape": [
+        151936,
+        1024
+      ]
+    },
+    {
+      "dtype": "float32",
+      "name": "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.exp_avg",
+      "npy": "inventory.payloads/69019424b23ea598bb4f.npy",
+      "payload_dtype": "<f4",
+      "payload_sha256": "bb23f474fcc8b1c212344591999c5f898aa54f9d3092b3d566be28e65bcef6f4",
+      "shape": [
+        596049920
+      ]
+    },
+    {
+      "dtype": "float32",
+      "name": "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.exp_avg_sq",
+      "npy": "inventory.payloads/6bf86929ab624fa080b4.npy",
+      "payload_dtype": "<f4",
+      "payload_sha256": "7dd2fbf757bc635de9aba932b9eb1dc715b0a8073b74ac36dc0524a0a25c5fce",
+      "shape": [
+        596049920
+      ]
+    },
+    {
+      "dtype": "float32",
+      "name": "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.param",
+      "npy": "inventory.payloads/a3ee8d1970b3c858d88d.npy",
+      "payload_dtype": "<f4",
+      "payload_sha256": "955de40dd447aa088702d53af6cd51f521d54d9cfc4825deae657d9bbc6cf782",
+      "shape": [
+        596049920
+      ]
+    }
+  ]
+}

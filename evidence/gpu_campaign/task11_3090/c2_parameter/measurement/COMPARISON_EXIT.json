@@ -1,0 +1,8 @@
+{
+  "observed_exit_code": 0,
+  "verdict": "PASS",
+  "stdout": "C2 parameter verdict: PASS; result sha256 06dca1126450fa4376f7b7aa99f03bc8487a5b6332a2d52885637fc77fbf7c8e",
+  "result_file_sha256": "d9f2e043ecbd0ebe86a51aeea2e69b051b32f95e16fb55b5b406d9875d45cb1c",
+  "execution_session": 27445,
+  "record_kind": "operator record of completed tool output; not a substitute for analyzer verdict"
+}

@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/root/miniconda3/bin/ray",
+    "start",
+    "--head",
+    "--block",
+    "--node-ip-address=<REDACTED_PRIVATE_ADDRESS>",
+    "--port=6379",
+    "--dashboard-host=127.0.0.1",
+    "--dashboard-port=8265",
+    "--num-cpus=60",
+    "--num-gpus=4",
+    "--object-store-memory=115289489416",
+    "--memory=269008706356",
+    "--temp-dir=/root/autodl-tmp/task11-3090/ray"
+  ],
+  "memory_max_bytes": 386547056640,
+  "owner": "codex-task11-parameter-measurement",
+  "publication_policy": "DERIVED_COPY; private node address redacted; original retained locally",
+  "raw_record_sha256": "61c32c3b7c794f9e7587bf3505a627ea7dc4a9f451e2c06ec2b17f35931482f6",
+  "pid": 292191,
+  "resource_source": "previous 3090 raylet logs; not copied from the 4090 host",
+  "started_at": 1790759006.036041,
+  "status": "START_REQUESTED; run repository preflight before GPU submission"
+}

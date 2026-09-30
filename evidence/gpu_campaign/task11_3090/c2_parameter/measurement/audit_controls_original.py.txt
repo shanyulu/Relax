@@ -1,0 +1,104 @@
+#!/usr/bin/env python3
+"""Recompute preregistered observer enactment and native-series facts."""
+import argparse
+import hashlib
+import json
+import math
+from collections import Counter
+from pathlib import Path
+
+
+def sha(path):
+    h = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1 << 20), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--campaign", type=Path, required=True)
+    parser.add_argument("--gate", type=Path, required=True)
+    parser.add_argument("--out", type=Path, required=True)
+    args = parser.parse_args()
+    assert not args.out.exists(), "refusing to overwrite audit"
+    arms = {}
+    for name in ("P-M1-off", "P-M1-on", "P-M2-on", "P-M2-off"):
+        root = args.campaign / name
+        manifest = json.loads((root / "manifest.json").read_text())
+        assert manifest["job_status"] == "SUCCEEDED" and manifest["valid"] and manifest["resources_returned"]
+        native = manifest["native"]
+        assert native["native_valid"] and native["update_count"] == 48 and len(native["native_step_ids"]) == 48
+        assert not native["nan_inf_findings"] and not native["extraction_errors"]
+        record = {
+            "manifest_sha256": sha(root / "manifest.json"), "job_log_sha256": sha(root / "job.log"),
+            "submit_log_sha256": sha(root / "submit.log"), "update_count": native["update_count"],
+            "nan_inf_count": len(native["nan_inf_findings"]), "envelope_files": {},
+        }
+        rows = Counter()
+        device = Counter()
+        paths = sorted((root / "straggler").rglob("straggler_envelopes.jsonl"))
+        for path in paths:
+            record["envelope_files"][str(path.relative_to(root))] = sha(path)
+            for line in path.open():
+                envelope = json.loads(line)
+                rank = envelope["rank"]
+                rows[rank] += 1
+                value = envelope.get("device_ms")
+                if isinstance(value, (float, int)) and math.isfinite(value) and value >= 0 and envelope.get("name"):
+                    device[rank] += 1
+        record.update(envelopes=sum(rows.values()), rank_rows=dict(rows), valid_device_rows=dict(device))
+        if name.endswith("-off"):
+            assert not paths
+            assert "straggler profiler disabled (RELAX_STRAGGLER_ENABLE unset)" in (root / "submit.log").read_text()
+            record["disabled_log_location"] = "submit.log"
+        else:
+            assert set(rows) == {0, 1, 2, 3} and set(device) == {0, 1, 2, 3}
+            snapshots = sorted((root / "straggler").rglob("runtime_status_rank*.json"))
+            assert len(snapshots) == 4
+            record["runtime_snapshots"] = {}
+            for path in snapshots:
+                runtime = json.loads(path.read_text())
+                observer = runtime["observer"]
+                assert runtime["enabled"] and runtime["started"] and observer["device_timing_enabled"]
+                record["runtime_snapshots"][str(path.relative_to(root))] = {
+                    "sha256": sha(path), "identity": observer["identity"],
+                    "counters": {k: observer.get(k) for k in (
+                        "observer_errors", "consumer_errors", "dropped_output_full", "dropped_pending_full", "readout_timeouts"
+                    )},
+                }
+            collectors = list((root / "straggler").rglob("collector_status.json"))
+            assert len(collectors) == 1
+            collector = json.loads(collectors[0].read_text())
+            assert collector["envelopes"] == sum(rows.values())
+            record["collector"] = {
+                "path": str(collectors[0].relative_to(root)), "sha256": sha(collectors[0]),
+                **{key: collector.get(key) for key in (
+                    "envelopes", "aligned_ranks", "invalid_device_samples", "invalid_packets", "ingest_errors"
+                )},
+            }
+        arms[name] = record
+    pairs = {}
+    for number in (1, 2):
+        off = json.loads((args.campaign / f"P-M{number}-off" / "manifest.json").read_text())["native"]
+        on = json.loads((args.campaign / f"P-M{number}-on" / "manifest.json").read_text())["native"]
+        pairs[f"P-M{number}"] = {
+            "step_ids_equal": off["native_step_ids"] == on["native_step_ids"],
+            "token_series_equal": off["token_series"] == on["token_series"],
+            "update_counts": [off["update_count"], on["update_count"]],
+        }
+        assert pairs[f"P-M{number}"]["step_ids_equal"] and pairs[f"P-M{number}"]["token_series_equal"]
+    payload = {
+        "schema": "PARAMETER_MEASUREMENT_CONTROL_AUDIT/v1", "observer_enactment": "PASS",
+        "scope": "observer enactment and native control facts only; NOT a parameter, loss, overlap or C1 verdict",
+        "gate_sha256": sha(args.gate), "audit_source_sha256": sha(Path(__file__)),
+        "arms": arms, "pairs": pairs, "self_sha256": None,
+    }
+    payload["self_sha256"] = hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    with args.out.open("x") as target:
+        target.write(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+"""Read-only telemetry for the already-running, owned parameter analyzer."""
+import json
+import time
+from pathlib import Path
+
+PID = 360604
+ROOT = Path(__file__).parent
+PROC = Path(f"/proc/{PID}")
+CAP = Path("/sys/fs/cgroup/memory.max").read_text().strip()
+
+
+def identity():
+    stat = (PROC / "stat").read_text().rpartition(") ")[2].split()
+    return stat[19], stat[0]
+
+
+started, state = identity()
+assert "c2_parameter_bounded_927c5de.py" in (PROC / "cmdline").read_bytes().decode().replace("\0", " ")
+with (ROOT / "analysis_memory.jsonl").open("x", buffering=1) as out:
+    while True:
+        record = {"time_unix": time.time(), "pid": PID, "start_ticks": started, "cgroup_max_bytes": CAP}
+        try:
+            current, state = identity()
+            if current != started or state == "Z":
+                record["state"] = "PROCESS_ENDED_OR_REUSED"
+            else:
+                status = (PROC / "status").read_text().splitlines()
+                rss = next(line.split()[1] for line in status if line.startswith("VmRSS:"))
+                record.update(state="RUNNING", rss_kib=int(rss),
+                              cgroup_current_bytes=int(Path("/sys/fs/cgroup/memory.current").read_text()),
+                              cgroup_memory_events=Path("/sys/fs/cgroup/memory.events").read_text())
+        except (FileNotFoundError, ProcessLookupError):
+            record["state"] = "PROCESS_ENDED"
+        out.write(json.dumps(record, sort_keys=True) + "\n")
+        if record["state"] != "RUNNING":
+            break
+        time.sleep(10)

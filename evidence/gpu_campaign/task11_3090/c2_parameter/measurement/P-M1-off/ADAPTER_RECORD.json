@@ -1,0 +1,232 @@
+{
+  "adapter_sha256": "28b013f2c2bb230dada3e30f01fbe30b4804b58479ee5b000b833380d3ba8e89",
+  "arm_name": "P-M1-off",
+  "converter": "torch.distributed.checkpoint.format_utils.dcp_to_torch_save",
+  "dropped_non_tensor_count": 48,
+  "dropped_non_tensor_leaves": [
+    {
+      "key": "common_state/shard_0_1[0].args",
+      "type": "argparse.Namespace"
+    },
+    {
+      "key": "common_state/shard_0_1[0].checkpoint_version",
+      "type": "builtins.float"
+    },
+    {
+      "key": "common_state/shard_0_1[0].content_metadata.chained_optim_avoid_prefix",
+      "type": "builtins.bool"
+    },
+    {
+      "key": "common_state/shard_0_1[0].content_metadata.distrib_optim_sharding_type",
+      "type": "builtins.str"
+    },
+    {
+      "key": "common_state/shard_0_1[0].content_metadata.singleton_local_shards",
+      "type": "builtins.bool"
+    },
+    {
+      "key": "common_state/shard_0_1[0].iteration",
+      "type": "builtins.int"
+    },
+    {
+      "key": "common_state/shard_0_1[0].num_floating_point_operations_so_far",
+      "type": "builtins.int"
+    },
+    {
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.end_wd",
+      "type": "builtins.float"
+    },
+    {
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.lr_decay_steps",
+      "type": "builtins.int"
+    },
+    {
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.lr_decay_style",
+      "type": "builtins.str"
+    },
+    {
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.lr_warmup_steps",
+      "type": "builtins.int"
+    },
+    {
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.max_lr",
+      "type": "builtins.float"
+    },
+    {
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.min_lr",
+      "type": "builtins.float"
+    },
+    {
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.num_steps",
+      "type": "builtins.int"
+    },
+    {
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.start_wd",
+      "type": "builtins.float"
+    },
+    {
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.wd_incr_steps",
+      "type": "builtins.int"
+    },
+    {
+      "key": "common_state/shard_0_1[0].opt_param_scheduler.wd_incr_style",
+      "type": "builtins.str"
+    },
+    {
+      "key": "common_state/shard_0_1[0].optimizer.param_state_sharding_type",
+      "type": "builtins.str"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].betas[0]",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].betas[1]",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].bias_correction",
+      "type": "builtins.bool"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].default_config",
+      "type": "builtins.bool"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].eps",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].is_decoupled_lr",
+      "type": "builtins.bool"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].is_expert_parallel",
+      "type": "builtins.bool"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].lr",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].lr_mult",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].max_lr",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].min_lr",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].step",
+      "type": "builtins.int"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].wd_mult",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[0].weight_decay",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].betas[0]",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].betas[1]",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].bias_correction",
+      "type": "builtins.bool"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].default_config",
+      "type": "builtins.bool"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].eps",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].is_decoupled_lr",
+      "type": "builtins.bool"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].is_expert_parallel",
+      "type": "builtins.bool"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].lr",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].lr_mult",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].max_lr",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].min_lr",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].step",
+      "type": "builtins.int"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].wd_mult",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.optimizer/shard_0_1[0].param_groups[1].weight_decay",
+      "type": "builtins.float"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.per_bucket_numel/shard_0_1[0][0].(torch.bfloat16, torch.float32)[0]",
+      "type": "builtins.int"
+    },
+    {
+      "key": "optimizer.distributed.dp_group_idx_0.per_bucket_numel_unpadded/shard_0_1[0][0].(torch.bfloat16, torch.float32)[0]",
+      "type": "builtins.int"
+    }
+  ],
+  "raw_converted_bytes": 8344822371,
+  "raw_converted_path": "/root/autodl-tmp/task11-3090/formal/parameter-measurement-4c74209/P-M1-off/adapted_raw/converted.pt",
+  "raw_converted_sha256": "f6c36e8f9dc5b77689cede8b4a86f73905f39f6582b63ae7b9b4227e93043d37",
+  "sanitized_bytes": 8344751703,
+  "sanitized_path": "/root/autodl-tmp/task11-3090/formal/parameter-measurement-4c74209/P-M1-off/adapted/converted_tensors.pt",
+  "sanitized_sha256": "c8520a5b594f936954fe847f8bd9aed4361c9470b90384d1318913254477d821",
+  "sanitized_tensor_count": 182,
+  "sanitized_tensor_keys": 182,
+  "schema": "C2_927C5DE_DCP_ADAPTER/v1",
+  "source_checkpoint_root": "/root/autodl-tmp/task11-3090/formal/parameter-measurement-4c74209/P-M1-off/checkpoints",
+  "source_files": [
+    {
+      "bytes": 2100001975,
+      "path": "__0_0.distcp"
+    },
+    {
+      "bytes": 2084296060,
+      "path": "__1_0.distcp"
+    },
+    {
+      "bytes": 2080385797,
+      "path": "__2_0.distcp"
+    },
+    {
+      "bytes": 2081829890,
+      "path": "__3_0.distcp"
+    }
+  ],
+  "source_iteration_dir": "/root/autodl-tmp/task11-3090/formal/parameter-measurement-4c74209/P-M1-off/checkpoints/sft/P-M1-off/iter_0000047",
+  "source_tree_sha256": "acc4fc13f6d2dc4534f8a885033e56eb191638266cc2adee9d002d42dc4d8a60",
+  "status": "REVIEWED_TRUSTED_CAMPAIGN_ONLY",
+  "torch_version": "2.8.0+cu128"
+}

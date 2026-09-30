@@ -1,0 +1,13 @@
+{
+  "calibration_sha256": "1939d53bb789427cf13f249f64693fb8c91a78a1186ad17e2b8f1cd66ad9a364",
+  "measurement_lock_sha256": "cc574c60253d87296cc335276d5fd2050d3c37d792e96cbc37e912af0717c1f2",
+  "off_arm": "P-M1-off",
+  "off_inventory": "P-M1-off/inventory.json",
+  "off_inventory_sha256": "0196f4f24a92c194cff9cc57a6bf4d139a80582a4f5967d943b3ca7cbbf28cbc",
+  "on_arm": "P-M1-on",
+  "on_inventory": "P-M1-on/inventory.json",
+  "on_inventory_sha256": "4cc311feae49fa63440439f536d864a5f05f3df866d8ef4f0c3302e94d49877a",
+  "pair_id": "P-M1",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "protocol_sha256": "06824b0ab3fd03c5b27494b55c74e69b4de515d0e56b4845661638b648f0607e"
+}

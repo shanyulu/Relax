@@ -1,0 +1,127 @@
+#!/usr/bin/env python3
+"""Build the C2 parameter raw-artifact hash ledger (Phase F / Phase I archive).
+
+Aggregates per-arm provenance from the campaign directory on the data disk:
+manifest sha, native step count, adapter record (source DCP tree / raw
+conversion / sanitized payload hashes), inventory sha + tensor count, and the
+sha256 of every raw log file. Emits one compact JSON ledger for the evidence
+repo; large payloads stay on the data disk and are represented by hash only.
+"""
+import hashlib
+import json
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def df_gib(path: str) -> float:
+    out = subprocess.check_output(["df", "-BG", path], text=True).splitlines()[-1].split()
+    return float(out[3].rstrip("G"))
+
+
+def arm_ledger(arm_dir: Path) -> dict:
+    arm = arm_dir.name
+    ledger = {"arm": arm}
+    manifest = json.loads((arm_dir / "manifest.json").read_text())
+    ledger["manifest_sha256"] = sha256_file(arm_dir / "manifest.json")
+    ledger["job_status"] = manifest.get("job_status")
+    ledger["valid"] = manifest.get("valid")
+    ledger["resources_returned"] = manifest.get("resources_returned")
+    ledger["job_id"] = manifest.get("job_id")
+    ledger["started_at"] = manifest.get("started_at")
+    ledger["finished_at"] = manifest.get("finished_at")
+    native = manifest.get("native", {})
+    if isinstance(native, dict):
+        ledger["native_valid"] = native.get("native_valid")
+        ledger["native_summary"] = {
+            k: (len(v) if isinstance(v, list) else v)
+            for k, v in native.items()
+            if not isinstance(v, (dict, list)) or isinstance(v, list)
+        }
+    adapted = arm_dir / "adapted"
+    record_path = adapted / "ADAPTER_RECORD.json"
+    if record_path.is_file():
+        record = json.loads(record_path.read_text())
+        ledger["adapter_record_sha256"] = sha256_file(record_path)
+        ledger["adapter"] = {
+            "status": record.get("status"),
+            "adapter_sha256": record.get("adapter_sha256"),
+            "source_tree_sha256": record.get("source_tree_sha256"),
+            "raw_converted_sha256": record.get("raw_converted_sha256"),
+            "raw_converted_bytes": record.get("raw_converted_bytes"),
+            "sanitized_sha256": record.get("sanitized_sha256"),
+            "sanitized_bytes": record.get("sanitized_bytes"),
+            "sanitized_tensor_count": record.get("sanitized_tensor_count"),
+            "dropped_non_tensor_count": record.get("dropped_non_tensor_count"),
+            "torch_version": record.get("torch_version"),
+            "source_iteration_dir": record.get("source_iteration_dir"),
+        }
+    inventory_path = arm_dir / "inventory.json"
+    if inventory_path.is_file():
+        inventory = json.loads(inventory_path.read_text())
+        ledger["inventory_sha256"] = sha256_file(inventory_path)
+        ledger["inventory"] = {
+            "schema_version": inventory.get("schema_version"),
+            "tensor_count": len(inventory.get("tensors", [])),
+            "checkpoint_tree_sha256": inventory.get("checkpoint_tree_sha256"),
+            "payload_dir": "inventory.payloads",
+        }
+        payload_dir = arm_dir / "inventory.payloads"
+        if payload_dir.is_dir():
+            ledger["inventory"]["payload_count"] = len(list(payload_dir.glob("*.npy")))
+            ledger["inventory"]["payload_dir_bytes"] = sum(
+                p.stat().st_size for p in payload_dir.rglob("*") if p.is_file()
+            )
+    logs = {}
+    for name in ("job.log", "submit.log"):
+        path = arm_dir / name
+        if path.is_file():
+            logs[name] = {"sha256": sha256_file(path), "bytes": path.stat().st_size}
+    submit_logs_dir = arm_dir / "submit-logs"
+    if submit_logs_dir.is_dir():
+        for path in sorted(submit_logs_dir.rglob("*")):
+            if path.is_file():
+                logs[f"submit-logs/{path.relative_to(submit_logs_dir)}"] = {
+                    "sha256": sha256_file(path),
+                    "bytes": path.stat().st_size,
+                }
+    ledger["raw_logs"] = logs
+    ckpt = arm_dir / "checkpoints"
+    if ckpt.is_dir():
+        ledger["checkpoint_dir_bytes"] = sum(p.stat().st_size for p in ckpt.rglob("*") if p.is_file())
+        ledger["checkpoint_dir_gib"] = round(ledger["checkpoint_dir_bytes"] / 2**30, 2)
+    return ledger
+
+
+def main() -> int:
+    campaign = Path(sys.argv[1]).resolve()
+    out = Path(sys.argv[2])
+    stage = sys.argv[3]
+    if out.exists():
+        raise SystemExit("refusing to overwrite ledger")
+    arms = sorted(p for p in campaign.iterdir() if p.is_dir() and (p / "manifest.json").is_file())
+    payload = {
+        "schema": "C2_927C5DE_PARAMETER_RAW_LEDGER/v1",
+        "stage": stage,
+        "campaign_root": str(campaign),
+        "arms": [arm_ledger(arm) for arm in arms],
+        "storage": {"data_disk_free_gib": df_gib(str(campaign))},
+        "cleanup": "NONE; all raw checkpoints, conversions, payloads and logs retained on data disk",
+    }
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+    print(f"wrote {out} ({len(arms)} arms)")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
