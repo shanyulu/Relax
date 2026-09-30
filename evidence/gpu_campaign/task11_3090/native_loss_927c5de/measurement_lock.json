@@ -1,0 +1,70 @@
+{
+  "_self_sha256": "7ba47ae2750da1353bda8395d78415c8a863dd1b218aef24faafba0be3fdf936",
+  "arm_order": [
+    "L-M1-off",
+    "L-M1-on",
+    "L-M2-on",
+    "L-M2-off"
+  ],
+  "calibration_lock_path": "/tmp/codex-task11-publication-20260930/evidence/gpu_campaign/task11_3090/native_loss_927c5de/calibration_lock.json",
+  "calibration_lock_sha256": "4e081f5298c02919b27f4f1b79f034f3842909c37446a18746eb77e96eeb4e67",
+  "calibration_result_commit": "1850beb007173f0f96f8ee5f5784efd4267377d3",
+  "calibration_result_path": "/tmp/codex-task11-publication-20260930/evidence/gpu_campaign/task11_3090/native_loss_927c5de/calibration_result.json",
+  "calibration_result_sha256": "8772372921343085097dd01e9ec2e584f5aa3ce5d68e30605892341c7bed33e4",
+  "calibration_rule": "2*max_abs_step_delta_over_all_6_pairwise_OFF_contrasts_separately_for_loss_and_grad_norm",
+  "dashboard_gcs_sha256": "1023b413e445d3bc130e306144361ee7950f8fe811a12da264928a385a56bb30",
+  "dataset_path": "/root/autodl-tmp/task11-3090/preflight/dapo-math-17k-sft-256.jsonl",
+  "dataset_sha256": "44f9ddacd1e078d60d1a65d43dda76283b5ba68c6db7bbd54462126cd6a59428",
+  "environment_fingerprint_sha256": "38e446df0c339980d5a85db3efa2a938a5be5fbbcaf5beae21bdfc55888e0290",
+  "extractor_sha256": "0cf3b379fc501c5d42981eca4de61e1900b25f50e17aaad08461538e1617fd09",
+  "host_environment_sha256": "532f86f871f09e7e6e4fe3263a310047f1b598ce7113e47d1060ed31196b93c8",
+  "measurement_pairs": [
+    [
+      "L-M1-off",
+      "L-M1-on"
+    ],
+    [
+      "L-M2-off",
+      "L-M2-on"
+    ]
+  ],
+  "measurement_runner_sha256": "fec3872f53c5f9b695a80cb51c6ab074ca4c9ba681b866d6e15c3dc07a028115",
+  "on_profile": {
+    "RELAX_STRAGGLER_ENABLE": "1",
+    "RELAX_STRAGGLER_REPORT_INTERVAL_S": "10",
+    "RELAX_STRAGGLER_WARMUP_WINDOWS": "2",
+    "RELAX_STRAGGLER_WINDOW_S": "5"
+  },
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "protocol_sha256": "2a3de952c233ae6227ab1e0d822ef69129535841d25601318a1fcda24ff7e76f",
+  "recipe_relpath": "scripts/training/sft/run-qwen3-0.6B-4xgpu-dp4-observer.sh",
+  "recipe_sha256": "f622a782e45e42e1ee409b3206a7ae7a7713bdbd300b8fa99125e5670001bdfc",
+  "runner_sha256": "328ec14224365f5529e2c483dd07a98ce98101ad8d38491a3d6195a9dbd2531b",
+  "runtime": {
+    "bridge_python_tree_sha256": "f7e4963d84b5c7eda3fcaf5f77d5cdbb8a2391a236652dfe979451f2c2edfa64",
+    "megatron_python_tree_sha256": "f163114a8af894b8f782ea2696a256fc63d83a67dc7f188adff2a52c82e15764",
+    "model_config_relpath": "scripts/models/qwen3-0.6B.sh",
+    "model_config_sha256": "8a95323abafb40f5a7641475ad93eaa0c05a5fac06f70e353faa2edf1acc026f",
+    "model_path": "/root/autodl-tmp/hf-cache/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+    "model_tree_sha256": "def951f2da449390cf088129a99096d090386f259decd86c097c8bd37de0a233",
+    "num_gpus": 4,
+    "save": 0,
+    "training_pip_freeze_sha256": "1c5acc007ebe3e9fe1f7b19bae9c5666306e352c23a447679919ed951d77e536",
+    "training_venv": "/root/autodl-tmp/megatron-stack/venv",
+    "training_venv_python": "Python 3.12.3"
+  },
+  "save": 0,
+  "schema": "TASK11_NATIVE_LOSS_CAMPAIGN/v1",
+  "seed": 1234,
+  "stage": "MEASUREMENT",
+  "steps": 48,
+  "straggler_source_sha256": "1879eacb6246104adadd693aa22918b758c62ea2ff7226d370cc0a57c5edaf77",
+  "topology": {
+    "dp": 4,
+    "gbs": 32,
+    "gpu": "4xRTX3090",
+    "pp": 1,
+    "tp": 1
+  },
+  "training_paths_sha256": "d4ab6964e53f30c87c21f4fb8ea3dba3af94341657ddb7b19aaab499957613b0"
+}
