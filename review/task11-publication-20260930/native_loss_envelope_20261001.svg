@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="470" viewBox="0 0 980 470" role="img" aria-labelledby="title desc">
+  <title id="title">927c5de native loss and gradient norm versus frozen OFF/OFF envelopes</title>
+  <desc id="desc">Maximum paired absolute differences are 21.4 and 20.7 percent of the loss envelope, and 14.6 and 21.8 percent of the gradient norm envelope. All four values are within the frozen bands.</desc>
+  <style>
+    text { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #172b4d; }
+    .title { font-size: 23px; font-weight: 700; }
+    .sub { font-size: 14px; fill: #4b5d73; }
+    .group { font-size: 17px; font-weight: 700; }
+    .row { font-size: 14px; }
+    .axis { font-size: 12px; fill: #596b80; }
+    .value { font-size: 13px; font-weight: 600; }
+    .note { font-size: 12px; fill: #43556c; }
+  </style>
+  <rect width="980" height="470" fill="#ffffff"/>
+  <text x="32" y="38" class="title">Native loss / grad norm：实测最大差与冻结包络</text>
+  <text x="32" y="64" class="sub">927c5de · 每对 48 步 · 误差条长度 = 最大绝对差 ÷ 对应 OFF/OFF 容差</text>
+
+  <text x="292" y="101" class="axis">相对冻结容差</text>
+  <line x1="330" y1="115" x2="750" y2="115" stroke="#8b9bb0" stroke-width="1"/>
+  <line x1="330" y1="109" x2="330" y2="368" stroke="#8b9bb0" stroke-width="1"/>
+  <line x1="435" y1="115" x2="435" y2="368" stroke="#dce3eb"/>
+  <line x1="540" y1="115" x2="540" y2="368" stroke="#dce3eb"/>
+  <line x1="645" y1="115" x2="645" y2="368" stroke="#dce3eb"/>
+  <line x1="750" y1="109" x2="750" y2="368" stroke="#a95a39" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="325" y="132" class="axis" text-anchor="middle">0%</text>
+  <text x="435" y="132" class="axis" text-anchor="middle">25%</text>
+  <text x="540" y="132" class="axis" text-anchor="middle">50%</text>
+  <text x="645" y="132" class="axis" text-anchor="middle">75%</text>
+  <text x="750" y="132" class="axis" text-anchor="middle">100% · 容差</text>
+  <text x="792" y="101" class="axis">实测最大差</text>
+
+  <text x="34" y="177" class="group">Loss</text>
+  <text x="34" y="201" class="sub">冻结容差 0.233478</text>
+  <text x="240" y="165" class="row" text-anchor="end">P1 · OFF / ON</text>
+  <rect x="330" y="148" width="89.9" height="23" rx="4" fill="#3975b7"/>
+  <text x="430" y="165" class="value">21.4%</text>
+  <text x="792" y="165" class="value">0.050019</text>
+  <text x="240" y="207" class="row" text-anchor="end">P2 · OFF / ON</text>
+  <rect x="330" y="190" width="86.9" height="23" rx="4" fill="#3975b7"/>
+  <text x="427" y="207" class="value">20.7%</text>
+  <text x="792" y="207" class="value">0.048279</text>
+
+  <line x1="32" y1="237" x2="948" y2="237" stroke="#e1e7ee"/>
+  <text x="34" y="291" class="group">Grad norm</text>
+  <text x="34" y="315" class="sub">冻结容差 57.434275</text>
+  <text x="240" y="279" class="row" text-anchor="end">P1 · OFF / ON</text>
+  <rect x="330" y="262" width="61.3" height="23" rx="4" fill="#37806e"/>
+  <text x="399" y="279" class="value">14.6%</text>
+  <text x="792" y="279" class="value">8.384097</text>
+  <text x="240" y="321" class="row" text-anchor="end">P2 · OFF / ON</text>
+  <rect x="330" y="304" width="91.6" height="23" rx="4" fill="#37806e"/>
+  <text x="432" y="321" class="value">21.8%</text>
+  <text x="792" y="321" class="value">12.530714</text>
+
+  <rect x="32" y="386" width="916" height="58" rx="7" fill="#f3f6fa"/>
+  <text x="48" y="409" class="note">四个 ON/OFF 最大差均处于冻结包络内；此图仅支持本次 loss/grad 补验判定。</text>
+  <text x="48" y="430" class="note">包络来自 4 个 OFF 臂的 6 个两两对照；对照共享臂与训练步，不是独立样本数或置信区间。</text>
+</svg>

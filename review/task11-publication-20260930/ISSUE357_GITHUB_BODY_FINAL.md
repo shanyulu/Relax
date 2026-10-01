@@ -57,21 +57,49 @@ stateDiagram-v2
 
 ## 验收结果与解释
 
-| 验收项                  | 产品与证据                                         | 当前结果                                                                                                                                                                                       |
-| ----------------------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| C1：常驻开销            | `e961661`，6 对 pilot                              | 均值 +0.417%；95% CI \[-1.295%, +2.023%\]，`INCONCLUSIVE`。不能由点估计证明低于 0.5%；固定 N 确认实验等主指标裁决                                                                              |
-| C2：训练指标            | `a48a23b` 原训练比较                               | 更新、step/token/LR 序列有记录；loss/grad 未在首个 ON 前冻结 band，旧结果保持 `UNSCORED`                                                                                                       |
-| C2：参数                | `927c5de`，最终保留 checkpoint                     | 两对参数比较按各自冻结数值包络判 `PASS`；13 个有内容浮点组，169 个空占位项结构匹配。每对非张量叶 47/48 一致，唯一差异在 args 中含运行态路径/名称/TransferQueue ID 与端口；不称完整恢复状态等价 |
-| C2：overlap             | `a48a23b` 与 `927c5de` 为不同实验                  | a48a23b 旧判定 `NOT_PASS` 保留；927c5de 新预注册独立实验在自己的包络内 `PASS`。后者不覆盖前者，也不证明严格零影响                                                                              |
-| C2：新增 loss/grad 补验 | `927c5de`，4 个 OFF 校准臂 + 两对 OFF/ON，各 48 步 | `PASS_WITHIN_OFF_OFF_ENVELOPE`。loss 最大差 0.050019/0.048279，限值 0.233478；grad norm 最大差 8.38410/12.53071，限值 57.43427。旧 a48a23b 的 UNSCORED 不被回溯改写                            |
-| C3：慢 rank 定位        | `927c5de`，公开输入包固定于 `7098b43`              | 健康臂 37 条 uncertain、0 条确认告警；减速目标 rank 3 四个阶段标签共 4 条确认告警，最大偏差 6.869×；另有 3 条非目标告警，按预注册窗口代理规则列为 false positive，因果来源未证实               |
-| C3：平台与复算          | 同一公开输入包；独立重算在本地执行                 | TensorBoard rollout 级 rank 序列 3、3、2、2；不与阶段 JSONL 逐事件关联。公开包 29 项哈希及冻结分类复算一致；复算执行目录在本机。逐事件时延 `UNMEASURED`                                        |
+| 验收项                  | 产品与证据                                         | 当前结果                                                                                                                                                                                                                                                       |
+| ----------------------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| C1：常驻开销            | `e961661`，6 对 pilot                              | 均值 +0.417%；95% CI \[-1.295%, +2.023%\]，`INCONCLUSIVE`。不能由点估计证明低于 0.5%；固定 N 确认实验等主指标裁决                                                                                                                                              |
+| C2：训练指标            | `a48a23b` 原训练比较                               | 更新、step/token/LR 序列有记录；loss/grad 未在首个 ON 前冻结 band，旧结果保持 `UNSCORED`                                                                                                                                                                       |
+| C2：参数                | `927c5de`，最终保留 checkpoint                     | **本地 PASS**（本地记录 `116d527`，远端 API 404，原始 checkpoint 未公开）：13 个有内容浮点组按各自冻结包络通过，169 个空占位项结构匹配；每对非张量叶 47/48 一致，唯一差异在含运行路径/名称/TransferQueue ID 与端口的 args 叶。不称完整恢复状态等价或公开可复算 |
+| C2：overlap             | `a48a23b` 与 `927c5de` 为不同实验                  | a48a23b 旧判定 `NOT_PASS` 保留；927c5de 新预注册独立实验在自己的包络内 `PASS`。后者不覆盖前者，也不证明严格零影响                                                                                                                                              |
+| C2：新增 loss/grad 补验 | `927c5de`，4 个 OFF 校准臂 + 两对 OFF/ON，各 48 步 | `PASS_WITHIN_OFF_OFF_ENVELOPE`。loss 最大差 0.050019/0.048279，限值 0.233478；grad norm 最大差 8.38410/12.53071，限值 57.43427。旧 a48a23b 的 UNSCORED 不被回溯改写                                                                                            |
+| C3：慢 rank 定位        | `927c5de`，公开输入包固定于 `7098b43`              | 健康臂 37 条不确定记录、0 条确认告警；减速目标 rank 3 四个阶段标签共 4 条确认告警，最大偏差 6.869×；另有 3 条非目标告警按预注册窗口代理规则归为误报，原因未证实                                                                                                |
+| C3：平台与复算          | 同一公开输入包；独立重算在本地执行                 | TensorBoard rollout 级 rank 序列 3、3、2、2；不与阶段 JSONL 逐事件关联。公开包 29 项哈希及冻结分类复算一致；复算执行目录在本机。逐事件时延 `UNMEASURED`                                                                                                        |
 
 C3 的公开输入包含脱敏后的 public job logs；其 SHA 与公开转换台账一致，且原件 SHA 另有记录。独立重算读取公开包后在本机完成。因此“公开输入可复算”指数据输入已公开且本地复算一致，不表示复算发生在 GitHub 或平台上。冻结结果称检测覆盖“三个阶段”与 JSON 实际四个阶段标签不一致；以原始包和复算报告为准，修订为四个标签。
 
-另有 observer-on、未注入减速臂的自然告警记录，须与故障注入 C3 分开解释。对两条 ON 运行的原始 observer 记录复核后，可重算出 7 条 runtime-confirmed 告警；告警原因未定。分析器对非终态尾窗复放出另外 5 条候选，但对应 runtime status 为 `closed=false` 且仍有 2 个 open windows，M1/M2 collector status 又早于各自 manifest 完成时间；因此这 5 条不是可确认为已发布告警的终态证据，也不能据此证明最终无丢弃。该项审计报告与不可变证据链接待主线补入；在此之前不把 7 条告警归为误报，也不并入冻结 C3 误报统计。
+### Observer-only 运行中的自然告警
 
-本次 927c5de 新增 native loss/grad 补验的工具、协议、校准结果、测量锁和判定目前固定在本地 `233e5f8` 及其父提交；公开仓库尚无这些对象的可访问链接，故当前公开 PR 不能声称它们已可由维护者复算。只读工具门禁审计首版固定于本地 `ce39ee1`，含八臂 lineage/原件复核和 32 项定向测试；随后复审又发现重复 JSON 键、raw-root symlink 逃逸及输出拒绝覆盖等边界需补测修复，故 `ce39ee1` 不是最终门禁版本，最终工具提交待定。可复核的本地源为 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/TOOL_GATE_AUDIT_20261001.md`、`evidence/gpu_campaign/task11_3090/native_loss_927c5de/measurement_verdict.json`、`evidence/NATIVE_LOSS_PROTOCOL_927C5DE_20260930.md`。参数差值图源为 `evidence/gpu_campaign/task11_3090/c2_parameter/parameter_deltas.svg`。发布时须由主线将本地源替换为真实不可变地址。参数原始 checkpoint 也没有公开下载渠道。哈希台账证明文件身份，不替代原件和独立存储。
+两条 native ON 运行没有配置延迟注入。对 4,011 行 observer envelope 复放冻结 detector 后，复现保存 verdict 中的 7 条确认告警。四个 rank 均有数据，告警 rank 的 peer cohort 覆盖为 4/4；每 rank 每窗 4–5 个样本，token 量差 −1.25% 至 +0.33%，sequence 与 microbatch 数一致。告警原因未知；它们是测得的计时异常，不能称为硬件故障或误报。
+
+| Arm / 窗口 | Rank / 阶段           | host 比值 | CUDA event 比值 | 分类               | 保存的恢复          |
+| ---------- | --------------------- | --------: | --------------: | ------------------ | ------------------- |
+| M1 / w16   | r2 `forward-compute`  |    1.145× |          1.148× | `gpu_stream_stall` | 无；快照中仍 active |
+| M2 / w11   | r1 `forward-compute`  |    1.292× |          1.298× | `gpu_stream_stall` | w13                 |
+| M2 / w11   | r2 `forward-compute`  |    1.222× |          1.230× | `gpu_stream_stall` | w14                 |
+| M2 / w11   | r3 `forward-compute`  |    1.302× |          1.310× | `gpu_stream_stall` | w12                 |
+| M2 / w11   | r2 `forward-backward` |    1.080× |          1.018× | `host_only_stall`  | w12                 |
+| M2 / w11   | r3 `forward-backward` |    1.126× |          1.017× | `host_only_stall`  | w12                 |
+| M2 / w15   | r3 `forward-compute`  |    1.288× |          1.293× | `gpu_stream_stall` | w16                 |
+
+六条保存告警有后续 `within_tolerance` 恢复；M1/r2 `forward-compute` 没有保存恢复事件。M2/w11 的三个 `forward-compute` 告警均以 r0 为该窗最快有效 peer；现有数据不能区分 r1–r3 同时变慢与 r0 特别快。`gpu_stream_stall` 只表示 host 与 CUDA event 计时均越过阈值，没有测量 GPU 利用率或硬件故障；两个 `forward-backward` 告警的 host 差异为 1.080×/1.126×，CUDA event 差异仅 1.018×/1.017×，与 `host_only_stall` 分类相符。
+
+![Observer-only 运行中的保存告警、恢复事件和尾窗复放候选](../../evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.svg)
+
+逐条数据、覆盖与哈希见本地提交 `4e4e736878e5328e7c59f39d21fdceea1046a430` 中的 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.md` 与复放脚本 `evidence/tools/replay_native_loss_alerts_20261001.py`。复放脚本 SHA-256 为 `efff2163…d7b16c`，12 项定向测试通过；门禁包括 job-log/raw-file 哈希、重复 JSON 键与 envelope 身份拒绝、raw-root symlink confinement。报告和原始运行数据仍只在本地，未公开；同步正文前须替换为不可变公开链接。
+
+detector 对未落盘尾窗复放出另外 5 个候选（M1 两个、M2 三个），它们不是实时 collector 保存的告警。两臂 `runtime_status` 都是 `closed=false` 且保留两个未关闭窗口；M1 有 6 个待读回、M2 有 1 个，状态文件早于作业完成。因此七条是保存 verdict 中的数目，不是两次作业的最终告警总数。状态快照中的队列/丢弃/错误计数为零，但没有关窗后的最终统计，不能声称最终零丢弃。
+
+本次 927c5de native loss/grad 补验的工具、协议、校准结果、测量锁和判定固定于本地 `233e5f8` 及其父提交；独立只读门禁审计最终版固定于本地 `e8d200a8d2853448618721952ae3f703d1054aac`，工具 SHA-256 `b8233b8cfd35a4e422db4933e1352ba030c7c3391d5823444d2198afb9e83af1`，37 项定向测试与八臂复算通过，并核实两 ON 臂 sender/collector 的 profiler 已启用。新证据尚未公开，不能称公开可复算。自然告警报告与复放工具固定于本地 `4e4e736878e5328e7c59f39d21fdceea1046a430`；参数实验记录 `116d527` 也仅本地可访问。参数原始 checkpoint 未公开；哈希台账不能替代原件和独立存储。
+
+![Native loss 与 grad norm 的实测差值相对冻结 OFF/OFF 包络](./native_loss_envelope_20261001.svg)
+
+图表按 `measurement_verdict.json` 生成；发布时须将本地相对路径替换为发布到 evidence ref 的不可变 URL。
+
+![最终 checkpoint 参数差值相对各自冻结容差](../../evidence/gpu_campaign/task11_3090/c2_parameter/parameter_deltas.svg)
+
+参数图是另一个独立补验结果，不能与 loss/grad 补验合并成同一验收结论。该相对路径仅供本地复核，发布前须替换为不可变链接。
 
 ## 已知边界
 
