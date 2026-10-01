@@ -1,48 +1,32 @@
-# 四份 Issue/PR 正文发布索引（2026-10-01）
+# 四链接正文与证据发布索引（2026-10-01）
 
-这组文件是本地中文正文候选；本轮没有改动 GitHub。工作从本地提交 `233e5f8` 的隔离副本开始，Task 4 产品、证据与 PR 内容未改。四份正文须等证据发布后再替换为不可变公开链接；本地路径或 SHA 不能冒充可访问链接。
+| 项目             | 正文源                                        | 产品 / PR 头          | 当前结论                                          |
+| ---------------- | --------------------------------------------- | --------------------- | ------------------------------------------------- |
+| Task 4 RFC #351  | [Issue 正文](./ISSUE351_GITHUB_BODY_FINAL.md) | `0481701` / `da4acbb` | 范围与证据边界保留；三项裁决待维护者答复          |
+| Task 4 PR #370   | [PR 正文](./PR370_GITHUB_BODY_FINAL.md)       | 同上；当前头 CI 8/8   | 等当前头 approval，不新增 GPU 实验或产品变更      |
+| Task 11 RFC #357 | [Issue 正文](./ISSUE357_GITHUB_BODY_FINAL.md) | `927c5de` / `c2875a5` | 分项证据更新；C1、实时节奏与 Attention/MoE 待裁决 |
+| Task 11 PR #378  | [PR 正文](./PR378_GITHUB_BODY_FINAL.md)       | 同上；当前头 CI 8/8   | 保持 Draft，整体验收未完成                        |
 
-| GitHub 项目      | 正文源文件                                                       | 远端基线                                 | 产品 / 证据基线                        | 当前远端状态                                                        |
-| ---------------- | ---------------------------------------------------------------- | ---------------------------------------- | -------------------------------------- | ------------------------------------------------------------------- |
-| Task 4 RFC #351  | [ISSUE351_GITHUB_BODY_FINAL.md](./ISSUE351_GITHUB_BODY_FINAL.md) | 当前 Issue 正文；关联 PR `da4acbb`       | 产品 `0481701`；证据 `fdf288d`         | OPEN；artifact、验收规模、采样语义待维护者裁决                      |
-| Task 4 PR #370   | [PR370_GITHUB_BODY_FINAL.md](./PR370_GITHUB_BODY_FINAL.md)       | head `da4acbb`                           | 产品 `0481701`；证据 `fdf288d`         | OPEN、非 Draft、mergeable；8 项必需 CI 成功；review approval 未取得 |
-| Task 11 RFC #357 | [ISSUE357_GITHUB_BODY_FINAL.md](./ISSUE357_GITHUB_BODY_FINAL.md) | 当前 Issue 正文；关联 Draft PR `c2875a5` | 产品 `927c5de`；公开证据基线 `7098b43` | OPEN；C1 主指标、实时 cadence、Attention/MoE 待导师裁决             |
-| Task 11 PR #378  | [PR378_GITHUB_BODY_FINAL.md](./PR378_GITHUB_BODY_FINAL.md)       | head `c2875a5`                           | 产品 `927c5de`；公开证据基线 `7098b43` | OPEN、Draft；当前头 CI 8/8 成功；仍有未完成验收项                   |
+## 本次交付
 
-## 本地新增证据
+- 证据数据与工具固定于 [1c23f03](https://github.com/shanyulu/Relax/tree/1c23f03d3553e26194c09f90d2ce0e85f7895c00/evidence)；图注修订固定于 [d67c189](https://github.com/shanyulu/Relax/commit/d67c189015efa237946935f75bc19d5596b09686)。
+- [公开下载复算记录](https://github.com/shanyulu/Relax/blob/41f2521cfef7dd3dc2bbd8e10dbb3f8a8dccf5de/evidence/public_download_replay_20261001/PUBLIC_DOWNLOAD_REPLAY.md)固定于 `41f2521`，包含实际下载与机器收据。
+- [Release](https://github.com/shanyulu/Relax/releases/tag/task11-evidence-20261001-1c23f03)有九个输入附件：native 小包 917,446 字节；八个 3090 trace 包合计 526,027,308 字节。
+- native 小包 96 项清单匹配；八臂复算为 `PASS_WITHIN_OFF_OFF_ENVELOPE`；保存告警 payload 匹配 145/145、139/139，输出与冻结 JSON 逐字节一致。下载包内三套工具测试为 71 passed。
+- 3090 的八份 manifest 与32件 trace 匹配冻结 config；calibration/measurement 都 PASS，生成文件与冻结结果逐字节一致。
+- 本地完整参数复算两对各 182/182 entries 通过。其中13个是非空浮点 storage 组，169个是零元素 TE 占位；非张量叶每对47/48一致，不能据此声明完整恢复状态等价。
+- 参数 P-M 旁证 loss `0.046285/0.030037`、grad `7.94949/5.50596` 属于 `927c5de`，保持 `UNSCORED`；新 L-M 补验独立判定。旧 `a48a23b` overlap `NOT_PASS` 保留。
+- 新图、表和正文使用同一冻结数据；修正将 GitHub 目录当图片的问题，并将新增图替换为不可变 raw 图片地址。
 
-新增本地证据的结论边界如下；三类结果互不替代，也不构成整体 C2 PASS。
+## 检查与发布范围
 
-| 证据                        | 当前判定                                                                                                                                                                                                               | 可复核材料                                                                                                                                                                                                                      |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Native loss/grad（927c5de） | `PASS_WITHIN_OFF_OFF_ENVELOPE`。48 步/臂；两对 loss 最大差 `0.05001947 / 0.04827869`，冻结限值 `0.2334780693`；grad norm `8.3840971 / 12.530714`，限值 `57.43427467`。旧 a48a23b 的 `UNSCORED` 不回溯改写。            | 审计报告 `TOOL_GATE_AUDIT_SOURCE_REMAP_20261001.md` SHA-256 `a32d899367ea13da2ca90f6d5bfd6ef2effccf2cc2caab4dd707459b4f26141d`；工具 SHA-256 `8f47444ea1ed3501f90358990fd5700df13016a718c5f781182879d1770ea43f`。               |
-| Observer-only 告警复放      | M1 `145/145`、M2 `139/139` saved-verdict payload 完整匹配；仍有未闭合尾窗和 pending readouts，不能推断终态零丢弃或告警根因。                                                                                           | `ALERT_REPLAY_20261001.json` SHA-256 `b094a71c72b59848796da1c1cf25a0a640ec6320d6680df69af566ab71aca942`；工具 SHA-256 `77fdda54c7c6c42d15708bf5d89d3d8bdaf84d86d59fe799a22bed8fa7735471`。                                      |
-| 参数复算                    | 每对 `182/182` entries 通过、零 violations、零缺失容差；非张量审查每对 `47/48` 一致，单一差异在运行态 `args`，不代表完整可恢复状态等价。                                                                               | 本地 commit `5173209`；verdict SHA-256 `73848f645b8043e7b37026882c8f7527a46807440918f1532b10c20e214a0f32`；mapping audit SHA-256 `c04c8a6ef4cdcc77f2a7e7e6a6729921a1a3b91297122e30e509f82546d67bc7`。258 GiB 参数原件仍仅本地。 |
-| 可迁移小证据包              | 96 项清单全匹配；最终 archive 解压后 native-loss 判定通过，告警 payload 再匹配 `145/145`、`139/139`。显式映射 manifest 中记录的 Ray 源码路径，在干净产品 checkout 重算源码指纹，不依赖原 Ray working-directory cache。 | `NATIVE_LOSS_REPLAY_BUNDLE_20261001.tar.gz`：917,446 bytes，SHA-256 `af1aff9db1b8c4f251b23b7e56d25d9b487fb43e1ee15bcc5259695b5e1f72c2`。包不含模型、训练环境或 258 GiB checkpoint；仍在同一存储、未公开，不是独立备份。         |
-| 工具与安全检查              | 三套测试合计 `71 passed`（native auditor 34、原 campaign 9、alert replay 28）。Gitleaks 8.30.1 扫描解包文件 6,284,963 bytes，零发现。                                                                                  | 扫描记录 `BUNDLE_SECURITY_SCAN_20261001.md`；空 JSON 报告 SHA-256 `37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`。                                                                                          |
+四份中文正文使用上表源文件更新；只发布个人 fork 的 evidence 分支与 Release，两个产品 PR 分支保持原头。维护者评论、评审记录、历史 verdict 和完整原件保留。
 
-loss/grad 差值图为 `native_loss_envelope_20261001.svg`，数据取自 measurement verdict；参数图为 `evidence/gpu_campaign/task11_3090/c2_parameter/parameter_deltas.svg`。自然告警时序图及逐条数据表为本地审计源 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.svg` / `.md`。各图先保留本地源路径，获准发布后再替换成不可变 URL。
+新材料定向 pre-commit 通过，gitleaks 扫描通过。全仓检查在隔离副本执行，历史证据被 EOF、Ruff、mdformat、clang-format 和 docformatter 修改而失败；修改未迁回。该 evidence 分支不宣称全仓格式检查通过，两个产品 PR 的当前 CI 按其真实 SHA 记录。
 
-## 证据出处与核验说明
+## 仍待闭合
 
-- C3 的输入包已公开于 `7098b43`；29 项直接对象/归档成员哈希匹配。独立复算过程在本机执行，输出与冻结 JSONL/TensorBoard 结果一致。正文应写“基于公开输入包的本地独立复算”，不写“公开复算平台已执行”。
-- C3 原结果的阶段摘要写“三个阶段”，逐项 JSONL 实际有四个目标阶段标签；候选正文按原始条目写四个，不改冻结结果文件。
-- C3 减速臂的 3 条非目标告警按预注册窗口代理规则归为误报，成因未证实。observer-only 两臂有 4,011 条 envelope，复放重现保存的 7 条确认告警；六条有保存恢复、M1/r2 一条快照时仍 active，原因未知，不判误报。
-- 非终态尾窗离线复放另有 5 个候选，不能当作实时保存告警；`closed=false`、每臂两窗未关闭，M1 尚有 6 个 pending readouts、M2 有 1 个。现有快照计数为零不构成最终零丢弃证明。报告、图及加固脚本见主线可达提交 `8b7006d`；公开链接仍未生成。
-- a48a23b 的旧 loss/grad 差值 `0.046285/0.030037` 和 grad `7.94949/5.50596` 属于参数实验旁证，因首个 ON 前未冻结容差而保持 `UNSCORED`。
-- a48a23b overlap `NOT_PASS` 与 927c5de 独立预注册 overlap `PASS` 各自绑定对应协议，不能覆盖或合并。
-
-## 发布前差异检查
-
-本轮约束为仅本地提交，不 push、不写 GitHub。后续只有在该约束由有权者明确解除后，才可发布证据并同步远端正文；发布前必须完成：
-
-1. 最终工具/复放门禁提交固定；Task 4 对应 `0481701` + evidence `fdf288d`，Task 11 对应 `927c5de` + 已公开基线 `7098b43`，本地新增 evidence 均标成未公开。
-2. 远端重新下载已授权的证据包，核对文件 SHA 并在隔离目录独立复算；只有实际完成后才改称公开可复算。
-3. 再读四个远端正文、CI 与 mentor/review 回复；有新增决策或远端代码头变化时先同步事实。
-4. #378 保持 Draft；不要把 native 补验写成 C1、整体 C2 或 Task 11 PASS。#370 仍待 approval 与三项裁决。
-5. 用正文源更新四项后回读比较；保留维护者意见，不通过新评论重复播报状态。
-
-## 未闭合事项
-
-- Task 4：维护者 review approval 与 artifact 归属、4×4090 验收规模、采样语义裁决。
-- Task 11：C1 主指标与确认实验；rollout cadence 是否满足实时；Attention/MoE 范围；两 observer-only 运行尾窗没有终态关闭与最终丢弃 accounting；native 小包虽已本地跨 Ray-cache 复算，仍未异盘或公开下载验证；258 GiB 参数原件仍需确定安全、可恢复的独立存储路径。
+- Task 4：当前头 approval；artifact 归属、4×4090 验收规模、内容派生 seed 三项裁决。
+- Task 11：C1 主指标与正式确认实验；实时节奏及 Attention/MoE 范围；整体 C2 覆盖接受。
+- 约258 GiB参数原件仍仅本地：独立存储、完整第三方恢复复算未完成。
+- 两条 observer-only 运行缺终态关窗/readout/drop accounting；七条保存告警中未知原因保留未知，五个离线尾窗候选不写成已保存告警。
