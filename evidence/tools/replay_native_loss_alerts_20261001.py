@@ -107,13 +107,65 @@ def validate_envelope_identities(envelopes: List[Dict[str, Any]]) -> int:
 
 
 def signature(verdict: Dict[str, Any]) -> Tuple[str, str, int, int, str]:
-    return (
-        str(verdict["cohort"]),
-        str(verdict["name"]),
-        int(verdict["rank"]),
-        int(verdict["window_index"]),
-        str(verdict["kind"]),
-    )
+    required = ("cohort", "name", "rank", "window_index", "kind")
+    missing = [field for field in required if field not in verdict]
+    if missing:
+        raise ValueError(f"saved verdict identity missing fields: {', '.join(missing)}")
+    cohort, name, rank, window_index, kind = (verdict[field] for field in required)
+    if not isinstance(cohort, str) or not cohort:
+        raise ValueError("saved verdict identity cohort must be a non-empty string")
+    if not isinstance(name, str) or not name:
+        raise ValueError("saved verdict identity name must be a non-empty string")
+    if type(rank) is not int or rank < 0:
+        raise ValueError("saved verdict identity rank must be a non-negative integer")
+    if type(window_index) is not int or window_index < 0:
+        raise ValueError("saved verdict identity window_index must be a non-negative integer")
+    if not isinstance(kind, str) or kind not in ("straggler", "recovered", "uncertain"):
+        raise ValueError("saved verdict identity kind is invalid")
+    return cohort, name, rank, window_index, kind
+
+
+def validate_saved_verdicts(verdicts: List[Dict[str, Any]]) -> List[Tuple[str, str, int, int, str]]:
+    signatures = []
+    seen = set()
+    for index, verdict in enumerate(verdicts, 1):
+        identity = signature(verdict)
+        if identity in seen:
+            raise ValueError(f"duplicate saved verdict identity at row {index}: {identity}")
+        seen.add(identity)
+        signatures.append(identity)
+    return signatures
+
+
+def verify_profiler_job_log(job_log: Path) -> Dict[str, Any]:
+    text = job_log.read_text(encoding="utf-8", errors="replace")
+    text = re.sub(r"\x1b\[[0-9;]*[A-Za-z]", "", text)
+    started_roles = set()
+    enabled_windows: Dict[str, List[Any]] = {"sender": [], "collector": []}
+    for line in text.splitlines():
+        started = re.search(r"straggler profiler started:\s*role=(sender|collector)\b", line)
+        if started:
+            started_roles.add(started.group(1))
+        enabled = re.search(r"straggler profiler enabled:\s*role=(sender|collector)\b", line)
+        if enabled:
+            window = re.search(r"\bwindow=([0-9]+(?:\.[0-9]+)?)s\b", line)
+            enabled_windows[enabled.group(1)].append(window.group(1) if window else None)
+
+    roles = ("sender", "collector")
+    missing_started = [role for role in roles if role not in started_roles]
+    if missing_started:
+        raise ValueError(f"missing straggler profiler started roles in {job_log}: {missing_started}")
+    for role in roles:
+        windows = enabled_windows[role]
+        if not windows:
+            raise ValueError(f"missing straggler profiler enabled role={role} in {job_log}")
+        if any(window != "5.0" for window in windows):
+            raise ValueError(f"unexpected profiler window for role={role}: {windows}")
+    return {
+        "started_roles": sorted(started_roles),
+        "enabled_roles": sorted(role for role in roles if enabled_windows[role]),
+        "window_seconds_by_role": {role: enabled_windows[role] for role in roles},
+    }
 
 
 def event_summary(verdict: Dict[str, Any]) -> Dict[str, Any]:
@@ -217,10 +269,12 @@ def replay_arm(
     envelopes = read_jsonl(envelopes_path)
     identity_count = validate_envelope_identities(envelopes)
     saved = read_jsonl(verdicts_path)
+    saved_signatures = validate_saved_verdicts(saved)
     status = read_json(resolve_input(measurement_root, run_relative / "collector_status.json"))
     runtime = read_json(resolve_input(measurement_root, run_relative / "runtime_status.json"))
     verify_job_log_hash(job_log_path, manifest.get("job_log_sha256"))
     injection_config = verify_no_injected_slowdown(job_log_path)
+    profiler_config = verify_profiler_job_log(job_log_path)
 
     config = StragglerConfig(
         enabled=True,
@@ -240,8 +294,8 @@ def replay_arm(
 
     saved_confirmed = [row for row in saved if row.get("kind") == "straggler"]
     saved_recovered = [row for row in saved if row.get("kind") == "recovered"]
-    saved_signatures = {signature(row) for row in saved}
-    replay_only = [row for row in replayed if signature(row) not in saved_signatures]
+    saved_signature_set = set(saved_signatures)
+    replay_only = [row for row in replayed if signature(row) not in saved_signature_set]
     replay_only_confirmed = [row for row in replay_only if row.get("kind") == "straggler"]
 
     sender_status = []
@@ -266,6 +320,7 @@ def replay_arm(
         "product_sha": manifest.get("product_sha"),
         "valid": manifest.get("valid"),
         "injection_config_from_job_log": injection_config,
+        "profiler_config_from_job_log": profiler_config,
         "raw": {
             "envelope_lines": len(envelopes),
             "envelope_unique_rank_seq_stage": identity_count,

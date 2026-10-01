@@ -18,7 +18,9 @@ from replay_native_loss_alerts_20261001 import (  # noqa: E402
     replay_arm,
     resolve_input,
     validate_envelope_identities,
+    validate_saved_verdicts,
     verify_job_log_hash,
+    verify_profiler_job_log,
 )
 
 
@@ -43,6 +45,108 @@ def test_duplicate_envelope_identity_is_rejected():
 
     with pytest.raises(ValueError, match="duplicate envelope identity"):
         validate_envelope_identities([envelope, dict(envelope)])
+
+
+def test_duplicate_saved_verdict_identity_is_rejected():
+    verdict = {
+        "cohort": "dense:0",
+        "name": "forward-compute",
+        "rank": 2,
+        "window_index": 17,
+        "kind": "straggler",
+    }
+
+    with pytest.raises(ValueError, match="duplicate saved verdict identity"):
+        validate_saved_verdicts([verdict, dict(verdict)])
+
+
+@pytest.mark.parametrize(
+    ("updates", "removed", "message"),
+    [
+        ({}, {"kind"}, "missing fields"),
+        ({"cohort": 4}, set(), "cohort must be"),
+        ({"name": ""}, set(), "name must be"),
+        ({"rank": "2"}, set(), "rank must be"),
+        ({"rank": True}, set(), "rank must be"),
+        ({"window_index": 1.0}, set(), "window_index must be"),
+        ({"kind": "other"}, set(), "kind is invalid"),
+    ],
+)
+def test_saved_verdict_identity_fields_are_complete_and_typed(updates, removed, message):
+    verdict = {
+        "cohort": "dense:0",
+        "name": "forward-compute",
+        "rank": 2,
+        "window_index": 17,
+        "kind": "straggler",
+    }
+    verdict.update(updates)
+    for key in removed:
+        verdict.pop(key)
+
+    with pytest.raises(ValueError, match=message):
+        validate_saved_verdicts([verdict])
+
+
+def test_job_log_confirms_sender_and_collector_at_five_second_window(tmp_path):
+    job_log = tmp_path / "job.log"
+    job_log.write_text(
+        "\n".join(
+            (
+                "straggler profiler started: role=sender identity=rank1 collector=127.0.0.1:1234",
+                "straggler profiler enabled: role=sender, log_level=2, event_pool=512, window=5.0s",
+                "straggler profiler started: role=collector identity=rank0 collector=127.0.0.1:1234",
+                "straggler profiler enabled: role=collector, log_level=2, event_pool=512, window=5.0s",
+            )
+        ),
+        encoding="utf-8",
+    )
+
+    result = verify_profiler_job_log(job_log)
+
+    assert result == {
+        "started_roles": ["collector", "sender"],
+        "enabled_roles": ["collector", "sender"],
+        "window_seconds_by_role": {"sender": ["5.0"], "collector": ["5.0"]},
+    }
+
+
+@pytest.mark.parametrize(
+    ("lines", "message"),
+    [
+        (
+            [
+                "straggler profiler started: role=sender",
+                "straggler profiler enabled: role=sender, window=5.0s",
+                "straggler profiler enabled: role=collector, window=5.0s",
+            ],
+            "missing straggler profiler started roles",
+        ),
+        (
+            [
+                "straggler profiler started: role=sender",
+                "straggler profiler started: role=collector",
+                "straggler profiler enabled: role=sender, window=5.0s",
+            ],
+            "missing straggler profiler enabled role=collector",
+        ),
+        (
+            [
+                "straggler profiler started: role=sender",
+                "straggler profiler started: role=collector",
+                "straggler profiler enabled: role=sender, window=5.0s",
+                "straggler profiler enabled: role=collector, window=10.0s",
+            ],
+            "unexpected profiler window for role=collector",
+        ),
+    ],
+)
+def test_job_log_rejects_missing_or_wrong_profiler_configuration(tmp_path, lines, message):
+    job_log = tmp_path / "job.log"
+    job_log.write_text("\n".join(lines), encoding="utf-8")
+
+    with pytest.raises(ValueError, match=message):
+        verify_profiler_job_log(job_log)
 
 
 def test_job_log_hash_mismatch_is_rejected_after_tampering(tmp_path):
