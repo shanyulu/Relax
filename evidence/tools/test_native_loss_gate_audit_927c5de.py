@@ -148,6 +148,42 @@ def test_json_with_duplicate_object_keys_is_rejected(tmp_path: Path) -> None:
         audit.read_json(path, "duplicate fixture")
 
 
+def test_worker_source_root_mapping_requires_exact_absolute_existing_directory(tmp_path: Path) -> None:
+    recorded = "/old/ray/cache/relax"
+    local = tmp_path / "clean-product" / "relax"
+    local.mkdir(parents=True)
+    mappings = audit.parse_worker_source_root_maps([f"{recorded}={local}"])
+    assert audit.resolve_worker_source_root(recorded, mappings) == local.resolve()
+    assert audit.resolve_worker_source_root(str(local), mappings) == local.resolve()
+
+    other_recorded = "/old/ray/cache/relax-copy"
+    with pytest.raises(audit.AuditFailure, match="unavailable and has no mapping"):
+        audit.resolve_worker_source_root(other_recorded, mappings)
+
+
+@pytest.mark.parametrize(
+    "values",
+    [
+        [""],
+        ["relative=also-relative"],
+        ["/recorded="],
+        ["=/local"],
+    ],
+)
+def test_worker_source_root_mapping_rejects_malformed_paths(values: list[str]) -> None:
+    with pytest.raises(audit.AuditFailure, match="mapping"):
+        audit.parse_worker_source_root_maps(values)
+
+
+def test_worker_source_root_mapping_rejects_duplicate_or_missing_local_root(tmp_path: Path) -> None:
+    local = tmp_path / "source"
+    local.mkdir()
+    with pytest.raises(audit.AuditFailure, match="duplicate"):
+        audit.parse_worker_source_root_maps([f"/recorded={local}", f"/recorded={local}"])
+    with pytest.raises(audit.AuditFailure, match="unavailable"):
+        audit.parse_worker_source_root_maps([f"/recorded={tmp_path / 'missing'}"])
+
+
 @pytest.mark.parametrize("filename", ["manifest.json", "job.log", "train-argv.nul"])
 def test_campaign_inputs_cannot_escape_raw_root_through_symlinks(tmp_path: Path, filename: str) -> None:
     root = tmp_path / "raw"

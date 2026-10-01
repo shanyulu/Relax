@@ -1,6 +1,6 @@
 # 四份 Issue/PR 正文发布索引（2026-10-01）
 
-这组文件是本地中文正文候选；没有改动 GitHub。来源工作区从本地提交 `233e5f8` 创建。四份正文均应在证据发布完成后整体同步，不把本地 SHA 写成可访问的 GitHub 链接。
+这组文件是本地中文正文候选；本轮没有改动 GitHub。工作从本地提交 `233e5f8` 的隔离副本开始，Task 4 产品、证据与 PR 内容未改。四份正文须等证据发布后再替换为不可变公开链接；本地路径或 SHA 不能冒充可访问链接。
 
 | GitHub 项目      | 正文源文件                                                       | 远端基线                                 | 产品 / 证据基线                        | 当前远端状态                                                        |
 | ---------------- | ---------------------------------------------------------------- | ---------------------------------------- | -------------------------------------- | ------------------------------------------------------------------- |
@@ -11,9 +11,15 @@
 
 ## 本地新增证据
 
-截至基线 `233e5f8`，新 native loss/grad 补验已判 `PASS_WITHIN_OFF_OFF_ENVELOPE`：测量差值 loss `0.05001947 / 0.04827869`（冻结限值 `0.2334780693`），grad norm `8.3840971 / 12.530714`（冻结限值 `57.43427467`）。该判定仅限同版两对 48 步数值比较，不更新 a48a23b 旧 loss/grad `UNSCORED`，不构成整体 C2 PASS。
+新增本地证据的结论边界如下；三类结果互不替代，也不构成整体 C2 PASS。
 
-结果、校准锁、测量锁、工具及测试所在的本地提交为 `86e35e2`、`1850beb`、`eaf3c63`、`233e5f8`。八臂只读审计最终版在主线可达提交 `61316a8`，工具 SHA-256 `b8233b8cfd35a4e422db4933e1352ba030c7c3391d5823444d2198afb9e83af1`，37 项测试与八臂复算通过。自然告警报告、SVG 和加固后的 replay 工具固定于主线可达提交 `8b7006d`；复放工具 SHA-256 `cbb59d102d514bbadbfc73fde19c9afe0db392046a5fcc3c068ed16104f9dec1`，24 项测试通过，覆盖输入 lineage、日志与原件哈希、重复 JSON 键和 envelope 身份、raw-root symlink confinement。报告 SHA-256 `0cc0d3d1c7f57f5327055d9451883b74c9268be3cdf817c83d927799b01377f`，图 SHA-256 `de645d462b2868baf7aa27fdaccb77365f92dbd730299c91eca9110df537b1ca`。这些证据均未公开。参数记录 `116d527` 经 GitHub API 返回 404，明确为 local-only；非张量审查确认每对 47/48 叶一致，唯一差异位于含运行路径、TensorBoard 名称及 TransferQueue 运行态信息的 args 叶。
+| 证据                        | 当前判定                                                                                                                                                                                                               | 可复核材料                                                                                                                                                                                                                      |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Native loss/grad（927c5de） | `PASS_WITHIN_OFF_OFF_ENVELOPE`。48 步/臂；两对 loss 最大差 `0.05001947 / 0.04827869`，冻结限值 `0.2334780693`；grad norm `8.3840971 / 12.530714`，限值 `57.43427467`。旧 a48a23b 的 `UNSCORED` 不回溯改写。            | 审计报告 `TOOL_GATE_AUDIT_SOURCE_REMAP_20261001.md` SHA-256 `a32d899367ea13da2ca90f6d5bfd6ef2effccf2cc2caab4dd707459b4f26141d`；工具 SHA-256 `8f47444ea1ed3501f90358990fd5700df13016a718c5f781182879d1770ea43f`。               |
+| Observer-only 告警复放      | M1 `145/145`、M2 `139/139` saved-verdict payload 完整匹配；仍有未闭合尾窗和 pending readouts，不能推断终态零丢弃或告警根因。                                                                                           | `ALERT_REPLAY_20261001.json` SHA-256 `b094a71c72b59848796da1c1cf25a0a640ec6320d6680df69af566ab71aca942`；工具 SHA-256 `77fdda54c7c6c42d15708bf5d89d3d8bdaf84d86d59fe799a22bed8fa7735471`。                                      |
+| 参数复算                    | 每对 `182/182` entries 通过、零 violations、零缺失容差；非张量审查每对 `47/48` 一致，单一差异在运行态 `args`，不代表完整可恢复状态等价。                                                                               | 本地 commit `5173209`；verdict SHA-256 `73848f645b8043e7b37026882c8f7527a46807440918f1532b10c20e214a0f32`；mapping audit SHA-256 `c04c8a6ef4cdcc77f2a7e7e6a6729921a1a3b91297122e30e509f82546d67bc7`。258 GiB 参数原件仍仅本地。 |
+| 可迁移小证据包              | 96 项清单全匹配；最终 archive 解压后 native-loss 判定通过，告警 payload 再匹配 `145/145`、`139/139`。显式映射 manifest 中记录的 Ray 源码路径，在干净产品 checkout 重算源码指纹，不依赖原 Ray working-directory cache。 | `NATIVE_LOSS_REPLAY_BUNDLE_20261001.tar.gz`：917,446 bytes，SHA-256 `af1aff9db1b8c4f251b23b7e56d25d9b487fb43e1ee15bcc5259695b5e1f72c2`。包不含模型、训练环境或 258 GiB checkpoint；仍在同一存储、未公开，不是独立备份。         |
+| 工具与安全检查              | 三套测试合计 `71 passed`（native auditor 34、原 campaign 9、alert replay 28）。Gitleaks 8.30.1 扫描解包文件 6,284,963 bytes，零发现。                                                                                  | 扫描记录 `BUNDLE_SECURITY_SCAN_20261001.md`；空 JSON 报告 SHA-256 `37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570`。                                                                                          |
 
 loss/grad 差值图为 `native_loss_envelope_20261001.svg`，数据取自 measurement verdict；参数图为 `evidence/gpu_campaign/task11_3090/c2_parameter/parameter_deltas.svg`。自然告警时序图及逐条数据表为本地审计源 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.svg` / `.md`。各图先保留本地源路径，获准发布后再替换成不可变 URL。
 
@@ -39,4 +45,4 @@ loss/grad 差值图为 `native_loss_envelope_20261001.svg`，数据取自 measur
 ## 未闭合事项
 
 - Task 4：维护者 review approval 与 artifact 归属、4×4090 验收规模、采样语义裁决。
-- Task 11：C1 主指标与确认实验；rollout cadence 是否满足实时；Attention/MoE 范围；两 observer-only 运行尾窗没有终态关闭与最终丢弃 accounting；native 补验及参数原始大文件的可迁移/独立存储和公开复算。
+- Task 11：C1 主指标与确认实验；rollout cadence 是否满足实时；Attention/MoE 范围；两 observer-only 运行尾窗没有终态关闭与最终丢弃 accounting；native 小包虽已本地跨 Ray-cache 复算，仍未异盘或公开下载验证；258 GiB 参数原件仍需确定安全、可恢复的独立存储路径。

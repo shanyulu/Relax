@@ -37,15 +37,15 @@ Collector 位于 global rank 0 训练进程内，不是独立服务；未配置�
 
 ## 验收摘要
 
-| 项目                     | 证据版本                                      | 判定                                                                                                                                                                                   |
-| ------------------------ | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| C1 性能开销              | `e961661`，6 对 pilot                         | `INCONCLUSIVE`；+0.417% 点估计，95% CI 上界 +2.023%，未证明 `<0.5%`                                                                                                                    |
-| C2 旧 loss/grad          | `a48a23b`                                     | `UNSCORED`；首个 ON 前没有冻结容差，本次新补验不回溯改写                                                                                                                               |
-| C2 参数                  | `927c5de`，本地记录 `116d527`                 | **本地 PASS，未公开复算**；每对 13 个有内容浮点组按冻结数值包络通过，169 个空占位项匹配；每对 48 个非张量叶中 47 个一致，唯一差异为含运行态路径/名称/TransferQueue ID 与端口的 args 叶 |
-| C2 overlap               | `a48a23b` 与 `927c5de` 独立                   | 旧 a48a23b `NOT_PASS` 保留；927c5de 新预注册门槛下 `PASS`，不能覆盖旧结果或证明零影响                                                                                                  |
-| C2 native loss/grad 补验 | `927c5de`，4 OFF 校准 + 两对 OFF/ON，48 步/臂 | `PASS_WITHIN_OFF_OFF_ENVELOPE`：loss 差 0.050019/0.048279，限值 0.233478；grad 差 8.38410/12.53071，限值 57.43427                                                                      |
-| C3 慢 rank 定位          | `927c5de`，evidence `7098b43`                 | 健康臂 37 uncertain、0 确认告警；rank 3 四个阶段标签命中 4 次、最大 6.869×；3 条非目标告警按冻结窗口代理规则归类，成因未证实                                                           |
-| C3 平台确认              | `927c5de`，同一公开输入包                     | TensorBoard rollout 级确认 rank 为 3、3、2、2；与 JSONL 无逐事件 ID，不能报告端到端时延；实时性待裁决                                                                                  |
+| 项目                     | 证据版本                                      | 判定                                                                                                                                                                                                                                                                                          |
+| ------------------------ | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| C1 性能开销              | `e961661`，6 对 pilot                         | `INCONCLUSIVE`；+0.417% 点估计，95% CI 上界 +2.023%，未证明 `<0.5%`                                                                                                                                                                                                                           |
+| C2 旧 loss/grad          | `a48a23b`                                     | `UNSCORED`；首个 ON 前没有冻结容差，本次新补验不回溯改写                                                                                                                                                                                                                                      |
+| C2 参数                  | `927c5de`，本地复算记录 `5173209`             | **本地 PASS，未公开**；2026-10-01 全 lineage／数值复算中两对各 182/182 inventory entries 通过，零 violation、零缺失容差；verdict SHA-256 `73848f645b8043e7b37026882c8f7527a46807440918f1532b10c20e214a0f32`。独立非张量叶审查为每对 47/48 一致，差异在运行态 `args`；不代表完整可恢复状态等价 |
+| C2 overlap               | `a48a23b` 与 `927c5de` 独立                   | 旧 a48a23b `NOT_PASS` 保留；927c5de 新预注册门槛下 `PASS`，不能覆盖旧结果或证明零影响                                                                                                                                                                                                         |
+| C2 native loss/grad 补验 | `927c5de`，4 OFF 校准 + 两对 OFF/ON，48 步/臂 | `PASS_WITHIN_OFF_OFF_ENVELOPE`：loss 差 0.050019/0.048279，限值 0.233478；grad 差 8.38410/12.53071，限值 57.43427                                                                                                                                                                             |
+| C3 慢 rank 定位          | `927c5de`，evidence `7098b43`                 | 健康臂 37 uncertain、0 确认告警；rank 3 四个阶段标签命中 4 次、最大 6.869×；3 条非目标告警按冻结窗口代理规则归类，成因未证实                                                                                                                                                                  |
+| C3 平台确认              | `927c5de`，同一公开输入包                     | TensorBoard rollout 级确认 rank 为 3、3、2、2；与 JSONL 无逐事件 ID，不能报告端到端时延；实时性待裁决                                                                                                                                                                                         |
 
 新 native loss/grad 补验使用 4 个 OFF 臂的六个共享对照冻结两项阈值；每对需满足 48 步、有限数值及 step/token-volume/LR/update 序列门槛。PASS 只说明两对本次 loss 与 grad norm 位于同版 OFF/OFF 包络内，不证明 bit determinism、样本内容/顺序相同、准确率不变或整体 C2 完成。工具、协议和原始日志仍为本地证据，未发布为可访问的 evidence ref。
 
@@ -57,26 +57,19 @@ Collector 位于 global rank 0 训练进程内，不是独立服务；未配置�
 
 C3 使用 `7098b43` 的公开输入包；公开台账内 11 个直接对象及 18 个归档成员共 29 项哈希匹配。独立分析在本机临时目录运行，JSONL 分类及 TensorBoard 提取结果与冻结结果一致。公开包内日志已脱敏，原始日志哈希及转换关系另有记录。因此这里的“公开输入可复算”指数据可下载、在本地成功重算，并非复算在 GitHub 执行。
 
-减速臂的三条非目标告警按冻结窗口代理规则分类为误报；这个标签不证明成因。两条无延迟注入的 observer-on 运行有 4,011 行 observer envelope，复放后重现七条已保存确认告警，告警原因未知；完整 cohort 覆盖，记录的 token/sequence/microbatch 量接近。六条保存了后续恢复，M1/r2 `forward-compute` 未保存恢复，快照时仍 active。这些是测得的计时异常，不能称为误报或硬件故障。
-
-| Arm / 窗口 | Rank / 阶段                |                host 比值 |          CUDA event 比值 | 保存的恢复      |
-| ---------- | -------------------------- | -----------------------: | -----------------------: | --------------- |
-| M1 / w16   | r2 `forward-compute`       |                   1.145× |                   1.148× | 无；快照 active |
-| M2 / w11   | r1/r2/r3 `forward-compute` | 1.292× / 1.222× / 1.302× | 1.298× / 1.230× / 1.310× | w13 / w14 / w12 |
-| M2 / w11   | r2/r3 `forward-backward`   |          1.080× / 1.126× |          1.018× / 1.017× | w12 / w12       |
-| M2 / w15   | r3 `forward-compute`       |                   1.288× |                   1.293× | w16             |
-
-五个额外 crossing 只在离线 flush 非终态原始尾窗时出现，不是 live collector 保存的确认告警。两个 runtime status 都是 `closed=false`、仍有两个 open windows；M1 有 6 个待读回、M2 有 1 个，collector status 早于作业完成。现存状态计数为零，不等于完成关窗后的最终零丢弃证明。
+减速臂的三条非目标告警按冻结窗口代理规则分类为误报；这个标签不证明成因。两条 observer-only 运行共 4,011 行 envelope，重放完整匹配 284 条已保存 verdict payload：其中 7 条确认告警、6 条保存恢复、1 条在快照中仍 active；告警原因未知，不能称为硬件故障或误报。离线 flush 未关闭尾窗另产生 5 个候选，不是 live collector 保存告警。两个 runtime status 都是 `closed=false`、各有两个 open windows；M1 有 6 个 pending readouts、M2 有 1 个，且状态快照早于作业完成，因此无法证明终态零丢弃。逐条数据见本地审计报告 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.md`；发布时须改成不可变公开链接。
 
 ![Observer-only 运行中的自然告警、恢复及尾窗复放候选](../../evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.svg)
 
-逐告警窗口、rank、参照比值和原件哈希见当前主线可达提交 `8b7006d` 中的 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.md`，复放脚本为 `evidence/tools/replay_native_loss_alerts_20261001.py`。脚本 SHA-256 为 `cbb59d102d514bbadbfc73fde19c9afe0db392046a5fcc3c068ed16104f9dec1`；24 项测试覆盖输入 lineage、日志与原件哈希、重复 JSON 键和 envelope 身份、symlink confinement。报告、图和原始数据仍未公开，正文发布前须替换为不可变 URL。
+逐告警窗口、rank、参照比值和原件哈希见本地 commit `c708c6d` 中的 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.md`，复放脚本为 `evidence/tools/replay_native_loss_alerts_20261001.py`。脚本 SHA-256 为 `77fdda54c7c6c42d15708bf5d89d3d8bdaf84d86d59fe799a22bed8fa7735471`；28 项测试覆盖输入 lineage、manifest 绑定的 job.log 哈希、重复 JSON 键和身份、完整 verdict payload 比较及 symlink confinement。envelope/verdict SHA-256 会记录，但不与独立预期台账比对。告警报告 SHA-256 为 `d2115aa1aeb50aa115357761564edf131c133e3587a5e86b63da7b506a0c1a18`，报告、图和原始数据仍未公开，正文发布前须替换为不可变 URL。
 
 ## 公开证据边界
 
-当前公开 C3 输入包与 overlap archive 固定于 `7098b43`。native loss/grad 与门禁审计固定于本地 `233e5f8`、主线可达 `61316a8`；自然告警报告和加固后的复放脚本固定于主线可达 `8b7006d`；参数记录 `116d527` 经 GitHub API 返回 404。它们尚非公开可下载、可复算的证据；原始 checkpoint 也未公开，哈希 ledger 不能替代原件。整体 Task 11 仍需主指标裁决与 C1 确认实验、C3 实时性裁决、Attention/MoE 范围决定，以及大文件的可迁移存储与下载复算。
+当前公开 C3 输入包与 overlap archive 固定于 `7098b43`。native loss/grad、自然告警及参数复算新增材料均已整理在本地，尚未发布；参数原始 checkpoint 仍不可公开下载。哈希 ledger 不能替代原件和独立备份。整体 Task 11 仍需主指标裁决与 C1 确认实验、C3 实时性裁决、Attention/MoE 范围决定，以及大文件的可迁移存储与下载复算。
 
-新补验的本地源：八臂审计报告 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/TOOL_GATE_AUDIT_20261001.md`（主线可达 commit `61316a8`；37 项定向测试；审计工具 SHA-256 `b8233b8cfd35a4e422db4933e1352ba030c7c3391d5823444d2198afb9e83af1`）、判定 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/measurement_verdict.json` 和协议 `evidence/NATIVE_LOSS_PROTOCOL_927C5DE_20260930.md`。该结果仅本地可读，尚未公开发布。参数图源：`evidence/gpu_campaign/task11_3090/c2_parameter/parameter_deltas.svg`。本地引用发布后须替换为真实固定地址。
+新增证据仍是本地候选，尚无公开下载地址。最终八臂审计工具 SHA-256 为 `8f47444ea1ed3501f90358990fd5700df13016a718c5f781182879d1770ea43f`；从最终证据包解压后重跑得到 `PASS_WITHIN_OFF_OFF_ENVELOPE`，审计与 campaign 测试共 43 项通过。告警复放完整匹配 M1 145/145、M2 139/139 条保存 verdict payload；与告警测试合计，本轮三套测试共 71 项通过。参数复算固定于本地 `5173209`：两对各 182/182 项通过、零 violation、零缺失容差；verdict 与映射审计见 `evidence/gpu_campaign/task11_3090/c2_parameter_replay_20261001/`，不代表完整可恢复状态等价。
+
+可迁移的小证据包 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATIVE_LOSS_REPLAY_BUNDLE_20261001.tar.gz` 为 917,446 bytes，SHA-256 `af1aff9db1b8c4f251b23b7e56d25d9b487fb43e1ee15bcc5259695b5e1f72c2`。解包清单 96 项全匹配；解包后源码映射到干净 `927c5de` checkout 并重算指纹，无需原 Ray 工作目录缓存；Gitleaks 8.30.1 扫描 6,284,963 bytes，零发现。包不含训练环境及 258 GiB 参数 checkpoint，仍在本地，未公开或独立备份。复算报告、告警 JSON、扫描记录和包内 README 位于同一 evidence 目录；发布时应以不可变下载地址替换本地路径。
 
 ![Native loss 与 grad norm 差值占各自冻结 OFF/OFF 包络比例](./native_loss_envelope_20261001.svg)
 

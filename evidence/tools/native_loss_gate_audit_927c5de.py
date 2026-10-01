@@ -144,6 +144,49 @@ def require_sha(value: Any, label: str) -> str:
     return value
 
 
+def parse_worker_source_root_maps(values: list[str]) -> dict[str, Path]:
+    """Parse exact recorded-root to local-root mappings for archived worker
+    paths."""
+    mappings: dict[str, Path] = {}
+    for value in values:
+        recorded_root, separator, local_root = value.partition("=")
+        if not separator or not recorded_root or not local_root:
+            raise AuditFailure("INVALID", "source-root mapping must be RECORDED_ABSOLUTE_ROOT=LOCAL_ABSOLUTE_ROOT")
+        recorded_path = Path(recorded_root)
+        local_path = Path(local_root)
+        if not recorded_path.is_absolute() or not local_path.is_absolute():
+            raise AuditFailure("INVALID", "source-root mappings must use absolute paths")
+        if recorded_root in mappings:
+            raise AuditFailure("INVALID", f"duplicate recorded source-root mapping: {recorded_root}")
+        try:
+            resolved_local = local_path.resolve(strict=True)
+        except (OSError, RuntimeError) as exc:
+            raise AuditFailure("INCOMPLETE", f"mapped local source root is unavailable: {local_root}") from exc
+        if not resolved_local.is_dir():
+            raise AuditFailure("INVALID", f"mapped local source root is not a directory: {resolved_local}")
+        mappings[recorded_root] = resolved_local
+    return mappings
+
+
+def resolve_worker_source_root(recorded_root: str, mappings: dict[str, Path]) -> Path:
+    """Resolve one manifest source root, applying only an exact explicit
+    mapping."""
+    recorded_path = Path(recorded_root)
+    if not recorded_path.is_absolute():
+        raise AuditFailure("INVALID", f"worker source root is not absolute: {recorded_root}")
+    if recorded_root in mappings:
+        return mappings[recorded_root]
+    try:
+        resolved = recorded_path.resolve(strict=True)
+    except (OSError, RuntimeError) as exc:
+        raise AuditFailure(
+            "INCOMPLETE", f"worker source path unavailable and has no mapping: {recorded_root}"
+        ) from exc
+    if not resolved.is_dir():
+        raise AuditFailure("INVALID", f"worker source path is not a directory: {resolved}")
+    return resolved
+
+
 def check_self_hash(value: dict[str, Any], label: str) -> None:
     expected = require_sha(value.get("_self_sha256"), f"{label}._self_sha256")
     if canonical_sha(value) != expected:
@@ -335,6 +378,7 @@ def audit_arm(
     lock: dict[str, Any],
     expected_normalized_argv_sha256: str,
     expected_common: dict[str, str],
+    worker_source_root_maps: dict[str, Path] | None = None,
 ) -> dict[str, Any]:
     arm_dir = secure_campaign_path(raw_root, arm_dir, f"{name} directory")
     if not arm_dir.is_dir():
@@ -376,18 +420,28 @@ def audit_arm(
     if (
         not isinstance(source_roots, list)
         or not source_roots
+        or any(not isinstance(root, str) for root in source_roots)
+        or len(source_roots) != len(set(source_roots))
         or not isinstance(source_hashes, dict)
         or set(source_roots) != set(source_hashes)
     ):
         raise AuditFailure("INVALID", f"{name}: worker source lineage is missing")
+    applied_source_maps: dict[str, str] = {}
     for root in source_roots:
+        if not isinstance(root, str):
+            raise AuditFailure("INVALID", f"{name}: worker source root must be a string")
         require_sha(source_hashes.get(root), f"{name}.worker_source_sha256[{root}]")
         try:
-            actual = frozen.source_fingerprint(Path(root))
+            source_root = resolve_worker_source_root(root, worker_source_root_maps or {})
+            actual = frozen.source_fingerprint(source_root)
+        except AuditFailure:
+            raise
         except (OSError, ValueError) as exc:
             raise AuditFailure("INCOMPLETE", f"{name}: worker source path unavailable: {root}") from exc
         if actual != lock.get("straggler_source_sha256") or source_hashes[root] != actual:
             raise AuditFailure("INVALID", f"{name}: worker source does not match locked product")
+        if root in (worker_source_root_maps or {}):
+            applied_source_maps[root] = str(source_root)
     try:
         parsed = frozen.parse_arm(arm_dir, expected_steps=frozen.STEPS)
     except (OSError, ValueError) as exc:
@@ -416,6 +470,7 @@ def audit_arm(
         "job_log_sha256": sha256_file(log_path),
         "resolved_argv_sha256": argv_hash,
         "normalized_argv_sha256": normalized,
+        "worker_source_root_mappings": applied_source_maps,
         "observer": observer,
         "native": parsed,
     }
@@ -461,6 +516,7 @@ def audit_campaign(
     calibration_result_path: Path,
     measurement_lock_path: Path,
     frozen_verdict_path: Path,
+    worker_source_root_maps: dict[str, Path] | None = None,
 ) -> dict[str, Any]:
     calibration_lock = read_json(calibration_lock_path, "calibration lock")
     calibration_result = read_json(calibration_result_path, "calibration result")
@@ -503,6 +559,7 @@ def audit_campaign(
             calibration_lock,
             normalized,
             common,
+            worker_source_root_maps,
         )
         if arm["manifest_sha256"] != calibration_result["arm_manifests"][name]:
             raise AuditFailure("INVALID", f"{name}: manifest hash differs from calibration result")
@@ -533,6 +590,7 @@ def audit_campaign(
             measurement_lock,
             normalized,
             common,
+            worker_source_root_maps,
         )
     compared = compare_pairs(measurement_arms, expected_tolerances, EXPECTED_PAIRS)
     status = "PASS_WITHIN_OFF_OFF_ENVELOPE" if all(pair["status"] == "PASS" for pair in compared) else "NOT_PASS"
@@ -568,6 +626,15 @@ def audit_campaign(
     if frozen_verdict != expected_frozen:
         raise AuditFailure("INVALID", "independent eight-arm recomputation differs from the frozen verdict")
 
+    used_source_roots = {
+        root: local
+        for arm in [*calibration_arms.values(), *measurement_arms.values()]
+        for root, local in arm["worker_source_root_mappings"].items()
+    }
+    unused_source_roots = set(worker_source_root_maps or {}) - set(used_source_roots)
+    if unused_source_roots:
+        raise AuditFailure("INVALID", f"unused worker source-root mappings: {sorted(unused_source_roots)}")
+
     return {
         "status": status,
         "product_sha": PRODUCT_SHA,
@@ -591,6 +658,7 @@ def audit_campaign(
         "observer_activation": {
             name: arm["observer"] for name, arm in measurement_arms.items() if name.endswith("-on")
         },
+        "worker_source_root_mappings": used_source_roots,
         "limitation": "Pass means only that this final-SHA native loss/grad supplement is within its frozen OFF/OFF envelope; it does not establish parameter equivalence, accuracy, C1, or overall C2 acceptance.",
     }
 
@@ -612,6 +680,9 @@ def render_markdown(result: dict[str, Any], tool_sha256: str, raw_root: Path) ->
         f"| {name} | `{values['manifest_sha256']}` | `{values['job_log_sha256']}` | "
         f"`{values['resolved_argv_sha256']}` |"
         for name, values in result["campaign_file_hashes"].items()
+    ]
+    source_map_rows = [
+        f"| `{recorded}` | `{resolved}` |" for recorded, resolved in result["worker_source_root_mappings"].items()
     ]
     return "\n".join(
         [
@@ -644,12 +715,16 @@ def render_markdown(result: dict[str, Any], tool_sha256: str, raw_root: Path) ->
             "|---|---|---|---|",
             *hash_rows,
             "",
+            "| Recorded worker source root | Replayed against source root |",
+            "|---|---|",
+            *(source_map_rows or ["| No remapping | Original recorded paths were available |"]),
+            "",
             f"Raw campaign root: `{raw_root}`",
             f"Audit tool SHA-256: `{tool_sha256}`",
             "",
             f"Scope: {result['limitation']}",
             "",
-            "This is a local evidence replay. Raw jobs, model files, training stack, and Ray runtime remain at their original machine paths; this report does not establish a portable restore or independent backup.",
+            "This is a local evidence replay. Where a Ray-cache source path was unavailable, the audit accepted only an explicit exact-path mapping and recomputed the source fingerprint against the clean product checkout; manifests and locks were not edited. This permits replay outside the original Ray working-directory cache, but does not establish an independent backup, model/runtime restore, or public-download reproduction.",
             "",
         ]
     )
@@ -663,9 +738,17 @@ def main() -> int:
     parser.add_argument("--calibration-result", type=Path, required=True)
     parser.add_argument("--measurement-lock", type=Path, required=True)
     parser.add_argument("--frozen-verdict", type=Path, required=True)
+    parser.add_argument(
+        "--worker-source-root-map",
+        action="append",
+        default=[],
+        metavar="RECORDED_ABSOLUTE_ROOT=LOCAL_ABSOLUTE_ROOT",
+        help="explicitly remap a worker source path recorded in a raw manifest; may be repeated",
+    )
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     try:
+        source_root_maps = parse_worker_source_root_maps(args.worker_source_root_map)
         result = audit_campaign(
             args.repo.resolve(),
             args.raw_root.resolve(),
@@ -673,6 +756,7 @@ def main() -> int:
             args.calibration_result.resolve(),
             args.measurement_lock.resolve(),
             args.frozen_verdict.resolve(),
+            source_root_maps,
         )
     except AuditFailure as exc:
         print(json.dumps({"status": exc.status, "reason": str(exc)}, sort_keys=True), file=sys.stderr)
