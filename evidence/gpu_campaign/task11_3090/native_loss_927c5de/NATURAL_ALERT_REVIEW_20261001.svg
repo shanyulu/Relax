@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="760" viewBox="0 0 1260 760" role="img" aria-labelledby="title desc">
+  <title id="title">Observer-only straggler detections and recoveries</title>
+  <desc id="desc">Seven saved confirmed detections across two no-injection observer-on training arms, six saved recoveries, and five additional detector crossings found only by flushing the raw unclosed tails offline.</desc>
+  <defs>
+    <style>
+      text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: #172b3a; }
+      .title { font-size: 25px; font-weight: 700; }
+      .sub { font-size: 13px; fill: #536675; }
+      .panel { fill: #fbfcfe; stroke: #cbd5df; stroke-width: 1.2; rx: 12; }
+      .panel-title { font-size: 17px; font-weight: 700; }
+      .panel-meta { font-size: 12px; fill: #607281; }
+      .axis { stroke: #9eacb9; stroke-width: 1; }
+      .grid { stroke: #e3e9ef; stroke-width: 1; }
+      .label { font-size: 12px; fill: #394f60; }
+      .tick { font-size: 11px; fill: #738391; }
+      .note { font-size: 11px; fill: #526675; }
+      .event { fill: #c33e43; stroke: #8f2730; stroke-width: 1.2; }
+      .recover { fill: #e7f4eb; stroke: #348052; stroke-width: 2; }
+      .tail { fill: #fff4dc; opacity: .78; }
+      .candidate { fill: #fff; stroke: #bc7614; stroke-width: 2.2; stroke-dasharray: 4 2; }
+      .legend { font-size: 12px; fill: #425867; }
+      .foot { font-size: 12px; fill: #536675; }
+    </style>
+  </defs>
+  <rect width="1260" height="760" fill="#ffffff"/>
+  <text x="42" y="44" class="title">Observer-only straggler detections without injected slowdown</text>
+  <text x="42" y="69" class="sub">Product 927c5de · DP4 · 48 steps per arm · 5 s windows · raw artifacts local-only</text>
+
+  <circle cx="55" cy="101" r="6" class="event"/><text x="68" y="105" class="legend">saved straggler verdict</text>
+  <rect x="238" y="95" width="12" height="12" class="recover"/><text x="258" y="105" class="legend">saved within-tolerance recovery</text>
+  <path d="M514 94 L521 101 L514 108 L507 101 Z" class="candidate"/><text x="530" y="105" class="legend">crossing only in offline tail replay</text>
+  <rect x="818" y="93" width="20" height="15" class="tail" stroke="#d5a84e" stroke-dasharray="3 2"/><text x="846" y="105" class="legend">raw windows without final saved verdict</text>
+
+  <!-- Panel 1: L-M1-on -->
+  <rect x="34" y="128" width="1192" height="245" class="panel"/>
+  <text x="58" y="158" class="panel-title">L-M1-on · saved verdicts: 1 confirmed / 0 recovered</text>
+  <text x="58" y="178" class="panel-meta">Rank 2 forward-compute remains active in the captured status; the post-verdict raw tail is not flushed into saved verdicts.</text>
+  <rect x="858" y="193" width="305" height="128" class="tail"/>
+  <line x1="264" y1="190" x2="1163" y2="190" class="axis"/>
+  <text x="264" y="184" class="tick" text-anchor="middle">window</text>
+  <g class="grid">
+    <line x1="264" y1="190" x2="264" y2="323"/><line x1="354" y1="190" x2="354" y2="323"/>
+    <line x1="444" y1="190" x2="444" y2="323"/><line x1="534" y1="190" x2="534" y2="323"/>
+    <line x1="624" y1="190" x2="624" y2="323"/><line x1="714" y1="190" x2="714" y2="323"/>
+    <line x1="804" y1="190" x2="804" y2="323"/><line x1="894" y1="190" x2="894" y2="323"/>
+    <line x1="984" y1="190" x2="984" y2="323"/><line x1="1074" y1="190" x2="1074" y2="323"/>
+    <line x1="1164" y1="190" x2="1164" y2="323"/>
+  </g>
+  <g class="tick" text-anchor="middle">
+    <text x="264" y="207">10</text><text x="354" y="207">11</text><text x="444" y="207">12</text>
+    <text x="534" y="207">13</text><text x="624" y="207">14</text><text x="714" y="207">15</text>
+    <text x="804" y="207">16</text><text x="894" y="207">17</text><text x="984" y="207">18</text>
+    <text x="1074" y="207">19</text><text x="1164" y="207">20</text>
+  </g>
+  <text x="58" y="245" class="label">r2 · forward-compute</text>
+  <text x="58" y="285" class="label">r3 · forward-compute</text>
+  <text x="58" y="325" class="label">r2 · forward-backward</text>
+  <line x1="250" y1="241" x2="1164" y2="241" class="grid"/>
+  <line x1="250" y1="281" x2="1164" y2="281" class="grid"/>
+  <line x1="250" y1="321" x2="1164" y2="321" class="grid"/>
+  <circle cx="804" cy="241" r="8" class="event"/>
+  <path d="M894 276 L902 284 L894 292 L886 284 Z" class="candidate"/>
+  <path d="M984 316 L992 324 L984 332 L976 324 Z" class="candidate"/>
+  <text x="817" y="234" class="note">saved · +14.5% host / +14.8% device</text>
+  <text x="907" y="277" class="note">replay-only · +10.3% host</text>
+  <text x="997" y="317" class="note">replay-only · +6.7% host</text>
+  <text x="858" y="346" class="note">Unflushed raw-tail windows</text>
+
+  <!-- Panel 2: L-M2-on -->
+  <rect x="34" y="390" width="1192" height="332" class="panel"/>
+  <text x="58" y="420" class="panel-title">L-M2-on · saved verdicts: 6 confirmed / 6 recovered</text>
+  <text x="58" y="440" class="panel-meta">Five detections share window 11; rank 3 forward-compute recurs at window 15 and recovers at 16.</text>
+  <rect x="858" y="454" width="305" height="222" class="tail"/>
+  <line x1="264" y1="451" x2="1163" y2="451" class="axis"/>
+  <g class="grid">
+    <line x1="264" y1="451" x2="264" y2="677"/><line x1="354" y1="451" x2="354" y2="677"/>
+    <line x1="444" y1="451" x2="444" y2="677"/><line x1="534" y1="451" x2="534" y2="677"/>
+    <line x1="624" y1="451" x2="624" y2="677"/><line x1="714" y1="451" x2="714" y2="677"/>
+    <line x1="804" y1="451" x2="804" y2="677"/><line x1="894" y1="451" x2="894" y2="677"/>
+    <line x1="984" y1="451" x2="984" y2="677"/><line x1="1074" y1="451" x2="1074" y2="677"/>
+    <line x1="1164" y1="451" x2="1164" y2="677"/>
+  </g>
+  <g class="tick" text-anchor="middle">
+    <text x="264" y="468">10</text><text x="354" y="468">11</text><text x="444" y="468">12</text>
+    <text x="534" y="468">13</text><text x="624" y="468">14</text><text x="714" y="468">15</text>
+    <text x="804" y="468">16</text><text x="894" y="468">17</text><text x="984" y="468">18</text>
+    <text x="1074" y="468">19</text><text x="1164" y="468">20</text>
+  </g>
+  <g class="label">
+    <text x="58" y="498">r1 · forward-compute</text>
+    <text x="58" y="533">r2 · forward-compute</text>
+    <text x="58" y="568">r3 · forward-compute</text>
+    <text x="58" y="603">r2 · forward-backward</text>
+    <text x="58" y="638">r3 · forward-backward</text>
+    <text x="58" y="673">r1 · all-grads-sync</text>
+  </g>
+  <g class="grid">
+    <line x1="250" y1="494" x2="1164" y2="494"/><line x1="250" y1="529" x2="1164" y2="529"/>
+    <line x1="250" y1="564" x2="1164" y2="564"/><line x1="250" y1="599" x2="1164" y2="599"/>
+    <line x1="250" y1="634" x2="1164" y2="634"/><line x1="250" y1="669" x2="1164" y2="669"/>
+  </g>
+  <!-- Saved confirmations, all at window 11 except rank 3 forward-compute's recurrence at 15. -->
+  <circle cx="354" cy="494" r="7" class="event"/><circle cx="354" cy="529" r="7" class="event"/><circle cx="354" cy="564" r="7" class="event"/>
+  <circle cx="354" cy="599" r="7" class="event"/><circle cx="354" cy="634" r="7" class="event"/>
+  <circle cx="714" cy="564" r="7" class="event"/>
+  <!-- Saved recoveries. -->
+  <rect x="438" y="558" width="12" height="12" class="recover"/><rect x="438" y="593" width="12" height="12" class="recover"/><rect x="438" y="628" width="12" height="12" class="recover"/>
+  <rect x="528" y="488" width="12" height="12" class="recover"/><rect x="618" y="523" width="12" height="12" class="recover"/><rect x="798" y="558" width="12" height="12" class="recover"/>
+  <!-- Tail-only replay crossings at window 17. -->
+  <path d="M894 522 L902 530 L894 538 L886 530 Z" class="candidate"/>
+  <path d="M894 592 L902 600 L894 608 L886 600 Z" class="candidate"/>
+  <path d="M894 662 L902 670 L894 678 L886 670 Z" class="candidate"/>
+  <rect x="978" y="523" width="12" height="12" class="recover"/>
+  <rect x="978" y="593" width="12" height="12" class="recover"/>
+  <text x="366" y="483" class="note">5 saved detections · all 3-window persistent</text>
+  <text x="727" y="553" class="note">saved event</text>
+  <text x="908" y="526" class="note">3 replay-only crossings</text>
+  <text x="1000" y="550" class="note">r2 recovers in replay at w18</text>
+  <text x="858" y="698" class="note">Saved verdict stream ends at w16; tail is not a live verdict</text>
+
+  <text x="42" y="746" class="foot">Replay-only markers are excluded from the seven saved confirmed verdicts. Final runtime snapshots remain open and do not establish complete end-of-run recovery or drop counts.</text>
+</svg>
