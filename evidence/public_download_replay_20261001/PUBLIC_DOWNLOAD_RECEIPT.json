@@ -1,0 +1,43 @@
+{
+  "schema": "task11-public-download-replay-v1",
+  "date": "2026-10-01",
+  "product_sha": "927c5de2f5a8f307cad0c87f2c7eb2b78262334d",
+  "evidence_sha": "1c23f03d3553e26194c09f90d2ce0e85f7895c00",
+  "release": "https://github.com/shanyulu/Relax/releases/tag/task11-evidence-20261001-1c23f03",
+  "native": {
+    "archive_bytes": 917446,
+    "archive_sha256": "af1aff9db1b8c4f251b23b7e56d25d9b487fb43e1ee15bcc5259695b5e1f72c2",
+    "manifest_files_checked": 96,
+    "verdict": "PASS_WITHIN_OFF_OFF_ENVELOPE",
+    "audit_tool_sha256": "8f47444ea1ed3501f90358990fd5700df13016a718c5f781182879d1770ea43f",
+    "download_replay_report_sha256": "4e4d7270543c72dc2219f8237e9b9b6f37691f9438cab31c7a9655c850cd2cf3",
+    "alert_replay_sha256": "b094a71c72b59848796da1c1cf25a0a640ec6320d6680df69af566ab71aca942",
+    "alert_replay_byte_identical": true,
+    "saved_payload_matches": {
+      "L-M1-on": 145,
+      "L-M2-on": 139
+    },
+    "package_tool_tests_passed": 71
+  },
+  "overlap": {
+    "archive_count": 8,
+    "archive_bytes": 526027308,
+    "raw_trace_count": 32,
+    "manifest_count": 8,
+    "archives_match_frozen_ledger": true,
+    "manifests_match_preregistered_configs": true,
+    "raw_traces_match_preregistered_configs": true,
+    "analyzer_sha256": "7654e337e46b0be6a7e92506b61b9a549813e3988e9fba21978c5fb64df31e0d",
+    "calibration_verdict": "PASS",
+    "measurement_verdict": "PASS",
+    "calibration_sha256": "7eca09527aa726e82e07daed3d9ad2081deb315b6857fd6f06799eee75107f0e",
+    "measurement_sha256": "821786baa46edbef6d17eb26c42ec21b164574a000dd02ff420ffa3f57b1d614",
+    "results_byte_identical": true
+  },
+  "limits": [
+    "same-host CPU replay of downloaded observations; not a new GPU experiment",
+    "258 GiB parameter originals not included or independently backed up",
+    "observer-only terminal readout/drop accounting not established",
+    "C1 and realtime/scope acceptance unresolved"
+  ]
+}
