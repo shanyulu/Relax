@@ -82,4 +82,4 @@ loss/grad 两对最大差分别为 0.05001947 / 0.04827869 和 8.384097 / 12.530
 3. 确认 Attention/MoE 是否要求实际插桩；当前为 schema 预留，真机证据限于单机 dense DP4，PP>1 尚未验收。
 4. 完成大参数原件的独立存储与第三方完整复算；observer-only 终态 accounting 仍有证据缺口。
 
-满足当前头 CI、正式 C1 结论、C2 覆盖获接受、C3 与范围裁决及无未解决评审线程后，再转 Ready for review。
+满足当前头 CI、正式 C1 结论、C2 覆盖获接受、C3 与范围裁决及无未解决评审线程后，再转 Ready for review。[早期进度评论](https://github.com/shanyulu/Relax/blob/33fc1d72ab1a386c51a427f4e890661504584da3/review/task11-publication-20260930/PR_COMMENT_ARCHIVE_20261001.json)另存作历史记录。

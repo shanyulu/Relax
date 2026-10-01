@@ -97,4 +97,4 @@ flowchart TB
 3. **验收规模**：4×RTX 4090、Qwen3-0.6B 是否满足本期生命周期与路由验收。
 4. **评分语义**：是否接受未显式指定 seed 时的内容确定性采样；若需要重复调用的随机多样性，应另行定义请求身份契约。
 
-当前头仍需正式 review。[不可变证据目录](https://github.com/shanyulu/Relax/tree/fdf288d705ddbefa7f8de9fbad050f7ed3ac4f27/demos/task4_genrm/results/)保留全部已归档轮次及各自判定。
+当前头仍需正式 review。[不可变证据目录](https://github.com/shanyulu/Relax/tree/fdf288d705ddbefa7f8de9fbad050f7ed3ac4f27/demos/task4_genrm/results/)保留全部已归档轮次及各自判定；[早期进度评论](https://github.com/shanyulu/Relax/blob/33fc1d72ab1a386c51a427f4e890661504584da3/review/task11-publication-20260930/PR_COMMENT_ARCHIVE_20261001.json)另存作历史记录。
