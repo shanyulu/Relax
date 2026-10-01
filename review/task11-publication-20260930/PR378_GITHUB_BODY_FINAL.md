@@ -70,13 +70,13 @@ C3 使用 `7098b43` 的公开输入包；公开台账内 11 个直接对象及 1
 
 ![Observer-only 运行中的自然告警、恢复及尾窗复放候选](../../evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.svg)
 
-逐告警窗口、rank、参照比值和原件哈希见本地提交 `4e4e736878e5328e7c59f39d21fdceea1046a430` 中的 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.md`，复放脚本为 `evidence/tools/replay_native_loss_alerts_20261001.py`。脚本 SHA-256 为 `efff2163…d7b16c`；新增 12 项测试验证 job-log/raw-file 哈希、重复 JSON 键与 envelope 身份拒绝，以及 raw-root symlink confinement。报告、图和原始数据仍未公开，正文发布前须替换为不可变 URL。
+逐告警窗口、rank、参照比值和原件哈希见当前主线可达提交 `8b7006d` 中的 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.md`，复放脚本为 `evidence/tools/replay_native_loss_alerts_20261001.py`。脚本 SHA-256 为 `cbb59d102d514bbadbfc73fde19c9afe0db392046a5fcc3c068ed16104f9dec1`；24 项测试覆盖输入 lineage、日志与原件哈希、重复 JSON 键和 envelope 身份、symlink confinement。报告、图和原始数据仍未公开，正文发布前须替换为不可变 URL。
 
 ## 公开证据边界
 
-当前公开 C3 输入包与 overlap archive 固定于 `7098b43`。native loss/grad 与门禁审计固定于本地 `233e5f8`、`e8d200a`；自然告警报告和加固后的复放脚本固定于本地 `4e4e736`；参数记录 `116d527` 经 GitHub API 返回 404。它们尚非公开可下载、可复算的证据；原始 checkpoint 也未公开，哈希 ledger 不能替代原件。整体 Task 11 仍需主指标裁决与 C1 确认实验、C3 实时性裁决、Attention/MoE 范围决定，以及大文件的可迁移存储与下载复算。
+当前公开 C3 输入包与 overlap archive 固定于 `7098b43`。native loss/grad 与门禁审计固定于本地 `233e5f8`、主线可达 `61316a8`；自然告警报告和加固后的复放脚本固定于主线可达 `8b7006d`；参数记录 `116d527` 经 GitHub API 返回 404。它们尚非公开可下载、可复算的证据；原始 checkpoint 也未公开，哈希 ledger 不能替代原件。整体 Task 11 仍需主指标裁决与 C1 确认实验、C3 实时性裁决、Attention/MoE 范围决定，以及大文件的可迁移存储与下载复算。
 
-新补验的本地源：八臂审计报告 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/TOOL_GATE_AUDIT_20261001.md`（本地 commit `e8d200a8d2853448618721952ae3f703d1054aac`；37 项定向测试；审计工具 SHA-256 `b8233b8cfd35a4e422db4933e1352ba030c7c3391d5823444d2198afb9e83af1`）、判定 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/measurement_verdict.json` 和协议 `evidence/NATIVE_LOSS_PROTOCOL_927C5DE_20260930.md`。该结果仅本地可读，尚未公开发布。参数图源：`evidence/gpu_campaign/task11_3090/c2_parameter/parameter_deltas.svg`。本地引用发布后须替换为真实固定地址。
+新补验的本地源：八臂审计报告 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/TOOL_GATE_AUDIT_20261001.md`（主线可达 commit `61316a8`；37 项定向测试；审计工具 SHA-256 `b8233b8cfd35a4e422db4933e1352ba030c7c3391d5823444d2198afb9e83af1`）、判定 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/measurement_verdict.json` 和协议 `evidence/NATIVE_LOSS_PROTOCOL_927C5DE_20260930.md`。该结果仅本地可读，尚未公开发布。参数图源：`evidence/gpu_campaign/task11_3090/c2_parameter/parameter_deltas.svg`。本地引用发布后须替换为真实固定地址。
 
 ![Native loss 与 grad norm 差值占各自冻结 OFF/OFF 包络比例](./native_loss_envelope_20261001.svg)
 

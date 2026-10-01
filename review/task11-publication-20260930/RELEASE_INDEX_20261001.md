@@ -13,7 +13,7 @@
 
 截至基线 `233e5f8`，新 native loss/grad 补验已判 `PASS_WITHIN_OFF_OFF_ENVELOPE`：测量差值 loss `0.05001947 / 0.04827869`（冻结限值 `0.2334780693`），grad norm `8.3840971 / 12.530714`（冻结限值 `57.43427467`）。该判定仅限同版两对 48 步数值比较，不更新 a48a23b 旧 loss/grad `UNSCORED`，不构成整体 C2 PASS。
 
-结果、校准锁、测量锁、工具及测试所在的本地提交为 `86e35e2`、`1850beb`、`eaf3c63`、`233e5f8`。八臂只读审计最终版在本地 `e8d200a8d2853448618721952ae3f703d1054aac`，工具 SHA-256 `b8233b8cfd35a4e422db4933e1352ba030c7c3391d5823444d2198afb9e83af1`，37 项测试与八臂复算通过。自然告警报告、SVG 和加固后的 replay 工具固定于本地 `4e4e736878e5328e7c59f39d21fdceea1046a430`；复放工具 SHA-256 `efff2163496b5f60c3c43a347cd212bd1529b7b3007b36777521cbec92d7b16c`，新增 12 项测试通过，覆盖 job-log/raw-file 哈希、重复 JSON 键与 envelope 身份、raw-root symlink confinement。报告 SHA-256 `0cc0d3d1c7f57f5327055d9451883b74c9268be3cdf817c83d927799b01377f`，图 SHA-256 `de645d462b2868baf7aa27fdaccb77365f92dbd730299c91eca9110df537b1ca`。所有这些都是本地证据，尚未发布。参数记录 `116d527` 经 GitHub API 返回 404，明确为 local-only；非张量审查确认每对 47/48 叶一致，唯一差异位于含运行路径、TensorBoard 名称及 TransferQueue 运行态信息的 args 叶。
+结果、校准锁、测量锁、工具及测试所在的本地提交为 `86e35e2`、`1850beb`、`eaf3c63`、`233e5f8`。八臂只读审计最终版在主线可达提交 `61316a8`，工具 SHA-256 `b8233b8cfd35a4e422db4933e1352ba030c7c3391d5823444d2198afb9e83af1`，37 项测试与八臂复算通过。自然告警报告、SVG 和加固后的 replay 工具固定于主线可达提交 `8b7006d`；复放工具 SHA-256 `cbb59d102d514bbadbfc73fde19c9afe0db392046a5fcc3c068ed16104f9dec1`，24 项测试通过，覆盖输入 lineage、日志与原件哈希、重复 JSON 键和 envelope 身份、raw-root symlink confinement。报告 SHA-256 `0cc0d3d1c7f57f5327055d9451883b74c9268be3cdf817c83d927799b01377f`，图 SHA-256 `de645d462b2868baf7aa27fdaccb77365f92dbd730299c91eca9110df537b1ca`。这些证据均未公开。参数记录 `116d527` 经 GitHub API 返回 404，明确为 local-only；非张量审查确认每对 47/48 叶一致，唯一差异位于含运行路径、TensorBoard 名称及 TransferQueue 运行态信息的 args 叶。
 
 loss/grad 差值图为 `native_loss_envelope_20261001.svg`，数据取自 measurement verdict；参数图为 `evidence/gpu_campaign/task11_3090/c2_parameter/parameter_deltas.svg`。自然告警时序图及逐条数据表为本地审计源 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.svg` / `.md`。各图先保留本地源路径，获准发布后再替换成不可变 URL。
 
@@ -22,7 +22,7 @@ loss/grad 差值图为 `native_loss_envelope_20261001.svg`，数据取自 measur
 - C3 的输入包已公开于 `7098b43`；29 项直接对象/归档成员哈希匹配。独立复算过程在本机执行，输出与冻结 JSONL/TensorBoard 结果一致。正文应写“基于公开输入包的本地独立复算”，不写“公开复算平台已执行”。
 - C3 原结果的阶段摘要写“三个阶段”，逐项 JSONL 实际有四个目标阶段标签；候选正文按原始条目写四个，不改冻结结果文件。
 - C3 减速臂的 3 条非目标告警按预注册窗口代理规则归为误报，成因未证实。observer-only 两臂有 4,011 条 envelope，复放重现保存的 7 条确认告警；六条有保存恢复、M1/r2 一条快照时仍 active，原因未知，不判误报。
-- 非终态尾窗离线复放另有 5 个候选，不能当作实时保存告警；`closed=false`、每臂两窗未关闭，M1 尚有 6 个 pending readouts、M2 有 1 个。现有快照计数为零不构成最终零丢弃证明。报告、图及加固脚本见本地提交 `4e4e736`；公开链接仍未生成。
+- 非终态尾窗离线复放另有 5 个候选，不能当作实时保存告警；`closed=false`、每臂两窗未关闭，M1 尚有 6 个 pending readouts、M2 有 1 个。现有快照计数为零不构成最终零丢弃证明。报告、图及加固脚本见主线可达提交 `8b7006d`；公开链接仍未生成。
 - a48a23b 的旧 loss/grad 差值 `0.046285/0.030037` 和 grad `7.94949/5.50596` 属于参数实验旁证，因首个 ON 前未冻结容差而保持 `UNSCORED`。
 - a48a23b overlap `NOT_PASS` 与 927c5de 独立预注册 overlap `PASS` 各自绑定对应协议，不能覆盖或合并。
 

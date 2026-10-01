@@ -87,11 +87,11 @@ C3 的公开输入包含脱敏后的 public job logs；其 SHA 与公开转换�
 
 ![Observer-only 运行中的保存告警、恢复事件和尾窗复放候选](../../evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.svg)
 
-逐条数据、覆盖与哈希见本地提交 `4e4e736878e5328e7c59f39d21fdceea1046a430` 中的 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.md` 与复放脚本 `evidence/tools/replay_native_loss_alerts_20261001.py`。复放脚本 SHA-256 为 `efff2163…d7b16c`，12 项定向测试通过；门禁包括 job-log/raw-file 哈希、重复 JSON 键与 envelope 身份拒绝、raw-root symlink confinement。报告和原始运行数据仍只在本地，未公开；同步正文前须替换为不可变公开链接。
+逐条数据、覆盖与哈希见当前主线可达提交 `8b7006d` 中的 `evidence/gpu_campaign/task11_3090/native_loss_927c5de/NATURAL_ALERT_REVIEW_20261001.md` 与复放脚本 `evidence/tools/replay_native_loss_alerts_20261001.py`。复放脚本 SHA-256 为 `cbb59d102d514bbadbfc73fde19c9afe0db392046a5fcc3c068ed16104f9dec1`，24 项定向测试通过；门禁包括 job-log/raw-file 哈希、重复 JSON 键与 envelope 身份拒绝、raw-root symlink confinement。报告和原始运行数据仍只在本地，未公开；同步正文前须替换为不可变公开链接。
 
 detector 对未落盘尾窗复放出另外 5 个候选（M1 两个、M2 三个），它们不是实时 collector 保存的告警。两臂 `runtime_status` 都是 `closed=false` 且保留两个未关闭窗口；M1 有 6 个待读回、M2 有 1 个，状态文件早于作业完成。因此七条是保存 verdict 中的数目，不是两次作业的最终告警总数。状态快照中的队列/丢弃/错误计数为零，但没有关窗后的最终统计，不能声称最终零丢弃。
 
-本次 927c5de native loss/grad 补验的工具、协议、校准结果、测量锁和判定固定于本地 `233e5f8` 及其父提交；独立只读门禁审计最终版固定于本地 `e8d200a8d2853448618721952ae3f703d1054aac`，工具 SHA-256 `b8233b8cfd35a4e422db4933e1352ba030c7c3391d5823444d2198afb9e83af1`，37 项定向测试与八臂复算通过，并核实两 ON 臂 sender/collector 的 profiler 已启用。新证据尚未公开，不能称公开可复算。自然告警报告与复放工具固定于本地 `4e4e736878e5328e7c59f39d21fdceea1046a430`；参数实验记录 `116d527` 也仅本地可访问。参数原始 checkpoint 未公开；哈希台账不能替代原件和独立存储。
+本次 927c5de native loss/grad 补验的工具、协议、校准结果、测量锁和判定固定于本地 `233e5f8` 及其父提交；独立只读门禁审计当前主线可达提交为 `61316a8`，工具 SHA-256 `b8233b8cfd35a4e422db4933e1352ba030c7c3391d5823444d2198afb9e83af1`，37 项定向测试与八臂复算通过，并核实两 ON 臂 sender/collector 的 profiler 已启用。新证据尚未公开，不能称公开可复算。自然告警报告与复放工具当前主线可达提交为 `8b7006d`；参数实验记录 `116d527` 也仅本地可访问。参数原始 checkpoint 未公开；哈希台账不能替代原件和独立存储。
 
 ![Native loss 与 grad norm 的实测差值相对冻结 OFF/OFF 包络](./native_loss_envelope_20261001.svg)
 
