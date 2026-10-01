@@ -35,8 +35,21 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _unique_object_pairs(pairs: List[Tuple[str, Any]]) -> Dict[str, Any]:
+    value: Dict[str, Any] = {}
+    for key, item in pairs:
+        if key in value:
+            raise ValueError(f"duplicate JSON key: {key}")
+        value[key] = item
+    return value
+
+
+def strict_json_loads(text: str) -> Any:
+    return json.loads(text, object_pairs_hook=_unique_object_pairs)
+
+
 def read_json(path: Path) -> Dict[str, Any]:
-    value = json.loads(path.read_text(encoding="utf-8"))
+    value = strict_json_loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
         raise ValueError(f"expected JSON object: {path}")
     return value
@@ -47,13 +60,50 @@ def read_jsonl(path: Path) -> List[Dict[str, Any]]:
     with path.open(encoding="utf-8") as stream:
         for line_number, line in enumerate(stream, 1):
             try:
-                value = json.loads(line)
+                value = strict_json_loads(line)
             except json.JSONDecodeError as exc:
                 raise ValueError(f"invalid JSON at {path}:{line_number}: {exc}") from exc
             if not isinstance(value, dict):
                 raise ValueError(f"expected JSON object at {path}:{line_number}")
             rows.append(value)
     return rows
+
+
+def resolve_input(measurement_root: Path, relative_path: Path) -> Path:
+    """Resolve an evidence input and reject paths/symlinks outside the root."""
+    root = measurement_root.resolve(strict=True)
+    if relative_path.is_absolute() or ".." in relative_path.parts:
+        raise ValueError(f"unsafe evidence path: {relative_path}")
+    resolved = (root / relative_path).resolve(strict=True)
+    try:
+        resolved.relative_to(root)
+    except ValueError as exc:
+        raise ValueError(f"evidence path escapes measurement root: {relative_path}") from exc
+    return resolved
+
+
+def verify_job_log_hash(job_log: Path, expected_hash: Any) -> str:
+    if not isinstance(expected_hash, str) or re.fullmatch(r"[0-9a-f]{64}", expected_hash) is None:
+        raise ValueError("manifest has missing or invalid job_log_sha256")
+    actual_hash = sha256(job_log)
+    if actual_hash != expected_hash:
+        raise ValueError(f"job.log SHA-256 mismatch: expected {expected_hash}, got {actual_hash}")
+    return actual_hash
+
+
+def validate_envelope_identities(envelopes: List[Dict[str, Any]]) -> int:
+    identities = set()
+    for index, row in enumerate(envelopes, 1):
+        rank = row.get("rank")
+        seq = row.get("seq")
+        stage = row.get("name")
+        if type(rank) is not int or type(seq) is not int or not isinstance(stage, str) or not stage:
+            raise ValueError(f"invalid envelope identity at row {index}")
+        identity = (rank, seq, stage)
+        if identity in identities:
+            raise ValueError(f"duplicate envelope identity at row {index}: {identity}")
+        identities.add(identity)
+    return len(identities)
 
 
 def signature(verdict: Dict[str, Any]) -> Tuple[str, str, int, int, str]:
@@ -142,11 +192,15 @@ def verify_product(product_root: Path) -> None:
 
 def replay_arm(
     arm: str,
-    run_dir: Path,
+    measurement_root: Path,
     StragglerConfig: Any,
     StragglerDetector: Any,
 ) -> Dict[str, Any]:
-    manifest = read_json(run_dir.parent.parent / "manifest.json")
+    run_id = ARMS[arm]
+    run_dir = resolve_input(measurement_root, Path(arm) / "straggler" / run_id)
+    manifest_path = resolve_input(measurement_root, Path(arm) / "manifest.json")
+    job_log_path = resolve_input(measurement_root, Path(arm) / "job.log")
+    manifest = read_json(manifest_path)
     if manifest.get("product_sha") != PRODUCT_SHA or manifest.get("arm") != arm:
         raise ValueError(f"manifest identity mismatch for {arm}")
     if manifest.get("status") != "SUCCEEDED" or manifest.get("valid") is not True:
@@ -157,13 +211,16 @@ def replay_arm(
     if observer.get("RELAX_STRAGGLER_ENABLE") != "1":
         raise ValueError(f"observer is not enabled in {arm}")
 
-    envelopes_path = run_dir / "straggler_envelopes.jsonl"
-    verdicts_path = run_dir / "straggler_verdicts.jsonl"
+    run_relative = run_dir.relative_to(measurement_root.resolve(strict=True))
+    envelopes_path = resolve_input(measurement_root, run_relative / "straggler_envelopes.jsonl")
+    verdicts_path = resolve_input(measurement_root, run_relative / "straggler_verdicts.jsonl")
     envelopes = read_jsonl(envelopes_path)
+    identity_count = validate_envelope_identities(envelopes)
     saved = read_jsonl(verdicts_path)
-    status = read_json(run_dir / "collector_status.json")
-    runtime = read_json(run_dir / "runtime_status.json")
-    injection_config = verify_no_injected_slowdown(run_dir.parent.parent / "job.log")
+    status = read_json(resolve_input(measurement_root, run_relative / "collector_status.json"))
+    runtime = read_json(resolve_input(measurement_root, run_relative / "runtime_status.json"))
+    verify_job_log_hash(job_log_path, manifest.get("job_log_sha256"))
+    injection_config = verify_no_injected_slowdown(job_log_path)
 
     config = StragglerConfig(
         enabled=True,
@@ -187,10 +244,10 @@ def replay_arm(
     replay_only = [row for row in replayed if signature(row) not in saved_signatures]
     replay_only_confirmed = [row for row in replay_only if row.get("kind") == "straggler"]
 
-    identities = {(row.get("rank"), row.get("seq"), row.get("name")) for row in envelopes}
     sender_status = []
     for path in sorted(run_dir.glob("runtime_status_rank*.json")):
-        rank_status = read_json(path)
+        safe_path = resolve_input(measurement_root, path.relative_to(measurement_root.resolve(strict=True)))
+        rank_status = read_json(safe_path)
         sender = rank_status.get("sender")
         if sender:
             sender_status.append(
@@ -211,7 +268,7 @@ def replay_arm(
         "injection_config_from_job_log": injection_config,
         "raw": {
             "envelope_lines": len(envelopes),
-            "envelope_unique_rank_seq_stage": len(identities),
+            "envelope_unique_rank_seq_stage": identity_count,
             "envelope_sha256": sha256(envelopes_path),
             "verdict_lines": len(saved),
             "verdict_sha256": sha256(verdicts_path),
@@ -279,9 +336,8 @@ def main() -> None:
         "offline_replay_flushes_open_windows": True,
         "arms": [],
     }
-    for arm, run_id in ARMS.items():
-        run_dir = args.measurement_root / arm / "straggler" / run_id
-        result["arms"].append(replay_arm(arm, run_dir, StragglerConfig, StragglerDetector))
+    for arm in ARMS:
+        result["arms"].append(replay_arm(arm, args.measurement_root, StragglerConfig, StragglerDetector))
     print(json.dumps(result, indent=2, sort_keys=True))
 
 
