@@ -137,6 +137,28 @@ def validate_saved_verdicts(verdicts: List[Dict[str, Any]]) -> List[Tuple[str, s
     return signatures
 
 
+def validate_saved_verdict_payloads(saved: List[Dict[str, Any]], replayed: List[Dict[str, Any]]) -> int:
+    """Require every saved verdict to match its replayed JSON-semantic
+    payload."""
+    validate_saved_verdicts(replayed)
+    replayed_by_signature = {signature(row): row for row in replayed}
+    matched = 0
+    for row in saved:
+        identity = signature(row)
+        replayed_row = replayed_by_signature.get(identity)
+        if replayed_row is None:
+            raise ValueError(f"saved verdict is missing from replay: {identity}")
+        # JSON round-tripping converts integer mapping keys (for example rank
+        # IDs in facts.samples_peers) to strings. Compare canonical JSON values,
+        # not Python dict key types, while preserving all payload fields.
+        saved_json = json.dumps(row, sort_keys=True, separators=(",", ":"), allow_nan=False)
+        replayed_json = json.dumps(replayed_row, sort_keys=True, separators=(",", ":"), allow_nan=False)
+        if saved_json != replayed_json:
+            raise ValueError(f"saved verdict payload differs from replay: {identity}")
+        matched += 1
+    return matched
+
+
 def verify_profiler_job_log(job_log: Path) -> Dict[str, Any]:
     text = job_log.read_text(encoding="utf-8", errors="replace")
     text = re.sub(r"\x1b\[[0-9;]*[A-Za-z]", "", text)
@@ -291,6 +313,7 @@ def replay_arm(
     detector.flush()
     replayed = [verdict.to_dict() for verdict in detector.drain_verdicts()]
     replayed_active = detector.active_stragglers()
+    payload_matches = validate_saved_verdict_payloads(saved, replayed)
 
     saved_confirmed = [row for row in saved if row.get("kind") == "straggler"]
     saved_recovered = [row for row in saved if row.get("kind") == "recovered"]
@@ -332,6 +355,7 @@ def replay_arm(
             },
         },
         "saved_confirmed": [event_summary(row) for row in saved_confirmed],
+        "saved_verdict_payloads_matched": payload_matches,
         "saved_recoveries": [event_summary(row) for row in saved_recovered],
         "offline_replay_only_confirmed": [event_summary(row) for row in replay_only_confirmed],
         "offline_replay_active_at_end": replayed_active,

@@ -23,7 +23,7 @@ python evidence/tools/replay_native_loss_alerts_20261001.py \
   --measurement-root /root/autodl-tmp/task11-3090/formal/native-loss-927c5de-20260930/measurement
 ```
 
-The script validates the product SHA and no-injection settings in each job log, checks the raw-file hashes and envelope identities, replays through the pinned detector, and prints the saved and replay-only results as JSON. It writes no files. Its source and this report are committed together; the commit hash identifies the exact calculation used here.
+The script validates the product SHA and no-injection settings in each job log, verifies the manifest-bound `job.log` SHA-256, validates envelope identities, and computes SHA-256 values for the envelope and verdict JSONL files for the report. Those JSONL hashes are reported, not checked against a separate expected-hash ledger. The pinned detector replay must match every saved verdict's full JSON-semantic payload by `(cohort, name, rank, window_index, kind)`; additional flushed-tail results are reported separately. The script writes no files. Its source and this report are committed together; the commit hash identifies the exact calculation used here.
 
 ## The seven saved detections
 
@@ -47,7 +47,7 @@ The three simultaneous `forward-compute` detections in M2 window 11 compare rank
 
 The saved verdict files are not a complete adjudication of all raw envelopes. Both `runtime_status.json` snapshots say `closed=false` and retain two open windows; the M1 observer snapshot has six pending readouts and M2 has one. The snapshots were written before job completion. M1's collector snapshot records 1,856 envelopes and 2,001 flushed lines, while the later raw files contain 2,112 envelopes plus 145 verdicts (2,257 lines). M2's line counts agree (1,899 + 139 = 2,038), but its status also retains two open windows and one pending readout. Consequently, the stored `stragglers_reported` totals (1 and 6) describe saved verdicts, not a proven final count after draining and closing every window.
 
-For diagnosis, the complete raw envelope streams were replayed through the frozen `927c5de` detector with the recorded 5-second window, two-window warmup, 5% work tolerance, 5 ms floor, and three-window persistence; the remaining windows were then explicitly flushed. This reproduced all seven saved detections and yielded five additional threshold crossings in raw tail windows absent from the saved verdict streams:
+For diagnosis, the complete raw envelope streams were replayed through the frozen `927c5de` detector with the recorded 5-second window, two-window warmup, 5% work tolerance, 5 ms floor, and three-window persistence; the remaining windows were then explicitly flushed. Replay matched every saved verdict payload and yielded five additional threshold crossings in raw tail windows absent from the saved verdict streams:
 
 | Arm | Replay-only tail window | Rank / stage          | Host ratio | Replay outcome                                         |
 | --- | ----------------------: | --------------------- | ---------: | ------------------------------------------------------ |

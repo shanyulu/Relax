@@ -18,6 +18,7 @@ from replay_native_loss_alerts_20261001 import (  # noqa: E402
     replay_arm,
     resolve_input,
     validate_envelope_identities,
+    validate_saved_verdict_payloads,
     validate_saved_verdicts,
     verify_job_log_hash,
     verify_profiler_job_log,
@@ -58,6 +59,67 @@ def test_duplicate_saved_verdict_identity_is_rejected():
 
     with pytest.raises(ValueError, match="duplicate saved verdict identity"):
         validate_saved_verdicts([verdict, dict(verdict)])
+
+
+def test_saved_verdict_payloads_match_after_json_key_normalization():
+    saved = [
+        {
+            "cohort": "dense:0",
+            "name": "forward-compute",
+            "rank": 2,
+            "window_index": 17,
+            "kind": "straggler",
+            "facts": {"samples_peers": {0: 5, 1: 4}},
+        }
+    ]
+    replayed = json.loads(json.dumps(saved))
+
+    assert validate_saved_verdict_payloads(saved, replayed) == 1
+
+
+def test_saved_verdict_payload_mismatch_is_rejected():
+    saved = [
+        {
+            "cohort": "dense:0",
+            "name": "forward-compute",
+            "rank": 2,
+            "window_index": 17,
+            "kind": "straggler",
+            "reason": "gpu_stream_stall",
+        }
+    ]
+    replayed = [dict(saved[0], reason="host_only_stall")]
+
+    with pytest.raises(ValueError, match="payload differs"):
+        validate_saved_verdict_payloads(saved, replayed)
+
+
+def test_saved_verdict_missing_from_replay_is_rejected():
+    saved = [
+        {
+            "cohort": "dense:0",
+            "name": "forward-compute",
+            "rank": 2,
+            "window_index": 17,
+            "kind": "straggler",
+        }
+    ]
+
+    with pytest.raises(ValueError, match="missing from replay"):
+        validate_saved_verdict_payloads(saved, [])
+
+
+def test_duplicate_replayed_verdict_identity_is_rejected():
+    verdict = {
+        "cohort": "dense:0",
+        "name": "forward-compute",
+        "rank": 2,
+        "window_index": 17,
+        "kind": "straggler",
+    }
+
+    with pytest.raises(ValueError, match="duplicate saved verdict identity"):
+        validate_saved_verdict_payloads([], [verdict, dict(verdict)])
 
 
 @pytest.mark.parametrize(
