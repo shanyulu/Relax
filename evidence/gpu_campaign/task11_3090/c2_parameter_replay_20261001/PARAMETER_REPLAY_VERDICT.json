@@ -1,0 +1,1565 @@
+{
+  "calibration_path": "/tmp/codex-task11-evidence/evidence/gpu_campaign/task11_3090/c2_parameter/P_CALIBRATION_RESULT.json",
+  "calibration_sha256": "1939d53bb789427cf13f249f64693fb8c91a78a1186ad17e2b8f1cd66ad9a364",
+  "pairs": [
+    {
+      "manifest_sha256": "fd8679a373adf3ceb3fc4d8bf07039772925f2b9ca02404a38549fa971f93b2b",
+      "missing_tolerances": [],
+      "off_inventory_sha256": "0196f4f24a92c194cff9cc57a6bf4d139a80582a4f5967d943b3ca7cbbf28cbc",
+      "on_inventory_sha256": "4cc311feae49fa63440439f536d864a5f05f3df866d8ef4f0c3302e94d49877a",
+      "pair_id": "P-M1",
+      "tensors": {
+        "converted_tensors.pt::decoder.final_layernorm._extra_state/shard_0_1[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.final_layernorm.weight": {
+          "exact_equal": true,
+          "max_abs_delta": 0.0,
+          "max_rel_delta": 0.0,
+          "state": "PASS",
+          "tolerance": 0.0
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_0_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_10_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_11_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_12_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_13_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_14_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_15_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_16_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_17_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_18_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_19_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_1_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_20_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_21_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_22_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_23_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_24_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_25_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_26_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_27_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_2_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_3_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_4_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_5_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_6_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_7_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_8_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_9_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1.layer_norm_weight": {
+          "exact_equal": false,
+          "max_abs_delta": 1.800060272216797e-05,
+          "max_rel_delta": 0.8727064220183486,
+          "state": "PASS",
+          "tolerance": 0.0001220703125
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 0.000244140625,
+          "max_rel_delta": 2.0,
+          "state": "PASS",
+          "tolerance": 0.00048828125
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_0_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_10_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_11_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_12_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_13_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_14_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_15_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_16_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_17_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_18_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_19_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_1_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_20_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_21_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_22_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_23_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_24_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_25_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_26_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_27_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_2_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_3_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_4_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_5_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_6_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_7_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_8_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_9_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 0.000244140625,
+          "max_rel_delta": 2.0,
+          "state": "PASS",
+          "tolerance": 0.00048828125
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_0_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_10_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_11_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_12_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_13_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_14_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_15_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_16_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_17_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_18_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_19_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_1_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_20_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_21_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_22_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_23_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_24_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_25_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_26_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_27_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_2_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_3_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_4_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_5_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_6_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_7_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_8_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_9_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 6.103515625e-05,
+          "max_rel_delta": 0.15827338129496402,
+          "state": "PASS",
+          "tolerance": 0.00048828125
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_0_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_10_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_11_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_12_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_13_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_14_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_15_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_16_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_17_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_18_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_19_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_1_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_20_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_21_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_22_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_23_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_24_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_25_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_26_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_27_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_2_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_3_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_4_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_5_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_6_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_7_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_8_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_9_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 0.000244140625,
+          "max_rel_delta": 2.0,
+          "state": "PASS",
+          "tolerance": 0.00048828125
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_0_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_10_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_11_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_12_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_13_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_14_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_15_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_16_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_17_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_18_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_19_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_1_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_20_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_21_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_22_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_23_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_24_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_25_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_26_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_27_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_2_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_3_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_4_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_5_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_6_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_7_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_8_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_9_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv.layer_norm_weight": {
+          "exact_equal": false,
+          "max_abs_delta": 7.62939453125e-06,
+          "max_rel_delta": 0.00390625,
+          "state": "PASS",
+          "tolerance": 6.103515625e-05
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 0.000244140625,
+          "max_rel_delta": 2.0,
+          "state": "PASS",
+          "tolerance": 0.00048828125
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_0_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_10_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_11_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_12_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_13_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_14_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_15_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_16_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_17_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_18_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_19_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_1_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_20_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_21_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_22_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_23_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_24_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_25_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_26_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_27_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_2_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_3_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_4_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_5_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_6_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_7_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_8_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_9_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 0.0001220703125,
+          "max_rel_delta": 0.4375,
+          "state": "PASS",
+          "tolerance": 0.000244140625
+        },
+        "converted_tensors.pt::embedding.word_embeddings.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 0.000244140625,
+          "max_rel_delta": 2.0,
+          "state": "PASS",
+          "tolerance": 0.0009765625
+        },
+        "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.exp_avg": {
+          "exact_equal": false,
+          "max_abs_delta": 0.004390295594930649,
+          "max_rel_delta": 1.9999999345039572,
+          "state": "PASS",
+          "tolerance": 0.020252835005521774
+        },
+        "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.exp_avg_sq": {
+          "exact_equal": false,
+          "max_abs_delta": 0.0004375253338366747,
+          "max_rel_delta": 0.9998062967332514,
+          "state": "PASS",
+          "tolerance": 0.0015365984290838242
+        },
+        "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.param": {
+          "exact_equal": false,
+          "max_abs_delta": 0.00016847788356244564,
+          "max_rel_delta": 1.9999377672173275,
+          "state": "PASS",
+          "tolerance": 0.00039810745511204004
+        }
+      },
+      "violations": []
+    },
+    {
+      "manifest_sha256": "8b63ad603726d2e8137b68ab56602f08bd10453fdcc4a90e0a3c09a5fa5a4c56",
+      "missing_tolerances": [],
+      "off_inventory_sha256": "3143817207624db035d8be9a4ed49f9e4ccf56760e351ebab9c71d1ff01a2f6a",
+      "on_inventory_sha256": "bc530dd0201908cc813717c05fe001675806666e57411a6287c18524510fa6a0",
+      "pair_id": "P-M2",
+      "tensors": {
+        "converted_tensors.pt::decoder.final_layernorm._extra_state/shard_0_1[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.final_layernorm.weight": {
+          "exact_equal": true,
+          "max_abs_delta": 0.0,
+          "max_rel_delta": 0.0,
+          "state": "PASS",
+          "tolerance": 0.0
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_0_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_10_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_11_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_12_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_13_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_14_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_15_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_16_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_17_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_18_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_19_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_1_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_20_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_21_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_22_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_23_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_24_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_25_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_26_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_27_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_2_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_3_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_4_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_5_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_6_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_7_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_8_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1._extra_state/shard_9_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1.layer_norm_weight": {
+          "exact_equal": false,
+          "max_abs_delta": 1.8835067749023438e-05,
+          "max_rel_delta": 1.8793103448275863,
+          "state": "PASS",
+          "tolerance": 0.0001220703125
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc1.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 0.000244140625,
+          "max_rel_delta": 2.0,
+          "state": "PASS",
+          "tolerance": 0.00048828125
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_0_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_10_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_11_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_12_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_13_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_14_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_15_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_16_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_17_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_18_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_19_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_1_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_20_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_21_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_22_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_23_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_24_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_25_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_26_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_27_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_2_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_3_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_4_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_5_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_6_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_7_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_8_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2._extra_state/shard_9_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.mlp.linear_fc2.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 0.000244140625,
+          "max_rel_delta": 2.0,
+          "state": "PASS",
+          "tolerance": 0.00048828125
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_0_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_10_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_11_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_12_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_13_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_14_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_15_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_16_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_17_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_18_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_19_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_1_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_20_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_21_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_22_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_23_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_24_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_25_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_26_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_27_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_2_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_3_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_4_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_5_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_6_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_7_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_8_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm._extra_state/shard_9_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.k_layernorm.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 0.000244140625,
+          "max_rel_delta": 0.42105263157894735,
+          "state": "PASS",
+          "tolerance": 0.00048828125
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_0_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_10_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_11_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_12_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_13_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_14_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_15_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_16_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_17_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_18_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_19_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_1_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_20_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_21_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_22_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_23_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_24_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_25_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_26_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_27_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_2_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_3_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_4_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_5_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_6_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_7_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_8_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj._extra_state/shard_9_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_proj.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 0.000244140625,
+          "max_rel_delta": 2.0,
+          "state": "PASS",
+          "tolerance": 0.00048828125
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_0_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_10_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_11_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_12_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_13_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_14_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_15_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_16_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_17_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_18_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_19_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_1_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_20_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_21_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_22_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_23_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_24_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_25_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_26_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_27_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_2_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_3_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_4_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_5_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_6_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_7_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_8_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv._extra_state/shard_9_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv.layer_norm_weight": {
+          "exact_equal": false,
+          "max_abs_delta": 7.62939453125e-06,
+          "max_rel_delta": 0.00390625,
+          "state": "PASS",
+          "tolerance": 6.103515625e-05
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.linear_qkv.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 0.000244140625,
+          "max_rel_delta": 2.0,
+          "state": "PASS",
+          "tolerance": 0.00048828125
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_0_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_10_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_11_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_12_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_13_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_14_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_15_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_16_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_17_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_18_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_19_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_1_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_20_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_21_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_22_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_23_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_24_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_25_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_26_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_27_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_2_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_3_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_4_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_5_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_6_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_7_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_8_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm._extra_state/shard_9_28[0]": {
+          "exact_equal": true,
+          "state": "PASS"
+        },
+        "converted_tensors.pt::decoder.layers.self_attention.q_layernorm.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 0.0001220703125,
+          "max_rel_delta": 0.12916666666666668,
+          "state": "PASS",
+          "tolerance": 0.000244140625
+        },
+        "converted_tensors.pt::embedding.word_embeddings.weight": {
+          "exact_equal": false,
+          "max_abs_delta": 0.00048828125,
+          "max_rel_delta": 2.0,
+          "state": "PASS",
+          "tolerance": 0.0009765625
+        },
+        "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.exp_avg": {
+          "exact_equal": false,
+          "max_abs_delta": 0.004557582084089518,
+          "max_rel_delta": 1.9999999004493318,
+          "state": "PASS",
+          "tolerance": 0.020252835005521774
+        },
+        "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.exp_avg_sq": {
+          "exact_equal": false,
+          "max_abs_delta": 0.00046391296200454235,
+          "max_rel_delta": 0.9999782632143083,
+          "state": "PASS",
+          "tolerance": 0.0015365984290838242
+        },
+        "converted_tensors.pt::optimizer.distributed.dp_group_idx_0.gbuf_idx_0.dtype_(torch.bfloat16, torch.float32).bucket_idx_0.param": {
+          "exact_equal": false,
+          "max_abs_delta": 0.0001760029699653387,
+          "max_rel_delta": 1.9999343991691496,
+          "state": "PASS",
+          "tolerance": 0.00039810745511204004
+        }
+      },
+      "violations": []
+    }
+  ],
+  "reason": null,
+  "schema_version": 1,
+  "scope": "final retained checkpoint parameter equivalence only; loss, updates, tokens, and overlap are separate gates",
+  "self_sha256": "f4bca13724d684a73f38945b5678dda07517cafb9fb1ece6acb5b631b6e20122",
+  "verdict": "PASS"
+}
