@@ -9,7 +9,7 @@
 | PR / 产品版本 | PR 头 [da4acbb](https://github.com/redai-studio/Relax/commit/da4acbbab530f082f37c1633c811c704be5a044e)；产品 [0481701](https://github.com/shanyulu/Relax/commit/048170127f3ef4a7ea6255b5e5e01240b03876bc)，`relax/` 产品代码保持不变 |
 | CI            | `da4acbb` 当前头 8/8 通过：pre-commit、Python 3.10/3.11/3.12、H20 4-GPU 单测、三项训练集成（含一项 NPU）                                                                                                                             |
 | 专用验收      | 生命周期、评分对照、自动扩缩、故障收尾及训练运行证据见下表；各自保留运行版本                                                                                                                                                         |
-| 尚待确认      | 当前头 approval；artifact 归属、验收规模、内容确定性采样三项裁决                                                                                                                                                                     |
+| 尚待确认      | 当前头 approval；Task 3 对接、artifact 归属、验收规模、内容确定性采样四项裁决                                                                                                                                                        |
 
 产品头之后仅变更 API / 证据文档、OpenAPI 生成脚本及两处测试 lint 注释，运行时代码未变。
 
@@ -92,8 +92,9 @@ flowchart TB
 
 ## 请维护者确认
 
-1. **仓库范围**：driver、manifest、原始 artifacts 的保留与迁出边界。
-2. **验收规模**：4×RTX 4090、Qwen3-0.6B 是否满足本期生命周期与路由验收。
-3. **评分语义**：是否接受未显式指定 seed 时的内容确定性采样；若需要重复调用的随机多样性，应另行定义请求身份契约。
+1. **Task 3 对接**：当前四条统一 inference PR（[#347](https://github.com/redai-studio/Relax/pull/347)、[#356](https://github.com/redai-studio/Relax/pull/356)、[#368](https://github.com/redai-studio/Relax/pull/368)、[#381](https://github.com/redai-studio/Relax/pull/381)）均未合入且与本 PR 的 GenRM 文件重叠。请指定采用哪条路线，以及 #370 独立合入还是先集成重验。
+2. **仓库范围**：driver、manifest、原始 artifacts 的保留与迁出边界。
+3. **验收规模**：4×RTX 4090、Qwen3-0.6B 是否满足本期生命周期与路由验收。
+4. **评分语义**：是否接受未显式指定 seed 时的内容确定性采样；若需要重复调用的随机多样性，应另行定义请求身份契约。
 
 当前头仍需正式 review。[不可变证据目录](https://github.com/shanyulu/Relax/tree/fdf288d705ddbefa7f8de9fbad050f7ed3ac4f27/demos/task4_genrm/results/)保留全部已归档轮次及各自判定。
