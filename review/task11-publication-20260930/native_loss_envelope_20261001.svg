@@ -13,7 +13,7 @@
   </style>
   <rect width="980" height="470" fill="#ffffff"/>
   <text x="32" y="38" class="title">Native loss / grad norm：实测最大差与冻结包络</text>
-  <text x="32" y="64" class="sub">927c5de · 每对 48 步 · 误差条长度 = 最大绝对差 ÷ 对应 OFF/OFF 容差</text>
+  <text x="32" y="64" class="sub">927c5de · 每对 48 步 · 条形长度 = 最大绝对差 ÷ 对应 OFF/OFF 容差</text>
 
   <text x="292" y="101" class="axis">相对冻结容差</text>
   <line x1="330" y1="115" x2="750" y2="115" stroke="#8b9bb0" stroke-width="1"/>
