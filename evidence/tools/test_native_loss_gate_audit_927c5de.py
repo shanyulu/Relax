@@ -131,14 +131,51 @@ def test_calibration_result_rejects_bad_product_lock_or_missing_argv_hash() -> N
 def test_missing_arm_directory_or_manifest_is_incomplete(tmp_path: Path) -> None:
     lock = valid_lock("CALIBRATION")
     with pytest.raises(audit.AuditFailure) as missing_arm:
-        audit.audit_arm(tmp_path / "missing", audit.CALIBRATION_ARMS[0], lock, "3" * 64, {})
+        audit.audit_arm(tmp_path, tmp_path / "missing", audit.CALIBRATION_ARMS[0], lock, "3" * 64, {})
     assert missing_arm.value.status == "INCOMPLETE"
 
     arm_dir = tmp_path / audit.CALIBRATION_ARMS[0]
     arm_dir.mkdir()
     with pytest.raises(audit.AuditFailure) as missing_manifest:
-        audit.audit_arm(arm_dir, arm_dir.name, lock, "3" * 64, {})
+        audit.audit_arm(tmp_path, arm_dir, arm_dir.name, lock, "3" * 64, {})
     assert missing_manifest.value.status == "INCOMPLETE"
+
+
+def test_json_with_duplicate_object_keys_is_rejected(tmp_path: Path) -> None:
+    path = tmp_path / "duplicate.json"
+    path.write_text('{"stage":"CALIBRATION","stage":"MEASUREMENT"}')
+    with pytest.raises(audit.AuditFailure, match="duplicate JSON object key"):
+        audit.read_json(path, "duplicate fixture")
+
+
+@pytest.mark.parametrize("filename", ["manifest.json", "job.log", "train-argv.nul"])
+def test_campaign_inputs_cannot_escape_raw_root_through_symlinks(tmp_path: Path, filename: str) -> None:
+    root = tmp_path / "raw"
+    arm_dir = root / "L-M1-on"
+    arm_dir.mkdir(parents=True)
+    outside = tmp_path / "outside"
+    outside.write_text("outside data")
+    target = arm_dir / filename
+    target.symlink_to(outside)
+    with pytest.raises(audit.AuditFailure, match="escapes --raw-root"):
+        audit.secure_campaign_path(root, target, filename)
+
+
+def test_report_write_is_exclusive_and_preserves_existing_file(tmp_path: Path) -> None:
+    raw_root = tmp_path / "raw"
+    raw_root.mkdir()
+    existing = tmp_path / "existing.md"
+    existing.write_text("original")
+    with pytest.raises(audit.AuditFailure, match="refusing to overwrite"):
+        audit.write_report_once(existing, "replacement", raw_root)
+    assert existing.read_text() == "original"
+
+    new = tmp_path / "new.md"
+    audit.write_report_once(new, "report", raw_root)
+    assert new.read_text() == "report"
+
+    with pytest.raises(audit.AuditFailure, match="outside the read-only"):
+        audit.write_report_once(raw_root / "report.md", "report", raw_root)
 
 
 def valid_native() -> dict:

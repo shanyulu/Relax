@@ -64,6 +64,19 @@ class AuditFailure(ValueError):
         self.status = status
 
 
+class DuplicateJSONKey(ValueError):
+    """Raised when an object repeats a member name."""
+
+
+def reject_duplicate_json_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    value: dict[str, Any] = {}
+    for key, item in pairs:
+        if key in value:
+            raise DuplicateJSONKey(f"duplicate JSON object key: {key}")
+        value[key] = item
+    return value
+
+
 def sha256_bytes(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
 
@@ -85,12 +98,44 @@ def read_json(path: Path, label: str) -> dict[str, Any]:
     if not path.is_file():
         raise AuditFailure("INCOMPLETE", f"missing {label}: {path}")
     try:
-        result = json.loads(path.read_text())
-    except (OSError, json.JSONDecodeError) as exc:
+        result = json.loads(path.read_text(), object_pairs_hook=reject_duplicate_json_keys)
+    except (OSError, json.JSONDecodeError, DuplicateJSONKey) as exc:
         raise AuditFailure("INVALID", f"cannot read {label}: {exc}") from exc
     if not isinstance(result, dict):
         raise AuditFailure("INVALID", f"{label} must be a JSON object")
     return result
+
+
+def secure_campaign_path(raw_root: Path, path: Path, label: str) -> Path:
+    try:
+        root = raw_root.resolve(strict=True)
+        resolved = path.resolve(strict=True)
+    except FileNotFoundError as exc:
+        raise AuditFailure("INCOMPLETE", f"missing raw campaign input {label}: {path}") from exc
+    except (OSError, RuntimeError) as exc:
+        raise AuditFailure("INVALID", f"cannot resolve raw campaign input {label}: {exc}") from exc
+    try:
+        resolved.relative_to(root)
+    except ValueError as exc:
+        raise AuditFailure("INVALID", f"raw campaign input escapes --raw-root through a symlink: {label}") from exc
+    return resolved
+
+
+def write_report_once(path: Path, report: str, raw_root: Path) -> None:
+    root = raw_root.resolve(strict=True)
+    parent = path.parent.resolve(strict=False)
+    try:
+        parent.relative_to(root)
+    except ValueError:
+        pass
+    else:
+        raise AuditFailure("INVALID", "report output must be outside the read-only raw campaign root")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with path.open("x", encoding="utf-8") as output:
+            output.write(report)
+    except FileExistsError as exc:
+        raise AuditFailure("INVALID", f"refusing to overwrite existing report: {path}") from exc
 
 
 def require_sha(value: Any, label: str) -> str:
@@ -284,17 +329,20 @@ def validate_observer(name: str, manifest: dict[str, Any], log: str) -> dict[str
 
 
 def audit_arm(
+    raw_root: Path,
     arm_dir: Path,
     name: str,
     lock: dict[str, Any],
     expected_normalized_argv_sha256: str,
     expected_common: dict[str, str],
 ) -> dict[str, Any]:
+    arm_dir = secure_campaign_path(raw_root, arm_dir, f"{name} directory")
     if not arm_dir.is_dir():
-        raise AuditFailure("INCOMPLETE", f"missing arm directory: {arm_dir}")
+        raise AuditFailure("INVALID", f"campaign arm path is not a directory: {arm_dir}")
     manifest_path = arm_dir / "manifest.json"
     log_path = arm_dir / "job.log"
     argv_path = arm_dir / "train-argv.nul"
+    manifest_path = secure_campaign_path(raw_root, manifest_path, f"{name}/manifest.json")
     manifest = read_json(manifest_path, f"{name} manifest")
     check_self_hash(manifest, f"{name} manifest")
     if manifest.get("arm") != name or manifest.get("lock_sha256") != lock.get("_self_sha256"):
@@ -312,9 +360,8 @@ def audit_arm(
         or manifest.get("checkpoint_directory_created") is not False
     ):
         raise AuditFailure("INVALID", f"{name}: job, resource-return, or SAVE=0 gate failed")
-    if not log_path.is_file() or not argv_path.is_file():
-        missing = [str(path) for path in (log_path, argv_path) if not path.is_file()]
-        raise AuditFailure("INCOMPLETE", f"{name}: missing required files: {', '.join(missing)}")
+    log_path = secure_campaign_path(raw_root, log_path, f"{name}/job.log")
+    argv_path = secure_campaign_path(raw_root, argv_path, f"{name}/train-argv.nul")
     if require_sha(manifest.get("job_log_sha256"), f"{name}.job_log_sha256") != sha256_file(log_path):
         raise AuditFailure("INVALID", f"{name}: job log hash mismatch")
     argv_hash = require_sha(manifest.get("resolved_argv_sha256"), f"{name}.resolved_argv_sha256")
@@ -407,14 +454,6 @@ def compare_pairs(
     return results
 
 
-def git_blob_sha(repo: Path, commit: str, relpath: Path) -> str:
-    try:
-        payload = subprocess.check_output(["git", "-C", str(repo), "show", f"{commit}:{relpath.as_posix()}"])
-    except subprocess.CalledProcessError as exc:
-        raise AuditFailure("INVALID", f"required immutable lineage is missing: {commit}:{relpath}") from exc
-    return sha256_bytes(payload)
-
-
 def audit_campaign(
     repo: Path,
     raw_root: Path,
@@ -458,6 +497,7 @@ def audit_campaign(
     calibration_arms: dict[str, dict[str, Any]] = {}
     for name in CALIBRATION_ARMS:
         arm = audit_arm(
+            raw_root,
             raw_root / "calibration" / name,
             name,
             calibration_lock,
@@ -487,6 +527,7 @@ def audit_campaign(
     measurement_arms: dict[str, dict[str, Any]] = {}
     for name in MEASUREMENT_ARMS:
         measurement_arms[name] = audit_arm(
+            raw_root,
             raw_root / "measurement" / name,
             name,
             measurement_lock,
@@ -638,8 +679,11 @@ def main() -> int:
         return 2
     tool_hash = sha256_file(Path(__file__).resolve())
     report = render_markdown(result, tool_hash, args.raw_root)
-    args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(report)
+    try:
+        write_report_once(args.out, report, args.raw_root.resolve())
+    except AuditFailure as exc:
+        print(json.dumps({"status": exc.status, "reason": str(exc)}, sort_keys=True), file=sys.stderr)
+        return 2
     print(json.dumps({"status": result["status"], "report": str(args.out), "audit_tool_sha256": tool_hash}))
     return 0 if result["status"] == "PASS_WITHIN_OFF_OFF_ENVELOPE" else 1
 
